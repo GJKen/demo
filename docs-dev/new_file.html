@@ -44,6 +44,19 @@
 					src="https://lipsum.app/id/2/200x150" />
 			</a>
 		</div>
+		<!--  style="display: flex;position: sticky;justify-content: space-evenly;" -->
+		<div class="toc-btn">
+			<div onclick="ToTop();">
+				<a title="跳转顶部">
+					<svg class="octicon" width="16" height="16"><path id="ToBottom" fill-rule="evenodd"d="M7.4 5h-8.5Z"></path></svg>
+				</a>
+			</div>
+			<div onclick="ToBottom();">
+				<a title="跳转底部">
+					<svg class="octicon" width="16" height="16"><path id="ToBottom" fill-rule="evenodd"d="M7.4 5h-8.5Z"></path></svg>
+				</a>
+			</div>
+		</div>
 		<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 		<script>
 			Fancybox.bind('[data-fancybox="gallery"]', {
