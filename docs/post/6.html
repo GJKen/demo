@@ -491,12 +491,8 @@ if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
 </script>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-	const HeaderID=document.getElementById("header");const headerHeight=HeaderID.offsetHeight;header.style.height=headerHeight+"px";const writeSpeed=80;const textContent=document.querySelector('.postTitle').textContent;const textContentLen=textContent.length;const postTitle=document.querySelector('.postTitle');postTitle.textContent='';let idx=0;const writing=()=>{postTitle.textContent=textContent.slice(0,idx++);if(idx>textContentLen){clearInterval(writeTimer);postTitle.classList.remove('no-blink');}};const writeTimer=setInterval(writing,writeSpeed);postTitle.classList.add('no-blink');
-	const checkBtn=document.createElement('div');checkBtn.id='checkBtn';const functionBtn=document.getElementById('functionBtn');functionBtn.insertAdjacentElement('afterend',checkBtn);const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){functionBtn.classList.remove('Btn-flex');}else{functionBtn.classList.add('Btn-flex');}});},{threshold:0});observer.observe(checkBtn);
-	const spoilers = document.querySelectorAll(".spoilerText");
-	spoilers.length && spoilers.forEach(el => el.onclick = () => el.classList.toggle("clear"));
-});
+document.addEventListener("DOMContentLoaded",()=>{const e=document.getElementById("header").offsetHeight;header.style.height=e+"px";const t=document.createElement("div");t.id="checkBtn";const n=document.getElementById("functionBtn");n.insertAdjacentElement("afterend",t),new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting?n.classList.remove("Btn-flex"):n.classList.add("Btn-flex")})},{threshold:0}).observe(t);const c=document.querySelectorAll(".spoilerText");c.length&&c.forEach(e=>e.onclick=(()=>e.classList.toggle("clear")))});
+const writeSpeed=80,textContent=document.querySelector(".postTitle").textContent,textContentLen=textContent.length,postTitle=document.querySelector(".postTitle");postTitle.textContent="";let idx=0;const writing=()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContentLen&&(clearInterval(writeTimer),postTitle.classList.remove("no-blink"))},writeTimer=setInterval(writing,80);postTitle.classList.add("no-blink");
 document.getElementById("pathHome").setAttribute("d",IconList["home"]);
 document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
 
