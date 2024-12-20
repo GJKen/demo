@@ -1322,12 +1322,15 @@ fork 之后, 转到搭建博客的 github 源码,
 
 </details>
 
-7. **添加打字效果以及滚动切换显示顶部按钮 JS 代码.**
+7. **添加自定义 JS 代码.**
+
+> 添加打字效果.
+> 添加滚动切换显示顶部按钮导航.
 
 定位`<script>`标签, 在里面增加 JS 代码:
 
 > [!NOTE]
-> `document.addEventListener('DOMContentLoaded', () => {`这个监听不止可写当前功能, 还可写其它功能的代码进去.
+> `document.addEventListener("DOMContentLoaded", () => {`这个监听不止可写当前功能, 还可写其它功能的代码进去.
 
 ```Javascript
 document.addEventListener('DOMContentLoaded', () => {
@@ -1341,70 +1344,62 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ```Javascript
 document.addEventListener('DOMContentLoaded', () => {
-	////////////// 打字效果js //////////////
+	////////////// 设置#header固定高度 //////////////
 	// 获取#header元素
 	const HeaderID = document.getElementById("header")
 	// 获取#header实际可视高度(未开始打字前的完整高度)
 	const headerHeight = HeaderID.offsetHeight;
 	// 给header设置实际完整高度.
 	header.style.height = headerHeight + "px";
-	// 间隔多少毫秒输入一个字符
-	const writeSpeed = 80;
 
-	// 获取文本内容
-	const textContent = document.querySelector('.postTitle').textContent;
-	const textContentLen = textContent.length;
-
-	// 获取 .postTitle 元素并初始化为空
-	const postTitle = document.querySelector('.postTitle');
-	postTitle.textContent = ''; // 初始化文本内容为空
-
-	// 要写入字符的索引
-	let idx = 0;
-
-	// 定时写入字符处理函数
-	const writing = () => {
-		postTitle.textContent = textContent.slice(0, idx++);
-		if (idx > textContentLen) {
-			clearInterval(writeTimer); // 完成后停止定时器
-			postTitle.classList.remove('no-blink'); // 恢复动画
-		}
-	};
-
-	// 启动定时器
-	const writeTimer = setInterval(writing, writeSpeed);
-
-	// 在开始打字前移除动画
-	postTitle.classList.add('no-blink');
-	
-	////////////// 按钮悬浮 //////////////
-	// 创建 checkBtn 元素
+	////////////// 创建新#chechBtn用来检测#functionBtn不可见 //////////////
+	// 创建一个新的 div 元素并为其设置 id
 	const checkBtn = document.createElement('div');
-	// 为 checkBtn 添加 id
 	checkBtn.id = 'checkBtn';
 
-	// 将 checkBtn 添加到 body 中的某个位置，例如在 #functionBtn 后面
+	// 获取页面中 id 为 'functionBtn' 的元素
 	const functionBtn = document.getElementById('functionBtn');
+
+	// 将新创建的 checkBtn 元素插入到 functionBtn 元素之后
 	functionBtn.insertAdjacentElement('afterend', checkBtn);
-	// 创建 IntersectionObserver 实例
-	const observer = new IntersectionObserver((entries) => {
+
+	// 创建一个 IntersectionObserver 实例，用于监听 checkBtn 是否出现在视口内
+	const observer = new IntersectionObserver(entries => {
+		// 遍历所有观察到的条目
 		entries.forEach(entry => {
+			// 如果 checkBtn 元素出现在视口内
 			if (entry.isIntersecting) {
-				// checkBtn 可见移除类
+				// 移除 functionBtn 的 'Btn-flex' 类
 				functionBtn.classList.remove('Btn-flex');
 			} else {
-				// checkBtn 不可见添加类
+				// 否则，添加 'Btn-flex' 类
 				functionBtn.classList.add('Btn-flex');
 			}
 		});
 	}, {
-		// 设置观察的阈值，0 表示任何部分可见时触发
+		// 设置阈值为 0，表示元素一开始进入视口时就触发回调
 		threshold: 0
 	});
 
-	// 开始观察 checkBtn
+	// 开始观察 checkBtn 元素
 	observer.observe(checkBtn);
 }
+////////////// 打字效果js //////////////
+const writeSpeed = 80;
+const textContent = document.querySelector('.postTitle').textContent;
+const textContentLen = textContent.length;
+const postTitle = document.querySelector('.postTitle');
+postTitle.textContent = '';
+let idx = 0;
+const writing = () => {
+	postTitle.textContent = textContent.slice(0, idx++);
+	if (idx > textContentLen) {
+		clearInterval(writeTimer);
+		postTitle.classList.remove('no-blink');
+	}
+};
+const writeTimer = setInterval(writing, writeSpeed);
+postTitle.classList.add('no-blink');
 ```
 
 </details>
@@ -1817,9 +1812,9 @@ document.addEventListener('DOMContentLoaded', () => {
 <!-- ##{"script":"<script>document.getElementById('user-content-busuanzi').id='busuanzi_container_site_uv';busuanzi=document.getElementById('busuanzi_container_site_uv');busuanzi.style.display='none';busuanzi.childNodes[1].id='busuanzi_value_site_uv';busuanzi.childNodes[3].id='busuanzi_value_site_pv';</script><script async src='//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js'></script>","style":"<style>#busuanzi_value_site_uv{color:red}#busuanzi_value_site_pv{color:red}</style>"}## -->
 ```
 
-# 添加icon
+# icon 图标
 
-这段暂定, 还未找到变量添加icon的办法.
+写着备用.
 
 1. **打开 Gmeek.py**
 
