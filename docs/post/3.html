@@ -48,7 +48,7 @@ https://x.com/sao_anime/status/1852274390312141212
 [data-color-mode=light][data-light-theme=dark],[data-color-mode=light][data-light-theme=dark]::selection,[data-color-mode=dark][data-dark-theme=dark],[data-color-mode=dark][data-dark-theme=dark]::selection{--functionBtnFlex-bgColor:#ffffff00;}
 @keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@keyframes blink{50%{opacity:0}100%{opacity:1}}@-webkit-keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes blink{50%{opacity:0}100%{opacity:1}}
 body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padding:45px;font-size:16px;font-family:sans-serif;line-height:1.25;}
-#header .homepage-header{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:24px;}
+#header{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:24px;}
 #functionBtn{display:flex;justify-content:center;margin:20px 0;gap:20px;}
 #functionBtn a, #functionBtn div{padding:14px 16px;animation:fadeIn .7s ease-in 0s forwards;}
 #functionBtn.Btn-flex{position:fixed;margin:0;padding:20px 0;top:0;left:0;width:100%;min-width:500px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;animation:fadeIn .2s ease-in 0s forwards}
@@ -57,7 +57,6 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 </style>
 
 <style>
-#header.article-header{animation:fadeIn .7s ease-in 0s forwards;}
 .postTitle{margin:0 auto;width:max-content;font-size:40px;font-weight:bold;}
 .postTitle::after{content:'|';animation:blink 1s infinite;font-family:fantasy;font-weight:normal;vertical-align:text-top;}
 .no-blink::after{animation:none;}
@@ -78,8 +77,8 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 
 
 
-<body class="article">
-    <div id="header" class="article-header">
+<body>
+    <div id="header">
 <h1 class="postTitle">纪念下SAO通关-2024-11-07</h1>
 </div>
     <div id="functionBtn">
@@ -167,6 +166,7 @@ if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
 <script>
 document.addEventListener("DOMContentLoaded",()=>{const e=document.getElementById("header").offsetHeight;header.style.height=e+"px";const t=document.createElement("div");t.id="checkBtn";const n=document.getElementById("functionBtn");n.insertAdjacentElement("afterend",t),new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting?n.classList.remove("Btn-flex"):n.classList.add("Btn-flex")})},{threshold:0}).observe(t);const c=document.querySelectorAll(".spoilerText");c.length&&c.forEach(e=>e.onclick=(()=>e.classList.toggle("clear")))});
 const writeSpeed=80,textContent=document.querySelector(".postTitle").textContent,textContentLen=textContent.length,postTitle=document.querySelector(".postTitle");postTitle.textContent="";let idx=0;const writing=()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContentLen&&(clearInterval(writeTimer),postTitle.classList.remove("no-blink"))},writeTimer=setInterval(writing,80);postTitle.classList.add("no-blink");
+
 document.getElementById("pathHome").setAttribute("d",IconList["home"]);
 document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
 
