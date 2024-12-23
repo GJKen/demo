@@ -57,7 +57,8 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 </style>
 
 <style>
-.postTitle{margin:0 auto;width:max-content;font-size:40px;font-weight:bold;}
+.postTitle{margin: 0 auto;font-size: 40px;font-weight: bold;}
+/* .postTitle{font-size:40px;font-weight:bold;word-wrap:break-word;text-align:center;} */
 .postTitle::after{content:'|';animation:blink 1s infinite;font-family:fantasy;font-weight:normal;vertical-align:text-top;}
 .no-blink::after{animation:none;}
 .spoilerText{filter:blur(5px);-webkit-filter:blur(5px);cursor:pointer;transition:filter .3s ease}
@@ -96,7 +97,7 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 </a>
 
 <a class="ArticleTOC btn btn-invisible circle" title="文章目录">
-	<svg class="octicon" width="16" height="16"><path d="M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z"></path></svg>
+	<svg class="octicon" width="16" height="16"><path id="ArticleTOC"></path></svg>
 </a>
 </div>
     <div id="content">
@@ -164,10 +165,14 @@ if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
 </script>
 
 <script>
-document.addEventListener("DOMContentLoaded",()=>{const e=document.getElementById("header").offsetHeight;header.style.height=e+"px";const t=document.createElement("div");t.id="checkBtn";const n=document.getElementById("functionBtn");n.insertAdjacentElement("afterend",t),new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting?n.classList.remove("Btn-flex"):n.classList.add("Btn-flex")})},{threshold:0}).observe(t);const c=document.querySelectorAll(".spoilerText");c.length&&c.forEach(e=>e.onclick=(()=>e.classList.toggle("clear")))});
-const writeSpeed=80,textContent=document.querySelector(".postTitle").textContent,textContentLen=textContent.length,postTitle=document.querySelector(".postTitle");postTitle.textContent="";let idx=0;const writing=()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContentLen&&(clearInterval(writeTimer),postTitle.classList.remove("no-blink"))},writeTimer=setInterval(writing,80);postTitle.classList.add("no-blink");
+//删除了检测高度写入, 这里要改
+// document.addEventListener("DOMContentLoaded",()=>{const e=document.getElementById("header").offsetHeight;header.style.height=e+"px";const t=document.createElement("div");t.id="checkBtn";const n=document.getElementById("functionBtn");n.insertAdjacentElement("afterend",t),new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting?n.classList.remove("Btn-flex"):n.classList.add("Btn-flex")})},{threshold:0}).observe(t);const c=document.querySelectorAll(".spoilerText");c.length&&c.forEach(e=>e.onclick=(()=>e.classList.toggle("clear")))});
+// const writeSpeed=80,textContent=document.querySelector(".postTitle").textContent,textContentLen=textContent.length,postTitle=document.querySelector(".postTitle");postTitle.textContent="";let idx=0;const writing=()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContentLen&&(clearInterval(writeTimer),postTitle.classList.remove("no-blink"))},writeTimer=setInterval(writing,80);postTitle.classList.add("no-blink");
+const writeSpeed=80,textContent=document.querySelector(".postTitle").textContent;let textContentLen=textContent.length;const postTitle=document.querySelector(".postTitle");postTitle.textContent="";let idx=0;const writing=()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContentLen&&(clearInterval(writeTimer),postTitle.classList.remove("no-blink"))},writeTimer=setInterval(writing,80);postTitle.classList.add("no-blink"),document.addEventListener("DOMContentLoaded",()=>{const t=document.createElement("div");t.id="checkBtn";const e=document.getElementById("functionBtn");e.insertAdjacentElement("afterend",t),new IntersectionObserver(t=>{t.forEach(t=>{t.isIntersecting?e.classList.remove("Btn-flex"):e.classList.add("Btn-flex")})},{threshold:0}).observe(t);const n=document.querySelectorAll(".spoilerText");n.length&&n.forEach(t=>t.onclick=(()=>t.classList.toggle("clear")))});
+
 
 document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("ArticleTOC").setAttribute("d","M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z");
 document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
 
 
