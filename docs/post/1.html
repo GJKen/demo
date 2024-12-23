@@ -16,7 +16,7 @@
 
 **如何搭建博客我就不写了, 强烈建议看完[官方文档](https://blog.meekdai.com/tag.html#gmeek).**
 
-**这里主要记录一些 js 和 CSS 的修改.记录的修改不一定准确, Gmeek-spoilertxt='因为改动的地方太多了🥴'.**
+**这里主要记录一些 js 和 CSS 的修改.记录的修改不一定准确, `Gmeek-spoilertxt='因为改动的地方太多了🥴'`.**
 
 > [!WARNING]
 > 利用 Github Page 搭建的网站内容是完全公开的, 请注意不要上传自己的隐私!!!
@@ -1231,7 +1231,7 @@ fork 之后, 转到搭建博客的 github 源码,
 > after 是光标, blink 是光标动画.
 
 ```Diff
-+.postTitle{margin:0 auto;width:max-content;font-size:40px;font-weight:bold;}
++.postTitle{font-size:40px;font-weight:bold;word-wrap:break-word;text-align:center;}
 +.postTitle::after{content:'|';animation:blink 1s infinite;font-family:fantasy;font-weight:normal;vertical-align:text-top;}
 +.no-blink::after{animation:none;}
 👆
@@ -1352,54 +1352,12 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 ```
 
-<details><summary>含注释JS</summary>
+<details><summary>未压缩JS</summary>
 
 ```Javascript
-document.addEventListener('DOMContentLoaded', () => {
-	////////////// 设置#header固定高度 //////////////
-	// 获取#header元素
-	const HeaderID = document.getElementById('header')
-	// 获取#header实际可视高度(未开始打字前的完整高度)
-	const headerHeight = HeaderID.offsetHeight;
-	// 给header设置实际完整高度.
-	header.style.height = headerHeight + 'px';
-
-	////////////// 创建新#chechBtn用来检测#functionBtn不可见 //////////////
-	// 创建一个新的 div 元素并为其设置 id
-	const checkBtn = document.createElement('div');
-	checkBtn.id = 'checkBtn';
-
-	// 获取页面中 id 为 'functionBtn' 的元素
-	const functionBtn = document.getElementById('functionBtn');
-
-	// 将新创建的 checkBtn 元素插入到 functionBtn 元素之后
-	functionBtn.insertAdjacentElement('afterend', checkBtn);
-
-	// 创建一个 IntersectionObserver 实例，用于监听 checkBtn 是否出现在视口内
-	const observer = new IntersectionObserver(entries => {
-		// 遍历所有观察到的条目
-		entries.forEach(entry => {
-			// 如果 checkBtn 元素出现在视口内
-			if (entry.isIntersecting) {
-				// 移除 functionBtn 的 'Btn-flex' 类
-				functionBtn.classList.remove('Btn-flex');
-			} else {
-				// 否则，添加 'Btn-flex' 类
-				functionBtn.classList.add('Btn-flex');
-			}
-		});
-	}, {
-		// 设置阈值为 0，表示元素一开始进入视口时就触发回调
-		threshold: 0
-	});
-
-	// 开始观察 checkBtn 元素
-	observer.observe(checkBtn);
-}
-////////////// 打字效果js //////////////
 const writeSpeed = 80;
 const textContent = document.querySelector('.postTitle').textContent;
-const textContentLen = textContent.length;
+let textContentLen = textContent.length;
 const postTitle = document.querySelector('.postTitle');
 postTitle.textContent = '';
 let idx = 0;
@@ -1412,6 +1370,26 @@ const writing = () => {
 };
 const writeTimer = setInterval(writing, writeSpeed);
 postTitle.classList.add('no-blink');
+document.addEventListener('DOMContentLoaded', () => {
+	const checkBtn = document.createElement('div');
+	checkBtn.id = 'checkBtn';
+	const functionBtn = document.getElementById('functionBtn');
+	functionBtn.insertAdjacentElement('afterend', checkBtn);
+	const observer = new IntersectionObserver(entries => {
+		entries.forEach(entry => {
+			if (entry.isIntersecting) {
+				functionBtn.classList.remove('Btn-flex');
+			} else {
+				functionBtn.classList.add('Btn-flex');
+			}
+		});
+	}, {
+		threshold: 0
+	});
+	observer.observe(checkBtn);
+	const spoilers = document.querySelectorAll('.spoilerText');
+	spoilers.length && spoilers.forEach(el => el.onclick = () => el.classList.toggle('clear'));
+});
 ```
 
 </details>
@@ -1872,7 +1850,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 **如何搭建博客我就不写了, 强烈建议看完[官方文档](https://blog.meekdai.com/tag.html#gmeek).**
 
-**这里主要记录一些 js 和 CSS 的修改.记录的修改不一定准确, Gmeek-spoilertxt='因为改动的地方太多了🥴'.**
+**这里主要记录一些 js 和 CSS 的修改.记录的修改不一定准确, `Gmeek-spoilertxt='因为改动的地方太多了🥴'`.**
 
 > [!WARNING]
 > 利用 Github Page 搭建的网站内容是完全公开的, 请注意不要上传自己的隐私!!!
@@ -3087,7 +3065,7 @@ fork 之后, 转到搭建博客的 github 源码,
 > after 是光标, blink 是光标动画.
 
 ```Diff
-+.postTitle{margin:0 auto;width:max-content;font-size:40px;font-weight:bold;}
++.postTitle{font-size:40px;font-weight:bold;word-wrap:break-word;text-align:center;}
 +.postTitle::after{content:'|';animation:blink 1s infinite;font-family:fantasy;font-weight:normal;vertical-align:text-top;}
 +.no-blink::after{animation:none;}
 👆
@@ -3208,54 +3186,12 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 ```
 
-<details><summary>含注释JS</summary>
+<details><summary>未压缩JS</summary>
 
 ```Javascript
-document.addEventListener('DOMContentLoaded', () => {
-	////////////// 设置#header固定高度 //////////////
-	// 获取#header元素
-	const HeaderID = document.getElementById('header')
-	// 获取#header实际可视高度(未开始打字前的完整高度)
-	const headerHeight = HeaderID.offsetHeight;
-	// 给header设置实际完整高度.
-	header.style.height = headerHeight + 'px';
-
-	////////////// 创建新#chechBtn用来检测#functionBtn不可见 //////////////
-	// 创建一个新的 div 元素并为其设置 id
-	const checkBtn = document.createElement('div');
-	checkBtn.id = 'checkBtn';
-
-	// 获取页面中 id 为 'functionBtn' 的元素
-	const functionBtn = document.getElementById('functionBtn');
-
-	// 将新创建的 checkBtn 元素插入到 functionBtn 元素之后
-	functionBtn.insertAdjacentElement('afterend', checkBtn);
-
-	// 创建一个 IntersectionObserver 实例，用于监听 checkBtn 是否出现在视口内
-	const observer = new IntersectionObserver(entries => {
-		// 遍历所有观察到的条目
-		entries.forEach(entry => {
-			// 如果 checkBtn 元素出现在视口内
-			if (entry.isIntersecting) {
-				// 移除 functionBtn 的 'Btn-flex' 类
-				functionBtn.classList.remove('Btn-flex');
-			} else {
-				// 否则，添加 'Btn-flex' 类
-				functionBtn.classList.add('Btn-flex');
-			}
-		});
-	}, {
-		// 设置阈值为 0，表示元素一开始进入视口时就触发回调
-		threshold: 0
-	});
-
-	// 开始观察 checkBtn 元素
-	observer.observe(checkBtn);
-}
-////////////// 打字效果js //////////////
 const writeSpeed = 80;
 const textContent = document.querySelector('.postTitle').textContent;
-const textContentLen = textContent.length;
+let textContentLen = textContent.length;
 const postTitle = document.querySelector('.postTitle');
 postTitle.textContent = '';
 let idx = 0;
@@ -3268,6 +3204,26 @@ const writing = () => {
 };
 const writeTimer = setInterval(writing, writeSpeed);
 postTitle.classList.add('no-blink');
+document.addEventListener('DOMContentLoaded', () => {
+	const checkBtn = document.createElement('div');
+	checkBtn.id = 'checkBtn';
+	const functionBtn = document.getElementById('functionBtn');
+	functionBtn.insertAdjacentElement('afterend', checkBtn);
+	const observer = new IntersectionObserver(entries => {
+		entries.forEach(entry => {
+			if (entry.isIntersecting) {
+				functionBtn.classList.remove('Btn-flex');
+			} else {
+				functionBtn.classList.add('Btn-flex');
+			}
+		});
+	}, {
+		threshold: 0
+	});
+	observer.observe(checkBtn);
+	const spoilers = document.querySelectorAll('.spoilerText');
+	spoilers.length && spoilers.forEach(el => el.onclick = () => el.classList.toggle('clear'));
+});
 ```
 
 </details>
@@ -3799,7 +3755,7 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 <div class="markdown-body" id="postBody"><p><a href="https://github.com/Meekdai/Gmeek">Gmeek</a> 博客完全依托 Github, 提供域名, 无需服务器, 比起传统的服务器建站更方便快捷.</p>
 <h1>搭建博客</h1>
 <p><strong>如何搭建博客我就不写了, 强烈建议看完<a href="https://blog.meekdai.com/tag.html#gmeek" rel="nofollow">官方文档</a>.</strong></p>
-<p><strong>这里主要记录一些 js 和 CSS 的修改.记录的修改不一定准确, Gmeek-spoilertxt="因为改动的地方太多了🥴".</strong></p>
+<p><strong>这里主要记录一些 js 和 CSS 的修改.记录的修改不一定准确, <span class="spoilerText">因为改动的地方太多了🥴</span>.</strong></p>
 <div class="markdown-alert markdown-alert-warning"><p class="markdown-alert-title"><svg class="octicon octicon-alert mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Warning</p><p>利用 Github Page 搭建的网站内容是完全公开的, 请注意不要上传自己的隐私!!!</p>
 </div>
 <h1>Config.json 小妙用</h1>
@@ -4686,7 +4642,7 @@ svg 暗黑模式下颜色.<br>
 <p>修改标题文字居中显示<br>
 after 是光标, blink 是光标动画.</p>
 </blockquote>
-<div class="highlight highlight-source-diff"><pre class="notranslate"><span class="pl-mi1"><span class="pl-mi1">+</span>.postTitle{margin:0 auto;width:max-content;font-size:40px;font-weight:bold;}</span>
+<div class="highlight highlight-source-diff"><pre class="notranslate"><span class="pl-mi1"><span class="pl-mi1">+</span>.postTitle{font-size:40px;font-weight:bold;word-wrap:break-word;text-align:center;}</span>
 <span class="pl-mi1"><span class="pl-mi1">+</span>.postTitle::after{content:'|';animation:blink 1s infinite;font-family:fantasy;font-weight:normal;vertical-align:text-top;}</span>
 <span class="pl-mi1"><span class="pl-mi1">+</span>.no-blink::after{animation:none;}</span>
 👆
@@ -4791,52 +4747,10 @@ after 是光标, blink 是光标动画.</p>
 
 	<span class="pl-k">const</span> <span class="pl-s1">checkBtn</span><span class="pl-c1">=</span><span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">createElement</span><span class="pl-kos">(</span><span class="pl-s">'div'</span><span class="pl-kos">)</span><span class="pl-kos">;</span><span class="pl-s1">checkBtn</span><span class="pl-kos">.</span><span class="pl-c1">id</span><span class="pl-c1">=</span><span class="pl-s">'checkBtn'</span><span class="pl-kos">;</span><span class="pl-k">const</span> <span class="pl-s1">functionBtn</span><span class="pl-c1">=</span><span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">getElementById</span><span class="pl-kos">(</span><span class="pl-s">'functionBtn'</span><span class="pl-kos">)</span><span class="pl-kos">;</span><span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-en">insertAdjacentElement</span><span class="pl-kos">(</span><span class="pl-s">'afterend'</span><span class="pl-kos">,</span><span class="pl-s1">checkBtn</span><span class="pl-kos">)</span><span class="pl-kos">;</span><span class="pl-k">const</span> <span class="pl-s1">observer</span><span class="pl-c1">=</span><span class="pl-k">new</span> <span class="pl-v">IntersectionObserver</span><span class="pl-kos">(</span><span class="pl-s1">entries</span><span class="pl-c1">=&gt;</span><span class="pl-kos">{</span><span class="pl-s1">entries</span><span class="pl-kos">.</span><span class="pl-en">forEach</span><span class="pl-kos">(</span><span class="pl-s1">entry</span><span class="pl-c1">=&gt;</span><span class="pl-kos">{</span><span class="pl-k">if</span><span class="pl-kos">(</span><span class="pl-s1">entry</span><span class="pl-kos">.</span><span class="pl-c1">isIntersecting</span><span class="pl-kos">)</span><span class="pl-kos">{</span><span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-c1">classList</span><span class="pl-kos">.</span><span class="pl-en">remove</span><span class="pl-kos">(</span><span class="pl-s">'Btn-flex'</span><span class="pl-kos">)</span><span class="pl-kos">;</span><span class="pl-kos">}</span><span class="pl-k">else</span><span class="pl-kos">{</span><span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-c1">classList</span><span class="pl-kos">.</span><span class="pl-en">add</span><span class="pl-kos">(</span><span class="pl-s">'Btn-flex'</span><span class="pl-kos">)</span><span class="pl-kos">;</span><span class="pl-kos">}</span><span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span><span class="pl-kos">}</span><span class="pl-kos">,</span><span class="pl-kos">{</span><span class="pl-c1">threshold</span>:<span class="pl-c1">0</span><span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span><span class="pl-s1">observer</span><span class="pl-kos">.</span><span class="pl-en">observe</span><span class="pl-kos">(</span><span class="pl-s1">checkBtn</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 <span class="pl-kos">}</span></pre></div>
-<details><summary>含注释JS</summary>
-<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'DOMContentLoaded'</span><span class="pl-kos">,</span> <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
-	<span class="pl-c">////////////// 设置#header固定高度 //////////////</span>
-	<span class="pl-c">// 获取#header元素</span>
-	<span class="pl-k">const</span> <span class="pl-v">HeaderID</span> <span class="pl-c1">=</span> <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">getElementById</span><span class="pl-kos">(</span><span class="pl-s">"header"</span><span class="pl-kos">)</span>
-	<span class="pl-c">// 获取#header实际可视高度(未开始打字前的完整高度)</span>
-	<span class="pl-k">const</span> <span class="pl-s1">headerHeight</span> <span class="pl-c1">=</span> <span class="pl-v">HeaderID</span><span class="pl-kos">.</span><span class="pl-c1">offsetHeight</span><span class="pl-kos">;</span>
-	<span class="pl-c">// 给header设置实际完整高度.</span>
-	<span class="pl-s1">header</span><span class="pl-kos">.</span><span class="pl-c1">style</span><span class="pl-kos">.</span><span class="pl-c1">height</span> <span class="pl-c1">=</span> <span class="pl-s1">headerHeight</span> <span class="pl-c1">+</span> <span class="pl-s">"px"</span><span class="pl-kos">;</span>
-
-	<span class="pl-c">////////////// 创建新#chechBtn用来检测#functionBtn不可见 //////////////</span>
-	<span class="pl-c">// 创建一个新的 div 元素并为其设置 id</span>
-	<span class="pl-k">const</span> <span class="pl-s1">checkBtn</span> <span class="pl-c1">=</span> <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">createElement</span><span class="pl-kos">(</span><span class="pl-s">'div'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-	<span class="pl-s1">checkBtn</span><span class="pl-kos">.</span><span class="pl-c1">id</span> <span class="pl-c1">=</span> <span class="pl-s">'checkBtn'</span><span class="pl-kos">;</span>
-
-	<span class="pl-c">// 获取页面中 id 为 'functionBtn' 的元素</span>
-	<span class="pl-k">const</span> <span class="pl-s1">functionBtn</span> <span class="pl-c1">=</span> <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">getElementById</span><span class="pl-kos">(</span><span class="pl-s">'functionBtn'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-
-	<span class="pl-c">// 将新创建的 checkBtn 元素插入到 functionBtn 元素之后</span>
-	<span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-en">insertAdjacentElement</span><span class="pl-kos">(</span><span class="pl-s">'afterend'</span><span class="pl-kos">,</span> <span class="pl-s1">checkBtn</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-
-	<span class="pl-c">// 创建一个 IntersectionObserver 实例，用于监听 checkBtn 是否出现在视口内</span>
-	<span class="pl-k">const</span> <span class="pl-s1">observer</span> <span class="pl-c1">=</span> <span class="pl-k">new</span> <span class="pl-v">IntersectionObserver</span><span class="pl-kos">(</span><span class="pl-s1">entries</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
-		<span class="pl-c">// 遍历所有观察到的条目</span>
-		<span class="pl-s1">entries</span><span class="pl-kos">.</span><span class="pl-en">forEach</span><span class="pl-kos">(</span><span class="pl-s1">entry</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
-			<span class="pl-c">// 如果 checkBtn 元素出现在视口内</span>
-			<span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">entry</span><span class="pl-kos">.</span><span class="pl-c1">isIntersecting</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-				<span class="pl-c">// 移除 functionBtn 的 'Btn-flex' 类</span>
-				<span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-c1">classList</span><span class="pl-kos">.</span><span class="pl-en">remove</span><span class="pl-kos">(</span><span class="pl-s">'Btn-flex'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-			<span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
-				<span class="pl-c">// 否则，添加 'Btn-flex' 类</span>
-				<span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-c1">classList</span><span class="pl-kos">.</span><span class="pl-en">add</span><span class="pl-kos">(</span><span class="pl-s">'Btn-flex'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-			<span class="pl-kos">}</span>
-		<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-	<span class="pl-kos">}</span><span class="pl-kos">,</span> <span class="pl-kos">{</span>
-		<span class="pl-c">// 设置阈值为 0，表示元素一开始进入视口时就触发回调</span>
-		<span class="pl-c1">threshold</span>: <span class="pl-c1">0</span>
-	<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-
-	<span class="pl-c">// 开始观察 checkBtn 元素</span>
-	<span class="pl-s1">observer</span><span class="pl-kos">.</span><span class="pl-en">observe</span><span class="pl-kos">(</span><span class="pl-s1">checkBtn</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-<span class="pl-kos">}</span>
-<span class="pl-c">////////////// 打字效果js //////////////</span>
-<span class="pl-s1">const</span> <span class="pl-s1">writeSpeed</span> <span class="pl-c1">=</span> <span class="pl-c1">80</span><span class="pl-kos">;</span>
-<span class="pl-k">const</span> <span class="pl-s1">textContent</span> <span class="pl-c1">=</span> <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">querySelector</span><span class="pl-kos">(</span><span class="pl-s">'.postTitle'</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-c1">textContent</span><span class="pl-kos"></span><span class="pl-kos">;</span>
-<span class="pl-k">const</span> <span class="pl-s1">textContentLen</span> <span class="pl-c1">=</span> <span class="pl-s1">textContent</span><span class="pl-kos">.</span><span class="pl-c1">length</span><span class="pl-kos">;</span>
+<details><summary>未压缩JS</summary>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-s1">writeSpeed</span> <span class="pl-c1">=</span> <span class="pl-c1">80</span><span class="pl-kos">;</span>
+<span class="pl-k">const</span> <span class="pl-s1">textContent</span> <span class="pl-c1">=</span> <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">querySelector</span><span class="pl-kos">(</span><span class="pl-s">'.postTitle'</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-c1">textContent</span><span class="pl-kos">;</span>
+<span class="pl-k">let</span> <span class="pl-s1">textContentLen</span> <span class="pl-c1">=</span> <span class="pl-s1">textContent</span><span class="pl-kos">.</span><span class="pl-c1">length</span><span class="pl-kos">;</span>
 <span class="pl-k">const</span> <span class="pl-s1">postTitle</span> <span class="pl-c1">=</span> <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">querySelector</span><span class="pl-kos">(</span><span class="pl-s">'.postTitle'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 <span class="pl-s1">postTitle</span><span class="pl-kos">.</span><span class="pl-c1">textContent</span> <span class="pl-c1">=</span> <span class="pl-s">''</span><span class="pl-kos">;</span>
 <span class="pl-k">let</span> <span class="pl-s1">idx</span> <span class="pl-c1">=</span> <span class="pl-c1">0</span><span class="pl-kos">;</span>
@@ -4848,7 +4762,27 @@ after 是光标, blink 是光标动画.</p>
 	<span class="pl-kos">}</span>
 <span class="pl-kos">}</span><span class="pl-kos">;</span>
 <span class="pl-k">const</span> <span class="pl-s1">writeTimer</span> <span class="pl-c1">=</span> <span class="pl-en">setInterval</span><span class="pl-kos">(</span><span class="pl-en">writing</span><span class="pl-kos">,</span> <span class="pl-s1">writeSpeed</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-<span class="pl-s1">postTitle</span><span class="pl-kos">.</span><span class="pl-c1">classList</span><span class="pl-kos">.</span><span class="pl-en">add</span><span class="pl-kos">(</span><span class="pl-s">'no-blink'</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
+<span class="pl-s1">postTitle</span><span class="pl-kos">.</span><span class="pl-c1">classList</span><span class="pl-kos">.</span><span class="pl-en">add</span><span class="pl-kos">(</span><span class="pl-s">'no-blink'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'DOMContentLoaded'</span><span class="pl-kos">,</span> <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+	<span class="pl-k">const</span> <span class="pl-s1">checkBtn</span> <span class="pl-c1">=</span> <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">createElement</span><span class="pl-kos">(</span><span class="pl-s">'div'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+	<span class="pl-s1">checkBtn</span><span class="pl-kos">.</span><span class="pl-c1">id</span> <span class="pl-c1">=</span> <span class="pl-s">'checkBtn'</span><span class="pl-kos">;</span>
+	<span class="pl-k">const</span> <span class="pl-s1">functionBtn</span> <span class="pl-c1">=</span> <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">getElementById</span><span class="pl-kos">(</span><span class="pl-s">'functionBtn'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+	<span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-en">insertAdjacentElement</span><span class="pl-kos">(</span><span class="pl-s">'afterend'</span><span class="pl-kos">,</span> <span class="pl-s1">checkBtn</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+	<span class="pl-k">const</span> <span class="pl-s1">observer</span> <span class="pl-c1">=</span> <span class="pl-k">new</span> <span class="pl-v">IntersectionObserver</span><span class="pl-kos">(</span><span class="pl-s1">entries</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+		<span class="pl-s1">entries</span><span class="pl-kos">.</span><span class="pl-en">forEach</span><span class="pl-kos">(</span><span class="pl-s1">entry</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+			<span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">entry</span><span class="pl-kos">.</span><span class="pl-c1">isIntersecting</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+				<span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-c1">classList</span><span class="pl-kos">.</span><span class="pl-en">remove</span><span class="pl-kos">(</span><span class="pl-s">'Btn-flex'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+			<span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
+				<span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-c1">classList</span><span class="pl-kos">.</span><span class="pl-en">add</span><span class="pl-kos">(</span><span class="pl-s">'Btn-flex'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+			<span class="pl-kos">}</span>
+		<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+	<span class="pl-kos">}</span><span class="pl-kos">,</span> <span class="pl-kos">{</span>
+		<span class="pl-c1">threshold</span>: <span class="pl-c1">0</span>
+	<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+	<span class="pl-s1">observer</span><span class="pl-kos">.</span><span class="pl-en">observe</span><span class="pl-kos">(</span><span class="pl-s1">checkBtn</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+	<span class="pl-k">const</span> <span class="pl-s1">spoilers</span> <span class="pl-c1">=</span> <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">querySelectorAll</span><span class="pl-kos">(</span><span class="pl-s">".spoilerText"</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+	<span class="pl-s1">spoilers</span><span class="pl-kos">.</span><span class="pl-c1">length</span> <span class="pl-c1">&amp;&amp;</span> <span class="pl-s1">spoilers</span><span class="pl-kos">.</span><span class="pl-en">forEach</span><span class="pl-kos">(</span><span class="pl-s1">el</span> <span class="pl-c1">=&gt;</span> <span class="pl-s1">el</span><span class="pl-kos">.</span><span class="pl-en">onclick</span> <span class="pl-c1">=</span> <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-s1">el</span><span class="pl-kos">.</span><span class="pl-c1">classList</span><span class="pl-kos">.</span><span class="pl-en">toggle</span><span class="pl-kos">(</span><span class="pl-s">"clear"</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
 </details>
 <h3>打开 plist.html 文件</h3>
 <div class="markdown-alert markdown-alert-important"><p class="markdown-alert-title"><svg class="octicon octicon-report mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Important</p><p>plist 这个模板文件里增加的代码可以应用到文章首页.</p>

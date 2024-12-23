@@ -4,7 +4,7 @@
 
 **如何搭建博客我就不写了, 强烈建议看完[官方文档](https://blog.meekdai.com/tag.html#gmeek).**
 
-**这里主要记录一些 js 和 CSS 的修改.记录的修改不一定准确, Gmeek-spoilertxt="因为改动的地方太多了🥴".**
+**这里主要记录一些 js 和 CSS 的修改.记录的修改不一定准确, `Gmeek-spoilertxt="因为改动的地方太多了🥴"`.**
 
 > [!WARNING]
 > 利用 Github Page 搭建的网站内容是完全公开的, 请注意不要上传自己的隐私!!!
@@ -1219,7 +1219,7 @@ fork 之后, 转到搭建博客的 github 源码,
 > after 是光标, blink 是光标动画.
 
 ```Diff
-+.postTitle{margin:0 auto;width:max-content;font-size:40px;font-weight:bold;}
++.postTitle{font-size:40px;font-weight:bold;word-wrap:break-word;text-align:center;}
 +.postTitle::after{content:'|';animation:blink 1s infinite;font-family:fantasy;font-weight:normal;vertical-align:text-top;}
 +.no-blink::after{animation:none;}
 👆
@@ -1340,54 +1340,12 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 ```
 
-<details><summary>含注释JS</summary>
+<details><summary>未压缩JS</summary>
 
 ```Javascript
-document.addEventListener('DOMContentLoaded', () => {
-	////////////// 设置#header固定高度 //////////////
-	// 获取#header元素
-	const HeaderID = document.getElementById("header")
-	// 获取#header实际可视高度(未开始打字前的完整高度)
-	const headerHeight = HeaderID.offsetHeight;
-	// 给header设置实际完整高度.
-	header.style.height = headerHeight + "px";
-
-	////////////// 创建新#chechBtn用来检测#functionBtn不可见 //////////////
-	// 创建一个新的 div 元素并为其设置 id
-	const checkBtn = document.createElement('div');
-	checkBtn.id = 'checkBtn';
-
-	// 获取页面中 id 为 'functionBtn' 的元素
-	const functionBtn = document.getElementById('functionBtn');
-
-	// 将新创建的 checkBtn 元素插入到 functionBtn 元素之后
-	functionBtn.insertAdjacentElement('afterend', checkBtn);
-
-	// 创建一个 IntersectionObserver 实例，用于监听 checkBtn 是否出现在视口内
-	const observer = new IntersectionObserver(entries => {
-		// 遍历所有观察到的条目
-		entries.forEach(entry => {
-			// 如果 checkBtn 元素出现在视口内
-			if (entry.isIntersecting) {
-				// 移除 functionBtn 的 'Btn-flex' 类
-				functionBtn.classList.remove('Btn-flex');
-			} else {
-				// 否则，添加 'Btn-flex' 类
-				functionBtn.classList.add('Btn-flex');
-			}
-		});
-	}, {
-		// 设置阈值为 0，表示元素一开始进入视口时就触发回调
-		threshold: 0
-	});
-
-	// 开始观察 checkBtn 元素
-	observer.observe(checkBtn);
-}
-////////////// 打字效果js //////////////
 const writeSpeed = 80;
 const textContent = document.querySelector('.postTitle').textContent;
-const textContentLen = textContent.length;
+let textContentLen = textContent.length;
 const postTitle = document.querySelector('.postTitle');
 postTitle.textContent = '';
 let idx = 0;
@@ -1400,6 +1358,26 @@ const writing = () => {
 };
 const writeTimer = setInterval(writing, writeSpeed);
 postTitle.classList.add('no-blink');
+document.addEventListener('DOMContentLoaded', () => {
+	const checkBtn = document.createElement('div');
+	checkBtn.id = 'checkBtn';
+	const functionBtn = document.getElementById('functionBtn');
+	functionBtn.insertAdjacentElement('afterend', checkBtn);
+	const observer = new IntersectionObserver(entries => {
+		entries.forEach(entry => {
+			if (entry.isIntersecting) {
+				functionBtn.classList.remove('Btn-flex');
+			} else {
+				functionBtn.classList.add('Btn-flex');
+			}
+		});
+	}, {
+		threshold: 0
+	});
+	observer.observe(checkBtn);
+	const spoilers = document.querySelectorAll(".spoilerText");
+	spoilers.length && spoilers.forEach(el => el.onclick = () => el.classList.toggle("clear"));
+});
 ```
 
 </details>
