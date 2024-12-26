@@ -1080,6 +1080,38 @@ a {
 
 </details>
 
+## 文章 \<td> 最后的子元素样式
+
+`.markdown-body table td>:last-child`
+
+> [!NOTE]
+> 修改下标基线对齐位置.
+
+<details><summary>修改前</summary>
+
+```CSS
+.markdown-body table td>:last-child {
+	margin-bottom: 0
+}
+```
+
+</details>
+
+<details><summary>修改后</summary>
+
+```CSS
+.markdown-body table td>:last-child {
+	margin-bottom: 0;
+	vertical-align: sub
+}
+```
+
+</details>
+
+效果图:
+
+Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/QmTwkiuWzou5jKS9aJ5hEZKau2zBEFRLiDcC8Gn1uzwiRm"
+
 # 通过 Gmeek 仓库 DIY 博客
 
 为什么这样做? `Gmeek-spoilertxt="自娱自乐.~~"`
@@ -1148,14 +1180,13 @@ fork 之后, 转到搭建博客的 github 源码,
 
 ```CSS
 :root{--functionBtnFlex-bgColor:#ffffff61;}
-
 [data-color-mode=light][data-light-theme=dark],[data-color-mode=light][data-light-theme=dark]::selection,[data-color-mode=dark][data-dark-theme=dark],[data-color-mode=dark][data-dark-theme=dark]::selection{--functionBtnFlex-bgColor:#ffffff00;}
 
 @keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@keyframes blink{50%{opacity:0}100%{opacity:1}}@-webkit-keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes blink{50%{opacity:0}100%{opacity:1}}
 
-#functionBtn{display:flex;justify-content:center;margin:20px 0;gap:20px;}
+#functionBtn{display:flex;justify-content:center;margin:20px 0;gap:20px;transition: transform 0.3s ease-in-out;}
 #functionBtn a, #functionBtn div{padding:14px 16px;animation:fadeIn .7s ease-in 0s forwards;}
-#functionBtn.Btn-flex{position:fixed;margin:0;padding:20px 0;top:0;left:0;width:100%;min-width:500px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;animation:fadeIn .2s ease-in 0s forwards}
+#functionBtn.Btn-flex{position:fixed;margin:0;padding:20px 0;top:-100px;left:0;width:100%;min-width:500px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;animation:fadeIn.2s ease-in 0s forwards;transition:top 0.3s ease-in-out}
 ```
 
 2. **定位`#header`, 修改样式.**
@@ -1215,11 +1246,11 @@ fork 之后, 转到搭建博客的 github 源码,
 
 1. **定位`.postTitle`, 修改样式**
 
-> 修改标题文字居中显示
+> 修改标题文字居中显示.
 > after 是光标, blink 是光标动画.
 
 ```Diff
-+.postTitle{font-size:40px;font-weight:bold;word-wrap:break-word;text-align:center;}
++.postTitle{margin:0 auto;font-size:40px;font-weight:bold;}
 +.postTitle::after{content:'|';animation:blink 1s infinite;font-family:fantasy;font-weight:normal;vertical-align:text-top;}
 +.no-blink::after{animation:none;}
 👆
@@ -1315,12 +1346,20 @@ fork 之后, 转到搭建博客的 github 源码,
 </a>
 
 <a class="ArticleTOC btn btn-invisible circle" title="文章目录">
-	<svg class="octicon" width="16" height="16"><path d="M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z"></path></svg>
+	<svg class="octicon" width="16" height="16"><path></path></svg>
 </a>
 {% endblock %}
 ```
 
 </details>
+
+定位`document.getElementById("pathHome").setAttribute("d",IconList["home"]);`, 在下面一行增加js.
+
+> 暂时还不知道如何通过变量增加 path 的路径信息, 只能直接模仿原先的增加方式上, 直接写路径.
+
+```Javascript
+document.getElementById("ArticleTOC").setAttribute("d","M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z");
+```
 
 7. **添加自定义 JS 代码.**
 
@@ -1333,50 +1372,116 @@ fork 之后, 转到搭建博客的 github 源码,
 > `document.addEventListener("DOMContentLoaded", () => {`这个监听不止可写当前功能, 还可写其它功能的代码进去.
 
 ```Javascript
-document.addEventListener('DOMContentLoaded', () => {
-	const HeaderID=document.getElementById("header");const headerHeight=HeaderID.offsetHeight;header.style.height=headerHeight+"px";const writeSpeed=80;const textContent=document.querySelector('.postTitle').textContent;const textContentLen=textContent.length;const postTitle=document.querySelector('.postTitle');postTitle.textContent='';let idx=0;const writing=()=>{postTitle.textContent=textContent.slice(0,idx++);if(idx>textContentLen){clearInterval(writeTimer);postTitle.classList.remove('no-blink');}};const writeTimer=setInterval(writing,writeSpeed);postTitle.classList.add('no-blink');
-
-	const checkBtn=document.createElement('div');checkBtn.id='checkBtn';const functionBtn=document.getElementById('functionBtn');functionBtn.insertAdjacentElement('afterend',checkBtn);const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){functionBtn.classList.remove('Btn-flex');}else{functionBtn.classList.add('Btn-flex');}});},{threshold:0});observer.observe(checkBtn);
+const writeSpeed=80,textContent=document.querySelector(".postTitle").textContent;let textContentLen=textContent.length;const postTitle=document.querySelector(".postTitle");postTitle.textContent="";let idx=0;const writing=()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContentLen&&(clearInterval(writeTimer),postTitle.classList.remove("no-blink"))},writeTimer=setInterval(writing,80);postTitle.classList.add("no-blink"),document.addEventListener("DOMContentLoaded",()=>{const t=document.createElement("div");t.id="checkBtn";const e=document.getElementById("functionBtn");e.insertAdjacentElement("afterend",t),new IntersectionObserver(t=>{t.forEach(t=>{t.isIntersecting?e.classList.remove("Btn-flex"):e.classList.add("Btn-flex")})},{rootMargin:"150px 0px 0px 0px",threshold:0}).observe(t);const n=document.querySelectorAll(".spoilerText");n.length&&n.forEach(t=>t.onclick=(()=>t.classList.toggle("clear")));let o=0;document.addEventListener("touchstart",t=>{o=t.touches[0].clientY}),document.addEventListener("touchmove",t=>{const n=t.touches[0].clientY-o;n>0?e.style.top="0":n<0&&(e.style.top="-100px"),o=t.touches[0].clientY}),document.addEventListener("wheel",t=>{t.deltaY>0?e.style.top="-100px":t.deltaY<0&&(e.style.top="0")})});
 }
 ```
 
 <details><summary>未压缩JS</summary>
 
 ```Javascript
+// 定义每次输入字符的速度（毫秒）
 const writeSpeed = 80;
+
+// 获取 .postTitle 元素的文本内容并存储
 const textContent = document.querySelector('.postTitle').textContent;
+
+// 计算文本内容的长度
 let textContentLen = textContent.length;
+
+// 获取 .postTitle 元素的引用
 const postTitle = document.querySelector('.postTitle');
+
+// 清空 .postTitle 的内容，为逐字输出做准备
 postTitle.textContent = '';
+
+// 定义当前索引位置，从 0 开始
 let idx = 0;
+
+// 定义逐字显示文本的函数
 const writing = () => {
-	postTitle.textContent = textContent.slice(0, idx++);
-	if (idx > textContentLen) {
-		clearInterval(writeTimer);
-		postTitle.classList.remove('no-blink');
-	}
+    // 设置 .postTitle 的文本内容为从开头到当前索引的部分
+    postTitle.textContent = textContent.slice(0, idx++);
+
+    // 如果当前索引超过文本长度，则停止计时器
+    if (idx > textContentLen) {
+        clearInterval(writeTimer); // 停止定时器
+        postTitle.classList.remove('no-blink'); // 移除 .no-blink 类，使光标恢复闪烁
+    }
 };
+
+// 设置定时器，每隔 writeSpeed 毫秒调用一次 writing 函数
 const writeTimer = setInterval(writing, writeSpeed);
+
+// 给 .postTitle 添加 .no-blink 类，以禁用光标闪烁效果
 postTitle.classList.add('no-blink');
+
 document.addEventListener('DOMContentLoaded', () => {
+	// 创建一个新的 div 元素作为检查按钮
 	const checkBtn = document.createElement('div');
-	checkBtn.id = 'checkBtn';
+	checkBtn.id = 'checkBtn'; // 设置新元素的 id 为 checkBtn
+
+	// 获取页面中 id 为 functionBtn 的元素
 	const functionBtn = document.getElementById('functionBtn');
+
+	// 将新创建的 checkBtn 插入到 functionBtn 元素之后
 	functionBtn.insertAdjacentElement('afterend', checkBtn);
+
+	// 创建 IntersectionObserver，用于观察元素是否可见
 	const observer = new IntersectionObserver(entries => {
 		entries.forEach(entry => {
+			// 如果 checkBtn 可见，移除 functionBtn 的 Btn-flex 类
 			if (entry.isIntersecting) {
 				functionBtn.classList.remove('Btn-flex');
 			} else {
+				// 如果 checkBtn 不可见，添加 Btn-flex 类
 				functionBtn.classList.add('Btn-flex');
 			}
 		});
 	}, {
-		threshold: 0
+		rootMargin: '150px 0px 0px 0px',
+		threshold: 0 // 设置观察阈值为 0（只要元素出现，就会触发）
 	});
+
+	// 开始观察 checkBtn 元素
 	observer.observe(checkBtn);
+
+	// 获取页面中所有 class 为 spoilerText 的元素
 	const spoilers = document.querySelectorAll(".spoilerText");
-	spoilers.length && spoilers.forEach(el => el.onclick = () => el.classList.toggle("clear"));
+
+	// 如果存在这些元素，给每个元素绑定点击事件
+	spoilers.length && spoilers.forEach(el => 
+		el.onclick = () => el.classList.toggle("clear") // 点击时切换 clear 类
+	);
+
+	let startY = 0; // 用于记录触摸起始点的 Y 坐标
+
+	// 监听触摸开始事件，获取触摸起始点的 Y 坐标
+	document.addEventListener('touchstart', (event) => {
+		startY = event.touches[0].clientY; // 获取触摸点的 Y 坐标并记录
+	});
+
+	// 监听触摸移动事件，根据滑动方向调整按钮位置
+	document.addEventListener('touchmove', (event) => {
+		const deltaY = event.touches[0].clientY - startY; // 计算滑动距离
+
+		if (deltaY > 0) {
+			// 逻辑与效果反着写
+			functionBtn.style.top = '0'; // 向下滑动显示按钮
+		} else if (deltaY < 0) {
+			functionBtn.style.top = '-100px'; // 向上滑动隐藏按钮
+		}
+
+		startY = event.touches[0].clientY; // 更新起始点为当前触摸点
+	});
+
+	// 监听鼠标滚轮事件，根据滚动方向调整按钮位置
+	document.addEventListener('wheel', (event) => {
+		if (event.deltaY > 0) {
+			functionBtn.style.top = '-100px'; // 向下滚动隐藏
+		} else if (event.deltaY < 0) {
+			functionBtn.style.top = '0'; // 向上滚动显示
+		}
+	});
 });
 ```
 
@@ -1402,9 +1507,9 @@ document.addEventListener('DOMContentLoaded', () => {
 .avatar:hover{transform:scale(1.5) rotate(720deg);box-shadow:0 0 10px #2dfaffbd;}
 ```
 
-4. **定位`{% block header %}`, 在上方增加类名块.**
+4. **用 class 类名区分body的`首页`和`文章页`**
 
-> 这是为了用 class 类名区分`首页` `文章页` `搜索页`
+定位`{% block header %}`, 在上方增加类名块.
 
 ```Django
 {% block body_class %}tag{% endblock %}
