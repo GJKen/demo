@@ -3213,16 +3213,16 @@ if '<code class='notranslate'>Gmeek-html' in post_body:
 @keyframes fadeIn2{0%{opacity:0}100%{opacity:1}}@keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@keyframes blink{50%{opacity:0}100%{opacity:1}}@-webkit-keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes blink{50%{opacity:0}100%{opacity:1}}
 body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padding:45px;font-size:16px;font-family:sans-serif;line-height:1.25;}
 #header .homepage-header{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:24px;}
-#functionBtn{display:flex;justify-content:center;margin:20px 0;gap:20px;}
+#functionBtn{display:flex;justify-content:center;margin:20px 0;gap:20px;transition: transform 0.3s ease-in-out;}
 #functionBtn a, #functionBtn div{padding:14px 16px;animation:fadeIn .7s ease-in 0s forwards;}
-#functionBtn.Btn-flex{position:fixed;margin:0;padding:20px 0;top:0;left:0;width:100%;min-width:500px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;animation:fadeIn .2s ease-in 0s forwards}
+#functionBtn.Btn-flex{position:fixed;margin:0;padding:20px 0;top:-100px;left:0;width:100%;min-width:500px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;animation:fadeIn .2s ease-in 0s forwards;transition:top 0.3s ease-in-out}
 #footer{margin-top:64px; text-align:center;font-size:small;}
 
 </style>
 
 <style>
 #header.article-header{animation:fadeIn .7s ease-in 0s forwards;}
-.postTitle{margin:0 auto;width:max-content;font-size:40px;font-weight:bold;}
+.postTitle{font-size:40px;font-weight:bold;word-wrap:break-word;text-align:center;}
 .postTitle::after{content:'|';animation:blink 1s infinite;font-family:fantasy;font-weight:normal;vertical-align:text-top;}
 .no-blink::after{animation:none;}
 .spoilerText{filter:blur(5px);-webkit-filter:blur(5px);cursor:pointer;transition:filter .3s ease}
@@ -3254,7 +3254,8 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 
 <body class="article">
     <div id="header" class="article-header">
-<h1 class="postTitle">Gmeek - 记录使用过程</h1>
+<h1 class="postTitle">Gmeek - 记录使用过程Gmeek - 记录使用过程Gmeek - 记录使用过程Gmeek - 记录使用过程Gmeek - 记录使用过程</h1>
+<!-- <h1 class="postTitle">Gmeek - 记录使用过程</h1> -->
 </div>
     <div id="functionBtn">
 		<a href="https://GJKen.github.io/demo" id="buttonHome" class="btn btn-invisible circle" title="首页">
@@ -4562,31 +4563,8 @@ if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
 </script>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-	const HeaderID=document.getElementById("header");const headerHeight=HeaderID.offsetHeight;header.style.height=headerHeight+"px";const writeSpeed=80;const textContent=document.querySelector('.postTitle').textContent;const textContentLen=textContent.length;const postTitle=document.querySelector('.postTitle');postTitle.textContent='';let idx=0;const writing=()=>{postTitle.textContent=textContent.slice(0,idx++);if(idx>textContentLen){clearInterval(writeTimer);postTitle.classList.remove('no-blink');}};const writeTimer=setInterval(writing,writeSpeed);postTitle.classList.add('no-blink');
-	
-	// const checkBtn=document.createElement('div');checkBtn.id='checkBtn';const functionBtn=document.getElementById('functionBtn');functionBtn.insertAdjacentElement('afterend',checkBtn);const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){functionBtn.classList.remove('Btn-flex');}else{functionBtn.classList.add('Btn-flex');}});},{threshold:0});observer.observe(checkBtn);
-	const checkBtn = document.createElement('div');
-	checkBtn.id = 'checkBtn';
-	const functionBtn = document.getElementById('functionBtn');
-	functionBtn.insertAdjacentElement('afterend', checkBtn);
-	const observer = new IntersectionObserver(entries => {
-		entries.forEach(entry => {
-			if (entry.isIntersecting) {
-				void functionBtn.offsetWidth;
-				functionBtn.classList.remove('Btn-flex');
-			} else {
-				functionBtn.classList.add('Btn-flex');
-			}
-		});
-	}, {
-		threshold: 0
-	});
-	observer.observe(checkBtn);
-	
-	const spoilers = document.querySelectorAll(".spoilerText");
-	spoilers.length && spoilers.forEach(el => el.onclick = () => el.classList.toggle("clear"));
-});
+const writeSpeed=80,textContent=document.querySelector(".postTitle").textContent;let textContentLen=textContent.length;const postTitle=document.querySelector(".postTitle");postTitle.textContent="";let idx=0;const writing=()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContentLen&&(clearInterval(writeTimer),postTitle.classList.remove("no-blink"))},writeTimer=setInterval(writing,80);postTitle.classList.add("no-blink"),document.addEventListener("DOMContentLoaded",()=>{const t=document.createElement("div");t.id="checkBtn";const e=document.getElementById("functionBtn");e.insertAdjacentElement("afterend",t),new IntersectionObserver(t=>{t.forEach(t=>{t.isIntersecting?e.classList.remove("Btn-flex"):e.classList.add("Btn-flex")})},{rootMargin:"150px 0px 0px 0px",threshold:0}).observe(t);const n=document.querySelectorAll(".spoilerText");n.length&&n.forEach(t=>t.onclick=(()=>t.classList.toggle("clear")));let o=0;document.addEventListener("touchstart",t=>{o=t.touches[0].clientY}),document.addEventListener("touchmove",t=>{const n=t.touches[0].clientY-o;n>0?e.style.top="-100px":n<0&&(e.style.top="0"),o=t.touches[0].clientY}),document.addEventListener("wheel",t=>{t.deltaY>0?e.style.top="-100px":t.deltaY<0&&(e.style.top="0")})});
+
 document.getElementById("pathHome").setAttribute("d",IconList["home"]);
 document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
 
@@ -4695,7 +4673,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 </script>
-<!-- <script src='../../static/ArticleJs.js'></script> -->
-<script src='../../static/ArticleJs.min.js'></script>
+<script src='../../static/ArticleJs.js'></script>
+<!-- <script src='../../static/ArticleJs.min.js'></script> -->
 <script src='https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js'></script>
 </html>
