@@ -1211,39 +1211,7 @@ fork 之后, 转到搭建博客的 github 源码,
 -#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
 ```
 
-3. 修改标签
-
-- 增加类名变量, 这样通过 Actions 时渲染出来的页面有 `homepage` `article` 的关键类名, 有了不同类名就可更方便的使用 CSS 控制不同页面的样式.
-- 分离header文字以及图标.
-
-定位`<body>`标签, 修改为以下内容:
-
-<details><summary>修改前</summary>
-
-```html
-<body>
-    <div id='header'>{% block header %}{% endblock %}</div>
-    <div id='content'>{% block content %}{% endblock %}</div>
-    <div id='footer'>{% include 'footer.html' %}</div>
-</body>
-```
-
-</details>
-
-<details><summary>修改后</summary>
-
-```html
-<body class='{% block body_class %}homepage{% endblock %}'>
-    <div id='header' class='{% block header_class %}homepage-header{% endblock %}'>{% block header %}{% endblock %}</div>
-    <div id='functionBtn'>{% block functionBtn %}{% endblock %}</div>
-    <div id='content'>{% block content %}{% endblock %}</div>
-    <div id='footer'>{% include 'footer.html' %}</div>
-</body>
-```
-
-</details>
-
-4. **头部图标样式.**
+3. **头部图标样式.**
 
 > 增加 CSS, `fadeIn`动画已在上文第1步骤添加过.
 
@@ -1290,15 +1258,6 @@ fork 之后, 转到搭建博客的 github 源码,
 5. **body响应**
 
 定位`@media (max-width:600px) {`, 给 body 增加最小宽度500px: `min-width:500px;`
-
-5. **定位`{% block header %}`, 在上方增加类名块.**
-
-> 这是为了用 class 类名区分`首页`和`文章页`
-
-```Django
-{% block body_class %}article{% endblock %}
-{% block header_class %}article-header{% endblock %}
-```
 
 6. 分离header文字以及图标
 
@@ -1382,118 +1341,56 @@ document.getElementById('ArticleTOC').setAttribute('d','M1 2.75A.75.75 0 0 1 1.7
 
 > [!NOTE]
 > `document.addEventListener('DOMContentLoaded', () => {`这个监听不止可写当前功能, 还可写其它功能的代码进去.
+> 实际应用场景我把这块的代码都压缩合并了.
+
+<details><summary>JavaScript</summary>
 
 ```Javascript
-const writeSpeed=80,textContent=document.querySelector('.postTitle').textContent;let textContentLen=textContent.length;const postTitle=document.querySelector('.postTitle');postTitle.textContent='';let idx=0;const writing=()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContentLen&&(clearInterval(writeTimer),postTitle.classList.remove('no-blink'))},writeTimer=setInterval(writing,80);postTitle.classList.add('no-blink'),document.addEventListener('DOMContentLoaded',()=>{const t=document.createElement('div');t.id='checkBtn';const e=document.getElementById('functionBtn');e.insertAdjacentElement('afterend',t),new IntersectionObserver(t=>{t.forEach(t=>{t.isIntersecting?e.classList.remove('Btn-flex'):e.classList.add('Btn-flex')})},{rootMargin:'150px 0px 0px 0px',threshold:0}).observe(t);const n=document.querySelectorAll('.spoilerText');n.length&&n.forEach(t=>t.onclick=(()=>t.classList.toggle('clear')));let o=0;document.addEventListener('touchstart',t=>{o=t.touches[0].clientY}),document.addEventListener('touchmove',t=>{const n=t.touches[0].clientY-o;n>0?e.style.top='0':n<0&&(e.style.top='-100px'),o=t.touches[0].clientY}),document.addEventListener('wheel',t=>{t.deltaY>0?e.style.top='-100px':t.deltaY<0&&(e.style.top='0')})});
-}
-```
-
-<details><summary>未压缩JS</summary>
-
-```Javascript
-// 定义每次输入字符的速度（毫秒）
-const writeSpeed = 80;
-
-// 获取 .postTitle 元素的文本内容并存储
-const textContent = document.querySelector('.postTitle').textContent;
-
-// 计算文本内容的长度
-let textContentLen = textContent.length;
-
-// 获取 .postTitle 元素的引用
+// 获取 .postTitle 元素的文本内容存储后清空
 const postTitle = document.querySelector('.postTitle');
-
-// 清空 .postTitle 的内容，为逐字输出做准备
+const textContent = postTitle.textContent;
 postTitle.textContent = '';
 
-// 定义当前索引位置，从 0 开始
+// 定义逐字显示文本的函数, 末尾的数值代表每次输入字符的速度(毫秒)
 let idx = 0;
-
-// 定义逐字显示文本的函数
-const writing = () => {
-    // 设置 .postTitle 的文本内容为从开头到当前索引的部分
+const writeTimer = setInterval(() => {
     postTitle.textContent = textContent.slice(0, idx++);
-
-    // 如果当前索引超过文本长度，则停止计时器
-    if (idx > textContentLen) {
-        clearInterval(writeTimer); // 停止定时器
-        postTitle.classList.remove('no-blink'); // 移除 .no-blink 类，使光标恢复闪烁
+    if (idx > textContent.length) {
+        clearInterval(writeTimer);
+        postTitle.classList.remove('no-blink');
     }
-};
+}, 80);
 
-// 设置定时器，每隔 writeSpeed 毫秒调用一次 writing 函数
-const writeTimer = setInterval(writing, writeSpeed);
-
-// 给 .postTitle 添加 .no-blink 类，以禁用光标闪烁效果
 postTitle.classList.add('no-blink');
 
 document.addEventListener('DOMContentLoaded', () => {
-	// 创建一个新的 div 元素作为检查按钮
-	const checkBtn = document.createElement('div');
-	checkBtn.id = 'checkBtn'; // 设置新元素的 id 为 checkBtn
+    // 创建检查按钮, 插入到#functionBtn div的后面
+    const checkBtn = document.createElement('div');
+    checkBtn.id = 'checkBtn';
+    const functionBtn = document.getElementById('functionBtn');
+    functionBtn.insertAdjacentElement('afterend', checkBtn);
 
-	// 获取页面中 id 为 functionBtn 的元素
-	const functionBtn = document.getElementById('functionBtn');
+    // 用 IntersectionObserver 观察 checkBtn 这个div的可见性
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            const isIntersecting = entry.isIntersecting;
+            functionBtn.classList.toggle('Btn-flex', !isIntersecting);
+            functionBtn.style.top = isIntersecting ? '0' : '-100px';
+        });
+    }, { rootMargin: '300px 0px 0px 0px', threshold: 0 });
+    observer.observe(checkBtn);
 
-	// 将新创建的 checkBtn 插入到 functionBtn 元素之后
-	functionBtn.insertAdjacentElement('afterend', checkBtn);
+    let startY = 0;
 
-	// 创建 IntersectionObserver，用于观察元素是否可见
-	const observer = new IntersectionObserver(entries => {
-		entries.forEach(entry => {
-			// 如果 checkBtn 可见，移除 functionBtn 的 Btn-flex 类
-			if (entry.isIntersecting) {
-				functionBtn.classList.remove('Btn-flex');
-			} else {
-				// 如果 checkBtn 不可见，添加 Btn-flex 类
-				functionBtn.classList.add('Btn-flex');
-			}
-		});
-	}, {
-		rootMargin: '150px 0px 0px 0px',
-		threshold: 0 // 设置观察阈值为 0（只要元素出现，就会触发）
-	});
+    // 通用滚动处理函数
+    const handleScroll = deltaY => {
+        functionBtn.style.top = deltaY > 0 ? '-100px' : '0';
+    };
 
-	// 开始观察 checkBtn 元素
-	observer.observe(checkBtn);
-
-	// 获取页面中所有 class 为 spoilerText 的元素
-	const spoilers = document.querySelectorAll('.spoilerText');
-
-	// 如果存在这些元素，给每个元素绑定点击事件
-	spoilers.length && spoilers.forEach(el => 
-		el.onclick = () => el.classList.toggle('clear') // 点击时切换 clear 类
-	);
-
-	let startY = 0; // 用于记录触摸起始点的 Y 坐标
-
-	// 监听触摸开始事件，获取触摸起始点的 Y 坐标
-	document.addEventListener('touchstart', (event) => {
-		startY = event.touches[0].clientY; // 获取触摸点的 Y 坐标并记录
-	});
-
-	// 监听触摸移动事件，根据滑动方向调整按钮位置
-	document.addEventListener('touchmove', (event) => {
-		const deltaY = event.touches[0].clientY - startY; // 计算滑动距离
-
-		if (deltaY > 0) {
-			// 逻辑与效果反着写
-			functionBtn.style.top = '0'; // 向下滑动显示按钮
-		} else if (deltaY < 0) {
-			functionBtn.style.top = '-100px'; // 向上滑动隐藏按钮
-		}
-
-		startY = event.touches[0].clientY; // 更新起始点为当前触摸点
-	});
-
-	// 监听鼠标滚轮事件，根据滚动方向调整按钮位置
-	document.addEventListener('wheel', (event) => {
-		if (event.deltaY > 0) {
-			functionBtn.style.top = '-100px'; // 向下滚动隐藏
-		} else if (event.deltaY < 0) {
-			functionBtn.style.top = '0'; // 向上滚动显示
-		}
-	});
+    // 监听触摸和滚轮事件
+    document.addEventListener('touchstart', e => startY = e.touches[0].clientY);
+    document.addEventListener('touchmove', e => handleScroll(e.touches[0].clientY - startY));
+    document.addEventListener('wheel', e => handleScroll(e.deltaY));
 });
 ```
 
@@ -1503,7 +1400,7 @@ document.addEventListener('DOMContentLoaded', () => {
 ### 打开 plist.html 文件
 
 > [!Important]
-> plist 这个模板文件里增加的代码可以应用到文章首页.
+> plist 这个模板文件里增加的代码可以应用到博客首页.
 
 1. **增加样式.**
 
@@ -1519,15 +1416,7 @@ document.addEventListener('DOMContentLoaded', () => {
 .avatar:hover{transform:scale(1.5) rotate(720deg);box-shadow:0 0 10px #2dfaffbd;}
 ```
 
-4. **用 class 类名区分body的`首页`和`文章页`**
-
-定位`{% block header %}`, 在上方增加类名块.
-
-```Django
-{% block body_class %}tag{% endblock %}
-```
-
-5. **分离header文字以及图标.**
+4. **分离#header的文字以及图标.**
 
 <details><summary>修改前</summary>
 
@@ -1625,8 +1514,6 @@ document.addEventListener('DOMContentLoaded', () => {
 ```
 
 </details>
-
-**到这里我的自定义 header 就修改完成了, 其它的样式可到 primer.css 里修改.**
 
 ### 打开 tag.html 文件
 
@@ -1727,6 +1614,9 @@ document.addEventListener('DOMContentLoaded', () => {
 👆
 -.subnav-search {position: relative;margin-left: 12px}
 ```
+
+> ![NOTE]
+> 到这里我的自定义 header 就修改完成了, 其它的样式可到 primer.css 里修改.
 
 ## 修改[警报强调信息]样式
 
@@ -3156,39 +3046,7 @@ fork 之后, 转到搭建博客的 github 源码,
 -#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
 ```
 
-3. 修改标签
-
-- 增加类名变量, 这样通过 Actions 时渲染出来的页面有 `homepage` `article` 的关键类名, 有了不同类名就可更方便的使用 CSS 控制不同页面的样式.
-- 分离header文字以及图标.
-
-定位`<body>`标签, 修改为以下内容:
-
-<details><summary>修改前</summary>
-
-```html
-<body>
-    <div id='header'>{% block header %}{% endblock %}</div>
-    <div id='content'>{% block content %}{% endblock %}</div>
-    <div id='footer'>{% include 'footer.html' %}</div>
-</body>
-```
-
-</details>
-
-<details><summary>修改后</summary>
-
-```html
-<body class='{% block body_class %}homepage{% endblock %}'>
-    <div id='header' class='{% block header_class %}homepage-header{% endblock %}'>{% block header %}{% endblock %}</div>
-    <div id='functionBtn'>{% block functionBtn %}{% endblock %}</div>
-    <div id='content'>{% block content %}{% endblock %}</div>
-    <div id='footer'>{% include 'footer.html' %}</div>
-</body>
-```
-
-</details>
-
-4. **头部图标样式.**
+3. **头部图标样式.**
 
 > 增加 CSS, `fadeIn`动画已在上文第1步骤添加过.
 
@@ -3235,15 +3093,6 @@ fork 之后, 转到搭建博客的 github 源码,
 5. **body响应**
 
 定位`@media (max-width:600px) {`, 给 body 增加最小宽度500px: `min-width:500px;`
-
-5. **定位`{% block header %}`, 在上方增加类名块.**
-
-> 这是为了用 class 类名区分`首页`和`文章页`
-
-```Django
-{% block body_class %}article{% endblock %}
-{% block header_class %}article-header{% endblock %}
-```
 
 6. 分离header文字以及图标
 
@@ -3327,118 +3176,56 @@ document.getElementById('ArticleTOC').setAttribute('d','M1 2.75A.75.75 0 0 1 1.7
 
 > [!NOTE]
 > `document.addEventListener('DOMContentLoaded', () => {`这个监听不止可写当前功能, 还可写其它功能的代码进去.
+> 实际应用场景我把这块的代码都压缩合并了.
+
+<details><summary>JavaScript</summary>
 
 ```Javascript
-const writeSpeed=80,textContent=document.querySelector('.postTitle').textContent;let textContentLen=textContent.length;const postTitle=document.querySelector('.postTitle');postTitle.textContent='';let idx=0;const writing=()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContentLen&&(clearInterval(writeTimer),postTitle.classList.remove('no-blink'))},writeTimer=setInterval(writing,80);postTitle.classList.add('no-blink'),document.addEventListener('DOMContentLoaded',()=>{const t=document.createElement('div');t.id='checkBtn';const e=document.getElementById('functionBtn');e.insertAdjacentElement('afterend',t),new IntersectionObserver(t=>{t.forEach(t=>{t.isIntersecting?e.classList.remove('Btn-flex'):e.classList.add('Btn-flex')})},{rootMargin:'150px 0px 0px 0px',threshold:0}).observe(t);const n=document.querySelectorAll('.spoilerText');n.length&&n.forEach(t=>t.onclick=(()=>t.classList.toggle('clear')));let o=0;document.addEventListener('touchstart',t=>{o=t.touches[0].clientY}),document.addEventListener('touchmove',t=>{const n=t.touches[0].clientY-o;n>0?e.style.top='0':n<0&&(e.style.top='-100px'),o=t.touches[0].clientY}),document.addEventListener('wheel',t=>{t.deltaY>0?e.style.top='-100px':t.deltaY<0&&(e.style.top='0')})});
-}
-```
-
-<details><summary>未压缩JS</summary>
-
-```Javascript
-// 定义每次输入字符的速度（毫秒）
-const writeSpeed = 80;
-
-// 获取 .postTitle 元素的文本内容并存储
-const textContent = document.querySelector('.postTitle').textContent;
-
-// 计算文本内容的长度
-let textContentLen = textContent.length;
-
-// 获取 .postTitle 元素的引用
+// 获取 .postTitle 元素的文本内容存储后清空
 const postTitle = document.querySelector('.postTitle');
-
-// 清空 .postTitle 的内容，为逐字输出做准备
+const textContent = postTitle.textContent;
 postTitle.textContent = '';
 
-// 定义当前索引位置，从 0 开始
+// 定义逐字显示文本的函数, 末尾的数值代表每次输入字符的速度(毫秒)
 let idx = 0;
-
-// 定义逐字显示文本的函数
-const writing = () => {
-    // 设置 .postTitle 的文本内容为从开头到当前索引的部分
+const writeTimer = setInterval(() => {
     postTitle.textContent = textContent.slice(0, idx++);
-
-    // 如果当前索引超过文本长度，则停止计时器
-    if (idx > textContentLen) {
-        clearInterval(writeTimer); // 停止定时器
-        postTitle.classList.remove('no-blink'); // 移除 .no-blink 类，使光标恢复闪烁
+    if (idx > textContent.length) {
+        clearInterval(writeTimer);
+        postTitle.classList.remove('no-blink');
     }
-};
+}, 80);
 
-// 设置定时器，每隔 writeSpeed 毫秒调用一次 writing 函数
-const writeTimer = setInterval(writing, writeSpeed);
-
-// 给 .postTitle 添加 .no-blink 类，以禁用光标闪烁效果
 postTitle.classList.add('no-blink');
 
 document.addEventListener('DOMContentLoaded', () => {
-	// 创建一个新的 div 元素作为检查按钮
-	const checkBtn = document.createElement('div');
-	checkBtn.id = 'checkBtn'; // 设置新元素的 id 为 checkBtn
+    // 创建检查按钮, 插入到#functionBtn div的后面
+    const checkBtn = document.createElement('div');
+    checkBtn.id = 'checkBtn';
+    const functionBtn = document.getElementById('functionBtn');
+    functionBtn.insertAdjacentElement('afterend', checkBtn);
 
-	// 获取页面中 id 为 functionBtn 的元素
-	const functionBtn = document.getElementById('functionBtn');
+    // 用 IntersectionObserver 观察 checkBtn 这个div的可见性
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            const isIntersecting = entry.isIntersecting;
+            functionBtn.classList.toggle('Btn-flex', !isIntersecting);
+            functionBtn.style.top = isIntersecting ? '0' : '-100px';
+        });
+    }, { rootMargin: '300px 0px 0px 0px', threshold: 0 });
+    observer.observe(checkBtn);
 
-	// 将新创建的 checkBtn 插入到 functionBtn 元素之后
-	functionBtn.insertAdjacentElement('afterend', checkBtn);
+    let startY = 0;
 
-	// 创建 IntersectionObserver，用于观察元素是否可见
-	const observer = new IntersectionObserver(entries => {
-		entries.forEach(entry => {
-			// 如果 checkBtn 可见，移除 functionBtn 的 Btn-flex 类
-			if (entry.isIntersecting) {
-				functionBtn.classList.remove('Btn-flex');
-			} else {
-				// 如果 checkBtn 不可见，添加 Btn-flex 类
-				functionBtn.classList.add('Btn-flex');
-			}
-		});
-	}, {
-		rootMargin: '150px 0px 0px 0px',
-		threshold: 0 // 设置观察阈值为 0（只要元素出现，就会触发）
-	});
+    // 通用滚动处理函数
+    const handleScroll = deltaY => {
+        functionBtn.style.top = deltaY > 0 ? '-100px' : '0';
+    };
 
-	// 开始观察 checkBtn 元素
-	observer.observe(checkBtn);
-
-	// 获取页面中所有 class 为 spoilerText 的元素
-	const spoilers = document.querySelectorAll('.spoilerText');
-
-	// 如果存在这些元素，给每个元素绑定点击事件
-	spoilers.length && spoilers.forEach(el => 
-		el.onclick = () => el.classList.toggle('clear') // 点击时切换 clear 类
-	);
-
-	let startY = 0; // 用于记录触摸起始点的 Y 坐标
-
-	// 监听触摸开始事件，获取触摸起始点的 Y 坐标
-	document.addEventListener('touchstart', (event) => {
-		startY = event.touches[0].clientY; // 获取触摸点的 Y 坐标并记录
-	});
-
-	// 监听触摸移动事件，根据滑动方向调整按钮位置
-	document.addEventListener('touchmove', (event) => {
-		const deltaY = event.touches[0].clientY - startY; // 计算滑动距离
-
-		if (deltaY > 0) {
-			// 逻辑与效果反着写
-			functionBtn.style.top = '0'; // 向下滑动显示按钮
-		} else if (deltaY < 0) {
-			functionBtn.style.top = '-100px'; // 向上滑动隐藏按钮
-		}
-
-		startY = event.touches[0].clientY; // 更新起始点为当前触摸点
-	});
-
-	// 监听鼠标滚轮事件，根据滚动方向调整按钮位置
-	document.addEventListener('wheel', (event) => {
-		if (event.deltaY > 0) {
-			functionBtn.style.top = '-100px'; // 向下滚动隐藏
-		} else if (event.deltaY < 0) {
-			functionBtn.style.top = '0'; // 向上滚动显示
-		}
-	});
+    // 监听触摸和滚轮事件
+    document.addEventListener('touchstart', e => startY = e.touches[0].clientY);
+    document.addEventListener('touchmove', e => handleScroll(e.touches[0].clientY - startY));
+    document.addEventListener('wheel', e => handleScroll(e.deltaY));
 });
 ```
 
@@ -3448,7 +3235,7 @@ document.addEventListener('DOMContentLoaded', () => {
 ### 打开 plist.html 文件
 
 > [!Important]
-> plist 这个模板文件里增加的代码可以应用到文章首页.
+> plist 这个模板文件里增加的代码可以应用到博客首页.
 
 1. **增加样式.**
 
@@ -3464,15 +3251,7 @@ document.addEventListener('DOMContentLoaded', () => {
 .avatar:hover{transform:scale(1.5) rotate(720deg);box-shadow:0 0 10px #2dfaffbd;}
 ```
 
-4. **用 class 类名区分body的`首页`和`文章页`**
-
-定位`{% block header %}`, 在上方增加类名块.
-
-```Django
-{% block body_class %}tag{% endblock %}
-```
-
-5. **分离header文字以及图标.**
+4. **分离#header的文字以及图标.**
 
 <details><summary>修改前</summary>
 
@@ -3570,8 +3349,6 @@ document.addEventListener('DOMContentLoaded', () => {
 ```
 
 </details>
-
-**到这里我的自定义 header 就修改完成了, 其它的样式可到 primer.css 里修改.**
 
 ### 打开 tag.html 文件
 
@@ -3672,6 +3449,9 @@ document.addEventListener('DOMContentLoaded', () => {
 👆
 -.subnav-search {position: relative;margin-left: 12px}
 ```
+
+> ![NOTE]
+> 到这里我的自定义 header 就修改完成了, 其它的样式可到 primer.css 里修改.
 
 ## 修改[警报强调信息]样式
 
@@ -4844,29 +4624,6 @@ svg 暗黑模式下颜色.<br>
 👆
 <span class="pl-md"><span class="pl-md">-</span>#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}</span></pre></div>
 <ol start="3">
-<li>修改标签</li>
-</ol>
-<ul>
-<li>增加类名变量, 这样通过 Actions 时渲染出来的页面有 <code class="notranslate">homepage</code> <code class="notranslate">article</code> 的关键类名, 有了不同类名就可更方便的使用 CSS 控制不同页面的样式.</li>
-<li>分离header文字以及图标.</li>
-</ul>
-<p>定位<code class="notranslate">&lt;body&gt;</code>标签, 修改为以下内容:</p>
-<details><summary>修改前</summary>
-<div class="highlight highlight-text-html-basic"><pre class="notranslate"><span class="pl-kos">&lt;</span><span class="pl-ent">body</span><span class="pl-kos">&gt;</span>
-    <span class="pl-kos">&lt;</span><span class="pl-ent">div</span> <span class="pl-c1">id</span>="<span class="pl-s">header</span>"<span class="pl-kos">&gt;</span>{% block header %}{% endblock %}<span class="pl-kos">&lt;/</span><span class="pl-ent">div</span><span class="pl-kos">&gt;</span>
-    <span class="pl-kos">&lt;</span><span class="pl-ent">div</span> <span class="pl-c1">id</span>="<span class="pl-s">content</span>"<span class="pl-kos">&gt;</span>{% block content %}{% endblock %}<span class="pl-kos">&lt;/</span><span class="pl-ent">div</span><span class="pl-kos">&gt;</span>
-    <span class="pl-kos">&lt;</span><span class="pl-ent">div</span> <span class="pl-c1">id</span>="<span class="pl-s">footer</span>"<span class="pl-kos">&gt;</span>{% include 'footer.html' %}<span class="pl-kos">&lt;/</span><span class="pl-ent">div</span><span class="pl-kos">&gt;</span>
-<span class="pl-kos">&lt;/</span><span class="pl-ent">body</span><span class="pl-kos">&gt;</span></pre></div>
-</details>
-<details><summary>修改后</summary>
-<div class="highlight highlight-text-html-basic"><pre class="notranslate"><span class="pl-kos">&lt;</span><span class="pl-ent">body</span> <span class="pl-c1">class</span>="<span class="pl-s">{% block body_class %}homepage{% endblock %}</span>"<span class="pl-kos">&gt;</span>
-    <span class="pl-kos">&lt;</span><span class="pl-ent">div</span> <span class="pl-c1">id</span>="<span class="pl-s">header</span>" <span class="pl-c1">class</span>="<span class="pl-s">{% block header_class %}homepage-header{% endblock %}</span>"<span class="pl-kos">&gt;</span>{% block header %}{% endblock %}<span class="pl-kos">&lt;/</span><span class="pl-ent">div</span><span class="pl-kos">&gt;</span>
-    <span class="pl-kos">&lt;</span><span class="pl-ent">div</span> <span class="pl-c1">id</span>="<span class="pl-s">functionBtn</span>"<span class="pl-kos">&gt;</span>{% block functionBtn %}{% endblock %}<span class="pl-kos">&lt;/</span><span class="pl-ent">div</span><span class="pl-kos">&gt;</span>
-    <span class="pl-kos">&lt;</span><span class="pl-ent">div</span> <span class="pl-c1">id</span>="<span class="pl-s">content</span>"<span class="pl-kos">&gt;</span>{% block content %}{% endblock %}<span class="pl-kos">&lt;/</span><span class="pl-ent">div</span><span class="pl-kos">&gt;</span>
-    <span class="pl-kos">&lt;</span><span class="pl-ent">div</span> <span class="pl-c1">id</span>="<span class="pl-s">footer</span>"<span class="pl-kos">&gt;</span>{% include 'footer.html' %}<span class="pl-kos">&lt;/</span><span class="pl-ent">div</span><span class="pl-kos">&gt;</span>
-<span class="pl-kos">&lt;/</span><span class="pl-ent">body</span><span class="pl-kos">&gt;</span></pre></div>
-</details>
-<ol start="4">
 <li><strong>头部图标样式.</strong></li>
 </ol>
 <blockquote>
@@ -4907,14 +4664,6 @@ after 是光标, blink 是光标动画.</p>
 <li><strong>body响应</strong></li>
 </ol>
 <p>定位<code class="notranslate">@media (max-width:600px) {</code>, 给 body 增加最小宽度500px: <code class="notranslate">min-width:500px;</code></p>
-<ol start="5">
-<li><strong>定位<code class="notranslate">{% block header %}</code>, 在上方增加类名块.</strong></li>
-</ol>
-<blockquote>
-<p>这是为了用 class 类名区分<code class="notranslate">首页</code>和<code class="notranslate">文章页</code></p>
-</blockquote>
-<div class="highlight highlight-text-html-django"><pre class="notranslate"><span class="pl-e">{%</span> <span class="pl-k">block</span> <span class="pl-s">body_class</span> <span class="pl-e">%}</span>article<span class="pl-e">{%</span> <span class="pl-k">endblock</span> <span class="pl-e">%}</span>
-<span class="pl-e">{%</span> <span class="pl-k">block</span> <span class="pl-s">header_class</span> <span class="pl-e">%}</span>article-header<span class="pl-e">{%</span> <span class="pl-k">endblock</span> <span class="pl-e">%}</span></pre></div>
 <ol start="6">
 <li>分离header文字以及图标</li>
 </ol>
@@ -4986,118 +4735,59 @@ after 是光标, blink 是光标动画.</p>
 添加滚动切换显示顶部按钮导航.</p>
 </blockquote>
 <p>定位<code class="notranslate">&lt;script&gt;</code>标签, 在里面增加 JS 代码:</p>
-<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p><code class="notranslate">document.addEventListener("DOMContentLoaded", () =&gt; {</code>这个监听不止可写当前功能, 还可写其它功能的代码进去.</p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p><code class="notranslate">document.addEventListener("DOMContentLoaded", () =&gt; {</code>这个监听不止可写当前功能, 还可写其它功能的代码进去.<br>
+实际应用场景我把这块的代码都压缩合并了.</p>
 </div>
-<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-s1">writeSpeed</span><span class="pl-c1">=</span><span class="pl-c1">80</span><span class="pl-kos">,</span><span class="pl-s1">textContent</span><span class="pl-c1">=</span><span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">querySelector</span><span class="pl-kos">(</span><span class="pl-s">".postTitle"</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-c1">textContent</span><span class="pl-kos">;</span><span class="pl-k">let</span> <span class="pl-s1">textContentLen</span><span class="pl-c1">=</span><span class="pl-s1">textContent</span><span class="pl-kos">.</span><span class="pl-c1">length</span><span class="pl-kos">;</span><span class="pl-k">const</span> <span class="pl-s1">postTitle</span><span class="pl-c1">=</span><span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">querySelector</span><span class="pl-kos">(</span><span class="pl-s">".postTitle"</span><span class="pl-kos">)</span><span class="pl-kos">;</span><span class="pl-s1">postTitle</span><span class="pl-kos">.</span><span class="pl-c1">textContent</span><span class="pl-c1">=</span><span class="pl-s">""</span><span class="pl-kos">;</span><span class="pl-k">let</span> <span class="pl-s1">idx</span><span class="pl-c1">=</span><span class="pl-c1">0</span><span class="pl-kos">;</span><span class="pl-k">const</span> <span class="pl-en">writing</span><span class="pl-c1">=</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-c1">=&gt;</span><span class="pl-kos">{</span><span class="pl-s1">postTitle</span><span class="pl-kos">.</span><span class="pl-c1">textContent</span><span class="pl-c1">=</span><span class="pl-s1">textContent</span><span class="pl-kos">.</span><span class="pl-en">slice</span><span class="pl-kos">(</span><span class="pl-c1">0</span><span class="pl-kos">,</span><span class="pl-s1">idx</span><span class="pl-c1">++</span><span class="pl-kos">)</span><span class="pl-kos">,</span><span class="pl-s1">idx</span><span class="pl-c1">&gt;</span><span class="pl-s1">textContentLen</span><span class="pl-c1">&amp;&amp;</span><span class="pl-kos">(</span><span class="pl-en">clearInterval</span><span class="pl-kos">(</span><span class="pl-s1">writeTimer</span><span class="pl-kos">)</span><span class="pl-kos">,</span><span class="pl-s1">postTitle</span><span class="pl-kos">.</span><span class="pl-c1">classList</span><span class="pl-kos">.</span><span class="pl-en">remove</span><span class="pl-kos">(</span><span class="pl-s">"no-blink"</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">}</span><span class="pl-kos">,</span><span class="pl-s1">writeTimer</span><span class="pl-c1">=</span><span class="pl-en">setInterval</span><span class="pl-kos">(</span><span class="pl-en">writing</span><span class="pl-kos">,</span><span class="pl-c1">80</span><span class="pl-kos">)</span><span class="pl-kos">;</span><span class="pl-s1">postTitle</span><span class="pl-kos">.</span><span class="pl-c1">classList</span><span class="pl-kos">.</span><span class="pl-en">add</span><span class="pl-kos">(</span><span class="pl-s">"no-blink"</span><span class="pl-kos">)</span><span class="pl-kos">,</span><span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">"DOMContentLoaded"</span><span class="pl-kos">,</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-c1">=&gt;</span><span class="pl-kos">{</span><span class="pl-k">const</span> <span class="pl-s1">t</span><span class="pl-c1">=</span><span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">createElement</span><span class="pl-kos">(</span><span class="pl-s">"div"</span><span class="pl-kos">)</span><span class="pl-kos">;</span><span class="pl-s1">t</span><span class="pl-kos">.</span><span class="pl-c1">id</span><span class="pl-c1">=</span><span class="pl-s">"checkBtn"</span><span class="pl-kos">;</span><span class="pl-k">const</span> <span class="pl-s1">e</span><span class="pl-c1">=</span><span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">getElementById</span><span class="pl-kos">(</span><span class="pl-s">"functionBtn"</span><span class="pl-kos">)</span><span class="pl-kos">;</span><span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-en">insertAdjacentElement</span><span class="pl-kos">(</span><span class="pl-s">"afterend"</span><span class="pl-kos">,</span><span class="pl-s1">t</span><span class="pl-kos">)</span><span class="pl-kos">,</span><span class="pl-k">new</span> <span class="pl-v">IntersectionObserver</span><span class="pl-kos">(</span><span class="pl-s1">t</span><span class="pl-c1">=&gt;</span><span class="pl-kos">{</span><span class="pl-s1">t</span><span class="pl-kos">.</span><span class="pl-en">forEach</span><span class="pl-kos">(</span><span class="pl-s1">t</span><span class="pl-c1">=&gt;</span><span class="pl-kos">{</span><span class="pl-s1">t</span><span class="pl-kos">.</span><span class="pl-c1">isIntersecting</span>?<span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-c1">classList</span><span class="pl-kos">.</span><span class="pl-en">remove</span><span class="pl-kos">(</span><span class="pl-s">"Btn-flex"</span><span class="pl-kos">)</span>:<span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-c1">classList</span><span class="pl-kos">.</span><span class="pl-en">add</span><span class="pl-kos">(</span><span class="pl-s">"Btn-flex"</span><span class="pl-kos">)</span><span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">}</span><span class="pl-kos">,</span><span class="pl-kos">{</span><span class="pl-c1">rootMargin</span>:<span class="pl-s">"150px 0px 0px 0px"</span><span class="pl-kos">,</span><span class="pl-c1">threshold</span>:<span class="pl-c1">0</span><span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">observe</span><span class="pl-kos">(</span><span class="pl-s1">t</span><span class="pl-kos">)</span><span class="pl-kos">;</span><span class="pl-k">const</span> <span class="pl-s1">n</span><span class="pl-c1">=</span><span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">querySelectorAll</span><span class="pl-kos">(</span><span class="pl-s">".spoilerText"</span><span class="pl-kos">)</span><span class="pl-kos">;</span><span class="pl-s1">n</span><span class="pl-kos">.</span><span class="pl-c1">length</span><span class="pl-c1">&amp;&amp;</span><span class="pl-s1">n</span><span class="pl-kos">.</span><span class="pl-en">forEach</span><span class="pl-kos">(</span><span class="pl-s1">t</span><span class="pl-c1">=&gt;</span><span class="pl-s1">t</span><span class="pl-kos">.</span><span class="pl-c1">onclick</span><span class="pl-c1">=</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-c1">=&gt;</span><span class="pl-s1">t</span><span class="pl-kos">.</span><span class="pl-c1">classList</span><span class="pl-kos">.</span><span class="pl-en">toggle</span><span class="pl-kos">(</span><span class="pl-s">"clear"</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span><span class="pl-k">let</span> <span class="pl-s1">o</span><span class="pl-c1">=</span><span class="pl-c1">0</span><span class="pl-kos">;</span><span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">"touchstart"</span><span class="pl-kos">,</span><span class="pl-s1">t</span><span class="pl-c1">=&gt;</span><span class="pl-kos">{</span><span class="pl-s1">o</span><span class="pl-c1">=</span><span class="pl-s1">t</span><span class="pl-kos">.</span><span class="pl-c1">touches</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span><span class="pl-kos">.</span><span class="pl-c1">clientY</span><span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">,</span><span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">"touchmove"</span><span class="pl-kos">,</span><span class="pl-s1">t</span><span class="pl-c1">=&gt;</span><span class="pl-kos">{</span><span class="pl-k">const</span> <span class="pl-s1">n</span><span class="pl-c1">=</span><span class="pl-s1">t</span><span class="pl-kos">.</span><span class="pl-c1">touches</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span><span class="pl-kos">.</span><span class="pl-c1">clientY</span><span class="pl-c1">-</span><span class="pl-s1">o</span><span class="pl-kos">;</span><span class="pl-s1">n</span><span class="pl-c1">&gt;</span><span class="pl-c1">0</span>?<span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-c1">style</span><span class="pl-kos">.</span><span class="pl-c1">top</span><span class="pl-c1">=</span><span class="pl-s">"0"</span>:<span class="pl-s1">n</span><span class="pl-c1">&lt;</span><span class="pl-c1">0</span><span class="pl-c1">&amp;&amp;</span><span class="pl-kos">(</span><span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-c1">style</span><span class="pl-kos">.</span><span class="pl-c1">top</span><span class="pl-c1">=</span><span class="pl-s">"-100px"</span><span class="pl-kos">)</span><span class="pl-kos">,</span><span class="pl-s1">o</span><span class="pl-c1">=</span><span class="pl-s1">t</span><span class="pl-kos">.</span><span class="pl-c1">touches</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span><span class="pl-kos">.</span><span class="pl-c1">clientY</span><span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">,</span><span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">"wheel"</span><span class="pl-kos">,</span><span class="pl-s1">t</span><span class="pl-c1">=&gt;</span><span class="pl-kos">{</span><span class="pl-s1">t</span><span class="pl-kos">.</span><span class="pl-c1">deltaY</span><span class="pl-c1">&gt;</span><span class="pl-c1">0</span>?<span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-c1">style</span><span class="pl-kos">.</span><span class="pl-c1">top</span><span class="pl-c1">=</span><span class="pl-s">"-100px"</span>:<span class="pl-s1">t</span><span class="pl-kos">.</span><span class="pl-c1">deltaY</span><span class="pl-c1">&lt;</span><span class="pl-c1">0</span><span class="pl-c1">&amp;&amp;</span><span class="pl-kos">(</span><span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-c1">style</span><span class="pl-kos">.</span><span class="pl-c1">top</span><span class="pl-c1">=</span><span class="pl-s">"0"</span><span class="pl-kos">)</span><span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-<span class="pl-kos">}</span></pre></div>
-<details><summary>未压缩JS</summary>
-<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-c">// 定义每次输入字符的速度（毫秒）</span>
-<span class="pl-k">const</span> <span class="pl-s1">writeSpeed</span> <span class="pl-c1">=</span> <span class="pl-c1">80</span><span class="pl-kos">;</span>
-
-<span class="pl-c">// 获取 .postTitle 元素的文本内容并存储</span>
-<span class="pl-k">const</span> <span class="pl-s1">textContent</span> <span class="pl-c1">=</span> <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">querySelector</span><span class="pl-kos">(</span><span class="pl-s">'.postTitle'</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-c1">textContent</span><span class="pl-kos">;</span>
-
-<span class="pl-c">// 计算文本内容的长度</span>
-<span class="pl-k">let</span> <span class="pl-s1">textContentLen</span> <span class="pl-c1">=</span> <span class="pl-s1">textContent</span><span class="pl-kos">.</span><span class="pl-c1">length</span><span class="pl-kos">;</span>
-
-<span class="pl-c">// 获取 .postTitle 元素的引用</span>
+<details><summary>JavaScript</summary>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-c">// 获取 .postTitle 元素的文本内容存储后清空</span>
 <span class="pl-k">const</span> <span class="pl-s1">postTitle</span> <span class="pl-c1">=</span> <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">querySelector</span><span class="pl-kos">(</span><span class="pl-s">'.postTitle'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-
-<span class="pl-c">// 清空 .postTitle 的内容，为逐字输出做准备</span>
+<span class="pl-k">const</span> <span class="pl-s1">textContent</span> <span class="pl-c1">=</span> <span class="pl-s1">postTitle</span><span class="pl-kos">.</span><span class="pl-c1">textContent</span><span class="pl-kos">;</span>
 <span class="pl-s1">postTitle</span><span class="pl-kos">.</span><span class="pl-c1">textContent</span> <span class="pl-c1">=</span> <span class="pl-s">''</span><span class="pl-kos">;</span>
 
-<span class="pl-c">// 定义当前索引位置，从 0 开始</span>
+<span class="pl-c">// 定义逐字显示文本的函数, 末尾的数值代表每次输入字符的速度(毫秒)</span>
 <span class="pl-k">let</span> <span class="pl-s1">idx</span> <span class="pl-c1">=</span> <span class="pl-c1">0</span><span class="pl-kos">;</span>
-
-<span class="pl-c">// 定义逐字显示文本的函数</span>
-<span class="pl-k">const</span> <span class="pl-en">writing</span> <span class="pl-c1">=</span> <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
-    <span class="pl-c">// 设置 .postTitle 的文本内容为从开头到当前索引的部分</span>
+<span class="pl-k">const</span> <span class="pl-s1">writeTimer</span> <span class="pl-c1">=</span> <span class="pl-en">setInterval</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
     <span class="pl-s1">postTitle</span><span class="pl-kos">.</span><span class="pl-c1">textContent</span> <span class="pl-c1">=</span> <span class="pl-s1">textContent</span><span class="pl-kos">.</span><span class="pl-en">slice</span><span class="pl-kos">(</span><span class="pl-c1">0</span><span class="pl-kos">,</span> <span class="pl-s1">idx</span><span class="pl-c1">++</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-
-    <span class="pl-c">// 如果当前索引超过文本长度，则停止计时器</span>
-    <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">idx</span> <span class="pl-c1">&gt;</span> <span class="pl-s1">textContentLen</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-        <span class="pl-en">clearInterval</span><span class="pl-kos">(</span><span class="pl-s1">writeTimer</span><span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// 停止定时器</span>
-        <span class="pl-s1">postTitle</span><span class="pl-kos">.</span><span class="pl-c1">classList</span><span class="pl-kos">.</span><span class="pl-en">remove</span><span class="pl-kos">(</span><span class="pl-s">'no-blink'</span><span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// 移除 .no-blink 类，使光标恢复闪烁</span>
+    <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">idx</span> <span class="pl-c1">&gt;</span> <span class="pl-s1">textContent</span><span class="pl-kos">.</span><span class="pl-c1">length</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        <span class="pl-en">clearInterval</span><span class="pl-kos">(</span><span class="pl-s1">writeTimer</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+        <span class="pl-s1">postTitle</span><span class="pl-kos">.</span><span class="pl-c1">classList</span><span class="pl-kos">.</span><span class="pl-en">remove</span><span class="pl-kos">(</span><span class="pl-s">'no-blink'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
     <span class="pl-kos">}</span>
-<span class="pl-kos">}</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span><span class="pl-kos">,</span> <span class="pl-c1">80</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 
-<span class="pl-c">// 设置定时器，每隔 writeSpeed 毫秒调用一次 writing 函数</span>
-<span class="pl-k">const</span> <span class="pl-s1">writeTimer</span> <span class="pl-c1">=</span> <span class="pl-en">setInterval</span><span class="pl-kos">(</span><span class="pl-en">writing</span><span class="pl-kos">,</span> <span class="pl-s1">writeSpeed</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-
-<span class="pl-c">// 给 .postTitle 添加 .no-blink 类，以禁用光标闪烁效果</span>
 <span class="pl-s1">postTitle</span><span class="pl-kos">.</span><span class="pl-c1">classList</span><span class="pl-kos">.</span><span class="pl-en">add</span><span class="pl-kos">(</span><span class="pl-s">'no-blink'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 
 <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'DOMContentLoaded'</span><span class="pl-kos">,</span> <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
-	<span class="pl-c">// 创建一个新的 div 元素作为检查按钮</span>
-	<span class="pl-k">const</span> <span class="pl-s1">checkBtn</span> <span class="pl-c1">=</span> <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">createElement</span><span class="pl-kos">(</span><span class="pl-s">'div'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-	<span class="pl-s1">checkBtn</span><span class="pl-kos">.</span><span class="pl-c1">id</span> <span class="pl-c1">=</span> <span class="pl-s">'checkBtn'</span><span class="pl-kos">;</span> <span class="pl-c">// 设置新元素的 id 为 checkBtn</span>
+    <span class="pl-c">// 创建检查按钮, 插入到#functionBtn div的后面</span>
+    <span class="pl-k">const</span> <span class="pl-s1">checkBtn</span> <span class="pl-c1">=</span> <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">createElement</span><span class="pl-kos">(</span><span class="pl-s">'div'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-s1">checkBtn</span><span class="pl-kos">.</span><span class="pl-c1">id</span> <span class="pl-c1">=</span> <span class="pl-s">'checkBtn'</span><span class="pl-kos">;</span>
+    <span class="pl-k">const</span> <span class="pl-s1">functionBtn</span> <span class="pl-c1">=</span> <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">getElementById</span><span class="pl-kos">(</span><span class="pl-s">'functionBtn'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-en">insertAdjacentElement</span><span class="pl-kos">(</span><span class="pl-s">'afterend'</span><span class="pl-kos">,</span> <span class="pl-s1">checkBtn</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 
-	<span class="pl-c">// 获取页面中 id 为 functionBtn 的元素</span>
-	<span class="pl-k">const</span> <span class="pl-s1">functionBtn</span> <span class="pl-c1">=</span> <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">getElementById</span><span class="pl-kos">(</span><span class="pl-s">'functionBtn'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-c">// 用 IntersectionObserver 观察 checkBtn 这个div的可见性</span>
+    <span class="pl-k">const</span> <span class="pl-s1">observer</span> <span class="pl-c1">=</span> <span class="pl-k">new</span> <span class="pl-v">IntersectionObserver</span><span class="pl-kos">(</span><span class="pl-s1">entries</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+        <span class="pl-s1">entries</span><span class="pl-kos">.</span><span class="pl-en">forEach</span><span class="pl-kos">(</span><span class="pl-s1">entry</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+            <span class="pl-k">const</span> <span class="pl-s1">isIntersecting</span> <span class="pl-c1">=</span> <span class="pl-s1">entry</span><span class="pl-kos">.</span><span class="pl-c1">isIntersecting</span><span class="pl-kos">;</span>
+            <span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-c1">classList</span><span class="pl-kos">.</span><span class="pl-en">toggle</span><span class="pl-kos">(</span><span class="pl-s">'Btn-flex'</span><span class="pl-kos">,</span> <span class="pl-c1">!</span><span class="pl-s1">isIntersecting</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+            <span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-c1">style</span><span class="pl-kos">.</span><span class="pl-c1">top</span> <span class="pl-c1">=</span> <span class="pl-s1">isIntersecting</span> ? <span class="pl-s">'0'</span> : <span class="pl-s">'-100px'</span><span class="pl-kos">;</span>
+        <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-kos">}</span><span class="pl-kos">,</span> <span class="pl-kos">{</span> <span class="pl-c1">rootMargin</span>: <span class="pl-s">'300px 0px 0px 0px'</span><span class="pl-kos">,</span> <span class="pl-c1">threshold</span>: <span class="pl-c1">0</span> <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-s1">observer</span><span class="pl-kos">.</span><span class="pl-en">observe</span><span class="pl-kos">(</span><span class="pl-s1">checkBtn</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 
-	<span class="pl-c">// 将新创建的 checkBtn 插入到 functionBtn 元素之后</span>
-	<span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-en">insertAdjacentElement</span><span class="pl-kos">(</span><span class="pl-s">'afterend'</span><span class="pl-kos">,</span> <span class="pl-s1">checkBtn</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-k">let</span> <span class="pl-s1">startY</span> <span class="pl-c1">=</span> <span class="pl-c1">0</span><span class="pl-kos">;</span>
 
-	<span class="pl-c">// 创建 IntersectionObserver，用于观察元素是否可见</span>
-	<span class="pl-k">const</span> <span class="pl-s1">observer</span> <span class="pl-c1">=</span> <span class="pl-k">new</span> <span class="pl-v">IntersectionObserver</span><span class="pl-kos">(</span><span class="pl-s1">entries</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
-		<span class="pl-s1">entries</span><span class="pl-kos">.</span><span class="pl-en">forEach</span><span class="pl-kos">(</span><span class="pl-s1">entry</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
-			<span class="pl-c">// 如果 checkBtn 可见，移除 functionBtn 的 Btn-flex 类</span>
-			<span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">entry</span><span class="pl-kos">.</span><span class="pl-c1">isIntersecting</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-				<span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-c1">classList</span><span class="pl-kos">.</span><span class="pl-en">remove</span><span class="pl-kos">(</span><span class="pl-s">'Btn-flex'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-			<span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
-				<span class="pl-c">// 如果 checkBtn 不可见，添加 Btn-flex 类</span>
-				<span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-c1">classList</span><span class="pl-kos">.</span><span class="pl-en">add</span><span class="pl-kos">(</span><span class="pl-s">'Btn-flex'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-			<span class="pl-kos">}</span>
-		<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-	<span class="pl-kos">}</span><span class="pl-kos">,</span> <span class="pl-kos">{</span>
-		<span class="pl-c1">rootMargin</span>: <span class="pl-s">'150px 0px 0px 0px'</span><span class="pl-kos">,</span>
-		<span class="pl-c1">threshold</span>: <span class="pl-c1">0</span> <span class="pl-c">// 设置观察阈值为 0（只要元素出现，就会触发）</span>
-	<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-c">// 通用滚动处理函数</span>
+    <span class="pl-k">const</span> <span class="pl-en">handleScroll</span> <span class="pl-c1">=</span> <span class="pl-s1">deltaY</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+        <span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-c1">style</span><span class="pl-kos">.</span><span class="pl-c1">top</span> <span class="pl-c1">=</span> <span class="pl-s1">deltaY</span> <span class="pl-c1">&gt;</span> <span class="pl-c1">0</span> ? <span class="pl-s">'-100px'</span> : <span class="pl-s">'0'</span><span class="pl-kos">;</span>
+    <span class="pl-kos">}</span><span class="pl-kos">;</span>
 
-	<span class="pl-c">// 开始观察 checkBtn 元素</span>
-	<span class="pl-s1">observer</span><span class="pl-kos">.</span><span class="pl-en">observe</span><span class="pl-kos">(</span><span class="pl-s1">checkBtn</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-
-	<span class="pl-c">// 获取页面中所有 class 为 spoilerText 的元素</span>
-	<span class="pl-k">const</span> <span class="pl-s1">spoilers</span> <span class="pl-c1">=</span> <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">querySelectorAll</span><span class="pl-kos">(</span><span class="pl-s">".spoilerText"</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-
-	<span class="pl-c">// 如果存在这些元素，给每个元素绑定点击事件</span>
-	<span class="pl-s1">spoilers</span><span class="pl-kos">.</span><span class="pl-c1">length</span> <span class="pl-c1">&amp;&amp;</span> <span class="pl-s1">spoilers</span><span class="pl-kos">.</span><span class="pl-en">forEach</span><span class="pl-kos">(</span><span class="pl-s1">el</span> <span class="pl-c1">=&gt;</span> 
-		<span class="pl-s1">el</span><span class="pl-kos">.</span><span class="pl-en">onclick</span> <span class="pl-c1">=</span> <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-s1">el</span><span class="pl-kos">.</span><span class="pl-c1">classList</span><span class="pl-kos">.</span><span class="pl-en">toggle</span><span class="pl-kos">(</span><span class="pl-s">"clear"</span><span class="pl-kos">)</span> <span class="pl-c">// 点击时切换 clear 类</span>
-	<span class="pl-kos">)</span><span class="pl-kos">;</span>
-
-	<span class="pl-k">let</span> <span class="pl-s1">startY</span> <span class="pl-c1">=</span> <span class="pl-c1">0</span><span class="pl-kos">;</span> <span class="pl-c">// 用于记录触摸起始点的 Y 坐标</span>
-
-	<span class="pl-c">// 监听触摸开始事件，获取触摸起始点的 Y 坐标</span>
-	<span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'touchstart'</span><span class="pl-kos">,</span> <span class="pl-kos">(</span><span class="pl-s1">event</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
-		<span class="pl-s1">startY</span> <span class="pl-c1">=</span> <span class="pl-s1">event</span><span class="pl-kos">.</span><span class="pl-c1">touches</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span><span class="pl-kos">.</span><span class="pl-c1">clientY</span><span class="pl-kos">;</span> <span class="pl-c">// 获取触摸点的 Y 坐标并记录</span>
-	<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-
-	<span class="pl-c">// 监听触摸移动事件，根据滑动方向调整按钮位置</span>
-	<span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'touchmove'</span><span class="pl-kos">,</span> <span class="pl-kos">(</span><span class="pl-s1">event</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
-		<span class="pl-k">const</span> <span class="pl-s1">deltaY</span> <span class="pl-c1">=</span> <span class="pl-s1">event</span><span class="pl-kos">.</span><span class="pl-c1">touches</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span><span class="pl-kos">.</span><span class="pl-c1">clientY</span> <span class="pl-c1">-</span> <span class="pl-s1">startY</span><span class="pl-kos">;</span> <span class="pl-c">// 计算滑动距离</span>
-
-		<span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">deltaY</span> <span class="pl-c1">&gt;</span> <span class="pl-c1">0</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-			<span class="pl-c">// 逻辑与效果反着写</span>
-			<span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-c1">style</span><span class="pl-kos">.</span><span class="pl-c1">top</span> <span class="pl-c1">=</span> <span class="pl-s">'0'</span><span class="pl-kos">;</span> <span class="pl-c">// 向下滑动显示按钮</span>
-		<span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">deltaY</span> <span class="pl-c1">&lt;</span> <span class="pl-c1">0</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-			<span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-c1">style</span><span class="pl-kos">.</span><span class="pl-c1">top</span> <span class="pl-c1">=</span> <span class="pl-s">'-100px'</span><span class="pl-kos">;</span> <span class="pl-c">// 向上滑动隐藏按钮</span>
-		<span class="pl-kos">}</span>
-
-		<span class="pl-s1">startY</span> <span class="pl-c1">=</span> <span class="pl-s1">event</span><span class="pl-kos">.</span><span class="pl-c1">touches</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span><span class="pl-kos">.</span><span class="pl-c1">clientY</span><span class="pl-kos">;</span> <span class="pl-c">// 更新起始点为当前触摸点</span>
-	<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-
-	<span class="pl-c">// 监听鼠标滚轮事件，根据滚动方向调整按钮位置</span>
-	<span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'wheel'</span><span class="pl-kos">,</span> <span class="pl-kos">(</span><span class="pl-s1">event</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
-		<span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">event</span><span class="pl-kos">.</span><span class="pl-c1">deltaY</span> <span class="pl-c1">&gt;</span> <span class="pl-c1">0</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-			<span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-c1">style</span><span class="pl-kos">.</span><span class="pl-c1">top</span> <span class="pl-c1">=</span> <span class="pl-s">'-100px'</span><span class="pl-kos">;</span> <span class="pl-c">// 向下滚动隐藏</span>
-		<span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">event</span><span class="pl-kos">.</span><span class="pl-c1">deltaY</span> <span class="pl-c1">&lt;</span> <span class="pl-c1">0</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-			<span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-c1">style</span><span class="pl-kos">.</span><span class="pl-c1">top</span> <span class="pl-c1">=</span> <span class="pl-s">'0'</span><span class="pl-kos">;</span> <span class="pl-c">// 向上滚动显示</span>
-		<span class="pl-kos">}</span>
-	<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-c">// 监听触摸和滚轮事件</span>
+    <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'touchstart'</span><span class="pl-kos">,</span> <span class="pl-s1">e</span> <span class="pl-c1">=&gt;</span> <span class="pl-s1">startY</span> <span class="pl-c1">=</span> <span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-c1">touches</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span><span class="pl-kos">.</span><span class="pl-c1">clientY</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'touchmove'</span><span class="pl-kos">,</span> <span class="pl-s1">e</span> <span class="pl-c1">=&gt;</span> <span class="pl-en">handleScroll</span><span class="pl-kos">(</span><span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-c1">touches</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span><span class="pl-kos">.</span><span class="pl-c1">clientY</span> <span class="pl-c1">-</span> <span class="pl-s1">startY</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'wheel'</span><span class="pl-kos">,</span> <span class="pl-s1">e</span> <span class="pl-c1">=&gt;</span> <span class="pl-en">handleScroll</span><span class="pl-kos">(</span><span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-c1">deltaY</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
 </details>
 <h3>打开 plist.html 文件</h3>
-<div class="markdown-alert markdown-alert-important"><p class="markdown-alert-title"><svg class="octicon octicon-report mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Important</p><p>plist 这个模板文件里增加的代码可以应用到文章首页.</p>
+<div class="markdown-alert markdown-alert-important"><p class="markdown-alert-title"><svg class="octicon octicon-report mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Important</p><p>plist 这个模板文件里增加的代码可以应用到博客首页.</p>
 </div>
 <ol>
 <li><strong>增加样式.</strong></li>
@@ -5113,12 +4803,7 @@ after 是光标, blink 是光标动画.</p>
 </ol>
 <div class="highlight highlight-source-css"><pre class="notranslate">.<span class="pl-c1">avatar</span><span class="pl-kos">:</span><span class="pl-c1">hover</span>{<span class="pl-c1">transform</span><span class="pl-kos">:</span><span class="pl-en">scale</span>(<span class="pl-c1">1.5</span>) <span class="pl-en">rotate</span>(<span class="pl-c1">720<span class="pl-smi">deg</span></span>);<span class="pl-c1">box-shadow</span><span class="pl-kos">:</span><span class="pl-c1">0</span> <span class="pl-c1">0</span> <span class="pl-c1">10<span class="pl-smi">px</span></span> <span class="pl-pds"><span class="pl-kos">#</span>2dfaffbd</span>;}</pre></div>
 <ol start="4">
-<li><strong>用 class 类名区分body的<code class="notranslate">首页</code>和<code class="notranslate">文章页</code></strong></li>
-</ol>
-<p>定位<code class="notranslate">{% block header %}</code>, 在上方增加类名块.</p>
-<div class="highlight highlight-text-html-django"><pre class="notranslate"><span class="pl-e">{%</span> <span class="pl-k">block</span> <span class="pl-s">body_class</span> <span class="pl-e">%}</span>tag<span class="pl-e">{%</span> <span class="pl-k">endblock</span> <span class="pl-e">%}</span></pre></div>
-<ol start="5">
-<li><strong>分离header文字以及图标.</strong></li>
+<li><strong>分离#header的文字以及图标.</strong></li>
 </ol>
 <details><summary>修改前</summary>
 <div class="highlight highlight-text-html-basic"><pre class="notranslate">{% block header %}
@@ -5207,7 +4892,6 @@ after 是光标, blink 是光标动画.</p>
 <span class="pl-kos">&lt;/</span><span class="pl-ent">a</span><span class="pl-kos">&gt;</span>
 {% endblock %}</pre></div>
 </details>
-<p><strong>到这里我的自定义 header 就修改完成了, 其它的样式可到 primer.css 里修改.</strong></p>
 <h3>打开 tag.html 文件</h3>
 <div class="markdown-alert markdown-alert-important"><p class="markdown-alert-title"><svg class="octicon octicon-report mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Important</p><p>tag 这个模板文件里增加的代码可以应用到搜索页.</p>
 </div>
@@ -5292,6 +4976,10 @@ after 是光标, blink 是光标动画.</p>
 <div class="highlight highlight-source-diff"><pre class="notranslate"><span class="pl-mi1"><span class="pl-mi1">+</span>.subnav-search {position: relative;s}</span>
 👆
 <span class="pl-md"><span class="pl-md">-</span>.subnav-search {position: relative;margin-left: 12px}</span></pre></div>
+<blockquote>
+<p>![NOTE]<br>
+到这里我的自定义 header 就修改完成了, 其它的样式可到 primer.css 里修改.</p>
+</blockquote>
 <h2>修改[警报强调信息]样式</h2>
 <ol>
 <li><strong>增加圆角</strong></li>

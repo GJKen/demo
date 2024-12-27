@@ -1199,39 +1199,7 @@ fork 之后, 转到搭建博客的 github 源码,
 -#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
 ```
 
-3. 修改标签
-
-- 增加类名变量, 这样通过 Actions 时渲染出来的页面有 `homepage` `article` 的关键类名, 有了不同类名就可更方便的使用 CSS 控制不同页面的样式.
-- 分离header文字以及图标.
-
-定位`<body>`标签, 修改为以下内容:
-
-<details><summary>修改前</summary>
-
-```html
-<body>
-    <div id="header">{% block header %}{% endblock %}</div>
-    <div id="content">{% block content %}{% endblock %}</div>
-    <div id="footer">{% include 'footer.html' %}</div>
-</body>
-```
-
-</details>
-
-<details><summary>修改后</summary>
-
-```html
-<body class="{% block body_class %}homepage{% endblock %}">
-    <div id="header" class="{% block header_class %}homepage-header{% endblock %}">{% block header %}{% endblock %}</div>
-    <div id="functionBtn">{% block functionBtn %}{% endblock %}</div>
-    <div id="content">{% block content %}{% endblock %}</div>
-    <div id="footer">{% include 'footer.html' %}</div>
-</body>
-```
-
-</details>
-
-4. **头部图标样式.**
+3. **头部图标样式.**
 
 > 增加 CSS, `fadeIn`动画已在上文第1步骤添加过.
 
@@ -1278,15 +1246,6 @@ fork 之后, 转到搭建博客的 github 源码,
 5. **body响应**
 
 定位`@media (max-width:600px) {`, 给 body 增加最小宽度500px: `min-width:500px;`
-
-5. **定位`{% block header %}`, 在上方增加类名块.**
-
-> 这是为了用 class 类名区分`首页`和`文章页`
-
-```Django
-{% block body_class %}article{% endblock %}
-{% block header_class %}article-header{% endblock %}
-```
 
 6. 分离header文字以及图标
 
@@ -1370,118 +1329,56 @@ document.getElementById("ArticleTOC").setAttribute("d","M1 2.75A.75.75 0 0 1 1.7
 
 > [!NOTE]
 > `document.addEventListener("DOMContentLoaded", () => {`这个监听不止可写当前功能, 还可写其它功能的代码进去.
+> 实际应用场景我把这块的代码都压缩合并了.
+
+<details><summary>JavaScript</summary>
 
 ```Javascript
-const writeSpeed=80,textContent=document.querySelector(".postTitle").textContent;let textContentLen=textContent.length;const postTitle=document.querySelector(".postTitle");postTitle.textContent="";let idx=0;const writing=()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContentLen&&(clearInterval(writeTimer),postTitle.classList.remove("no-blink"))},writeTimer=setInterval(writing,80);postTitle.classList.add("no-blink"),document.addEventListener("DOMContentLoaded",()=>{const t=document.createElement("div");t.id="checkBtn";const e=document.getElementById("functionBtn");e.insertAdjacentElement("afterend",t),new IntersectionObserver(t=>{t.forEach(t=>{t.isIntersecting?e.classList.remove("Btn-flex"):e.classList.add("Btn-flex")})},{rootMargin:"150px 0px 0px 0px",threshold:0}).observe(t);const n=document.querySelectorAll(".spoilerText");n.length&&n.forEach(t=>t.onclick=(()=>t.classList.toggle("clear")));let o=0;document.addEventListener("touchstart",t=>{o=t.touches[0].clientY}),document.addEventListener("touchmove",t=>{const n=t.touches[0].clientY-o;n>0?e.style.top="0":n<0&&(e.style.top="-100px"),o=t.touches[0].clientY}),document.addEventListener("wheel",t=>{t.deltaY>0?e.style.top="-100px":t.deltaY<0&&(e.style.top="0")})});
-}
-```
-
-<details><summary>未压缩JS</summary>
-
-```Javascript
-// 定义每次输入字符的速度（毫秒）
-const writeSpeed = 80;
-
-// 获取 .postTitle 元素的文本内容并存储
-const textContent = document.querySelector('.postTitle').textContent;
-
-// 计算文本内容的长度
-let textContentLen = textContent.length;
-
-// 获取 .postTitle 元素的引用
+// 获取 .postTitle 元素的文本内容存储后清空
 const postTitle = document.querySelector('.postTitle');
-
-// 清空 .postTitle 的内容，为逐字输出做准备
+const textContent = postTitle.textContent;
 postTitle.textContent = '';
 
-// 定义当前索引位置，从 0 开始
+// 定义逐字显示文本的函数, 末尾的数值代表每次输入字符的速度(毫秒)
 let idx = 0;
-
-// 定义逐字显示文本的函数
-const writing = () => {
-    // 设置 .postTitle 的文本内容为从开头到当前索引的部分
+const writeTimer = setInterval(() => {
     postTitle.textContent = textContent.slice(0, idx++);
-
-    // 如果当前索引超过文本长度，则停止计时器
-    if (idx > textContentLen) {
-        clearInterval(writeTimer); // 停止定时器
-        postTitle.classList.remove('no-blink'); // 移除 .no-blink 类，使光标恢复闪烁
+    if (idx > textContent.length) {
+        clearInterval(writeTimer);
+        postTitle.classList.remove('no-blink');
     }
-};
+}, 80);
 
-// 设置定时器，每隔 writeSpeed 毫秒调用一次 writing 函数
-const writeTimer = setInterval(writing, writeSpeed);
-
-// 给 .postTitle 添加 .no-blink 类，以禁用光标闪烁效果
 postTitle.classList.add('no-blink');
 
 document.addEventListener('DOMContentLoaded', () => {
-	// 创建一个新的 div 元素作为检查按钮
-	const checkBtn = document.createElement('div');
-	checkBtn.id = 'checkBtn'; // 设置新元素的 id 为 checkBtn
+    // 创建检查按钮, 插入到#functionBtn div的后面
+    const checkBtn = document.createElement('div');
+    checkBtn.id = 'checkBtn';
+    const functionBtn = document.getElementById('functionBtn');
+    functionBtn.insertAdjacentElement('afterend', checkBtn);
 
-	// 获取页面中 id 为 functionBtn 的元素
-	const functionBtn = document.getElementById('functionBtn');
+    // 用 IntersectionObserver 观察 checkBtn 这个div的可见性
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            const isIntersecting = entry.isIntersecting;
+            functionBtn.classList.toggle('Btn-flex', !isIntersecting);
+            functionBtn.style.top = isIntersecting ? '0' : '-100px';
+        });
+    }, { rootMargin: '300px 0px 0px 0px', threshold: 0 });
+    observer.observe(checkBtn);
 
-	// 将新创建的 checkBtn 插入到 functionBtn 元素之后
-	functionBtn.insertAdjacentElement('afterend', checkBtn);
+    let startY = 0;
 
-	// 创建 IntersectionObserver，用于观察元素是否可见
-	const observer = new IntersectionObserver(entries => {
-		entries.forEach(entry => {
-			// 如果 checkBtn 可见，移除 functionBtn 的 Btn-flex 类
-			if (entry.isIntersecting) {
-				functionBtn.classList.remove('Btn-flex');
-			} else {
-				// 如果 checkBtn 不可见，添加 Btn-flex 类
-				functionBtn.classList.add('Btn-flex');
-			}
-		});
-	}, {
-		rootMargin: '150px 0px 0px 0px',
-		threshold: 0 // 设置观察阈值为 0（只要元素出现，就会触发）
-	});
+    // 通用滚动处理函数
+    const handleScroll = deltaY => {
+        functionBtn.style.top = deltaY > 0 ? '-100px' : '0';
+    };
 
-	// 开始观察 checkBtn 元素
-	observer.observe(checkBtn);
-
-	// 获取页面中所有 class 为 spoilerText 的元素
-	const spoilers = document.querySelectorAll(".spoilerText");
-
-	// 如果存在这些元素，给每个元素绑定点击事件
-	spoilers.length && spoilers.forEach(el => 
-		el.onclick = () => el.classList.toggle("clear") // 点击时切换 clear 类
-	);
-
-	let startY = 0; // 用于记录触摸起始点的 Y 坐标
-
-	// 监听触摸开始事件，获取触摸起始点的 Y 坐标
-	document.addEventListener('touchstart', (event) => {
-		startY = event.touches[0].clientY; // 获取触摸点的 Y 坐标并记录
-	});
-
-	// 监听触摸移动事件，根据滑动方向调整按钮位置
-	document.addEventListener('touchmove', (event) => {
-		const deltaY = event.touches[0].clientY - startY; // 计算滑动距离
-
-		if (deltaY > 0) {
-			// 逻辑与效果反着写
-			functionBtn.style.top = '0'; // 向下滑动显示按钮
-		} else if (deltaY < 0) {
-			functionBtn.style.top = '-100px'; // 向上滑动隐藏按钮
-		}
-
-		startY = event.touches[0].clientY; // 更新起始点为当前触摸点
-	});
-
-	// 监听鼠标滚轮事件，根据滚动方向调整按钮位置
-	document.addEventListener('wheel', (event) => {
-		if (event.deltaY > 0) {
-			functionBtn.style.top = '-100px'; // 向下滚动隐藏
-		} else if (event.deltaY < 0) {
-			functionBtn.style.top = '0'; // 向上滚动显示
-		}
-	});
+    // 监听触摸和滚轮事件
+    document.addEventListener('touchstart', e => startY = e.touches[0].clientY);
+    document.addEventListener('touchmove', e => handleScroll(e.touches[0].clientY - startY));
+    document.addEventListener('wheel', e => handleScroll(e.deltaY));
 });
 ```
 
@@ -1491,7 +1388,7 @@ document.addEventListener('DOMContentLoaded', () => {
 ### 打开 plist.html 文件
 
 > [!Important]
-> plist 这个模板文件里增加的代码可以应用到文章首页.
+> plist 这个模板文件里增加的代码可以应用到博客首页.
 
 1. **增加样式.**
 
@@ -1507,15 +1404,7 @@ document.addEventListener('DOMContentLoaded', () => {
 .avatar:hover{transform:scale(1.5) rotate(720deg);box-shadow:0 0 10px #2dfaffbd;}
 ```
 
-4. **用 class 类名区分body的`首页`和`文章页`**
-
-定位`{% block header %}`, 在上方增加类名块.
-
-```Django
-{% block body_class %}tag{% endblock %}
-```
-
-5. **分离header文字以及图标.**
+4. **分离#header的文字以及图标.**
 
 <details><summary>修改前</summary>
 
@@ -1613,8 +1502,6 @@ document.addEventListener('DOMContentLoaded', () => {
 ```
 
 </details>
-
-**到这里我的自定义 header 就修改完成了, 其它的样式可到 primer.css 里修改.**
 
 ### 打开 tag.html 文件
 
@@ -1715,6 +1602,9 @@ document.addEventListener('DOMContentLoaded', () => {
 👆
 -.subnav-search {position: relative;margin-left: 12px}
 ```
+
+> ![NOTE]
+> 到这里我的自定义 header 就修改完成了, 其它的样式可到 primer.css 里修改.
 
 ## 修改[警报强调信息]样式
 
