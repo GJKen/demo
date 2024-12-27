@@ -81,16 +81,16 @@ markdown 输入:
 <img data-fancybox="gallery" img-src="https://example.com/image.jpg">
 
 <!--
-一个图片未加载时的占位 CSS 动画 DIV, 类名为`ImgLazyLoad`, 这个类名的 CSS 动画我写在了`primer.css`里面.
-一个 img 标签, 包含`fancybox`所需的`data-fancybox="gallery"`值.
+一个图片未加载时的占位 CSS 动画 DIV, 类名为 .ImgLazyLoad-circle, 这个类名的 CSS 动画我写在了 primer.css 里面.
+一个 img 标签, 包含 fancybox 所需的 data-fancybox="gallery" 值.
 -->
 ```
 
-当页面加载完成后, 使用 IntersectionObserver 监听图片是否进入视口, 图片会提前 500px 接近视口时加载, 当图片即将进入视口时,
+当页面加载完成后, 使用 IntersectionObserver 监听图片是否进入视口, 图片会提前 500px 接近视口时加载
 
-脚本会检测标签里面的`img-src="https://example.com/image.jpg"`内容,  给 img 标签增加`src`值, 这样图片就能显示了.
+当图片即将进入视口时, 脚本会检测标签里面的`img-src="https://example.com/image.jpg"`内容,  给 img 标签增加`src`值, 这样图片就能显示了.
 
-在 CSS 中默认模糊并且透明图片, 脚本会等待图片加载完成后才会正常显示, 在这之前会隐藏掉占位转圈动画, 这样就实现了转圈动画消失并显示正常的图片.
+在 CSS 中 img 标签默认模糊并且透明图片, 脚本会等待图片加载完成后才会正常显示, 显示图片之前会隐藏掉占位转圈动画, 这样就实现了转圈动画消失并显示正常的图片.
 
 图片加载失败则会创建指定的 SVG 图标以及文字提示, 同时隐藏加载失败的 img 标签和占位动画.
 
@@ -1718,6 +1718,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ## 修改[警报强调信息]样式
 
+1. **增加圆角**
+
 打开`Gmeek.py`
 
 定位代码`markdown-alert-{alert}`
@@ -1731,6 +1733,10 @@ document.addEventListener('DOMContentLoaded', () => {
 效果图:
 
 `Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/QmZpTsgv2gCosiy6VRuckx59U1yiLfyTMqxkbXHivWmusW"`
+
+2. **优化行高显示**
+
+定位`line-height:1;`, 直接删除这个属性.
 
 ## 页面底部文字增加图标动画
 
