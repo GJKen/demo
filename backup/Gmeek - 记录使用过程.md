@@ -1375,10 +1375,24 @@ document.addEventListener('DOMContentLoaded', () => {
         functionBtn.style.top = deltaY > 0 ? '-100px' : '0';
     };
 
+    // 判断事件目标是否位于滚动容器内
+    const isInScrollableDiv = target => {
+        let node = target;
+        while (node && node !== document.body) {
+            if (node.scrollHeight > node.clientHeight) return true;
+            node = node.parentNode;
+        }
+        return false;
+    };
+
     // 监听触摸和滚轮事件
     document.addEventListener('touchstart', e => startY = e.touches[0].clientY);
     document.addEventListener('touchmove', e => handleScroll(e.touches[0].clientY - startY));
-    document.addEventListener('wheel', e => handleScroll(e.deltaY));
+    document.addEventListener('wheel', e => {
+        if (!isInScrollableDiv(e.target)) {
+            handleScroll(e.deltaY);
+        }
+    });
 });
 ```
 

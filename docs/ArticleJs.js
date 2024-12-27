@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				const img = entry.target;
 				const imgContainer = img.previousElementSibling;
 				const handleError = (isError = false) => {
-					if (imgContainer && imgContainer.classList.contains('ImgLazyLoad')) {
+					if (imgContainer && imgContainer.classList.contains('ImgLazyLoad-circle')) {
 						imgContainer.style.display = 'none';
 					}
 					if (isError) {
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
 						img.parentNode.insertBefore(errorContainer, img.nextSibling);
 						img.style.display = 'none';
 					} else {
-						img.classList.remove('ImgLazyLoad');
+						img.classList.remove('ImgLazyLoad-circle');
 						img.classList.add('ImgLoaded');
 					}
 				};
@@ -286,7 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		.toc-link.toc-active {
 			background-color: #3db9d399;
 			font-weight: bold;
-			box-shadow: inset -2px -2px 6px #ffffff42, inset 2px 2px 6px #00000080;
+			box-shadow: inset -2px -2px 6px #ffffff42, inset 2px 2px 6px #59595980;
 		}
 	`;
 
