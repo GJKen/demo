@@ -27543,7 +27543,8 @@ a.branch-name .octicon {
 }
 
 .markdown-body table td>:last-child {
-	margin-bottom: 0
+	margin-bottom: 0;
+	vertical-align: sub
 }
 
 .markdown-body table tr {
