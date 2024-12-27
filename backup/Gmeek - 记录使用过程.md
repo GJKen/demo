@@ -1822,7 +1822,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 1. **定位`onclick="openComments()"`, 在 html 结构里删除这个点击绑定.**
 
-2. **定位`function openComments(){`这个函数, 在函数末尾行增加`openComments();`**
+2. **定位`function openComments(){`这个函数, 在函数结束外边尾行增加`openComments();`**
 
 # icon 图标
 
