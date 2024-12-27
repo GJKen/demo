@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
             post_body = re.sub(r'<code class='notranslate'>Gmeek-imgbox='([^']+)'</code>',lambda match: f'<img data-fancybox='gallery' src='{match.group(1)}'>',post_body, flags=re.DOTALL)
 ```
 
-### 使用演示
+- **使用演示**
 
 在 markdown 插入图片:
 
@@ -2131,7 +2131,7 @@ document.addEventListener('DOMContentLoaded', () => {
             post_body = re.sub(r'<code class='notranslate'>Gmeek-imgbox='([^']+)'</code>',lambda match: f'<img data-fancybox='gallery' src='{match.group(1)}'>',post_body, flags=re.DOTALL)
 ```
 
-### 使用演示
+- **使用演示**
 
 在 markdown 插入图片:
 
@@ -4084,7 +4084,9 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 <p>然后在下面增加代码:</p>
 <div class="highlight highlight-source-python"><pre class="notranslate">        <span class="pl-k">if</span> <span class="pl-s">'&lt;code class="notranslate"&gt;Gmeek-imgbox'</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>: 
             <span class="pl-s1">post_body</span> <span class="pl-c1">=</span> <span class="pl-s1">re</span>.<span class="pl-c1">sub</span>(<span class="pl-s">r'&lt;code class="notranslate"&gt;Gmeek-imgbox="([^"]+)"&lt;/code&gt;'</span>,<span class="pl-k">lambda</span> <span class="pl-s1">match</span>: <span class="pl-s">f'&lt;img data-fancybox="gallery" src="<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">match</span>.<span class="pl-c1">group</span>(<span class="pl-c1">1</span>)<span class="pl-kos">}</span></span>"&gt;'</span>,<span class="pl-s1">post_body</span>, <span class="pl-s1">flags</span><span class="pl-c1">=</span><span class="pl-s1">re</span>.<span class="pl-c1">DOTALL</span>)</pre></div>
-<h3>使用演示</h3>
+<ul>
+<li><strong>使用演示</strong></li>
+</ul>
 <p>在 markdown 插入图片:</p>
 <div class="highlight highlight-text-html-basic"><pre class="notranslate">`Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/QmNiH2pdrA9Hb61EXgYbKtEssBAGemEjTQRBZbgutUCNx2"`</pre></div>
 <p>通过 Actions 转换后实际效果如下, html 里面图片标签会增加 fancybox 所需的<code class="notranslate">data-fancybox="gallery"</code>属性.</p>

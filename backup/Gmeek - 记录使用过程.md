@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
             post_body = re.sub(r'<code class="notranslate">Gmeek-imgbox="([^"]+)"</code>',lambda match: f'<img data-fancybox="gallery" src="{match.group(1)}">',post_body, flags=re.DOTALL)
 ```
 
-### 使用演示
+- **使用演示**
 
 在 markdown 插入图片:
 
