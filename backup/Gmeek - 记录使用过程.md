@@ -15,7 +15,7 @@
 
 官方虽然没说, 但是经过我后面测试得出:
 
-`script`字段里面引用的 js 代码, **写在尾巴加载越靠前!**
+`script`字段里面引用的 js 代码, **写在尾巴加载顺序越靠前!**
 
 > 其它字段还未测试过, 不知道是不是一样的道理.
 
@@ -1110,7 +1110,7 @@ a {
 
 效果图:
 
-Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/QmTwkiuWzou5jKS9aJ5hEZKau2zBEFRLiDcC8Gn1uzwiRm"
+`Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/QmTwkiuWzou5jKS9aJ5hEZKau2zBEFRLiDcC8Gn1uzwiRm"`
 
 # 通过 Gmeek 仓库 DIY 博客
 

@@ -27,7 +27,7 @@
 
 官方虽然没说, 但是经过我后面测试得出:
 
-`script`字段里面引用的 js 代码, **写在尾巴加载越靠前!**
+`script`字段里面引用的 js 代码, **写在尾巴加载顺序越靠前!**
 
 > 其它字段还未测试过, 不知道是不是一样的道理.
 
@@ -1122,7 +1122,7 @@ a {
 
 效果图:
 
-Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmTwkiuWzou5jKS9aJ5hEZKau2zBEFRLiDcC8Gn1uzwiRm'
+`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmTwkiuWzou5jKS9aJ5hEZKau2zBEFRLiDcC8Gn1uzwiRm'`
 
 # 通过 Gmeek 仓库 DIY 博客
 
@@ -1966,7 +1966,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 官方虽然没说, 但是经过我后面测试得出:
 
-`script`字段里面引用的 js 代码, **写在尾巴加载越靠前!**
+`script`字段里面引用的 js 代码, **写在尾巴加载顺序越靠前!**
 
 > 其它字段还未测试过, 不知道是不是一样的道理.
 
@@ -3061,7 +3061,7 @@ a {
 
 效果图:
 
-Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmTwkiuWzou5jKS9aJ5hEZKau2zBEFRLiDcC8Gn1uzwiRm'
+`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmTwkiuWzou5jKS9aJ5hEZKau2zBEFRLiDcC8Gn1uzwiRm'`
 
 # 通过 Gmeek 仓库 DIY 博客
 
@@ -3971,7 +3971,7 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 <h1>Config.json 小妙用</h1>
 <h2>引用顺序</h2>
 <p>官方虽然没说, 但是经过我后面测试得出:</p>
-<p><code class="notranslate">script</code>字段里面引用的 js 代码, <strong>写在尾巴加载越靠前!</strong></p>
+<p><code class="notranslate">script</code>字段里面引用的 js 代码, <strong>写在尾巴加载顺序越靠前!</strong></p>
 <blockquote>
 <p>其它字段还未测试过, 不知道是不是一样的道理.</p>
 </blockquote>
@@ -4768,7 +4768,8 @@ svg 暗黑模式下颜色.<br>
 }</pre></div>
 </details>
 <p>效果图:</p>
-<p>Gmeek-imgbox="<a href="https://i0.img2ipfs.com/ipfs/QmTwkiuWzou5jKS9aJ5hEZKau2zBEFRLiDcC8Gn1uzwiRm" rel="nofollow">https://i0.img2ipfs.com/ipfs/QmTwkiuWzou5jKS9aJ5hEZKau2zBEFRLiDcC8Gn1uzwiRm</a>"</p>
+<p><div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://i0.img2ipfs.com/ipfs/QmTwkiuWzou5jKS9aJ5hEZKau2zBEFRLiDcC8Gn1uzwiRm"></p>
 <h1>通过 Gmeek 仓库 DIY 博客</h1>
 <p>为什么这样做? <span class="spoilerText">自娱自乐.~~</span></p>
 <h2>Fork Gmeek 仓库</h2>
