@@ -123,9 +123,11 @@ markdown 输入:
 > 修改-当滚动页面使`#functionBtn`按钮不可见时, 使其悬浮在顶部.
 > 修改-文章目录增加顶部和底部跳转按钮.
 
-按钮位置展示:
+图示:
 
 `Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/Qme3qiTmKATk8BVvcLj7bC87q3w8MqywJcQTJfHKQTmyvd"`
+
+`Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/QmfSbibFEBSh5YShTT6YyZwY5D2Um8avsYkZTbDcndh1dh"`
 
 ## Fancybox.js - 图片浏览器
 
@@ -1804,6 +1806,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <!-- ##{"script":"<script>document.getElementById('user-content-busuanzi').id='busuanzi_container_site_uv';busuanzi=document.getElementById('busuanzi_container_site_uv');busuanzi.style.display='none';busuanzi.childNodes[1].id='busuanzi_value_site_uv';busuanzi.childNodes[3].id='busuanzi_value_site_pv';</script><script async src='//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js'></script>","style":"<style>#busuanzi_value_site_uv{color:red}#busuanzi_value_site_pv{color:red}</style>"}## -->
 ```
+
+# 自动展开评论区
+
+打开 post.html,
+
+定位`onclick="openComments()"`, html 里删除这个点击绑定.
+
+定位`function openComments(){`这个函数, 在函数末尾行增加`openComments();`
 
 # icon 图标
 
