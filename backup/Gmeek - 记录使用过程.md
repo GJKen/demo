@@ -1,13 +1,5 @@
 [Gmeek](https://github.com/Meekdai/Gmeek) 博客完全依托 Github, 提供域名, 无需服务器, 比起传统的服务器建站更方便快捷.
 
-- [x] 拥有了一个域名.
-- [x] 域名备案已解决.
-
-#测试
-
-- 拥有了一个域名.
-- 域名备案已解决.
-
 # 搭建博客
 
 **如何搭建博客我就不写了, 强烈建议看完[官方文档](https://blog.meekdai.com/tag.html#gmeek).**
@@ -980,8 +972,7 @@ html {
 
 > [!NOTE]
 > 默认的效果可以双击复制到+和-号, 通过 CSS 控制使其无法被选中复制.
-
-直接在`primer.css`里增加代码:
+> 直接增加下面代码.
 
 <details><summary>CSS Code</summary>
 
@@ -1141,7 +1132,7 @@ fork 之后, 转到搭建博客的 github 源码,
 打开`config.json`文件, 修改右边字段值为main`"GMEEK_VERSION":"main"`
 
 > [!NOTE]
-> 如果值是`last`的话, Actions 会失败, 因为默认值`last`是靠源码仓库(Gmeek)的 tag 来构建的, 改成 main 就不会构建失败.
+> 如果值是`last`的话, Actions 会失败, 因为默认值`last`是靠模板仓库的 tag 来构建的, 改成 main 就不会构建失败.
 > ~~创建新的 tag 也可以, 但是挺麻烦.~~
 
 ## 修改 Actions 定时任务时间
@@ -1257,7 +1248,7 @@ fork 之后, 转到搭建博客的 github 源码,
 
 定位`@media (max-width:600px) {`, 给 body 增加最小宽度500px: `min-width:500px;`
 
-6. 分离header文字以及图标
+6. **分离header文字以及图标**
 
 > 需要把`.title-right`这个类名全部重命名为`#functionBtn`
 > 增加文章目录按钮
@@ -1420,7 +1411,7 @@ document.addEventListener('DOMContentLoaded', () => {
 .title-left{display:flex;flex-direction:column;align-items:center;gap:20px;}
 ```
 
-2. **定位样式`.title-left`, 直接删除相关的所有样式
+2. **定位样式`.title-left`, 直接删除相关的所有样式**
 
 3. **定位`.avatar:hover`, 修改样式.**
 
@@ -1532,7 +1523,7 @@ document.addEventListener('DOMContentLoaded', () => {
 > [!Important]
 > tag 这个模板文件里增加的代码可以应用到搜索页.
 
-1. 打开`tag.html`修改样式, 用了 Diff 代码块, 看着改吧.
+1. **打开`tag.html`修改样式, 用了 Diff 代码块, 看着改吧.**
 
 ```Diff
 +.title-right{display:flex;align-items:center;flex-direction:column;}
@@ -1607,7 +1598,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 1. **定位`.subnav-search`类名. 直接删除这个样式**
 
-2. **定位`.subnav-search-input`类名, 修改以下内容
+2. **定位`.subnav-search-input`类名, 修改以下内容**
 
 ```Diff
 +.subnav-search-input{width:160px;}
@@ -1627,7 +1618,7 @@ document.addEventListener('DOMContentLoaded', () => {
 -.subnav-search {position: relative;margin-left: 12px}
 ```
 
-> ![NOTE]
+> [!NOTE]
 > 到这里我的自定义 header 就修改完成了, 其它的样式可到 primer.css 里修改.
 
 ## 修改[警报强调信息]样式
@@ -1636,21 +1627,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
 打开`Gmeek.py`
 
-定位代码`markdown-alert-{alert}`
+定位代码`<style>.markdown-alert{`, 增加圆角6px.
 
-> 增加圆角6px.
+`border-radius:6px;`
 
-`f'border-radius:6px;'`
-
-`Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/Qmen4szA7gJFZYiiXU7xcU2dqTfWyyCdEu619PCJCHtMQS"`
-
-效果图:
-
-`Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/QmZpTsgv2gCosiy6VRuckx59U1yiLfyTMqxkbXHivWmusW"`
+`Gmeek-imgbox="https://i1.img2ipfs.com/ipfs/QmRCXZrjvmUajTL5odC4d5oJyJwx8mrNSwDzGgTs3yuDMw"`
 
 2. **优化行高显示**
 
 定位`line-height:1;`, 直接删除这个属性.
+
+**效果图:**
+
+`Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/QmTWtMj5966zgsPLPYDNZDNpyQ4k6YfxMj8CazAMnnZjSQ"`
+
+# 优化任务列表样式
+
+具体问题看[#202](https://github.com/Meekdai/Gmeek/issues/202)
+
+打开`Gmeek.py`, 定位`postBase=self.blogBase.copy()`, 在它的下面增加如下代码:
+
+```python
+        if '<ul class="contains-task-list">' in post_body:
+            issue["style"]=issue["style"]+'<style>.contains-task-list{padding-left:0.9em !important;list-style:none}</style>'
+```
+
 
 ## 页面底部文字增加图标动画
 

@@ -12,14 +12,6 @@
     </script>
 <meta name="description" content="[Gmeek](https://github.com/Meekdai/Gmeek) 博客完全依托 Github, 提供域名, 无需服务器, 比起传统的服务器建站更方便快捷.
 
-- [x] 拥有了一个域名.
-- [x] 域名备案已解决.
-
-#测试
-
-- 拥有了一个域名.
-- 域名备案已解决.
-
 # 搭建博客
 
 **如何搭建博客我就不写了, 强烈建议看完[官方文档](https://blog.meekdai.com/tag.html#gmeek).**
@@ -992,8 +984,7 @@ html {
 
 > [!NOTE]
 > 默认的效果可以双击复制到+和-号, 通过 CSS 控制使其无法被选中复制.
-
-直接在`primer.css`里增加代码:
+> 直接增加下面代码.
 
 <details><summary>CSS Code</summary>
 
@@ -1153,7 +1144,7 @@ fork 之后, 转到搭建博客的 github 源码,
 打开`config.json`文件, 修改右边字段值为main`'GMEEK_VERSION':'main'`
 
 > [!NOTE]
-> 如果值是`last`的话, Actions 会失败, 因为默认值`last`是靠源码仓库(Gmeek)的 tag 来构建的, 改成 main 就不会构建失败.
+> 如果值是`last`的话, Actions 会失败, 因为默认值`last`是靠模板仓库的 tag 来构建的, 改成 main 就不会构建失败.
 > ~~创建新的 tag 也可以, 但是挺麻烦.~~
 
 ## 修改 Actions 定时任务时间
@@ -1269,7 +1260,7 @@ fork 之后, 转到搭建博客的 github 源码,
 
 定位`@media (max-width:600px) {`, 给 body 增加最小宽度500px: `min-width:500px;`
 
-6. 分离header文字以及图标
+6. **分离header文字以及图标**
 
 > 需要把`.title-right`这个类名全部重命名为`#functionBtn`
 > 增加文章目录按钮
@@ -1432,7 +1423,7 @@ document.addEventListener('DOMContentLoaded', () => {
 .title-left{display:flex;flex-direction:column;align-items:center;gap:20px;}
 ```
 
-2. **定位样式`.title-left`, 直接删除相关的所有样式
+2. **定位样式`.title-left`, 直接删除相关的所有样式**
 
 3. **定位`.avatar:hover`, 修改样式.**
 
@@ -1544,7 +1535,7 @@ document.addEventListener('DOMContentLoaded', () => {
 > [!Important]
 > tag 这个模板文件里增加的代码可以应用到搜索页.
 
-1. 打开`tag.html`修改样式, 用了 Diff 代码块, 看着改吧.
+1. **打开`tag.html`修改样式, 用了 Diff 代码块, 看着改吧.**
 
 ```Diff
 +.title-right{display:flex;align-items:center;flex-direction:column;}
@@ -1619,7 +1610,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 1. **定位`.subnav-search`类名. 直接删除这个样式**
 
-2. **定位`.subnav-search-input`类名, 修改以下内容
+2. **定位`.subnav-search-input`类名, 修改以下内容**
 
 ```Diff
 +.subnav-search-input{width:160px;}
@@ -1639,7 +1630,7 @@ document.addEventListener('DOMContentLoaded', () => {
 -.subnav-search {position: relative;margin-left: 12px}
 ```
 
-> ![NOTE]
+> [!NOTE]
 > 到这里我的自定义 header 就修改完成了, 其它的样式可到 primer.css 里修改.
 
 ## 修改[警报强调信息]样式
@@ -1648,21 +1639,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
 打开`Gmeek.py`
 
-定位代码`markdown-alert-{alert}`
+定位代码`<style>.markdown-alert{`, 增加圆角6px.
 
-> 增加圆角6px.
+`border-radius:6px;`
 
-`f'border-radius:6px;'`
-
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/Qmen4szA7gJFZYiiXU7xcU2dqTfWyyCdEu619PCJCHtMQS'`
-
-效果图:
-
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmZpTsgv2gCosiy6VRuckx59U1yiLfyTMqxkbXHivWmusW'`
+`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/QmRCXZrjvmUajTL5odC4d5oJyJwx8mrNSwDzGgTs3yuDMw'`
 
 2. **优化行高显示**
 
 定位`line-height:1;`, 直接删除这个属性.
+
+**效果图:**
+
+`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmTWtMj5966zgsPLPYDNZDNpyQ4k6YfxMj8CazAMnnZjSQ'`
+
+# 优化任务列表样式
+
+具体问题看[#202](https://github.com/Meekdai/Gmeek/issues/202)
+
+打开`Gmeek.py`, 定位`postBase=self.blogBase.copy()`, 在它的下面增加如下代码:
+
+```python
+        if '<ul class='contains-task-list'>' in post_body:
+            issue['style']=issue['style']+'<style>.contains-task-list{padding-left:0.9em !important;list-style:none}</style>'
+```
+
 
 ## 页面底部文字增加图标动画
 
@@ -1879,14 +1880,6 @@ document.addEventListener('DOMContentLoaded', () => {
 <meta property="og:title" content="Gmeek - 记录使用过程">
 <meta property="og:description" content="[Gmeek](https://github.com/Meekdai/Gmeek) 博客完全依托 Github, 提供域名, 无需服务器, 比起传统的服务器建站更方便快捷.
 
-- [x] 拥有了一个域名.
-- [x] 域名备案已解决.
-
-#测试
-
-- 拥有了一个域名.
-- 域名备案已解决.
-
 # 搭建博客
 
 **如何搭建博客我就不写了, 强烈建议看完[官方文档](https://blog.meekdai.com/tag.html#gmeek).**
@@ -2859,8 +2852,7 @@ html {
 
 > [!NOTE]
 > 默认的效果可以双击复制到+和-号, 通过 CSS 控制使其无法被选中复制.
-
-直接在`primer.css`里增加代码:
+> 直接增加下面代码.
 
 <details><summary>CSS Code</summary>
 
@@ -3020,7 +3012,7 @@ fork 之后, 转到搭建博客的 github 源码,
 打开`config.json`文件, 修改右边字段值为main`'GMEEK_VERSION':'main'`
 
 > [!NOTE]
-> 如果值是`last`的话, Actions 会失败, 因为默认值`last`是靠源码仓库(Gmeek)的 tag 来构建的, 改成 main 就不会构建失败.
+> 如果值是`last`的话, Actions 会失败, 因为默认值`last`是靠模板仓库的 tag 来构建的, 改成 main 就不会构建失败.
 > ~~创建新的 tag 也可以, 但是挺麻烦.~~
 
 ## 修改 Actions 定时任务时间
@@ -3136,7 +3128,7 @@ fork 之后, 转到搭建博客的 github 源码,
 
 定位`@media (max-width:600px) {`, 给 body 增加最小宽度500px: `min-width:500px;`
 
-6. 分离header文字以及图标
+6. **分离header文字以及图标**
 
 > 需要把`.title-right`这个类名全部重命名为`#functionBtn`
 > 增加文章目录按钮
@@ -3299,7 +3291,7 @@ document.addEventListener('DOMContentLoaded', () => {
 .title-left{display:flex;flex-direction:column;align-items:center;gap:20px;}
 ```
 
-2. **定位样式`.title-left`, 直接删除相关的所有样式
+2. **定位样式`.title-left`, 直接删除相关的所有样式**
 
 3. **定位`.avatar:hover`, 修改样式.**
 
@@ -3411,7 +3403,7 @@ document.addEventListener('DOMContentLoaded', () => {
 > [!Important]
 > tag 这个模板文件里增加的代码可以应用到搜索页.
 
-1. 打开`tag.html`修改样式, 用了 Diff 代码块, 看着改吧.
+1. **打开`tag.html`修改样式, 用了 Diff 代码块, 看着改吧.**
 
 ```Diff
 +.title-right{display:flex;align-items:center;flex-direction:column;}
@@ -3486,7 +3478,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 1. **定位`.subnav-search`类名. 直接删除这个样式**
 
-2. **定位`.subnav-search-input`类名, 修改以下内容
+2. **定位`.subnav-search-input`类名, 修改以下内容**
 
 ```Diff
 +.subnav-search-input{width:160px;}
@@ -3506,7 +3498,7 @@ document.addEventListener('DOMContentLoaded', () => {
 -.subnav-search {position: relative;margin-left: 12px}
 ```
 
-> ![NOTE]
+> [!NOTE]
 > 到这里我的自定义 header 就修改完成了, 其它的样式可到 primer.css 里修改.
 
 ## 修改[警报强调信息]样式
@@ -3515,21 +3507,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
 打开`Gmeek.py`
 
-定位代码`markdown-alert-{alert}`
+定位代码`<style>.markdown-alert{`, 增加圆角6px.
 
-> 增加圆角6px.
+`border-radius:6px;`
 
-`f'border-radius:6px;'`
-
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/Qmen4szA7gJFZYiiXU7xcU2dqTfWyyCdEu619PCJCHtMQS'`
-
-效果图:
-
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmZpTsgv2gCosiy6VRuckx59U1yiLfyTMqxkbXHivWmusW'`
+`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/QmRCXZrjvmUajTL5odC4d5oJyJwx8mrNSwDzGgTs3yuDMw'`
 
 2. **优化行高显示**
 
 定位`line-height:1;`, 直接删除这个属性.
+
+**效果图:**
+
+`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmTWtMj5966zgsPLPYDNZDNpyQ4k6YfxMj8CazAMnnZjSQ'`
+
+# 优化任务列表样式
+
+具体问题看[#202](https://github.com/Meekdai/Gmeek/issues/202)
+
+打开`Gmeek.py`, 定位`postBase=self.blogBase.copy()`, 在它的下面增加如下代码:
+
+```python
+        if '<ul class='contains-task-list'>' in post_body:
+            issue['style']=issue['style']+'<style>.contains-task-list{padding-left:0.9em !important;list-style:none}</style>'
+```
+
 
 ## 页面底部文字增加图标动画
 
@@ -3791,7 +3793,7 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
     font-size:12px;
 }
 </style>
-<style>.markdown-alert{border-radius:6px;padding:0.5rem 1rem;margin-bottom:1rem;border-left:.25em solid var(--borderColor-default,var(--color-border-default));}.markdown-alert .markdown-alert-title {display:flex;font-weight:var(--base-text-weight-medium,500);align-items:center;}.markdown-alert>:first-child {margin-top:0;}.markdown-alert>:last-child {margin-bottom:0;}</style><style>.markdown-alert.markdown-alert-note {border-left-color:var(--borderColor-accent-emphasis, var(--color-accent-emphasis));background-color:var(--color-accent-subtle);}.markdown-alert.markdown-alert-note .markdown-alert-title {color: var(--fgColor-accent,var(--color-accent-fg));}</style><style>.markdown-alert.markdown-alert-important {border-left-color:var(--borderColor-done-emphasis, var(--color-done-emphasis));background-color:var(--color-done-subtle);}.markdown-alert.markdown-alert-important .markdown-alert-title {color: var(--fgColor-done,var(--color-done-fg));}</style><style>.markdown-alert.markdown-alert-warning {border-left-color:var(--borderColor-attention-emphasis, var(--color-attention-emphasis));background-color:var(--color-attention-subtle);}.markdown-alert.markdown-alert-warning .markdown-alert-title {color: var(--fgColor-attention,var(--color-attention-fg));}</style><style>.contains-task-list{padding-left: 0.9em;list-style: none}</style>
+<style>.markdown-alert{border-radius:6px;padding:0.5rem 1rem;margin-bottom:1rem;border-left:.25em solid var(--borderColor-default,var(--color-border-default));}.markdown-alert .markdown-alert-title {display:flex;font-weight:var(--base-text-weight-medium,500);align-items:center;}.markdown-alert>:first-child {margin-top:0;}.markdown-alert>:last-child {margin-bottom:0;}</style><style>.markdown-alert.markdown-alert-note {border-left-color:var(--borderColor-accent-emphasis, var(--color-accent-emphasis));background-color:var(--color-accent-subtle);}.markdown-alert.markdown-alert-note .markdown-alert-title {color: var(--fgColor-accent,var(--color-accent-fg));}</style><style>.markdown-alert.markdown-alert-important {border-left-color:var(--borderColor-done-emphasis, var(--color-done-emphasis));background-color:var(--color-done-subtle);}.markdown-alert.markdown-alert-important .markdown-alert-title {color: var(--fgColor-done,var(--color-done-fg));}</style><style>.markdown-alert.markdown-alert-warning {border-left-color:var(--borderColor-attention-emphasis, var(--color-attention-emphasis));background-color:var(--color-attention-subtle);}.markdown-alert.markdown-alert-warning .markdown-alert-title {color: var(--fgColor-attention,var(--color-attention-fg));}</style>
 
 
 
@@ -3819,15 +3821,6 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 </div>
     <div id="content">
 <div class="markdown-body" id="postBody"><p><a href="https://github.com/Meekdai/Gmeek">Gmeek</a> 博客完全依托 Github, 提供域名, 无需服务器, 比起传统的服务器建站更方便快捷.</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox" checked=""> 拥有了一个域名.</li>
-<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox" checked=""> 域名备案已解决.</li>
-</ul>
-<p>#测试</p>
-<ul>
-<li>拥有了一个域名.</li>
-<li>域名备案已解决.</li>
-</ul>
 <h1>搭建博客</h1>
 <p><strong>如何搭建博客我就不写了, 强烈建议看完<a href="https://blog.meekdai.com/tag.html#gmeek" rel="nofollow">官方文档</a>.</strong></p>
 <p><strong>这里主要记录一些 js 和 CSS 的修改.记录的修改不一定准确, <span class="spoilerText">因为改动的地方太多了🥴</span>.</strong></p>
@@ -4537,9 +4530,9 @@ svg 暗黑模式下颜色.<br>
 }</pre></div>
 </details>
 <h2>文章 diff 代码块样式</h2>
-<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>默认的效果可以双击复制到+和-号, 通过 CSS 控制使其无法被选中复制.</p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>默认的效果可以双击复制到+和-号, 通过 CSS 控制使其无法被选中复制.<br>
+直接增加下面代码.</p>
 </div>
-<p>直接在<code class="notranslate">primer.css</code>里增加代码:</p>
 <details><summary>CSS Code</summary>
 <div class="highlight highlight-source-css"><pre class="notranslate">.<span class="pl-c1">pl-mi1</span> {
 	<span class="pl-c1">user-select</span><span class="pl-kos">:</span> text;
@@ -4650,7 +4643,7 @@ svg 暗黑模式下颜色.<br>
 <p><div class="ImgLazyLoad-circle"></div>
 <img data-fancybox="gallery" img-src="https://i0.img2ipfs.com/ipfs/QmNa2H5MrVphqpUwAHWBv7iWw782HmDb7qjZb3JEzdjQav"></p>
 <p>打开<code class="notranslate">config.json</code>文件, 修改右边字段值为main<code class="notranslate">"GMEEK_VERSION":"main"</code></p>
-<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>如果值是<code class="notranslate">last</code>的话, Actions 会失败, 因为默认值<code class="notranslate">last</code>是靠源码仓库(Gmeek)的 tag 来构建的, 改成 main 就不会构建失败.<br>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>如果值是<code class="notranslate">last</code>的话, Actions 会失败, 因为默认值<code class="notranslate">last</code>是靠模板仓库的 tag 来构建的, 改成 main 就不会构建失败.<br>
 <del>创建新的 tag 也可以, 但是挺麻烦.</del></p>
 </div>
 <h2>修改 Actions 定时任务时间</h2>
@@ -4740,7 +4733,7 @@ after 是光标, blink 是光标动画.</p>
 </ol>
 <p>定位<code class="notranslate">@media (max-width:600px) {</code>, 给 body 增加最小宽度500px: <code class="notranslate">min-width:500px;</code></p>
 <ol start="6">
-<li>分离header文字以及图标</li>
+<li><strong>分离header文字以及图标</strong></li>
 </ol>
 <blockquote>
 <p>需要把<code class="notranslate">.title-right</code>这个类名全部重命名为<code class="notranslate">#functionBtn</code><br>
@@ -4884,7 +4877,7 @@ after 是光标, blink 是光标动画.</p>
 <div class="highlight highlight-source-css"><pre class="notranslate">.<span class="pl-c1">title-left</span>{<span class="pl-c1">display</span><span class="pl-kos">:</span>flex;<span class="pl-c1">flex-direction</span><span class="pl-kos">:</span>column;<span class="pl-c1">align-items</span><span class="pl-kos">:</span>center;<span class="pl-c1">gap</span><span class="pl-kos">:</span><span class="pl-c1">20<span class="pl-smi">px</span></span>;}</pre></div>
 <ol start="2">
 <li>
-<p>**定位样式<code class="notranslate">.title-left</code>, 直接删除相关的所有样式</p>
+<p><strong>定位样式<code class="notranslate">.title-left</code>, 直接删除相关的所有样式</strong></p>
 </li>
 <li>
 <p><strong>定位<code class="notranslate">.avatar:hover</code>, 修改样式.</strong></p>
@@ -4985,7 +4978,7 @@ after 是光标, blink 是光标动画.</p>
 <div class="markdown-alert markdown-alert-important"><p class="markdown-alert-title"><svg class="octicon octicon-report mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Important</p><p>tag 这个模板文件里增加的代码可以应用到搜索页.</p>
 </div>
 <ol>
-<li>打开<code class="notranslate">tag.html</code>修改样式, 用了 Diff 代码块, 看着改吧.</li>
+<li><strong>打开<code class="notranslate">tag.html</code>修改样式, 用了 Diff 代码块, 看着改吧.</strong></li>
 </ol>
 <div class="highlight highlight-source-diff"><pre class="notranslate"><span class="pl-mi1"><span class="pl-mi1">+</span>.title-right{display:flex;align-items:center;flex-direction:column;}</span>
 <span class="pl-mi1"><span class="pl-mi1">+</span>.title-right .circle{padding:14px 16px;}</span>
@@ -5050,7 +5043,7 @@ after 是光标, blink 是光标动画.</p>
 <p><strong>定位<code class="notranslate">.subnav-search</code>类名. 直接删除这个样式</strong></p>
 </li>
 <li>
-<p>**定位<code class="notranslate">.subnav-search-input</code>类名, 修改以下内容</p>
+<p><strong>定位<code class="notranslate">.subnav-search-input</code>类名, 修改以下内容</strong></p>
 </li>
 </ol>
 <div class="highlight highlight-source-diff"><pre class="notranslate"><span class="pl-mi1"><span class="pl-mi1">+</span>.subnav-search-input{width:160px;}</span>
@@ -5065,29 +5058,29 @@ after 是光标, blink 是光标动画.</p>
 <div class="highlight highlight-source-diff"><pre class="notranslate"><span class="pl-mi1"><span class="pl-mi1">+</span>.subnav-search {position: relative;s}</span>
 👆
 <span class="pl-md"><span class="pl-md">-</span>.subnav-search {position: relative;margin-left: 12px}</span></pre></div>
-<blockquote>
-<p>![NOTE]<br>
-到这里我的自定义 header 就修改完成了, 其它的样式可到 primer.css 里修改.</p>
-</blockquote>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>到这里我的自定义 header 就修改完成了, 其它的样式可到 primer.css 里修改.</p>
+</div>
 <h2>修改[警报强调信息]样式</h2>
 <ol>
 <li><strong>增加圆角</strong></li>
 </ol>
 <p>打开<code class="notranslate">Gmeek.py</code></p>
-<p>定位代码<code class="notranslate">markdown-alert-{alert}</code></p>
-<blockquote>
-<p>增加圆角6px.</p>
-</blockquote>
-<p><code class="notranslate">f'border-radius:6px;'</code></p>
+<p>定位代码<code class="notranslate">&lt;style&gt;.markdown-alert{</code>, 增加圆角6px.</p>
+<p><code class="notranslate">border-radius:6px;</code></p>
 <p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://i0.img2ipfs.com/ipfs/Qmen4szA7gJFZYiiXU7xcU2dqTfWyyCdEu619PCJCHtMQS"></p>
-<p>效果图:</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://i0.img2ipfs.com/ipfs/QmZpTsgv2gCosiy6VRuckx59U1yiLfyTMqxkbXHivWmusW"></p>
+<img data-fancybox="gallery" img-src="https://i1.img2ipfs.com/ipfs/QmRCXZrjvmUajTL5odC4d5oJyJwx8mrNSwDzGgTs3yuDMw"></p>
 <ol start="2">
 <li><strong>优化行高显示</strong></li>
 </ol>
 <p>定位<code class="notranslate">line-height:1;</code>, 直接删除这个属性.</p>
+<p><strong>效果图:</strong></p>
+<p><div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://i0.img2ipfs.com/ipfs/QmTWtMj5966zgsPLPYDNZDNpyQ4k6YfxMj8CazAMnnZjSQ"></p>
+<h1>优化任务列表样式</h1>
+<p>具体问题看<a href="https://github.com/Meekdai/Gmeek/issues/202" data-hovercard-type="issue" data-hovercard-url="/Meekdai/Gmeek/issues/202/hovercard">#202</a></p>
+<p>打开<code class="notranslate">Gmeek.py</code>, 定位<code class="notranslate">postBase=self.blogBase.copy()</code>, 在它的下面增加如下代码:</p>
+<div class="highlight highlight-source-python"><pre class="notranslate">        <span class="pl-k">if</span> <span class="pl-s">'&lt;ul class="contains-task-list"&gt;'</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>:
+            <span class="pl-s1">issue</span>[<span class="pl-s">"style"</span>]<span class="pl-c1">=</span><span class="pl-s1">issue</span>[<span class="pl-s">"style"</span>]<span class="pl-c1">+</span><span class="pl-s">'&lt;style&gt;.contains-task-list{padding-left:0.9em !important;list-style:none}&lt;/style&gt;'</span></pre></div>
 <h2>页面底部文字增加图标动画</h2>
 <p>爱心图标动画.</p>
 <p>打开<code class="notranslate">footer.html</code></p>
