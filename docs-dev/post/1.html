@@ -4,7 +4,7 @@
     <meta content="text/html; charset=utf-8" http-equiv="content-type" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href='../../static/primer.css' rel='stylesheet' />
+    <link href='../../static/primer.min.css' rel='stylesheet' />
     
     <link rel="icon" href="https://pic.imgdb.cn/item/6734c652d29ded1a8cc038aa.jpg"><script>
         let theme = localStorage.getItem("meek_theme") || "light";
@@ -4564,7 +4564,10 @@ if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
 </script>
 
 <script>
-const writeSpeed=80,textContent=document.querySelector(".postTitle").textContent;let textContentLen=textContent.length;const postTitle=document.querySelector(".postTitle");postTitle.textContent="";let idx=0;const writing=()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContentLen&&(clearInterval(writeTimer),postTitle.classList.remove("no-blink"))},writeTimer=setInterval(writing,80);postTitle.classList.add("no-blink"),document.addEventListener("DOMContentLoaded",()=>{const t=document.createElement("div");t.id="checkBtn";const e=document.getElementById("functionBtn");e.insertAdjacentElement("afterend",t),new IntersectionObserver(t=>{t.forEach(t=>{t.isIntersecting?e.classList.remove("Btn-flex"):e.classList.add("Btn-flex")})},{rootMargin:"150px 0px 0px 0px",threshold:0}).observe(t);const n=document.querySelectorAll(".spoilerText");n.length&&n.forEach(t=>t.onclick=(()=>t.classList.toggle("clear")));let o=0;document.addEventListener("touchstart",t=>{o=t.touches[0].clientY}),document.addEventListener("touchmove",t=>{const n=t.touches[0].clientY-o;n>0?e.style.top="0":n<0&&(e.style.top="100px"),o=t.touches[0].clientY}),document.addEventListener("wheel",t=>{t.deltaY>0?e.style.top="-100px":t.deltaY<0&&(e.style.top="0")})});
+// const writeSpeed=80,textContent=document.querySelector(".postTitle").textContent;let textContentLen=textContent.length;const postTitle=document.querySelector(".postTitle");postTitle.textContent="";let idx=0;const writing=()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContentLen&&(clearInterval(writeTimer),postTitle.classList.remove("no-blink"))},writeTimer=setInterval(writing,80);postTitle.classList.add("no-blink"),document.addEventListener("DOMContentLoaded",()=>{const t=document.createElement("div");t.id="checkBtn";const e=document.getElementById("functionBtn");e.insertAdjacentElement("afterend",t),new IntersectionObserver(t=>{t.forEach(t=>{t.isIntersecting?e.classList.remove("Btn-flex"):e.classList.add("Btn-flex")})},{rootMargin:"150px 0px 0px 0px",threshold:0}).observe(t);const n=document.querySelectorAll(".spoilerText");n.length&&n.forEach(t=>t.onclick=(()=>t.classList.toggle("clear")));let o=0;document.addEventListener("touchstart",t=>{o=t.touches[0].clientY}),document.addEventListener("touchmove",t=>{const n=t.touches[0].clientY-o;n>0?e.style.top="0":n<0&&(e.style.top="100px"),o=t.touches[0].clientY}),document.addEventListener("wheel",t=>{t.deltaY>0?e.style.top="-100px":t.deltaY<0&&(e.style.top="0")})});
+
+const writeSpeed=80,postTitle=document.querySelector(".postTitle"),textContent=postTitle.textContent;postTitle.textContent="";let idx=0;const writeTimer=setInterval(()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContent.length&&(clearInterval(writeTimer),postTitle.classList.remove("no-blink"))},80);postTitle.classList.add("no-blink"),document.addEventListener("DOMContentLoaded",()=>{const t=document.createElement("div");t.id="checkBtn";const e=document.getElementById("functionBtn");e.insertAdjacentElement("afterend",t),new IntersectionObserver(t=>{t.forEach(t=>{const n=t.isIntersecting;e.classList.toggle("Btn-flex",!n),e.style.top=n?"0":"-100px"})},{rootMargin:"150px 0px 0px 0px",threshold:0}).observe(t),document.querySelectorAll(".spoilerText").forEach(t=>t.addEventListener("click",()=>t.classList.toggle("clear")));let n=0;const o=t=>{e.style.top=t>0?"-100px":"0"};document.addEventListener("touchstart",t=>n=t.touches[0].clientY),document.addEventListener("touchmove",t=>o(t.touches[0].clientY-n)),document.addEventListener("wheel",t=>o(t.deltaY))});
+
 document.getElementById("pathHome").setAttribute("d",IconList["home"]);
 document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
 
@@ -4673,7 +4676,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 </script>
-<script src='../../static/ArticleJs.js'></script>
-<!-- <script src='../../static/ArticleJs.min.js'></script> -->
+<!-- <script src='../../static/ArticleJs.js'></script> -->
+<script src='../../static/ArticleJs.min.js'></script>
 <script src='https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js'></script>
 </html>

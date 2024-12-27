@@ -13724,7 +13724,7 @@ a.btn-primary:focus-visible {
 }
 
 /* 图片懒加载占位css动画 */
-.ImgLazyLoad {
+.ImgLazyLoad-circle {
 	width: 40px;
 	height: 40px;
 	border-radius: 50%;
