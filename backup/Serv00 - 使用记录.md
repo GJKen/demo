@@ -80,7 +80,7 @@ Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 
 定位这个`config.json`文件, 双击编辑它:
 
-`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmXmXQRv5AfHqy2sRYS4dNCPQL2xPiGfaGtgTJjwGsX5Et"`
+`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmZSbd9AMpbHWfzdNzt3EDD5ke6UjsAC77DeaG4syNpKWw"`
 
 我主要修改了`CDN` `database` `scheme`三个部分,
 
@@ -151,17 +151,9 @@ Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 
 我们进入 https://dash.cloudflare.com
 
-点击添加域.
+点击添加域, 再输入自己的域名, 选择最底下的 free 计划.
 
 `Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmcFYHqU8iTz77vEzVUkrHkMiQUcJ1mCjBz2u6q9mszmaD"`
-
-输入自己的域名.
-
-`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmWEwsF7kjqWYZET8AbyPbVizciT3pLDbi6Pjm4xkYZvCS"`
-
-选择 free 计划.
-
-`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmeYbZ48awUqAPApdLrRckVqbtLB71XWTpCafpHCwE2hHG"`
 
 复制 dns 名称服务器.
 
