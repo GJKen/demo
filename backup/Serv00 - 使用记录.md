@@ -80,7 +80,7 @@ Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 
 定位这个`config.json`文件, 双击编辑它:
 
-`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmZSbd9AMpbHWfzdNzt3EDD5ke6UjsAC77DeaG4syNpKWw"`
+`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmUz4eAt1DMDzxHNyYnRrrYJx1uwjrCcR61BKAGZDXYutz"`
 
 我主要修改了`CDN` `database` `scheme`三个部分,
 
@@ -181,11 +181,11 @@ echo "$(date '+%Y-%m-%d %H:%M:%S')" > ~/domains/alist/logfile.txt
 
 转到 panel 面板, 创建 Cron Jobs 定时任务.
 
-我们需要创建2条定时任务, 一个是每小时执行, 一个是 reboot 执行,
+我们需要创建一个每小时执行的任务进行保活,
 
-计划任务执行的是我的`runAlist.sh`脚本进行进程保活. 如下图:
+计划任务执行的是我的`runAlist.sh`. 如下图:
 
-`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmRgagQ4tvQ6BeD5Hcjm2tx7YdWFL6Fo3BYCiHZJD9wgSd"`
+`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmSNKpcsXM2xbaubLF9fAWV4irZpaL74rsAQUfu22kPw2W"`
 
 成功后不出意外的话, 隔一段时间进入 Alist 网盘需要重新登陆账号, 因为定时脚本会先杀原来的 Alist 进程再重启.
 
@@ -440,17 +440,15 @@ function delay(ms) {
 
 ## 创建 Workers
 
-进入 Cloudflare 面板, 然后按照下图点击创建.
-
-`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmXBBc5zsb3vZEbXWKjw9oUv7u6899kPV8eDz8MXZKyUpe"`
+进入 Cloudflare 面板, 创建 Workers
 
 名字随意, 建议写`Serv00Keep`方便好记, 然后右下角点部署.
 
-`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmNP8RrwuUE6LEauh1tEAVApPXkLzf1nH28r6mWZgV5GEg"`
+`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/Qmc15LLyu3pEnWWvtxHqK48AHv49FMaXYPTgfw96JNqELt"`
 
 部署完成后点击编辑代码.
 
-`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmNVaEi6uUU7AaprzNaPGGwRbKNmc1kHvXEAE6pZTPZzqa"`
+`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmQkE6PnCBAC5Ug3pKMb6ffgTW9ybFNNhEFzkcSNSNDsXu"`
 
 粘贴 Worker 代码, 粘贴好之后点击部署.
 
