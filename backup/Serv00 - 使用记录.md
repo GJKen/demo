@@ -8,7 +8,7 @@
 进入 Additional services 选项卡中找到 Run your own applications 项目,
 如下图所示, 必须要设置成如图所示的 Enabled.
 
-`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmUg8VV61q7DApUWcijdA1xdZar5wE5TUhcfMq5femCMYs"`
+`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmSxxUuqJmk7f3HK7jSSzrTRa8fHRLYpNWq7JVzQ2pvpbM"`
 
 如果不开启这一项, 自己的用户目录下的所有文件都无法添加可执行权限.
 
@@ -21,32 +21,27 @@
 每个账户只能创建3个端口.
 其中一个用来反代本地搭建 Alist 的端口, 这里我用 26666 端口.
 
-`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmNSXAsz4QFnkTp3JRHGLuUJStNoPaK7yERRqPj9spXSc9"`
+`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmaeNdqmf9RMN6DxDiQUUEnY7F4ng4A5YmL28jsKG7TCt1"`
 
 ### 创建网站
 
 > Serv00 账号创建好之后默认就有一个网站, 一般是`USERNAME.serv00.net`, 可以随意删除.
 
-这里可以用自己的域名或者用 Serv00 的域名.
 下图我写的是自己的域名.
 
-`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmX3mkbrv5EfzsCzJXTTGqKdYDiXc2eu5BJMuK7ozD3PNC"`
+`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmQrk88sEBPW1pykSdshM9L6gwSrANTE9wvRY1ySk5sjGW"`
 
 其中 26666 这个端口是 Alist 服务的端口.
 
 ### 网站添加 SSL 证书
 
-站点创建完成后, 点击上方的 Manage SSL certificates.
+站点创建完成后, 点击上方的 Manage SSL certificates, 再点击 Manage.
 
-`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmWRkpfidsY2KGkX47dAW4tKmNe2hStW6vzodRe7GUG2dw"`
+`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/Qmdr6rNkRPJQDpwaG4wcRDddjKtCWWwUFujpY662HH8HJf"`
 
-点击 Manage.
+点击 Add certificate, 最后点击 Add 完成创建证书.
 
-`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmcXdLQSy2PJpuWMCVzMZebNFpdt2w3P6Px1wQ84Pi9jbx"`
-
-点击 Add certificate.
-
-`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/Qmd9CV8BxtjSMZivZnCQrVd1dqByaj6HoUWKi8UMrC8ZX6"`
+`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmbGd8SafDnUUWpwaFgcAStzSPoc9w3gR6qj5RBRsay67D"`
 
 ### 安装 Alist
 
@@ -73,7 +68,7 @@ mkdir -p ~/domains/alist && cd ~/domains/alist && curl -L -o alist.tar.gz https:
 
 回到 Panel 面板, 找到 MySQL 选项卡, 使用 Add database 功能新建一个数据库:
 
-`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/Qmd1bF66pa9RihfeYZ6odBBG9htemSi57jy2A32Q4wDt7r"`
+`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmbLyHtCapJsYyg2LHckgYGpkuGcCnAbPkpnNR2CawrV82"`
 
 Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 
@@ -83,15 +78,13 @@ Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 
 进入 Panel 面板, 找到 File manager 选项卡, 会如下图的进入文件管理器.
 
-定位文件:
+定位这个`config.json`文件, 双击编辑它:
 
 `Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmXmXQRv5AfHqy2sRYS4dNCPQL2xPiGfaGtgTJjwGsX5Et"`
 
-双击编辑这个`config.json`文件.
-
 我主要修改了`CDN` `database` `scheme`三个部分,
 
-`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmXLJa8YMr9KufMYVNQjVW1wXCjWmJ3Q9V1PqR5BRXHtHU"`
+`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmZSbd9AMpbHWfzdNzt3EDD5ke6UjsAC77DeaG4syNpKWw"`
 
 <table>
   <tr>
@@ -103,7 +96,7 @@ Database name 和 Username 字段为了方便好记就写 Alist 就行了.
   <tr>
     <td rowspan="6">database</td>
     <td>type</td>
-    <td>因为我们创建的数据库类型是 mysql, 所以这里写<code class="notranslate">mysql</code>.</td>
+    <td>因为我们创建的数据库类型是 mysql, 就写<code class="notranslate">mysql</code>.</td>
   </tr>
   <tr>
     <td>host</td>
@@ -126,8 +119,8 @@ Database name 和 Username 字段为了方便好记就写 Alist 就行了.
     <td>填写创建的数据表名称</td>
   </tr>
   <tr>
-    <td rowspan="2">database</td>
-    <td>scheme</td>
+    <td rowspan="2">scheme</td>
+    <td>address</td>
     <td>0.0.0.0</td>
   </tr>
   <tr>
@@ -146,13 +139,13 @@ Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 ./alist server
 ```
 
-`Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmYL72sd2Wyb5C6WrJe6G7w1NvAdpqXiUwFWUEm6FCSGxt"`
+`Gmeek-imgbox="https://ipfs.io/ipfs/Qmdw9VRvPnosHNGuZbEoi1EAr6GYxxDFmrbFM2BdB8orSD"`
 
 运行正常, 显示的管理员账号的密码一定要记住. 接着使用 Ctrl+c 停止运行.
 
 ### 自定义域名绑定
 
-我这边使用 us.kg 的免费域名进行访问 Alist.
+我这边使用 [us.kg]()的免费域名进行访问 Alist.
 
 因为 serv00 的域名基本上都会被墙, 没办法只能用~~Cloudflare减速器~~跨墙了, ~~CDN 回源加速不会弄.~~
 
@@ -497,3 +490,7 @@ function delay(ms) {
 同时可以看到正常运行没问题, 接下来就是定时执行不用再管它了.
 
 `Gmeek-imgbox="https://ipfs.mbzj.org/ipfs/QmSZWMYTY92JjWUxipWBLb9ipAWpAayYY3Jwint8Zp8XAK"`
+
+# 文章引用
+
+[Saika's Blog](https://saika.us.kg/2024/01/27/serv00_logs#Alist) | [知乎](https://zhuanlan.zhihu.com/p/680607217)
