@@ -27,6 +27,18 @@
 -   无序列表:使用 `*`、`+` 或 `-` 加上一个空格.
 -   有序列表:使用数字加点加空格.
 
+## 任务列表
+
+任务列表是一组任务，每个任务都在单独的行上呈现，带有可点击的复选框。 您可以选中或取消选中复选框来将任务标记为完成或未完成。
+
+![](https://docs.github.com/assets/cb-64626/mw-1440/images/help/writing/task-list-rendered-simple.webp)
+
+```
+- [x] #739
+- [ ] https://github.com/octo-org/octo-repo/issues/740
+- [ ] Add delight to the experience when all tasks are complete :tada:
+```
+
 ## 链接与图片
 
 -   链接:`[显示文本](链接地址 "标题")`
