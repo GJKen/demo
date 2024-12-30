@@ -891,14 +891,16 @@ html {
 .markdown-body img {
     max-width: 100%;
     box-sizing: content-box;
-    transition: transform 0.3s ease, clip-path 0.3s ease;/* 增加 */
-    -webkit-transition: -webkit-transform 0.3s ease, -webkit-clip-path 0.3s ease;/* 增加 */
+	/* 增加 */
+    transition: transform 0.3s ease, -webkit-transform 0.3s ease, clip-path 0.3s ease, -webkit-clip-path 0.3s ease;
 }
 /* 增加 */
 .markdown-body img:hover {
-    transform: scale(1.01);
-    clip-path: inset(-4%);
-    cursor: zoom-in;
+	transform: scale(1.01);
+	-webkit-transform: scale(1.01);
+	clip-path: inset(-4%);
+	-webkit-clip-path: inset(-4%);
+	cursor: zoom-in;
 }
 ```
 
@@ -2777,14 +2779,16 @@ html {
 .markdown-body img {
     max-width: 100%;
     box-sizing: content-box;
-    transition: transform 0.3s ease, clip-path 0.3s ease;/* 增加 */
-    -webkit-transition: -webkit-transform 0.3s ease, -webkit-clip-path 0.3s ease;/* 增加 */
+	/* 增加 */
+    transition: transform 0.3s ease, -webkit-transform 0.3s ease, clip-path 0.3s ease, -webkit-clip-path 0.3s ease;
 }
 /* 增加 */
 .markdown-body img:hover {
-    transform: scale(1.01);
-    clip-path: inset(-4%);
-    cursor: zoom-in;
+	transform: scale(1.01);
+	-webkit-transform: scale(1.01);
+	clip-path: inset(-4%);
+	-webkit-clip-path: inset(-4%);
+	cursor: zoom-in;
 }
 ```
 
@@ -4505,14 +4509,16 @@ svg 暗黑模式下颜色.<br>
 .<span class="pl-c1">markdown-body</span> <span class="pl-ent">img</span> {
     <span class="pl-c1">max-width</span><span class="pl-kos">:</span> <span class="pl-c1">100<span class="pl-smi">%</span></span>;
     <span class="pl-c1">box-sizing</span><span class="pl-kos">:</span> content-box;
-    <span class="pl-c1">transition</span><span class="pl-kos">:</span> transform <span class="pl-c1">0.3<span class="pl-smi">s</span></span> ease<span class="pl-kos">,</span> clip-path <span class="pl-c1">0.3<span class="pl-smi">s</span></span> ease;<span class="pl-c">/* 增加 */</span>
-    <span class="pl-c1">-webkit-transition</span><span class="pl-kos">:</span> -webkit-transform <span class="pl-c1">0.3<span class="pl-smi">s</span></span> ease<span class="pl-kos">,</span> -webkit-clip-path <span class="pl-c1">0.3<span class="pl-smi">s</span></span> ease;<span class="pl-c">/* 增加 */</span>
+	<span class="pl-c">/* 增加 */</span>
+    <span class="pl-c1">transition</span><span class="pl-kos">:</span> transform <span class="pl-c1">0.3<span class="pl-smi">s</span></span> ease<span class="pl-kos">,</span> -webkit-transform <span class="pl-c1">0.3<span class="pl-smi">s</span></span> ease<span class="pl-kos">,</span> clip-path <span class="pl-c1">0.3<span class="pl-smi">s</span></span> ease<span class="pl-kos">,</span> -webkit-clip-path <span class="pl-c1">0.3<span class="pl-smi">s</span></span> ease;
 }
 <span class="pl-c">/* 增加 */</span>
 .<span class="pl-c1">markdown-body</span> <span class="pl-ent">img</span><span class="pl-kos">:</span><span class="pl-c1">hover</span> {
-    <span class="pl-c1">transform</span><span class="pl-kos">:</span> <span class="pl-en">scale</span>(<span class="pl-c1">1.01</span>);
-    <span class="pl-c1">clip-path</span><span class="pl-kos">:</span> <span class="pl-en">inset</span>(<span class="pl-c1">-4<span class="pl-smi">%</span></span>);
-    <span class="pl-c1">cursor</span><span class="pl-kos">:</span> zoom-in;
+	<span class="pl-c1">transform</span><span class="pl-kos">:</span> <span class="pl-en">scale</span>(<span class="pl-c1">1.01</span>);
+	<span class="pl-c1">-webkit-transform</span><span class="pl-kos">:</span> <span class="pl-en">scale</span>(<span class="pl-c1">1.01</span>);
+	<span class="pl-c1">clip-path</span><span class="pl-kos">:</span> <span class="pl-en">inset</span>(<span class="pl-c1">-4<span class="pl-smi">%</span></span>);
+	<span class="pl-c1">-webkit-clip-path</span><span class="pl-kos">:</span> <span class="pl-en">inset</span>(<span class="pl-c1">-4<span class="pl-smi">%</span></span>);
+	<span class="pl-c1">cursor</span><span class="pl-kos">:</span> zoom-in;
 }</pre></div>
 </details>
 <h2>文章 &lt;code&gt; 标签样式</h2>

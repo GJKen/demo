@@ -879,14 +879,16 @@ html {
 .markdown-body img {
     max-width: 100%;
     box-sizing: content-box;
-    transition: transform 0.3s ease, clip-path 0.3s ease;/* 增加 */
-    -webkit-transition: -webkit-transform 0.3s ease, -webkit-clip-path 0.3s ease;/* 增加 */
+	/* 增加 */
+    transition: transform 0.3s ease, -webkit-transform 0.3s ease, clip-path 0.3s ease, -webkit-clip-path 0.3s ease;
 }
 /* 增加 */
 .markdown-body img:hover {
-    transform: scale(1.01);
-    clip-path: inset(-4%);
-    cursor: zoom-in;
+	transform: scale(1.01);
+	-webkit-transform: scale(1.01);
+	clip-path: inset(-4%);
+	-webkit-clip-path: inset(-4%);
+	cursor: zoom-in;
 }
 ```
 
