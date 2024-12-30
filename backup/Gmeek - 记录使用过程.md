@@ -64,8 +64,9 @@ CSS 效果:
 `Gmeek.py`匹配转换的代码如下:
 
 ```python
-        if '<code class="notranslate">Gmeek-imgbox' in post_body:
-            post_body = re.sub(r'<p>\s*<code class="notranslate">Gmeek-imgbox="([^"]+)"</code>\s*</p>', lambda match: f'<div class="ImgLazyLoad-circle"></div>\n<img data-fancybox="gallery" img-src="{match.group(1)}">', post_body, flags=re.DOTALL)
+        # 剧透
+        if '<code class="notranslate">Gmeek-spoilertxt' in post_body: 
+            post_body = re.sub(r'<code class="notranslate">Gmeek-spoilertxt="([^"]+)"</code>', lambda match: f'<span class="spoilerText">{match.group(1)}</span>', post_body, flags=re.DOTALL)
 ```
 
 markdown 输入:
@@ -172,8 +173,9 @@ document.addEventListener('DOMContentLoaded', () => {
 然后在下面增加代码:
 
 ```python
-        if '<code class="notranslate">Gmeek-imgbox' in post_body: 
-            post_body = re.sub(r'<code class="notranslate">Gmeek-imgbox="([^"]+)"</code>',lambda match: f'<img data-fancybox="gallery" src="{match.group(1)}">',post_body, flags=re.DOTALL)
+        # 手动插入外链图片
+        if '<code class="notranslate">Gmeek-imgbox' in post_body:
+            post_body = re.sub(r'<p>\s*<code class="notranslate">Gmeek-imgbox="([^"]+)"</code>\s*</p>', lambda match: f'<div class="ImgLazyLoad-circle"></div>\n<img data-fancybox="gallery" img-src="{match.group(1)}">', post_body, flags=re.DOTALL)
 ```
 
 - **使用演示**
@@ -1644,6 +1646,7 @@ document.addEventListener('wheel', e => handleScroll(e.deltaY));
 打开`Gmeek.py`, 定位`postBase=self.blogBase.copy()`, 在它的下面增加如下代码:
 
 ```python
+        # 优化任务列表样式
         if '<ul class="contains-task-list">' in post_body:
             issue["style"]=issue["style"]+'<style>.contains-task-list{padding-left:0.9em !important;list-style:none}</style>'
 ```
@@ -1728,7 +1731,8 @@ Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 替换成下面的代码:
 
 ```python
-if '<code class="notranslate">Gmeek-html' in post_body:
+        # 给原本的Gmeek-html增加小括号判断:<>, 缩小匹配范围
+        if '<code class="notranslate">Gmeek-html' in post_body:
             post_body = re.sub(r'<code class="notranslate">Gmeek-html(&lt;.*?&gt;)</code>', lambda match: html.unescape(match.group(1)), post_body, flags=re.DOTALL)
 ```
 
@@ -1746,12 +1750,12 @@ if '<code class="notranslate">Gmeek-html' in post_body:
 
 ```python
         # 默认情况插入图片情况下的匹配规则<p> -> <a> -><img>
-        if '<a' in post_body:
+        if '<p><a target="_blank" rel=' in post_body:
             post_body = re.sub(r'<p>\s*<a[^>]*?href="([^"]+)"[^>]*?><img[^>]*?src="\1"[^>]*?></a>\s*</p>', lambda match: f'<div class="ImgLazyLoad-circle"></div>\n<img data-fancybox="gallery" img-src="{match.group(1)}">', post_body, flags=re.DOTALL)
 
         # 通用插入图片情况下的匹配规则<a> -><img>
-        if '<a' in post_body:
-            post_body = re.sub(r'\s*<a[^>]*?href="([^"]+)"[^>]*?><img[^>]*?src="\1"[^>]*?></a>\s*', lambda match: f'<div class="ImgLazyLoad-circle"></div>\n<img data-fancybox="gallery" img-src="{match.group(1)}">', post_body, flags=re.DOTALL)
+        if '<a target="_blank" rel=' in post_body:
+            post_body = re.sub(r'<a[^>]*?href="([^"]+)"[^>]*?><img[^>]*?src="\1"[^>]*?></a>',lambda match: f'<div class="ImgLazyLoad-circle"></div>\n<img data-fancybox="gallery" img-src="{match.group(1)}">', post_body, flags=re.DOTALL)
 ```
 
 - **使用演示**

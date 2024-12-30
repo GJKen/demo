@@ -76,8 +76,9 @@ CSS 效果:
 `Gmeek.py`匹配转换的代码如下:
 
 ```python
-        if '<code class='notranslate'>Gmeek-imgbox' in post_body:
-            post_body = re.sub(r'<p>\s*<code class='notranslate'>Gmeek-imgbox='([^']+)'</code>\s*</p>', lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>', post_body, flags=re.DOTALL)
+        # 剧透
+        if '<code class='notranslate'>Gmeek-spoilertxt' in post_body: 
+            post_body = re.sub(r'<code class='notranslate'>Gmeek-spoilertxt='([^']+)'</code>', lambda match: f'<span class='spoilerText'>{match.group(1)}</span>', post_body, flags=re.DOTALL)
 ```
 
 markdown 输入:
@@ -184,8 +185,9 @@ document.addEventListener('DOMContentLoaded', () => {
 然后在下面增加代码:
 
 ```python
-        if '<code class='notranslate'>Gmeek-imgbox' in post_body: 
-            post_body = re.sub(r'<code class='notranslate'>Gmeek-imgbox='([^']+)'</code>',lambda match: f'<img data-fancybox='gallery' src='{match.group(1)}'>',post_body, flags=re.DOTALL)
+        # 手动插入外链图片
+        if '<code class='notranslate'>Gmeek-imgbox' in post_body:
+            post_body = re.sub(r'<p>\s*<code class='notranslate'>Gmeek-imgbox='([^']+)'</code>\s*</p>', lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>', post_body, flags=re.DOTALL)
 ```
 
 - **使用演示**
@@ -1656,6 +1658,7 @@ document.addEventListener('wheel', e => handleScroll(e.deltaY));
 打开`Gmeek.py`, 定位`postBase=self.blogBase.copy()`, 在它的下面增加如下代码:
 
 ```python
+        # 优化任务列表样式
         if '<ul class='contains-task-list'>' in post_body:
             issue['style']=issue['style']+'<style>.contains-task-list{padding-left:0.9em !important;list-style:none}</style>'
 ```
@@ -1740,7 +1743,8 @@ Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 替换成下面的代码:
 
 ```python
-if '<code class='notranslate'>Gmeek-html' in post_body:
+        # 给原本的Gmeek-html增加小括号判断:<>, 缩小匹配范围
+        if '<code class='notranslate'>Gmeek-html' in post_body:
             post_body = re.sub(r'<code class='notranslate'>Gmeek-html(&lt;.*?&gt;)</code>', lambda match: html.unescape(match.group(1)), post_body, flags=re.DOTALL)
 ```
 
@@ -1758,12 +1762,12 @@ if '<code class='notranslate'>Gmeek-html' in post_body:
 
 ```python
         # 默认情况插入图片情况下的匹配规则<p> -> <a> -><img>
-        if '<a' in post_body:
+        if '<p><a target='_blank' rel=' in post_body:
             post_body = re.sub(r'<p>\s*<a[^>]*?href='([^']+)'[^>]*?><img[^>]*?src='\1'[^>]*?></a>\s*</p>', lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>', post_body, flags=re.DOTALL)
 
         # 通用插入图片情况下的匹配规则<a> -><img>
-        if '<a' in post_body:
-            post_body = re.sub(r'\s*<a[^>]*?href='([^']+)'[^>]*?><img[^>]*?src='\1'[^>]*?></a>\s*', lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>', post_body, flags=re.DOTALL)
+        if '<a target='_blank' rel=' in post_body:
+            post_body = re.sub(r'<a[^>]*?href='([^']+)'[^>]*?><img[^>]*?src='\1'[^>]*?></a>',lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>', post_body, flags=re.DOTALL)
 ```
 
 - **使用演示**
@@ -1958,8 +1962,9 @@ CSS 效果:
 `Gmeek.py`匹配转换的代码如下:
 
 ```python
-        if '<code class='notranslate'>Gmeek-imgbox' in post_body:
-            post_body = re.sub(r'<p>\s*<code class='notranslate'>Gmeek-imgbox='([^']+)'</code>\s*</p>', lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>', post_body, flags=re.DOTALL)
+        # 剧透
+        if '<code class='notranslate'>Gmeek-spoilertxt' in post_body: 
+            post_body = re.sub(r'<code class='notranslate'>Gmeek-spoilertxt='([^']+)'</code>', lambda match: f'<span class='spoilerText'>{match.group(1)}</span>', post_body, flags=re.DOTALL)
 ```
 
 markdown 输入:
@@ -2066,8 +2071,9 @@ document.addEventListener('DOMContentLoaded', () => {
 然后在下面增加代码:
 
 ```python
-        if '<code class='notranslate'>Gmeek-imgbox' in post_body: 
-            post_body = re.sub(r'<code class='notranslate'>Gmeek-imgbox='([^']+)'</code>',lambda match: f'<img data-fancybox='gallery' src='{match.group(1)}'>',post_body, flags=re.DOTALL)
+        # 手动插入外链图片
+        if '<code class='notranslate'>Gmeek-imgbox' in post_body:
+            post_body = re.sub(r'<p>\s*<code class='notranslate'>Gmeek-imgbox='([^']+)'</code>\s*</p>', lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>', post_body, flags=re.DOTALL)
 ```
 
 - **使用演示**
@@ -3538,6 +3544,7 @@ document.addEventListener('wheel', e => handleScroll(e.deltaY));
 打开`Gmeek.py`, 定位`postBase=self.blogBase.copy()`, 在它的下面增加如下代码:
 
 ```python
+        # 优化任务列表样式
         if '<ul class='contains-task-list'>' in post_body:
             issue['style']=issue['style']+'<style>.contains-task-list{padding-left:0.9em !important;list-style:none}</style>'
 ```
@@ -3622,7 +3629,8 @@ Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 替换成下面的代码:
 
 ```python
-if '<code class='notranslate'>Gmeek-html' in post_body:
+        # 给原本的Gmeek-html增加小括号判断:<>, 缩小匹配范围
+        if '<code class='notranslate'>Gmeek-html' in post_body:
             post_body = re.sub(r'<code class='notranslate'>Gmeek-html(&lt;.*?&gt;)</code>', lambda match: html.unescape(match.group(1)), post_body, flags=re.DOTALL)
 ```
 
@@ -3640,12 +3648,12 @@ if '<code class='notranslate'>Gmeek-html' in post_body:
 
 ```python
         # 默认情况插入图片情况下的匹配规则<p> -> <a> -><img>
-        if '<a' in post_body:
+        if '<p><a target='_blank' rel=' in post_body:
             post_body = re.sub(r'<p>\s*<a[^>]*?href='([^']+)'[^>]*?><img[^>]*?src='\1'[^>]*?></a>\s*</p>', lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>', post_body, flags=re.DOTALL)
 
         # 通用插入图片情况下的匹配规则<a> -><img>
-        if '<a' in post_body:
-            post_body = re.sub(r'\s*<a[^>]*?href='([^']+)'[^>]*?><img[^>]*?src='\1'[^>]*?></a>\s*', lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>', post_body, flags=re.DOTALL)
+        if '<a target='_blank' rel=' in post_body:
+            post_body = re.sub(r'<a[^>]*?href='([^']+)'[^>]*?><img[^>]*?src='\1'[^>]*?></a>',lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>', post_body, flags=re.DOTALL)
 ```
 
 - **使用演示**
@@ -3884,8 +3892,9 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 <details><summary>点击展开</summary>
 <p><code class="notranslate">Gmeek-imgbox</code>首先匹配到关键字后转化标签.</p>
 <p><code class="notranslate">Gmeek.py</code>匹配转换的代码如下:</p>
-<div class="highlight highlight-source-python"><pre class="notranslate">        <span class="pl-k">if</span> <span class="pl-s">'&lt;code class="notranslate"&gt;Gmeek-imgbox'</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>:
-            <span class="pl-s1">post_body</span> <span class="pl-c1">=</span> <span class="pl-s1">re</span>.<span class="pl-c1">sub</span>(<span class="pl-s">r'&lt;p&gt;\s*&lt;code class="notranslate"&gt;Gmeek-imgbox="([^"]+)"&lt;/code&gt;\s*&lt;/p&gt;'</span>, <span class="pl-k">lambda</span> <span class="pl-s1">match</span>: <span class="pl-s">f'&lt;div class="ImgLazyLoad-circle"&gt;&lt;/div&gt;<span class="pl-cce">\n</span>&lt;img data-fancybox="gallery" img-src="<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">match</span>.<span class="pl-c1">group</span>(<span class="pl-c1">1</span>)<span class="pl-kos">}</span></span>"&gt;'</span>, <span class="pl-s1">post_body</span>, <span class="pl-s1">flags</span><span class="pl-c1">=</span><span class="pl-s1">re</span>.<span class="pl-c1">DOTALL</span>)</pre></div>
+<div class="highlight highlight-source-python"><pre class="notranslate">        <span class="pl-c"># 剧透</span>
+        <span class="pl-k">if</span> <span class="pl-s">'&lt;code class="notranslate"&gt;Gmeek-spoilertxt'</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>: 
+            <span class="pl-s1">post_body</span> <span class="pl-c1">=</span> <span class="pl-s1">re</span>.<span class="pl-c1">sub</span>(<span class="pl-s">r'&lt;code class="notranslate"&gt;Gmeek-spoilertxt="([^"]+)"&lt;/code&gt;'</span>, <span class="pl-k">lambda</span> <span class="pl-s1">match</span>: <span class="pl-s">f'&lt;span class="spoilerText"&gt;<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">match</span>.<span class="pl-c1">group</span>(<span class="pl-c1">1</span>)<span class="pl-kos">}</span></span>&lt;/span&gt;'</span>, <span class="pl-s1">post_body</span>, <span class="pl-s1">flags</span><span class="pl-c1">=</span><span class="pl-s1">re</span>.<span class="pl-c1">DOTALL</span>)</pre></div>
 <p>markdown 输入:</p>
 <pre class="notranslate"><code class="notranslate">`Gmeek-imgbox="https://example.com/image.jpg"`
 </code></pre>
@@ -3958,8 +3967,9 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 </blockquote>
 <p>打开<code class="notranslate">Gmeek.py</code>文件, 定位字符串<code class="notranslate">Gmeek-html</code></p>
 <p>然后在下面增加代码:</p>
-<div class="highlight highlight-source-python"><pre class="notranslate">        <span class="pl-k">if</span> <span class="pl-s">'&lt;code class="notranslate"&gt;Gmeek-imgbox'</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>: 
-            <span class="pl-s1">post_body</span> <span class="pl-c1">=</span> <span class="pl-s1">re</span>.<span class="pl-c1">sub</span>(<span class="pl-s">r'&lt;code class="notranslate"&gt;Gmeek-imgbox="([^"]+)"&lt;/code&gt;'</span>,<span class="pl-k">lambda</span> <span class="pl-s1">match</span>: <span class="pl-s">f'&lt;img data-fancybox="gallery" src="<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">match</span>.<span class="pl-c1">group</span>(<span class="pl-c1">1</span>)<span class="pl-kos">}</span></span>"&gt;'</span>,<span class="pl-s1">post_body</span>, <span class="pl-s1">flags</span><span class="pl-c1">=</span><span class="pl-s1">re</span>.<span class="pl-c1">DOTALL</span>)</pre></div>
+<div class="highlight highlight-source-python"><pre class="notranslate">        <span class="pl-c"># 手动插入外链图片</span>
+        <span class="pl-k">if</span> <span class="pl-s">'&lt;code class="notranslate"&gt;Gmeek-imgbox'</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>:
+            <span class="pl-s1">post_body</span> <span class="pl-c1">=</span> <span class="pl-s1">re</span>.<span class="pl-c1">sub</span>(<span class="pl-s">r'&lt;p&gt;\s*&lt;code class="notranslate"&gt;Gmeek-imgbox="([^"]+)"&lt;/code&gt;\s*&lt;/p&gt;'</span>, <span class="pl-k">lambda</span> <span class="pl-s1">match</span>: <span class="pl-s">f'&lt;div class="ImgLazyLoad-circle"&gt;&lt;/div&gt;<span class="pl-cce">\n</span>&lt;img data-fancybox="gallery" img-src="<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">match</span>.<span class="pl-c1">group</span>(<span class="pl-c1">1</span>)<span class="pl-kos">}</span></span>"&gt;'</span>, <span class="pl-s1">post_body</span>, <span class="pl-s1">flags</span><span class="pl-c1">=</span><span class="pl-s1">re</span>.<span class="pl-c1">DOTALL</span>)</pre></div>
 <ul>
 <li><strong>使用演示</strong></li>
 </ul>
@@ -5103,7 +5113,8 @@ after 是光标, blink 是光标动画.</p>
 <h1>优化任务列表样式</h1>
 <p>具体问题看<a href="https://github.com/Meekdai/Gmeek/issues/202" data-hovercard-type="issue" data-hovercard-url="/Meekdai/Gmeek/issues/202/hovercard">#202</a></p>
 <p>打开<code class="notranslate">Gmeek.py</code>, 定位<code class="notranslate">postBase=self.blogBase.copy()</code>, 在它的下面增加如下代码:</p>
-<div class="highlight highlight-source-python"><pre class="notranslate">        <span class="pl-k">if</span> <span class="pl-s">'&lt;ul class="contains-task-list"&gt;'</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>:
+<div class="highlight highlight-source-python"><pre class="notranslate">        <span class="pl-c"># 优化任务列表样式</span>
+        <span class="pl-k">if</span> <span class="pl-s">'&lt;ul class="contains-task-list"&gt;'</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>:
             <span class="pl-s1">issue</span>[<span class="pl-s">"style"</span>]<span class="pl-c1">=</span><span class="pl-s1">issue</span>[<span class="pl-s">"style"</span>]<span class="pl-c1">+</span><span class="pl-s">'&lt;style&gt;.contains-task-list{padding-left:0.9em !important;list-style:none}&lt;/style&gt;'</span></pre></div>
 <h2>页面底部文字增加图标动画</h2>
 <p>爱心图标动画.</p>
@@ -5164,7 +5175,8 @@ after 是光标, blink 是光标动画.</p>
 <h1>优化 Gmeek-html, 标签转换匹配</h1>
 <p>打开<code class="notranslate">Gmeek.py</code>, 定位字符串<code class="notranslate">gmeek-html</code></p>
 <p>替换成下面的代码:</p>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">if</span> <span class="pl-s">'&lt;code class="notranslate"&gt;Gmeek-html'</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>:
+<div class="highlight highlight-source-python"><pre class="notranslate">        <span class="pl-c"># 给原本的Gmeek-html增加小括号判断:&lt;&gt;, 缩小匹配范围</span>
+        <span class="pl-k">if</span> <span class="pl-s">'&lt;code class="notranslate"&gt;Gmeek-html'</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>:
             <span class="pl-s1">post_body</span> <span class="pl-c1">=</span> <span class="pl-s1">re</span>.<span class="pl-c1">sub</span>(<span class="pl-s">r'&lt;code class="notranslate"&gt;Gmeek-html(&amp;lt;.*?&amp;gt;)&lt;/code&gt;'</span>, <span class="pl-k">lambda</span> <span class="pl-s1">match</span>: <span class="pl-s1">html</span>.<span class="pl-c1">unescape</span>(<span class="pl-s1">match</span>.<span class="pl-c1">group</span>(<span class="pl-c1">1</span>)), <span class="pl-s1">post_body</span>, <span class="pl-s1">flags</span><span class="pl-c1">=</span><span class="pl-s1">re</span>.<span class="pl-c1">DOTALL</span>)</pre></div>
 <p>原先匹配的内容为:<code class="notranslate">&lt;code class="notranslate"&gt;Gmeek-html(.*?)&lt;/code&gt;</code>,</p>
 <p>这种情况下, 如果在 html 中含有行内代码块标签并且内容含有 Gmeek-html, 会导致转换文章内容时出现显示错误,</p>
@@ -5173,12 +5185,12 @@ after 是光标, blink 是光标动画.</p>
 <p>打开<code class="notranslate">Gmeek.py</code>, 定位字符串<code class="notranslate">gmeek-html</code></p>
 <p>在附近任意行增加代码:</p>
 <div class="highlight highlight-source-python"><pre class="notranslate">        <span class="pl-c"># 默认情况插入图片情况下的匹配规则&lt;p&gt; -&gt; &lt;a&gt; -&gt;&lt;img&gt;</span>
-        <span class="pl-k">if</span> <span class="pl-s">'&lt;a'</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>:
+        <span class="pl-k">if</span> <span class="pl-s">'&lt;p&gt;&lt;a target="_blank" rel='</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>:
             <span class="pl-s1">post_body</span> <span class="pl-c1">=</span> <span class="pl-s1">re</span>.<span class="pl-c1">sub</span>(<span class="pl-s">r'&lt;p&gt;\s*&lt;a[^&gt;]*?href="([^"]+)"[^&gt;]*?&gt;&lt;img[^&gt;]*?src="\1"[^&gt;]*?&gt;&lt;/a&gt;\s*&lt;/p&gt;'</span>, <span class="pl-k">lambda</span> <span class="pl-s1">match</span>: <span class="pl-s">f'&lt;div class="ImgLazyLoad-circle"&gt;&lt;/div&gt;<span class="pl-cce">\n</span>&lt;img data-fancybox="gallery" img-src="<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">match</span>.<span class="pl-c1">group</span>(<span class="pl-c1">1</span>)<span class="pl-kos">}</span></span>"&gt;'</span>, <span class="pl-s1">post_body</span>, <span class="pl-s1">flags</span><span class="pl-c1">=</span><span class="pl-s1">re</span>.<span class="pl-c1">DOTALL</span>)
 
         <span class="pl-c"># 通用插入图片情况下的匹配规则&lt;a&gt; -&gt;&lt;img&gt;</span>
-        <span class="pl-k">if</span> <span class="pl-s">'&lt;a'</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>:
-            <span class="pl-s1">post_body</span> <span class="pl-c1">=</span> <span class="pl-s1">re</span>.<span class="pl-c1">sub</span>(<span class="pl-s">r'\s*&lt;a[^&gt;]*?href="([^"]+)"[^&gt;]*?&gt;&lt;img[^&gt;]*?src="\1"[^&gt;]*?&gt;&lt;/a&gt;\s*'</span>, <span class="pl-k">lambda</span> <span class="pl-s1">match</span>: <span class="pl-s">f'&lt;div class="ImgLazyLoad-circle"&gt;&lt;/div&gt;<span class="pl-cce">\n</span>&lt;img data-fancybox="gallery" img-src="<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">match</span>.<span class="pl-c1">group</span>(<span class="pl-c1">1</span>)<span class="pl-kos">}</span></span>"&gt;'</span>, <span class="pl-s1">post_body</span>, <span class="pl-s1">flags</span><span class="pl-c1">=</span><span class="pl-s1">re</span>.<span class="pl-c1">DOTALL</span>)</pre></div>
+        <span class="pl-k">if</span> <span class="pl-s">'&lt;a target="_blank" rel='</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>:
+            <span class="pl-s1">post_body</span> <span class="pl-c1">=</span> <span class="pl-s1">re</span>.<span class="pl-c1">sub</span>(<span class="pl-s">r'&lt;a[^&gt;]*?href="([^"]+)"[^&gt;]*?&gt;&lt;img[^&gt;]*?src="\1"[^&gt;]*?&gt;&lt;/a&gt;'</span>,<span class="pl-k">lambda</span> <span class="pl-s1">match</span>: <span class="pl-s">f'&lt;div class="ImgLazyLoad-circle"&gt;&lt;/div&gt;<span class="pl-cce">\n</span>&lt;img data-fancybox="gallery" img-src="<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">match</span>.<span class="pl-c1">group</span>(<span class="pl-c1">1</span>)<span class="pl-kos">}</span></span>"&gt;'</span>, <span class="pl-s1">post_body</span>, <span class="pl-s1">flags</span><span class="pl-c1">=</span><span class="pl-s1">re</span>.<span class="pl-c1">DOTALL</span>)</pre></div>
 <ul>
 <li><strong>使用演示</strong></li>
 </ul>
