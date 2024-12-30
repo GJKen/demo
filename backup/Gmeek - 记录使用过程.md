@@ -1123,7 +1123,7 @@ a {
 
 效果图:
 
-`Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/QmTwkiuWzou5jKS9aJ5hEZKau2zBEFRLiDcC8Gn1uzwiRm"`
+![image](https://github.com/user-attachments/assets/73cdc397-e4c8-45c8-8ecf-02f32af9fd63)
 
 # 通过 Gmeek 仓库 DIY 博客
 
@@ -1133,13 +1133,13 @@ a {
 
 仓库地址👉 https://github.com/Meekdai/Gmeek
 
-`Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/QmaJMN2pqoQwtA3c8bPbajkwWYAwaAcwbzUqBiXya836PV"`
+![image](https://github.com/user-attachments/assets/8794d347-3524-4709-a6f1-fd74c607fc22)
 
 fork 之后, 转到搭建博客的 github 源码,
 
 打开`.github/workflows/Gmeek.yml`文件, 修改构建博客仓库的地址为你自己的仓库地址
 
-`Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/QmNa2H5MrVphqpUwAHWBv7iWw782HmDb7qjZb3JEzdjQav"`
+![image](https://github.com/user-attachments/assets/20d1b3ac-c0fc-44ad-a937-3828b6875a8f)
 
 打开`config.json`文件, 修改右边字段值为main`"GMEEK_VERSION":"main"`
 
@@ -1167,15 +1167,15 @@ fork 之后, 转到搭建博客的 github 源码,
 
 下图文字直接修改即可, 不同语言的按需修改.
 
-`Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/QmaxN6phAHJsxfB5Q3xLCGdAwpq2CcoNLo4xoFB16DpzAs"`
+![image](https://github.com/user-attachments/assets/c0f4bca8-174d-4044-a654-12e6322cca9b)
 
 ## 修改默认 primer.css 链接
 
 打开`Gmeek.py`
 
-`Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/QmWcdviYe3A5bmtjCjhFeFA8VaczcvTQ2HDMB5aUAnkg3v"`
+![image](https://github.com/user-attachments/assets/fd72d93f-5015-44d9-ac79-58dff7e3c116)
 
-这里我直接写改成我存放的链接 https://cdn.jsdelivr.net/gh/gjken/gjken.github.io@v1.0/static/primer.min.css
+这里我直接写改成我存放的链接, 并使用 tag 控制版本.
 
 ## 修改页面头部样式
 
