@@ -40,7 +40,7 @@ CSS 效果:
 
 效果图:
 
-`Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/Qmei764zAMx9fXgotWbrrwizXRsrk42GGiKor2Zqo8hFgy"`
+![2024-12-30-1-77a044632caf5ccc0b0ec4f986b4435d](https://github.com/user-attachments/assets/92e2da59-1bb4-4c4c-a2ae-b58105ecc230)
 
 可以用空白字符的方式, 隐藏`subTitle`这个必须字段, 无需使用 js 隐藏.
 
@@ -111,7 +111,7 @@ markdown 输入:
 
 图示:
 
-`Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/QmcZLXt281ogUR7bUqReAWRhecnbGaftfaGu2wu2qugV4H"`
+![image](https://github.com/user-attachments/assets/2d12652a-ee57-44a7-bd41-17f618a0785b)
 
 可以直接引用.
 
@@ -126,9 +126,9 @@ markdown 输入:
 
 图示:
 
-`Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/Qme3qiTmKATk8BVvcLj7bC87q3w8MqywJcQTJfHKQTmyvd"`
+![image](https://github.com/user-attachments/assets/cb85ad0f-0e19-42e0-bb3e-45399a5ca7f7)
 
-`Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/QmfSbibFEBSh5YShTT6YyZwY5D2Um8avsYkZTbDcndh1dh"`
+![2024-12-30-1-b0ad706ab827b475640e589ff44a3e13](https://github.com/user-attachments/assets/3f84c22d-43cc-489f-9df0-d6ffa24feb42)
 
 ## Fancybox.js - 图片浏览器
 
