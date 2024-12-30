@@ -1625,11 +1625,9 @@ document.addEventListener('wheel', e => handleScroll(e.deltaY));
 
 打开`Gmeek.py`
 
-定位代码`<style>.markdown-alert{`, 增加圆角6px.
+定位代码`<style>.markdown-alert{`, 给它增加圆角6px.
 
 `border-radius:6px;`
-
-`Gmeek-imgbox="https://i1.img2ipfs.com/ipfs/QmRCXZrjvmUajTL5odC4d5oJyJwx8mrNSwDzGgTs3yuDMw"`
 
 2. **优化行高显示**
 
@@ -1713,21 +1711,11 @@ document.addEventListener('wheel', e => handleScroll(e.deltaY));
 
 转到页脚查看实际效果👉 [点我](#footer2)
 
-# 使用 Gmeek-html, 给博客插入图片, 防止链接自动转换
+# Gmeek-html
 
-Github 在 issues 插入的图片也会自动转换为 Github 的地址.
+Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 issues 插入的图片也会自动转换为 Github 的地址, 为了文章的多样性, 在 Gmeek 的 v2.19 版本中添加了支持 html 标签的功能.
 
-为了文章的多样性, 在 Gmeek 的`v2.19`版本中添加了支持 html 标签的功能.
-
-示例代码:
-
-```html
-`Gmeek-html<img src="https://i0.img2ipfs.com/ipfs/QmbAZqtwu2G9vXrJ8oC7ixvKh4tY8uL8NvPA9zAxDqWFPq">`
-```
-
-效果图:
-
-`Gmeek-html<img src="https://i0.img2ipfs.com/ipfs/QmbAZqtwu2G9vXrJ8oC7ixvKh4tY8uL8NvPA9zAxDqWFPq">`
+> Gmeek 的默认功能, 可使用这个匹配规则转换不同的html效果, 祥看 👉 [Gmeek进阶](https://blog.meekdai.com/post/%E3%80%90Gmeek-jin-jie-%E3%80%91-wen-zhang-cha-ru-html-biao-qian.html)
 
 > [!Important]
 > 如果在文章中含有代码块标签并且内容为 Gmeek-html, Action 那边会进行转换导致显示错误, 详情看[#201](https://github.com/Meekdai/Gmeek/issues/201)
