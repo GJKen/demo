@@ -40,9 +40,8 @@
 ```
 
 CSS 效果:
-![2024-12-30-1-8b58a3c8283110590642d5aeb1f60ad0](https://github.com/user-attachments/assets/704ba114-c255-469e-ac71-61ccdffac962)
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmPJLQrhBg9opKvbgNGqQaEopEKJnsH3thbH7wNbocp6VF'`
+![2024-12-30-1-8b58a3c8283110590642d5aeb1f60ad0](https://github.com/user-attachments/assets/704ba114-c255-469e-ac71-61ccdffac962)
 
 从图中可以看到, `subTitle`字段可用 js 插入 html 实现修改文字.
 
@@ -77,8 +76,8 @@ CSS 效果:
 `Gmeek.py`匹配转换的代码如下:
 
 ```python
-        if '<code class='notranslate'>Gmeek-imgbox' in post_body: 
-            post_body = re.sub(r'<code class='notranslate'>Gmeek-imgbox='([^']+)'</code>',lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>',post_body, flags=re.DOTALL)
+        if '<code class='notranslate'>Gmeek-imgbox' in post_body:
+            post_body = re.sub(r'<p>\s*<code class='notranslate'>Gmeek-imgbox='([^']+)'</code>\s*</p>', lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>', post_body, flags=re.DOTALL)
 ```
 
 markdown 输入:
@@ -199,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 通过 Actions 转换后实际效果如下, html 里面图片标签会增加 fancybox 所需的`data-fancybox='gallery'`属性.
 
-![image](https://github.com/user-attachments/assets/3c5ecaf5-cb2e-440e-9708-44b2a22f1e9f)
+![image](https://github.com/user-attachments/assets/90439bbe-7ced-409b-a4c7-62f859c842ab)
 
 ## 图片懒加载
 
@@ -1909,9 +1908,8 @@ document.addEventListener('DOMContentLoaded', () => {
 ```
 
 CSS 效果:
-![2024-12-30-1-8b58a3c8283110590642d5aeb1f60ad0](https://github.com/user-attachments/assets/704ba114-c255-469e-ac71-61ccdffac962)
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmPJLQrhBg9opKvbgNGqQaEopEKJnsH3thbH7wNbocp6VF'`
+![2024-12-30-1-8b58a3c8283110590642d5aeb1f60ad0](https://github.com/user-attachments/assets/704ba114-c255-469e-ac71-61ccdffac962)
 
 从图中可以看到, `subTitle`字段可用 js 插入 html 实现修改文字.
 
@@ -1946,8 +1944,8 @@ CSS 效果:
 `Gmeek.py`匹配转换的代码如下:
 
 ```python
-        if '<code class='notranslate'>Gmeek-imgbox' in post_body: 
-            post_body = re.sub(r'<code class='notranslate'>Gmeek-imgbox='([^']+)'</code>',lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>',post_body, flags=re.DOTALL)
+        if '<code class='notranslate'>Gmeek-imgbox' in post_body:
+            post_body = re.sub(r'<p>\s*<code class='notranslate'>Gmeek-imgbox='([^']+)'</code>\s*</p>', lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>', post_body, flags=re.DOTALL)
 ```
 
 markdown 输入:
@@ -2068,7 +2066,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 通过 Actions 转换后实际效果如下, html 里面图片标签会增加 fancybox 所需的`data-fancybox='gallery'`属性.
 
-![image](https://github.com/user-attachments/assets/3c5ecaf5-cb2e-440e-9708-44b2a22f1e9f)
+![image](https://github.com/user-attachments/assets/90439bbe-7ced-409b-a4c7-62f859c842ab)
 
 ## 图片懒加载
 
@@ -3838,10 +3836,9 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 <h2>subTitle - js插入</h2>
 <p>代码:</p>
 <div class="highlight highlight-source-json"><pre class="notranslate"><span class="pl-ent">"subTitle"</span>:<span class="pl-s"><span class="pl-pds">"</span>&lt;script&gt;document.getElementById('content').innerHTML = `&lt;div style='text-align: center;'&gt;&lt;p&gt;CV工程师,&lt;/p&gt;&lt;p&gt;一个又菜又爱玩, 喜欢瞎折腾的流浪者.&lt;/p&gt;&lt;/div&gt;`;&lt;/script&gt;<span class="pl-pds">"</span></span>,</pre></div>
-<p>CSS 效果:<br>
-<a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/704ba114-c255-469e-ac71-61ccdffac962"><img src="https://github.com/user-attachments/assets/704ba114-c255-469e-ac71-61ccdffac962" alt="2024-12-30-1-8b58a3c8283110590642d5aeb1f60ad0" style="max-width: 100%;"></a></p>
+<p>CSS 效果:</p>
 <div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://i0.img2ipfs.com/ipfs/QmPJLQrhBg9opKvbgNGqQaEopEKJnsH3thbH7wNbocp6VF">
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/704ba114-c255-469e-ac71-61ccdffac962">
 <p>从图中可以看到, <code class="notranslate">subTitle</code>字段可用 js 插入 html 实现修改文字.</p>
 <h2>subTitle - 隐藏</h2>
 <p><code class="notranslate">"subTitle":" ",</code></p>
@@ -3859,8 +3856,8 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 <details><summary>点击展开</summary>
 <p><code class="notranslate">Gmeek-imgbox</code>首先匹配到关键字后转化标签.</p>
 <p><code class="notranslate">Gmeek.py</code>匹配转换的代码如下:</p>
-<div class="highlight highlight-source-python"><pre class="notranslate">        <span class="pl-k">if</span> <span class="pl-s">'&lt;code class="notranslate"&gt;Gmeek-imgbox'</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>: 
-            <span class="pl-s1">post_body</span> <span class="pl-c1">=</span> <span class="pl-s1">re</span>.<span class="pl-c1">sub</span>(<span class="pl-s">r'&lt;code class="notranslate"&gt;Gmeek-imgbox="([^"]+)"&lt;/code&gt;'</span>,<span class="pl-k">lambda</span> <span class="pl-s1">match</span>: <span class="pl-s">f'&lt;div class="ImgLazyLoad-circle"&gt;&lt;/div&gt;<span class="pl-cce">\n</span>&lt;img data-fancybox="gallery" img-src="<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">match</span>.<span class="pl-c1">group</span>(<span class="pl-c1">1</span>)<span class="pl-kos">}</span></span>"&gt;'</span>,<span class="pl-s1">post_body</span>, <span class="pl-s1">flags</span><span class="pl-c1">=</span><span class="pl-s1">re</span>.<span class="pl-c1">DOTALL</span>)</pre></div>
+<div class="highlight highlight-source-python"><pre class="notranslate">        <span class="pl-k">if</span> <span class="pl-s">'&lt;code class="notranslate"&gt;Gmeek-imgbox'</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>:
+            <span class="pl-s1">post_body</span> <span class="pl-c1">=</span> <span class="pl-s1">re</span>.<span class="pl-c1">sub</span>(<span class="pl-s">r'&lt;p&gt;\s*&lt;code class="notranslate"&gt;Gmeek-imgbox="([^"]+)"&lt;/code&gt;\s*&lt;/p&gt;'</span>, <span class="pl-k">lambda</span> <span class="pl-s1">match</span>: <span class="pl-s">f'&lt;div class="ImgLazyLoad-circle"&gt;&lt;/div&gt;<span class="pl-cce">\n</span>&lt;img data-fancybox="gallery" img-src="<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">match</span>.<span class="pl-c1">group</span>(<span class="pl-c1">1</span>)<span class="pl-kos">}</span></span>"&gt;'</span>, <span class="pl-s1">post_body</span>, <span class="pl-s1">flags</span><span class="pl-c1">=</span><span class="pl-s1">re</span>.<span class="pl-c1">DOTALL</span>)</pre></div>
 <p>markdown 输入:</p>
 <pre class="notranslate"><code class="notranslate">`Gmeek-imgbox="https://example.com/image.jpg"`
 </code></pre>
@@ -3942,7 +3939,7 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 <div class="highlight highlight-text-html-basic"><pre class="notranslate">`Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/QmNiH2pdrA9Hb61EXgYbKtEssBAGemEjTQRBZbgutUCNx2"`</pre></div>
 <p>通过 Actions 转换后实际效果如下, html 里面图片标签会增加 fancybox 所需的<code class="notranslate">data-fancybox="gallery"</code>属性.</p>
 <div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/3c5ecaf5-cb2e-440e-9708-44b2a22f1e9f">
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/90439bbe-7ced-409b-a4c7-62f859c842ab">
 <h2>图片懒加载</h2>
 <blockquote>
 <p>来源: <a href="https://github.com/liyifanniubi/liyifanniubi.github.io">Github</a></p>

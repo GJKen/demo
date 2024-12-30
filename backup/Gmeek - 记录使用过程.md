@@ -28,9 +28,8 @@
 ```
 
 CSS 效果:
-![2024-12-30-1-8b58a3c8283110590642d5aeb1f60ad0](https://github.com/user-attachments/assets/704ba114-c255-469e-ac71-61ccdffac962)
 
-`Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/QmPJLQrhBg9opKvbgNGqQaEopEKJnsH3thbH7wNbocp6VF"`
+![2024-12-30-1-8b58a3c8283110590642d5aeb1f60ad0](https://github.com/user-attachments/assets/704ba114-c255-469e-ac71-61ccdffac962)
 
 从图中可以看到, `subTitle`字段可用 js 插入 html 实现修改文字.
 
@@ -65,8 +64,8 @@ CSS 效果:
 `Gmeek.py`匹配转换的代码如下:
 
 ```python
-        if '<code class="notranslate">Gmeek-imgbox' in post_body: 
-            post_body = re.sub(r'<code class="notranslate">Gmeek-imgbox="([^"]+)"</code>',lambda match: f'<div class="ImgLazyLoad-circle"></div>\n<img data-fancybox="gallery" img-src="{match.group(1)}">',post_body, flags=re.DOTALL)
+        if '<code class="notranslate">Gmeek-imgbox' in post_body:
+            post_body = re.sub(r'<p>\s*<code class="notranslate">Gmeek-imgbox="([^"]+)"</code>\s*</p>', lambda match: f'<div class="ImgLazyLoad-circle"></div>\n<img data-fancybox="gallery" img-src="{match.group(1)}">', post_body, flags=re.DOTALL)
 ```
 
 markdown 输入:
@@ -187,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 通过 Actions 转换后实际效果如下, html 里面图片标签会增加 fancybox 所需的`data-fancybox="gallery"`属性.
 
-![image](https://github.com/user-attachments/assets/3c5ecaf5-cb2e-440e-9708-44b2a22f1e9f)
+![image](https://github.com/user-attachments/assets/90439bbe-7ced-409b-a4c7-62f859c842ab)
 
 ## 图片懒加载
 
