@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Demo</title><link>https://GJKen.github.io/demo</link><description> </description><copyright>Demo</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp</url><title>avatar</title><link>https://GJKen.github.io/demo</link></image><lastBuildDate>Mon, 30 Dec 2024 10:24:51 +0000</lastBuildDate><managingEditor>Demo</managingEditor><ttl>60</ttl><webMaster>Demo</webMaster><item><title>正则表达式 - 使用记录</title><link>https://GJKen.github.io/demo/post/9.html</link><description>&gt; [!NOTE]&#13;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Demo</title><link>https://GJKen.github.io/demo</link><description> </description><copyright>Demo</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp</url><title>avatar</title><link>https://GJKen.github.io/demo</link></image><lastBuildDate>Mon, 30 Dec 2024 10:27:34 +0000</lastBuildDate><managingEditor>Demo</managingEditor><ttl>60</ttl><webMaster>Demo</webMaster><item><title>正则表达式 - 使用记录</title><link>https://GJKen.github.io/demo/post/9.html</link><description>&gt; [!NOTE]&#13;
 &gt; GPT帮写最方便.&#13;
 &#13;
 # 匹配关键字并删除指定行&#13;
@@ -19,20 +19,15 @@
 查找👉`\r\n`&#13;
 替换👉`\r\n填写的内容\r\n`&#13;
 &#13;
-# 在每一行后面添加 ':' 符号&#13;
-&#13;
-查找👉`^.*$``&#13;
-替换👉`$0:`&#13;
-&#13;
 # 匹配以 ?file 开头, 并且之间有任意字符, 最后以 .jpg`或`.png` 结尾&#13;
 &#13;
 &gt; ipfs 超链接重命名&#13;
 &#13;
-`\?file.*\.{jpg|png}$&#13;
+`\?file.*\.{jpg|png}$`&#13;
 &#13;
 # 匹配 /* */ 中间包含任意字符串&#13;
 &#13;
-&gt; css注释块&#13;
+&gt; css 注释块&#13;
 &#13;
 `\/\*.*?\*\/`。</description><guid isPermaLink="true">https://GJKen.github.io/demo/post/9.html</guid><pubDate>Mon, 30 Dec 2024 06:43:38 +0000</pubDate></item><item><title>翻墙服务端和客户端 - 使用记录</title><link>https://GJKen.github.io/demo/post/8.html</link><description>**记录翻墙软件使用记录**&#13;
 &#13;
