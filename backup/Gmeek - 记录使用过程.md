@@ -527,12 +527,20 @@ html {
 	box-shadow: none
 }
 
-.btn-invisible:hover,
-.btn-invisible.zeroclipboard-is-hover {
+.btn-invisible:active,
+.btn-invisible.selected,
+.btn-invisible[aria-selected=true],
+.btn-invisible.zeroclipboard-is-active {
 	color: var(--fgColor-accent, var(--color-accent-fg));
-	background-color: var(--title-right-btnbg-color);
-	outline: none;
+	background: none;
+	border-color: var(--button-default-borderColor-active, var(--color-btn-active-border));
+	outline: 2px solid var(--focus-outlineColor, var(--color-accent-fg));
+	outline-offset: -2px;
 	box-shadow: none
+}
+
+.btn-invisible:active .btn-invisible.zeroclipboard-is-active {
+	background-color: var(--button-default-bgColor-selected, var(--color-btn-selected-bg))
 }
 ```
 
@@ -565,13 +573,6 @@ html {
 	box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor), -7px -7px 16px 0 var(--header-btn-shadowColor2);
 	transition: box-shadow .4s ease-in-out,filter .4s ease-in-out;
 }
-.btn-invisible:hover,
-.btn-invisible.zeroclipboard-is-hover {
-	color: var(--fgColor-accent, var(--color-accent-fg));
-	background-color: rgba(0, 0, 0, 0);
-	outline: none;
-	box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor) inset,-7px -7px 12px 0 var(--header-btn-shadowColor2) inset;
-}
 /* 图标颜色 */
 .btn-invisible svg path{
 	fill: var(--title-right-svgColor);
@@ -580,6 +581,17 @@ html {
 .btn-invisible:hover svg path,
 .btn-invisible.zeroclipboard-is-hover svg path{
 	fill: var(--title-right-svgHovercolor);
+}
+
+.btn-invisible:active,
+.btn-invisible.selected,
+.btn-invisible[aria-selected=true],
+.btn-invisible.zeroclipboard-is-active {
+	box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor) inset, -7px -7px 12px 0 var(--header-btn-shadowColor2) inset;
+}
+
+.btn-invisible:active .btn-invisible.zeroclipboard-is-active {
+	box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor) inset, -7px -7px 12px 0 var(--header-btn-shadowColor2) inset;
 }
 ```
 
@@ -1376,24 +1388,10 @@ document.addEventListener('DOMContentLoaded', () => {
         functionBtn.style.top = deltaY > 0 ? '-100px' : '0';
     };
 
-    // 判断事件目标是否位于滚动容器内
-    const isInScrollableDiv = target => {
-        let node = target;
-        while (node && node !== document.body) {
-            if (node.scrollHeight > node.clientHeight) return true;
-            node = node.parentNode;
-        }
-        return false;
-    };
-
-    // 监听触摸和滚轮事件
-    document.addEventListener('touchstart', e => startY = e.touches[0].clientY);
-    document.addEventListener('touchmove', e => handleScroll(e.touches[0].clientY - startY));
-    document.addEventListener('wheel', e => {
-        if (!isInScrollableDiv(e.target)) {
-            handleScroll(e.deltaY);
-        }
-    });
+// 监听触摸和滚轮事件
+document.addEventListener('touchstart', e => startY = e.touches[0].clientY);
+document.addEventListener('touchmove', e => handleScroll(e.touches[0].clientY - startY));
+document.addEventListener('wheel', e => handleScroll(e.deltaY));
 });
 ```
 
@@ -1858,6 +1856,8 @@ document.addEventListener('DOMContentLoaded', () => {
 | Github | #333333 | `Gmeek-imgbox="https://img.shields.io/static/v1?label=&message=Github&color=333333"`
 | CDN | #cb222c | `Gmeek-imgbox="https://img.shields.io/static/v1?label=&message=CDN&color=cb222c"`
 | Bug | #D73A4A | `Gmeek-imgbox="https://img.shields.io/static/v1?label=&message=Bug&color=D73A4A"`
+| 软件 | #5da167 | `Gmeek-imgbox="https://img.shields.io/static/v1?label=&message=软件&color=5da167"`
+| 翻墙 | #cb7b58 | `Gmeek-imgbox="https://img.shields.io/static/v1?label=&message=翻墙&color=cb7b58"`
 
 # Readme.md
 

@@ -539,12 +539,20 @@ html {
 	box-shadow: none
 }
 
-.btn-invisible:hover,
-.btn-invisible.zeroclipboard-is-hover {
+.btn-invisible:active,
+.btn-invisible.selected,
+.btn-invisible[aria-selected=true],
+.btn-invisible.zeroclipboard-is-active {
 	color: var(--fgColor-accent, var(--color-accent-fg));
-	background-color: var(--title-right-btnbg-color);
-	outline: none;
+	background: none;
+	border-color: var(--button-default-borderColor-active, var(--color-btn-active-border));
+	outline: 2px solid var(--focus-outlineColor, var(--color-accent-fg));
+	outline-offset: -2px;
 	box-shadow: none
+}
+
+.btn-invisible:active .btn-invisible.zeroclipboard-is-active {
+	background-color: var(--button-default-bgColor-selected, var(--color-btn-selected-bg))
 }
 ```
 
@@ -577,13 +585,6 @@ html {
 	box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor), -7px -7px 16px 0 var(--header-btn-shadowColor2);
 	transition: box-shadow .4s ease-in-out,filter .4s ease-in-out;
 }
-.btn-invisible:hover,
-.btn-invisible.zeroclipboard-is-hover {
-	color: var(--fgColor-accent, var(--color-accent-fg));
-	background-color: rgba(0, 0, 0, 0);
-	outline: none;
-	box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor) inset,-7px -7px 12px 0 var(--header-btn-shadowColor2) inset;
-}
 /* 图标颜色 */
 .btn-invisible svg path{
 	fill: var(--title-right-svgColor);
@@ -592,6 +593,17 @@ html {
 .btn-invisible:hover svg path,
 .btn-invisible.zeroclipboard-is-hover svg path{
 	fill: var(--title-right-svgHovercolor);
+}
+
+.btn-invisible:active,
+.btn-invisible.selected,
+.btn-invisible[aria-selected=true],
+.btn-invisible.zeroclipboard-is-active {
+	box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor) inset, -7px -7px 12px 0 var(--header-btn-shadowColor2) inset;
+}
+
+.btn-invisible:active .btn-invisible.zeroclipboard-is-active {
+	box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor) inset, -7px -7px 12px 0 var(--header-btn-shadowColor2) inset;
 }
 ```
 
@@ -1388,24 +1400,10 @@ document.addEventListener('DOMContentLoaded', () => {
         functionBtn.style.top = deltaY > 0 ? '-100px' : '0';
     };
 
-    // 判断事件目标是否位于滚动容器内
-    const isInScrollableDiv = target => {
-        let node = target;
-        while (node && node !== document.body) {
-            if (node.scrollHeight > node.clientHeight) return true;
-            node = node.parentNode;
-        }
-        return false;
-    };
-
-    // 监听触摸和滚轮事件
-    document.addEventListener('touchstart', e => startY = e.touches[0].clientY);
-    document.addEventListener('touchmove', e => handleScroll(e.touches[0].clientY - startY));
-    document.addEventListener('wheel', e => {
-        if (!isInScrollableDiv(e.target)) {
-            handleScroll(e.deltaY);
-        }
-    });
+// 监听触摸和滚轮事件
+document.addEventListener('touchstart', e => startY = e.touches[0].clientY);
+document.addEventListener('touchmove', e => handleScroll(e.touches[0].clientY - startY));
+document.addEventListener('wheel', e => handleScroll(e.deltaY));
 });
 ```
 
@@ -1870,6 +1868,8 @@ document.addEventListener('DOMContentLoaded', () => {
 | Github | #333333 | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=Github&color=333333'`
 | CDN | #cb222c | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=CDN&color=cb222c'`
 | Bug | #D73A4A | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=Bug&color=D73A4A'`
+| 软件 | #5da167 | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=软件&color=5da167'`
+| 翻墙 | #cb7b58 | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=翻墙&color=cb7b58'`
 
 # Readme.md
 
@@ -2407,12 +2407,20 @@ html {
 	box-shadow: none
 }
 
-.btn-invisible:hover,
-.btn-invisible.zeroclipboard-is-hover {
+.btn-invisible:active,
+.btn-invisible.selected,
+.btn-invisible[aria-selected=true],
+.btn-invisible.zeroclipboard-is-active {
 	color: var(--fgColor-accent, var(--color-accent-fg));
-	background-color: var(--title-right-btnbg-color);
-	outline: none;
+	background: none;
+	border-color: var(--button-default-borderColor-active, var(--color-btn-active-border));
+	outline: 2px solid var(--focus-outlineColor, var(--color-accent-fg));
+	outline-offset: -2px;
 	box-shadow: none
+}
+
+.btn-invisible:active .btn-invisible.zeroclipboard-is-active {
+	background-color: var(--button-default-bgColor-selected, var(--color-btn-selected-bg))
 }
 ```
 
@@ -2445,13 +2453,6 @@ html {
 	box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor), -7px -7px 16px 0 var(--header-btn-shadowColor2);
 	transition: box-shadow .4s ease-in-out,filter .4s ease-in-out;
 }
-.btn-invisible:hover,
-.btn-invisible.zeroclipboard-is-hover {
-	color: var(--fgColor-accent, var(--color-accent-fg));
-	background-color: rgba(0, 0, 0, 0);
-	outline: none;
-	box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor) inset,-7px -7px 12px 0 var(--header-btn-shadowColor2) inset;
-}
 /* 图标颜色 */
 .btn-invisible svg path{
 	fill: var(--title-right-svgColor);
@@ -2460,6 +2461,17 @@ html {
 .btn-invisible:hover svg path,
 .btn-invisible.zeroclipboard-is-hover svg path{
 	fill: var(--title-right-svgHovercolor);
+}
+
+.btn-invisible:active,
+.btn-invisible.selected,
+.btn-invisible[aria-selected=true],
+.btn-invisible.zeroclipboard-is-active {
+	box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor) inset, -7px -7px 12px 0 var(--header-btn-shadowColor2) inset;
+}
+
+.btn-invisible:active .btn-invisible.zeroclipboard-is-active {
+	box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor) inset, -7px -7px 12px 0 var(--header-btn-shadowColor2) inset;
 }
 ```
 
@@ -3256,24 +3268,10 @@ document.addEventListener('DOMContentLoaded', () => {
         functionBtn.style.top = deltaY > 0 ? '-100px' : '0';
     };
 
-    // 判断事件目标是否位于滚动容器内
-    const isInScrollableDiv = target => {
-        let node = target;
-        while (node && node !== document.body) {
-            if (node.scrollHeight > node.clientHeight) return true;
-            node = node.parentNode;
-        }
-        return false;
-    };
-
-    // 监听触摸和滚轮事件
-    document.addEventListener('touchstart', e => startY = e.touches[0].clientY);
-    document.addEventListener('touchmove', e => handleScroll(e.touches[0].clientY - startY));
-    document.addEventListener('wheel', e => {
-        if (!isInScrollableDiv(e.target)) {
-            handleScroll(e.deltaY);
-        }
-    });
+// 监听触摸和滚轮事件
+document.addEventListener('touchstart', e => startY = e.touches[0].clientY);
+document.addEventListener('touchmove', e => handleScroll(e.touches[0].clientY - startY));
+document.addEventListener('wheel', e => handleScroll(e.deltaY));
 });
 ```
 
@@ -3738,6 +3736,8 @@ document.addEventListener('DOMContentLoaded', () => {
 | Github | #333333 | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=Github&color=333333'`
 | CDN | #cb222c | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=CDN&color=cb222c'`
 | Bug | #D73A4A | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=Bug&color=D73A4A'`
+| 软件 | #5da167 | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=软件&color=5da167'`
+| 翻墙 | #cb7b58 | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=翻墙&color=cb7b58'`
 
 # Readme.md
 
@@ -4213,12 +4213,20 @@ svg 暗黑模式下颜色.<br>
 	<span class="pl-c1">box-shadow</span><span class="pl-kos">:</span> none
 }
 
-.<span class="pl-c1">btn-invisible</span><span class="pl-kos">:</span><span class="pl-c1">hover</span><span class="pl-kos">,</span>
-.<span class="pl-c1">btn-invisible</span>.<span class="pl-c1">zeroclipboard-is-hover</span> {
+.<span class="pl-c1">btn-invisible</span><span class="pl-kos">:</span><span class="pl-c1">active</span><span class="pl-kos">,</span>
+.<span class="pl-c1">btn-invisible</span>.<span class="pl-c1">selected</span><span class="pl-kos">,</span>
+.<span class="pl-c1">btn-invisible</span>[<span class="pl-c1">aria-selected</span><span class="pl-c1">=</span><span class="pl-s">true</span>]<span class="pl-kos">,</span>
+.<span class="pl-c1">btn-invisible</span>.<span class="pl-c1">zeroclipboard-is-active</span> {
 	<span class="pl-c1">color</span><span class="pl-kos">:</span> <span class="pl-en">var</span>(<span class="pl-s1">--fgColor-accent</span><span class="pl-kos">,</span> <span class="pl-en">var</span>(<span class="pl-s1">--color-accent-fg</span>));
-	<span class="pl-c1">background-color</span><span class="pl-kos">:</span> <span class="pl-en">var</span>(<span class="pl-s1">--title-right-btnbg-color</span>);
-	<span class="pl-c1">outline</span><span class="pl-kos">:</span> none;
+	<span class="pl-c1">background</span><span class="pl-kos">:</span> none;
+	<span class="pl-c1">border-color</span><span class="pl-kos">:</span> <span class="pl-en">var</span>(<span class="pl-s1">--button-default-borderColor-active</span><span class="pl-kos">,</span> <span class="pl-en">var</span>(<span class="pl-s1">--color-btn-active-border</span>));
+	<span class="pl-c1">outline</span><span class="pl-kos">:</span> <span class="pl-c1">2<span class="pl-smi">px</span></span> solid <span class="pl-en">var</span>(<span class="pl-s1">--focus-outlineColor</span><span class="pl-kos">,</span> <span class="pl-en">var</span>(<span class="pl-s1">--color-accent-fg</span>));
+	<span class="pl-c1">outline-offset</span><span class="pl-kos">:</span> <span class="pl-c1">-2<span class="pl-smi">px</span></span>;
 	<span class="pl-c1">box-shadow</span><span class="pl-kos">:</span> none
+}
+
+.<span class="pl-c1">btn-invisible</span><span class="pl-kos">:</span><span class="pl-c1">active</span> .<span class="pl-c1">btn-invisible</span>.<span class="pl-c1">zeroclipboard-is-active</span> {
+	<span class="pl-c1">background-color</span><span class="pl-kos">:</span> <span class="pl-en">var</span>(<span class="pl-s1">--button-default-bgColor-selected</span><span class="pl-kos">,</span> <span class="pl-en">var</span>(<span class="pl-s1">--color-btn-selected-bg</span>))
 }</pre></div>
 </details>
 <details><summary>修改后</summary>
@@ -4247,13 +4255,6 @@ svg 暗黑模式下颜色.<br>
 	<span class="pl-c1">box-shadow</span><span class="pl-kos">:</span> <span class="pl-c1">6<span class="pl-smi">px</span></span> <span class="pl-c1">6<span class="pl-smi">px</span></span> <span class="pl-c1">14<span class="pl-smi">px</span></span> <span class="pl-c1">0</span> <span class="pl-en">var</span>(<span class="pl-s1">--header-btn-shadowColor</span>)<span class="pl-kos">,</span> <span class="pl-c1">-7<span class="pl-smi">px</span></span> <span class="pl-c1">-7<span class="pl-smi">px</span></span> <span class="pl-c1">16<span class="pl-smi">px</span></span> <span class="pl-c1">0</span> <span class="pl-en">var</span>(<span class="pl-s1">--header-btn-shadowColor2</span>);
 	<span class="pl-c1">transition</span><span class="pl-kos">:</span> box-shadow <span class="pl-c1">.4<span class="pl-smi">s</span></span> ease-in-out<span class="pl-kos">,</span>filter <span class="pl-c1">.4<span class="pl-smi">s</span></span> ease-in-out;
 }
-.<span class="pl-c1">btn-invisible</span><span class="pl-kos">:</span><span class="pl-c1">hover</span><span class="pl-kos">,</span>
-.<span class="pl-c1">btn-invisible</span>.<span class="pl-c1">zeroclipboard-is-hover</span> {
-	<span class="pl-c1">color</span><span class="pl-kos">:</span> <span class="pl-en">var</span>(<span class="pl-s1">--fgColor-accent</span><span class="pl-kos">,</span> <span class="pl-en">var</span>(<span class="pl-s1">--color-accent-fg</span>));
-	<span class="pl-c1">background-color</span><span class="pl-kos">:</span> <span class="pl-en">rgba</span>(<span class="pl-c1">0</span><span class="pl-kos">,</span> <span class="pl-c1">0</span><span class="pl-kos">,</span> <span class="pl-c1">0</span><span class="pl-kos">,</span> <span class="pl-c1">0</span>);
-	<span class="pl-c1">outline</span><span class="pl-kos">:</span> none;
-	<span class="pl-c1">box-shadow</span><span class="pl-kos">:</span> <span class="pl-c1">6<span class="pl-smi">px</span></span> <span class="pl-c1">6<span class="pl-smi">px</span></span> <span class="pl-c1">14<span class="pl-smi">px</span></span> <span class="pl-c1">0</span> <span class="pl-en">var</span>(<span class="pl-s1">--header-btn-shadowColor</span>) inset<span class="pl-kos">,</span><span class="pl-c1">-7<span class="pl-smi">px</span></span> <span class="pl-c1">-7<span class="pl-smi">px</span></span> <span class="pl-c1">12<span class="pl-smi">px</span></span> <span class="pl-c1">0</span> <span class="pl-en">var</span>(<span class="pl-s1">--header-btn-shadowColor2</span>) inset;
-}
 <span class="pl-c">/* 图标颜色 */</span>
 .<span class="pl-c1">btn-invisible</span> <span class="pl-ent">svg</span> <span class="pl-ent">path</span>{
 	<span class="pl-c1">fill</span><span class="pl-kos">:</span> <span class="pl-en">var</span>(<span class="pl-s1">--title-right-svgColor</span>);
@@ -4262,6 +4263,17 @@ svg 暗黑模式下颜色.<br>
 .<span class="pl-c1">btn-invisible</span><span class="pl-kos">:</span><span class="pl-c1">hover</span> <span class="pl-ent">svg</span> <span class="pl-ent">path</span><span class="pl-kos">,</span>
 .<span class="pl-c1">btn-invisible</span>.<span class="pl-c1">zeroclipboard-is-hover</span> <span class="pl-ent">svg</span> <span class="pl-ent">path</span>{
 	<span class="pl-c1">fill</span><span class="pl-kos">:</span> <span class="pl-en">var</span>(<span class="pl-s1">--title-right-svgHovercolor</span>);
+}
+
+.<span class="pl-c1">btn-invisible</span><span class="pl-kos">:</span><span class="pl-c1">active</span><span class="pl-kos">,</span>
+.<span class="pl-c1">btn-invisible</span>.<span class="pl-c1">selected</span><span class="pl-kos">,</span>
+.<span class="pl-c1">btn-invisible</span>[<span class="pl-c1">aria-selected</span><span class="pl-c1">=</span><span class="pl-s">true</span>]<span class="pl-kos">,</span>
+.<span class="pl-c1">btn-invisible</span>.<span class="pl-c1">zeroclipboard-is-active</span> {
+	<span class="pl-c1">box-shadow</span><span class="pl-kos">:</span> <span class="pl-c1">6<span class="pl-smi">px</span></span> <span class="pl-c1">6<span class="pl-smi">px</span></span> <span class="pl-c1">14<span class="pl-smi">px</span></span> <span class="pl-c1">0</span> <span class="pl-en">var</span>(<span class="pl-s1">--header-btn-shadowColor</span>) inset<span class="pl-kos">,</span> <span class="pl-c1">-7<span class="pl-smi">px</span></span> <span class="pl-c1">-7<span class="pl-smi">px</span></span> <span class="pl-c1">12<span class="pl-smi">px</span></span> <span class="pl-c1">0</span> <span class="pl-en">var</span>(<span class="pl-s1">--header-btn-shadowColor2</span>) inset;
+}
+
+.<span class="pl-c1">btn-invisible</span><span class="pl-kos">:</span><span class="pl-c1">active</span> .<span class="pl-c1">btn-invisible</span>.<span class="pl-c1">zeroclipboard-is-active</span> {
+	<span class="pl-c1">box-shadow</span><span class="pl-kos">:</span> <span class="pl-c1">6<span class="pl-smi">px</span></span> <span class="pl-c1">6<span class="pl-smi">px</span></span> <span class="pl-c1">14<span class="pl-smi">px</span></span> <span class="pl-c1">0</span> <span class="pl-en">var</span>(<span class="pl-s1">--header-btn-shadowColor</span>) inset<span class="pl-kos">,</span> <span class="pl-c1">-7<span class="pl-smi">px</span></span> <span class="pl-c1">-7<span class="pl-smi">px</span></span> <span class="pl-c1">12<span class="pl-smi">px</span></span> <span class="pl-c1">0</span> <span class="pl-en">var</span>(<span class="pl-s1">--header-btn-shadowColor2</span>) inset;
 }</pre></div>
 </details>
 <h2>修改文章主页, 文章的列表样式</h2>
@@ -4848,24 +4860,10 @@ after 是光标, blink 是光标动画.</p>
         <span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-c1">style</span><span class="pl-kos">.</span><span class="pl-c1">top</span> <span class="pl-c1">=</span> <span class="pl-s1">deltaY</span> <span class="pl-c1">&gt;</span> <span class="pl-c1">0</span> ? <span class="pl-s">'-100px'</span> : <span class="pl-s">'0'</span><span class="pl-kos">;</span>
     <span class="pl-kos">}</span><span class="pl-kos">;</span>
 
-    <span class="pl-c">// 判断事件目标是否位于滚动容器内</span>
-    <span class="pl-k">const</span> <span class="pl-en">isInScrollableDiv</span> <span class="pl-c1">=</span> <span class="pl-s1">target</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
-        <span class="pl-k">let</span> <span class="pl-s1">node</span> <span class="pl-c1">=</span> <span class="pl-s1">target</span><span class="pl-kos">;</span>
-        <span class="pl-k">while</span> <span class="pl-kos">(</span><span class="pl-s1">node</span> <span class="pl-c1">&amp;&amp;</span> <span class="pl-s1">node</span> <span class="pl-c1">!==</span> <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-c1">body</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-            <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">node</span><span class="pl-kos">.</span><span class="pl-c1">scrollHeight</span> <span class="pl-c1">&gt;</span> <span class="pl-s1">node</span><span class="pl-kos">.</span><span class="pl-c1">clientHeight</span><span class="pl-kos">)</span> <span class="pl-k">return</span> <span class="pl-c1">true</span><span class="pl-kos">;</span>
-            <span class="pl-s1">node</span> <span class="pl-c1">=</span> <span class="pl-s1">node</span><span class="pl-kos">.</span><span class="pl-c1">parentNode</span><span class="pl-kos">;</span>
-        <span class="pl-kos">}</span>
-        <span class="pl-k">return</span> <span class="pl-c1">false</span><span class="pl-kos">;</span>
-    <span class="pl-kos">}</span><span class="pl-kos">;</span>
-
-    <span class="pl-c">// 监听触摸和滚轮事件</span>
-    <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'touchstart'</span><span class="pl-kos">,</span> <span class="pl-s1">e</span> <span class="pl-c1">=&gt;</span> <span class="pl-s1">startY</span> <span class="pl-c1">=</span> <span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-c1">touches</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span><span class="pl-kos">.</span><span class="pl-c1">clientY</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-    <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'touchmove'</span><span class="pl-kos">,</span> <span class="pl-s1">e</span> <span class="pl-c1">=&gt;</span> <span class="pl-en">handleScroll</span><span class="pl-kos">(</span><span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-c1">touches</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span><span class="pl-kos">.</span><span class="pl-c1">clientY</span> <span class="pl-c1">-</span> <span class="pl-s1">startY</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-    <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'wheel'</span><span class="pl-kos">,</span> <span class="pl-s1">e</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
-        <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-c1">!</span><span class="pl-en">isInScrollableDiv</span><span class="pl-kos">(</span><span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-c1">target</span><span class="pl-kos">)</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-            <span class="pl-en">handleScroll</span><span class="pl-kos">(</span><span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-c1">deltaY</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-        <span class="pl-kos">}</span>
-    <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-c">// 监听触摸和滚轮事件</span>
+<span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'touchstart'</span><span class="pl-kos">,</span> <span class="pl-s1">e</span> <span class="pl-c1">=&gt;</span> <span class="pl-s1">startY</span> <span class="pl-c1">=</span> <span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-c1">touches</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span><span class="pl-kos">.</span><span class="pl-c1">clientY</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'touchmove'</span><span class="pl-kos">,</span> <span class="pl-s1">e</span> <span class="pl-c1">=&gt;</span> <span class="pl-en">handleScroll</span><span class="pl-kos">(</span><span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-c1">touches</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span><span class="pl-kos">.</span><span class="pl-c1">clientY</span> <span class="pl-c1">-</span> <span class="pl-s1">startY</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'wheel'</span><span class="pl-kos">,</span> <span class="pl-s1">e</span> <span class="pl-c1">=&gt;</span> <span class="pl-en">handleScroll</span><span class="pl-kos">(</span><span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-c1">deltaY</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
 </details>
 <h3>打开 plist.html 文件</h3>
@@ -5287,6 +5285,18 @@ after 是光标, blink 是光标动画.</p>
 <td>#D73A4A</td>
 <td><div class="ImgLazyLoad-circle"></div>
 <img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=Bug&amp;color=D73A4A"></td>
+</tr>
+<tr>
+<td>软件</td>
+<td>#5da167</td>
+<td><div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=软件&amp;color=5da167"></td>
+</tr>
+<tr>
+<td>翻墙</td>
+<td>#cb7b58</td>
+<td><div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=翻墙&amp;color=cb7b58"></td>
 </tr>
 </tbody>
 </table></markdown-accessiblity-table>
