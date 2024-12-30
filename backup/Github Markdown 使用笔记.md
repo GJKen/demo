@@ -31,7 +31,7 @@
 
 任务列表是一组任务，每个任务都在单独的行上呈现，带有可点击的复选框。 您可以选中或取消选中复选框来将任务标记为完成或未完成。
 
-![](https://docs.github.com/assets/cb-64626/mw-1440/images/help/writing/task-list-rendered-simple.webp)
+`Gmeek-imgbox="https://docs.github.com/assets/cb-64626/mw-1440/images/help/writing/task-list-rendered-simple.webp"`
 
 ```
 - [x] #739
