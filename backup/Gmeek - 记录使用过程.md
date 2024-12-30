@@ -1637,7 +1637,7 @@ document.addEventListener('wheel', e => handleScroll(e.deltaY));
 
 **效果图:**
 
-`Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/QmTWtMj5966zgsPLPYDNZDNpyQ4k6YfxMj8CazAMnnZjSQ"`
+![image](https://github.com/user-attachments/assets/db205027-0615-4456-bca3-b33856372283)
 
 # 优化任务列表样式
 
@@ -1749,6 +1749,25 @@ if '<code class="notranslate">Gmeek-html' in post_body:
 这种情况下, 如果在 html 中含有行内代码块标签并且内容含有 Gmeek-html, 会导致转换文章内容时出现显示错误,
 
 更改后缩小了匹配范围, 可直接用行内代码块👉`Gmeek-html`让其在文章内正常显示.
+
+# 增加图片转换, 并适配图片懒加载
+
+打开`Gmeek.py`, 定位字符串`gmeek-html`
+
+在附近任意行增加代码:
+
+```python
+        if '<a' in post_body:
+            post_body = re.sub(r'<p>\s*<a[^>]*?href="([^"]+)"[^>]*?><img[^>]*?src="\1"[^>]*?></a>\s*</p>', lambda match: f'<div class="ImgLazyLoad-circle"></div>\n<img data-fancybox="gallery" img-src="{match.group(1)}">', post_body, flags=re.DOTALL)
+```
+
+- **使用演示**
+
+在 markdown 上传图片
+
+通过 Actions 转换后实际效果如下, html 里面图片标签会增加 fancybox 所需的`data-fancybox="gallery"`属性.
+
+这样优化后可以在 Github issue 的 Preview 里面直接预览图片, 同时还能防备图床问题导致的图片丢失(`Gmeek-spoilerText="Github, 稳!"`)
 
 # 添加 Gmeek-spoilertxt - 文字防剧透模糊效果
 
