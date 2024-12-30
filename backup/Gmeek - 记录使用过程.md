@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 通过 Actions 转换后实际效果如下, html 里面图片标签会增加 fancybox 所需的`data-fancybox="gallery"`属性.
 
-`Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/QmNiH2pdrA9Hb61EXgYbKtEssBAGemEjTQRBZbgutUCNx2"`
+![image](https://github.com/user-attachments/assets/3c5ecaf5-cb2e-440e-9708-44b2a22f1e9f)
 
 ## 图片懒加载
 
@@ -1011,7 +1011,7 @@ html {
 
 效果图:
 
-`Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/QmZS6jSp64Zg1uCQdw4hvACYUyb9cFGKrCgnBNRuf6mPVF"`
+![image](https://github.com/user-attachments/assets/f3eb7940-ca2b-4952-8fb4-e05a7acc84bd)
 
 ## 文章一键复制代码按钮样式
 
