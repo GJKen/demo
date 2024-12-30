@@ -13555,8 +13555,7 @@ a.btn-primary:focus-visible {
 .btn-invisible.zeroclipboard-is-hover {
 	color: var(--fgColor-accent, var(--color-accent-fg));
 	background-color: var(--title-right-btnbg-color);
-	outline: none;
-	box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor) inset, -7px -7px 12px 0 var(--header-btn-shadowColor2) inset;
+	outline: none
 }
 
 /* 图标颜色 */
@@ -13574,16 +13573,11 @@ a.btn-primary:focus-visible {
 .btn-invisible.selected,
 .btn-invisible[aria-selected=true],
 .btn-invisible.zeroclipboard-is-active {
-	color: var(--fgColor-accent, var(--color-accent-fg));
-	background: none;
-	border-color: var(--button-default-borderColor-active, var(--color-btn-active-border));
-	outline: 2px solid var(--focus-outlineColor, var(--color-accent-fg));
-	outline-offset: -2px;
-	box-shadow: none
+	box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor) inset, -7px -7px 12px 0 var(--header-btn-shadowColor2) inset;
 }
 
 .btn-invisible:active .btn-invisible.zeroclipboard-is-active {
-	background-color: var(--button-default-bgColor-selected, var(--color-btn-selected-bg))
+	box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor) inset, -7px -7px 12px 0 var(--header-btn-shadowColor2) inset;
 }
 
 .btn-invisible:disabled,
@@ -27390,6 +27384,7 @@ a.branch-name .octicon {
 	font-size: 1.85em;
 	border-left: .25em solid #32c7dd;
 	padding-left: .25em;
+	margin-top: 42px
 }
 
 .markdown-body h2 {
@@ -27399,17 +27394,6 @@ a.branch-name .octicon {
 	display: inline-block;
 	border-radius: 6px;
 }
-
-/*
-.markdown-body h2 {
-	font-size: 1.5em;
-	border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));
-	background: linear-gradient(45deg, #90d1ff, transparent) no-repeat left bottom;
-	background-size: 0 2px;
-	-webkit-transition: all 0.25s ease;
-	transition: all 0.25s ease;
-}
-*/
 
 .markdown-body h2:hover {
 	background-size: 100% 2px;
@@ -27572,8 +27556,6 @@ a.branch-name .octicon {
 .markdown-body img {
 	max-width: 100%;
 	box-sizing: content-box;
-	/* transition: transform 0.3s ease, clip-path 0.3s ease; */
-	/* -webkit-transition: -webkit-transform 0.3s ease, -webkit-clip-path 0.3s ease; */
 }
 
 .markdown-body img:hover {
