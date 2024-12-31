@@ -4,7 +4,7 @@
     <meta content="text/html; charset=utf-8" http-equiv="content-type" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href='https://gjkblog.us.kg/demo/primer.css' rel='stylesheet' />
+    <link href='https://cdn.jsdelivr.net/gh/gjken/gjken.github.io@v2.2/static/primer.min.css' rel='stylesheet' />
     
     <link rel="icon" href="https://pic.imgdb.cn/item/6734c652d29ded1a8cc038aa.jpg"><script>
         let theme = localStorage.getItem("meek_theme") || "light";
@@ -20,7 +20,7 @@
 进入 Additional services 选项卡中找到 Run your own applications 项目,
 如下图所示, 必须要设置成如图所示的 Enabled.
 
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmUg8VV61q7DApUWcijdA1xdZar5wE5TUhcfMq5femCMYs'`
+`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/QmSxxUuqJmk7f3HK7jSSzrTRa8fHRLYpNWq7JVzQ2pvpbM'`
 
 如果不开启这一项, 自己的用户目录下的所有文件都无法添加可执行权限.
 
@@ -33,32 +33,27 @@
 每个账户只能创建3个端口.
 其中一个用来反代本地搭建 Alist 的端口, 这里我用 26666 端口.
 
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmNSXAsz4QFnkTp3JRHGLuUJStNoPaK7yERRqPj9spXSc9'`
+`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/QmaeNdqmf9RMN6DxDiQUUEnY7F4ng4A5YmL28jsKG7TCt1'`
 
 ### 创建网站
 
 > Serv00 账号创建好之后默认就有一个网站, 一般是`USERNAME.serv00.net`, 可以随意删除.
 
-这里可以用自己的域名或者用 Serv00 的域名.
 下图我写的是自己的域名.
 
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmX3mkbrv5EfzsCzJXTTGqKdYDiXc2eu5BJMuK7ozD3PNC'`
+`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/QmQrk88sEBPW1pykSdshM9L6gwSrANTE9wvRY1ySk5sjGW'`
 
 其中 26666 这个端口是 Alist 服务的端口.
 
 ### 网站添加 SSL 证书
 
-站点创建完成后, 点击上方的 Manage SSL certificates.
+站点创建完成后, 点击上方的 Manage SSL certificates, 再点击 Manage.
 
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmWRkpfidsY2KGkX47dAW4tKmNe2hStW6vzodRe7GUG2dw'`
+`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/Qmdr6rNkRPJQDpwaG4wcRDddjKtCWWwUFujpY662HH8HJf'`
 
-点击 Manage.
+点击 Add certificate, 最后点击 Add 完成创建证书.
 
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmcXdLQSy2PJpuWMCVzMZebNFpdt2w3P6Px1wQ84Pi9jbx'`
-
-点击 Add certificate.
-
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/Qmd9CV8BxtjSMZivZnCQrVd1dqByaj6HoUWKi8UMrC8ZX6'`
+`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/QmbGd8SafDnUUWpwaFgcAStzSPoc9w3gR6qj5RBRsay67D'`
 
 ### 安装 Alist
 
@@ -85,7 +80,7 @@ mkdir -p ~/domains/alist && cd ~/domains/alist && curl -L -o alist.tar.gz https:
 
 回到 Panel 面板, 找到 MySQL 选项卡, 使用 Add database 功能新建一个数据库:
 
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/Qmd1bF66pa9RihfeYZ6odBBG9htemSi57jy2A32Q4wDt7r'`
+`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/QmbLyHtCapJsYyg2LHckgYGpkuGcCnAbPkpnNR2CawrV82'`
 
 Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 
@@ -95,15 +90,13 @@ Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 
 进入 Panel 面板, 找到 File manager 选项卡, 会如下图的进入文件管理器.
 
-定位文件:
+定位这个`config.json`文件, 双击编辑它:
 
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmXmXQRv5AfHqy2sRYS4dNCPQL2xPiGfaGtgTJjwGsX5Et'`
-
-双击编辑这个`config.json`文件.
+`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/QmUz4eAt1DMDzxHNyYnRrrYJx1uwjrCcR61BKAGZDXYutz'`
 
 我主要修改了`CDN` `database` `scheme`三个部分,
 
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmXLJa8YMr9KufMYVNQjVW1wXCjWmJ3Q9V1PqR5BRXHtHU'`
+`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/QmZSbd9AMpbHWfzdNzt3EDD5ke6UjsAC77DeaG4syNpKWw'`
 
 <table>
   <tr>
@@ -115,7 +108,7 @@ Database name 和 Username 字段为了方便好记就写 Alist 就行了.
   <tr>
     <td rowspan='6'>database</td>
     <td>type</td>
-    <td>因为我们创建的数据库类型是 mysql, 所以这里写<code class='notranslate'>mysql</code>.</td>
+    <td>因为我们创建的数据库类型是 mysql, 就写<code class='notranslate'>mysql</code>.</td>
   </tr>
   <tr>
     <td>host</td>
@@ -138,8 +131,8 @@ Database name 和 Username 字段为了方便好记就写 Alist 就行了.
     <td>填写创建的数据表名称</td>
   </tr>
   <tr>
-    <td rowspan='2'>database</td>
-    <td>scheme</td>
+    <td rowspan='2'>scheme</td>
+    <td>address</td>
     <td>0.0.0.0</td>
   </tr>
   <tr>
@@ -158,37 +151,29 @@ Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 ./alist server
 ```
 
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmYL72sd2Wyb5C6WrJe6G7w1NvAdpqXiUwFWUEm6FCSGxt'`
+`Gmeek-imgbox='https://ipfs.io/ipfs/Qmdw9VRvPnosHNGuZbEoi1EAr6GYxxDFmrbFM2BdB8orSD'`
 
 运行正常, 显示的管理员账号的密码一定要记住. 接着使用 Ctrl+c 停止运行.
 
 ### 自定义域名绑定
 
-我这边使用 us.kg 的免费域名进行访问 Alist.
+我这边使用 [us.kg]()的免费域名进行访问 Alist.
 
 因为 serv00 的域名基本上都会被墙, 没办法只能用~~Cloudflare减速器~~跨墙了, ~~CDN 回源加速不会弄.~~
 
 我们进入 https://dash.cloudflare.com
 
-点击添加域.
+点击添加域, 再输入自己的域名, 选择最底下的 free 计划.
 
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmcFYHqU8iTz77vEzVUkrHkMiQUcJ1mCjBz2u6q9mszmaD'`
-
-输入自己的域名.
-
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmWEwsF7kjqWYZET8AbyPbVizciT3pLDbi6Pjm4xkYZvCS'`
-
-选择 free 计划.
-
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmeYbZ48awUqAPApdLrRckVqbtLB71XWTpCafpHCwE2hHG'`
+`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/QmcFYHqU8iTz77vEzVUkrHkMiQUcJ1mCjBz2u6q9mszmaD'`
 
 复制 dns 名称服务器.
 
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmakCvRG52FLk2NV1XFjmWmz5LZuhPg3oD2SdiTunQH8TU'`
+`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/QmakCvRG52FLk2NV1XFjmWmz5LZuhPg3oD2SdiTunQH8TU'`
 
 然后转到你的域名提供服务商, 添加 dns 记录.
 
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmUN7NYdHmRnLgHEGtFdHF3ygCtkVsR6WyRyhsX9nhDB1a'`
+`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/QmUN7NYdHmRnLgHEGtFdHF3ygCtkVsR6WyRyhsX9nhDB1a'`
 
 如果没问题就可以通过自定义域名访问了.
 
@@ -208,11 +193,11 @@ echo '$(date '+%Y-%m-%d %H:%M:%S')' > ~/domains/alist/logfile.txt
 
 转到 panel 面板, 创建 Cron Jobs 定时任务.
 
-我们需要创建2条定时任务, 一个是每小时执行, 一个是 reboot 执行,
+我们需要创建一个每小时执行的任务进行保活,
 
-计划任务执行的是我的`runAlist.sh`脚本进行进程保活. 如下图:
+计划任务执行的是我的`runAlist.sh`. 如下图:
 
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmRgagQ4tvQ6BeD5Hcjm2tx7YdWFL6Fo3BYCiHZJD9wgSd'`
+`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/QmSNKpcsXM2xbaubLF9fAWV4irZpaL74rsAQUfu22kPw2W'`
 
 成功后不出意外的话, 隔一段时间进入 Alist 网盘需要重新登陆账号, 因为定时脚本会先杀原来的 Alist 进程再重启.
 
@@ -354,7 +339,7 @@ async function loginAccount(account) {
 进入 Additional services 选项卡中找到 Run your own applications 项目,
 如下图所示, 必须要设置成如图所示的 Enabled.
 
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmUg8VV61q7DApUWcijdA1xdZar5wE5TUhcfMq5femCMYs'`
+`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/QmSxxUuqJmk7f3HK7jSSzrTRa8fHRLYpNWq7JVzQ2pvpbM'`
 
 如果不开启这一项, 自己的用户目录下的所有文件都无法添加可执行权限.
 
@@ -367,32 +352,27 @@ async function loginAccount(account) {
 每个账户只能创建3个端口.
 其中一个用来反代本地搭建 Alist 的端口, 这里我用 26666 端口.
 
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmNSXAsz4QFnkTp3JRHGLuUJStNoPaK7yERRqPj9spXSc9'`
+`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/QmaeNdqmf9RMN6DxDiQUUEnY7F4ng4A5YmL28jsKG7TCt1'`
 
 ### 创建网站
 
 > Serv00 账号创建好之后默认就有一个网站, 一般是`USERNAME.serv00.net`, 可以随意删除.
 
-这里可以用自己的域名或者用 Serv00 的域名.
 下图我写的是自己的域名.
 
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmX3mkbrv5EfzsCzJXTTGqKdYDiXc2eu5BJMuK7ozD3PNC'`
+`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/QmQrk88sEBPW1pykSdshM9L6gwSrANTE9wvRY1ySk5sjGW'`
 
 其中 26666 这个端口是 Alist 服务的端口.
 
 ### 网站添加 SSL 证书
 
-站点创建完成后, 点击上方的 Manage SSL certificates.
+站点创建完成后, 点击上方的 Manage SSL certificates, 再点击 Manage.
 
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmWRkpfidsY2KGkX47dAW4tKmNe2hStW6vzodRe7GUG2dw'`
+`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/Qmdr6rNkRPJQDpwaG4wcRDddjKtCWWwUFujpY662HH8HJf'`
 
-点击 Manage.
+点击 Add certificate, 最后点击 Add 完成创建证书.
 
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmcXdLQSy2PJpuWMCVzMZebNFpdt2w3P6Px1wQ84Pi9jbx'`
-
-点击 Add certificate.
-
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/Qmd9CV8BxtjSMZivZnCQrVd1dqByaj6HoUWKi8UMrC8ZX6'`
+`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/QmbGd8SafDnUUWpwaFgcAStzSPoc9w3gR6qj5RBRsay67D'`
 
 ### 安装 Alist
 
@@ -419,7 +399,7 @@ mkdir -p ~/domains/alist && cd ~/domains/alist && curl -L -o alist.tar.gz https:
 
 回到 Panel 面板, 找到 MySQL 选项卡, 使用 Add database 功能新建一个数据库:
 
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/Qmd1bF66pa9RihfeYZ6odBBG9htemSi57jy2A32Q4wDt7r'`
+`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/QmbLyHtCapJsYyg2LHckgYGpkuGcCnAbPkpnNR2CawrV82'`
 
 Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 
@@ -429,15 +409,13 @@ Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 
 进入 Panel 面板, 找到 File manager 选项卡, 会如下图的进入文件管理器.
 
-定位文件:
+定位这个`config.json`文件, 双击编辑它:
 
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmXmXQRv5AfHqy2sRYS4dNCPQL2xPiGfaGtgTJjwGsX5Et'`
-
-双击编辑这个`config.json`文件.
+`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/QmUz4eAt1DMDzxHNyYnRrrYJx1uwjrCcR61BKAGZDXYutz'`
 
 我主要修改了`CDN` `database` `scheme`三个部分,
 
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmXLJa8YMr9KufMYVNQjVW1wXCjWmJ3Q9V1PqR5BRXHtHU'`
+`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/QmZSbd9AMpbHWfzdNzt3EDD5ke6UjsAC77DeaG4syNpKWw'`
 
 <table>
   <tr>
@@ -449,7 +427,7 @@ Database name 和 Username 字段为了方便好记就写 Alist 就行了.
   <tr>
     <td rowspan='6'>database</td>
     <td>type</td>
-    <td>因为我们创建的数据库类型是 mysql, 所以这里写<code class='notranslate'>mysql</code>.</td>
+    <td>因为我们创建的数据库类型是 mysql, 就写<code class='notranslate'>mysql</code>.</td>
   </tr>
   <tr>
     <td>host</td>
@@ -472,8 +450,8 @@ Database name 和 Username 字段为了方便好记就写 Alist 就行了.
     <td>填写创建的数据表名称</td>
   </tr>
   <tr>
-    <td rowspan='2'>database</td>
-    <td>scheme</td>
+    <td rowspan='2'>scheme</td>
+    <td>address</td>
     <td>0.0.0.0</td>
   </tr>
   <tr>
@@ -492,37 +470,29 @@ Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 ./alist server
 ```
 
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmYL72sd2Wyb5C6WrJe6G7w1NvAdpqXiUwFWUEm6FCSGxt'`
+`Gmeek-imgbox='https://ipfs.io/ipfs/Qmdw9VRvPnosHNGuZbEoi1EAr6GYxxDFmrbFM2BdB8orSD'`
 
 运行正常, 显示的管理员账号的密码一定要记住. 接着使用 Ctrl+c 停止运行.
 
 ### 自定义域名绑定
 
-我这边使用 us.kg 的免费域名进行访问 Alist.
+我这边使用 [us.kg]()的免费域名进行访问 Alist.
 
 因为 serv00 的域名基本上都会被墙, 没办法只能用~~Cloudflare减速器~~跨墙了, ~~CDN 回源加速不会弄.~~
 
 我们进入 https://dash.cloudflare.com
 
-点击添加域.
+点击添加域, 再输入自己的域名, 选择最底下的 free 计划.
 
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmcFYHqU8iTz77vEzVUkrHkMiQUcJ1mCjBz2u6q9mszmaD'`
-
-输入自己的域名.
-
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmWEwsF7kjqWYZET8AbyPbVizciT3pLDbi6Pjm4xkYZvCS'`
-
-选择 free 计划.
-
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmeYbZ48awUqAPApdLrRckVqbtLB71XWTpCafpHCwE2hHG'`
+`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/QmcFYHqU8iTz77vEzVUkrHkMiQUcJ1mCjBz2u6q9mszmaD'`
 
 复制 dns 名称服务器.
 
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmakCvRG52FLk2NV1XFjmWmz5LZuhPg3oD2SdiTunQH8TU'`
+`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/QmakCvRG52FLk2NV1XFjmWmz5LZuhPg3oD2SdiTunQH8TU'`
 
 然后转到你的域名提供服务商, 添加 dns 记录.
 
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmUN7NYdHmRnLgHEGtFdHF3ygCtkVsR6WyRyhsX9nhDB1a'`
+`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/QmUN7NYdHmRnLgHEGtFdHF3ygCtkVsR6WyRyhsX9nhDB1a'`
 
 如果没问题就可以通过自定义域名访问了.
 
@@ -542,11 +512,11 @@ echo '$(date '+%Y-%m-%d %H:%M:%S')' > ~/domains/alist/logfile.txt
 
 转到 panel 面板, 创建 Cron Jobs 定时任务.
 
-我们需要创建2条定时任务, 一个是每小时执行, 一个是 reboot 执行,
+我们需要创建一个每小时执行的任务进行保活,
 
-计划任务执行的是我的`runAlist.sh`脚本进行进程保活. 如下图:
+计划任务执行的是我的`runAlist.sh`. 如下图:
 
-`Gmeek-imgbox='https://ipfs.mbzj.org/ipfs/QmRgagQ4tvQ6BeD5Hcjm2tx7YdWFL6Fo3BYCiHZJD9wgSd'`
+`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/QmSNKpcsXM2xbaubLF9fAWV4irZpaL74rsAQUfu22kPw2W'`
 
 成功后不出意外的话, 隔一段时间进入 Alist 网盘需要重新登陆账号, 因为定时脚本会先杀原来的 Alist 进程再重启.
 
@@ -690,17 +660,16 @@ async function loginAccount(account) {
 [data-color-mode=light][data-light-theme=dark],[data-color-mode=light][data-light-theme=dark]::selection,[data-color-mode=dark][data-dark-theme=dark],[data-color-mode=dark][data-dark-theme=dark]::selection{--functionBtnFlex-bgColor:#ffffff00;}
 @keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@keyframes blink{50%{opacity:0}100%{opacity:1}}@-webkit-keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes blink{50%{opacity:0}100%{opacity:1}}
 body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padding:45px;font-size:16px;font-family:sans-serif;line-height:1.25;}
-#header .homepage-header{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:24px;}
+#header{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:24px;}
 #functionBtn{display:flex;justify-content:center;margin:20px 0;gap:20px;}
-#functionBtn a, #functionBtn div{padding:14px 16px;}
-#functionBtn.Btn-flex{position:fixed;margin:0;padding:20px 0;top:0;left:0;width:100%;min-width:500px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;animation:fadeIn .2s ease-in 0s forwards}
+#functionBtn a, #functionBtn div{padding:14px 16px;animation:fadeIn .7s ease-in 0s forwards;}
+#functionBtn.Btn-flex{position:fixed;margin:0;padding:20px 0;top:-100px;left:0;width:100%;min-width:500px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;animation:fadeIn.2s ease-in 0s forwards;transition:top 0.3s ease-in-out}
 #footer{margin-top:64px; text-align:center;font-size:small;}
 
 </style>
 
 <style>
-#header.article-header{display:flex;justify-content:center;}
-.postTitle{margin:auto 0;font-size:40px;font-weight:bold;}
+.postTitle{margin:0 auto;font-size:40px;font-weight:bold;}
 .postTitle::after{content:'|';animation:blink 1s infinite;font-family:fantasy;font-weight:normal;vertical-align:text-top;}
 .no-blink::after{animation:none;}
 .spoilerText{filter:blur(5px);-webkit-filter:blur(5px);cursor:pointer;transition:filter .3s ease}
@@ -726,12 +695,12 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
     font-size:12px;
 }
 </style>
-<style>.markdown-alert{padding:0.5rem 1rem;margin-bottom:1rem;border-left:.25em solid var(--borderColor-default,var(--color-border-default));}.markdown-alert .markdown-alert-title {display:flex;font-weight:var(--base-text-weight-medium,500);align-items:center;line-height:1;}.markdown-alert>:first-child {margin-top:0;}.markdown-alert>:last-child {margin-bottom:0;}</style><style>.markdown-alert.markdown-alert-tip {border-left-color:var(--borderColor-success-emphasis, var(--color-success-emphasis));border-radius:6px;background-color:var(--color-success-subtle);}.markdown-alert.markdown-alert-tip .markdown-alert-title {color: var(--fgColor-success,var(--color-success-fg));}</style>
+<style>.markdown-alert{border-radius:6px;padding:0.5rem 1rem;margin-bottom:1rem;border-left:.25em solid var(--borderColor-default,var(--color-border-default));}.markdown-alert .markdown-alert-title {display:flex;font-weight:var(--base-text-weight-medium,500);align-items:center;}.markdown-alert>:first-child {margin-top:0;}.markdown-alert>:last-child {margin-bottom:0;}</style><style>.markdown-alert.markdown-alert-tip {border-left-color:var(--borderColor-success-emphasis, var(--color-success-emphasis));background-color:var(--color-success-subtle);}.markdown-alert.markdown-alert-tip .markdown-alert-title {color: var(--fgColor-success,var(--color-success-fg));}</style><style>.contains-task-list{padding-left:0.9em !important;list-style:none}</style>
 
 
 
-<body class="article">
-    <div id="header" class="article-header">
+<body>
+    <div id="header">
 <h1 class="postTitle">Serv00 - 使用记录</h1>
 </div>
     <div id="functionBtn">
@@ -748,9 +717,9 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 	<svg class="octicon" width="16" height="16" ><path id="themeSwitch" fill-rule="evenodd"></path></svg>
 </a>
 
-<div class="ArticleTOC btn btn-invisible circle">
-	<svg viewBox="-30 380 1084 1" xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path d="M973.281 563.992c28.282.049 51.248-22.838 51.295-51.121.049-28.27-22.838-51.232-51.121-51.28l-921.597-1.567C23.59 459.975.627 482.86.578 511.13c-.049 28.284 22.838 51.248 51.107 51.295l921.596 1.568zm.566-332.805c28.283.047 51.248-22.838 51.295-51.105.047-28.284-22.838-51.248-51.122-51.295L52.426 127.22c-28.27-.049-51.234 22.836-51.28 51.12-.05 28.269 22.837 51.233 51.106 51.28l921.595 1.568zm-1.13 665.597c28.283.047 51.247-22.825 51.294-51.107.047-28.281-22.84-51.247-51.122-51.294l-921.594-1.568C23.025 792.768.06 815.653.013 843.935c-.05 28.283 22.838 51.233 51.107 51.282l921.596 1.567z" fill="#656d76"></path></svg>
-</div>
+<a class="ArticleTOC btn btn-invisible circle" title="文章目录">
+	<svg class="octicon" width="16" height="16"><path id="ArticleTOC"></path></svg>
+</a>
 </div>
     <div id="content">
 <div class="markdown-body" id="postBody"><h1>注册 Serv00</h1>
@@ -759,35 +728,31 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 <h1>准备工作</h1>
 <p>进入 Additional services 选项卡中找到 Run your own applications 项目,<br>
 如下图所示, 必须要设置成如图所示的 Enabled.</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://ipfs.mbzj.org/ipfs/QmUg8VV61q7DApUWcijdA1xdZar5wE5TUhcfMq5femCMYs"></p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://i1.img2ipfs.com/ipfs/QmSxxUuqJmk7f3HK7jSSzrTRa8fHRLYpNWq7JVzQ2pvpbM">
 <p>如果不开启这一项, 自己的用户目录下的所有文件都无法添加可执行权限.</p>
 <h1>部署记录</h1>
 <h2>Alist</h2>
 <h3>创建端口</h3>
 <p>每个账户只能创建3个端口.<br>
 其中一个用来反代本地搭建 Alist 的端口, 这里我用 26666 端口.</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://ipfs.mbzj.org/ipfs/QmNSXAsz4QFnkTp3JRHGLuUJStNoPaK7yERRqPj9spXSc9"></p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://i1.img2ipfs.com/ipfs/QmaeNdqmf9RMN6DxDiQUUEnY7F4ng4A5YmL28jsKG7TCt1">
 <h3>创建网站</h3>
 <blockquote>
 <p>Serv00 账号创建好之后默认就有一个网站, 一般是<code class="notranslate">USERNAME.serv00.net</code>, 可以随意删除.</p>
 </blockquote>
-<p>这里可以用自己的域名或者用 Serv00 的域名.<br>
-下图我写的是自己的域名.</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://ipfs.mbzj.org/ipfs/QmX3mkbrv5EfzsCzJXTTGqKdYDiXc2eu5BJMuK7ozD3PNC"></p>
+<p>下图我写的是自己的域名.</p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://i1.img2ipfs.com/ipfs/QmQrk88sEBPW1pykSdshM9L6gwSrANTE9wvRY1ySk5sjGW">
 <p>其中 26666 这个端口是 Alist 服务的端口.</p>
 <h3>网站添加 SSL 证书</h3>
-<p>站点创建完成后, 点击上方的 Manage SSL certificates.</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://ipfs.mbzj.org/ipfs/QmWRkpfidsY2KGkX47dAW4tKmNe2hStW6vzodRe7GUG2dw"></p>
-<p>点击 Manage.</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://ipfs.mbzj.org/ipfs/QmcXdLQSy2PJpuWMCVzMZebNFpdt2w3P6Px1wQ84Pi9jbx"></p>
-<p>点击 Add certificate.</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://ipfs.mbzj.org/ipfs/Qmd9CV8BxtjSMZivZnCQrVd1dqByaj6HoUWKi8UMrC8ZX6"></p>
+<p>站点创建完成后, 点击上方的 Manage SSL certificates, 再点击 Manage.</p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://i1.img2ipfs.com/ipfs/Qmdr6rNkRPJQDpwaG4wcRDddjKtCWWwUFujpY662HH8HJf">
+<p>点击 Add certificate, 最后点击 Add 完成创建证书.</p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://i1.img2ipfs.com/ipfs/QmbGd8SafDnUUWpwaFgcAStzSPoc9w3gR6qj5RBRsay67D">
 <h3>安装 Alist</h3>
 <div class="markdown-alert markdown-alert-tip"><p class="markdown-alert-title"><svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p><p>Alist 官方在 24年8月17日, 增加了 <a href="https://github.com/AlistGo/alist/releases/tag/beta">beta</a> 版本, 支持 FreeBSD 系统下能够运行的 Alist 可执行文件🎉</p>
 </div>
@@ -799,21 +764,20 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 <div class="highlight highlight-source-shell"><pre class="notranslate">./alist server</pre></div>
 <h3>创建 Alist 所需数据库</h3>
 <p>回到 Panel 面板, 找到 MySQL 选项卡, 使用 Add database 功能新建一个数据库:</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://ipfs.mbzj.org/ipfs/Qmd1bF66pa9RihfeYZ6odBBG9htemSi57jy2A32Q4wDt7r"></p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://i1.img2ipfs.com/ipfs/QmbLyHtCapJsYyg2LHckgYGpkuGcCnAbPkpnNR2CawrV82">
 <p>Database name 和 Username 字段为了方便好记就写 Alist 就行了.</p>
 <blockquote>
 <p>密码要求含有大写字母, 小写字母和数字三种字符, 且长度必须超过6个字符.</p>
 </blockquote>
 <h3>修改配置文件</h3>
 <p>进入 Panel 面板, 找到 File manager 选项卡, 会如下图的进入文件管理器.</p>
-<p>定位文件:</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://ipfs.mbzj.org/ipfs/QmXmXQRv5AfHqy2sRYS4dNCPQL2xPiGfaGtgTJjwGsX5Et"></p>
-<p>双击编辑这个<code class="notranslate">config.json</code>文件.</p>
+<p>定位这个<code class="notranslate">config.json</code>文件, 双击编辑它:</p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://i1.img2ipfs.com/ipfs/QmUz4eAt1DMDzxHNyYnRrrYJx1uwjrCcR61BKAGZDXYutz">
 <p>我主要修改了<code class="notranslate">CDN</code> <code class="notranslate">database</code> <code class="notranslate">scheme</code>三个部分,</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://ipfs.mbzj.org/ipfs/QmXLJa8YMr9KufMYVNQjVW1wXCjWmJ3Q9V1PqR5BRXHtHU"></p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://i1.img2ipfs.com/ipfs/QmZSbd9AMpbHWfzdNzt3EDD5ke6UjsAC77DeaG4syNpKWw">
 <markdown-accessiblity-table><table role="table">
   <tbody><tr>
     <td><p>CDN</p></td>
@@ -824,7 +788,7 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
   <tr>
     <td rowspan="6">database</td>
     <td>type</td>
-    <td>因为我们创建的数据库类型是 mysql, 所以这里写<code class="notranslate">mysql</code>.</td>
+    <td>因为我们创建的数据库类型是 mysql, 就写<code class="notranslate">mysql</code>.</td>
   </tr>
   <tr>
     <td>host</td>
@@ -847,8 +811,8 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
     <td>填写创建的数据表名称</td>
   </tr>
   <tr>
-    <td rowspan="2">database</td>
-    <td>scheme</td>
+    <td rowspan="2">scheme</td>
+    <td>address</td>
     <td>0.0.0.0</td>
   </tr>
   <tr>
@@ -860,28 +824,22 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 <h3>再次启动 Alist</h3>
 <p>回到 SSH 窗口中进行操作.</p>
 <div class="highlight highlight-source-shell"><pre class="notranslate">./alist server</pre></div>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://ipfs.mbzj.org/ipfs/QmYL72sd2Wyb5C6WrJe6G7w1NvAdpqXiUwFWUEm6FCSGxt"></p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://ipfs.io/ipfs/Qmdw9VRvPnosHNGuZbEoi1EAr6GYxxDFmrbFM2BdB8orSD">
 <p>运行正常, 显示的管理员账号的密码一定要记住. 接着使用 Ctrl+c 停止运行.</p>
 <h3>自定义域名绑定</h3>
-<p>我这边使用 us.kg 的免费域名进行访问 Alist.</p>
+<p>我这边使用 <a href="">us.kg</a>的免费域名进行访问 Alist.</p>
 <p>因为 serv00 的域名基本上都会被墙, 没办法只能用<del>Cloudflare减速器</del>跨墙了, <del>CDN 回源加速不会弄.</del></p>
 <p>我们进入 <a href="https://dash.cloudflare.com" rel="nofollow">https://dash.cloudflare.com</a></p>
-<p>点击添加域.</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://ipfs.mbzj.org/ipfs/QmcFYHqU8iTz77vEzVUkrHkMiQUcJ1mCjBz2u6q9mszmaD"></p>
-<p>输入自己的域名.</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://ipfs.mbzj.org/ipfs/QmWEwsF7kjqWYZET8AbyPbVizciT3pLDbi6Pjm4xkYZvCS"></p>
-<p>选择 free 计划.</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://ipfs.mbzj.org/ipfs/QmeYbZ48awUqAPApdLrRckVqbtLB71XWTpCafpHCwE2hHG"></p>
+<p>点击添加域, 再输入自己的域名, 选择最底下的 free 计划.</p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://i1.img2ipfs.com/ipfs/QmcFYHqU8iTz77vEzVUkrHkMiQUcJ1mCjBz2u6q9mszmaD">
 <p>复制 dns 名称服务器.</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://ipfs.mbzj.org/ipfs/QmakCvRG52FLk2NV1XFjmWmz5LZuhPg3oD2SdiTunQH8TU"></p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://i1.img2ipfs.com/ipfs/QmakCvRG52FLk2NV1XFjmWmz5LZuhPg3oD2SdiTunQH8TU">
 <p>然后转到你的域名提供服务商, 添加 dns 记录.</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://ipfs.mbzj.org/ipfs/QmUN7NYdHmRnLgHEGtFdHF3ygCtkVsR6WyRyhsX9nhDB1a"></p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://i1.img2ipfs.com/ipfs/QmUN7NYdHmRnLgHEGtFdHF3ygCtkVsR6WyRyhsX9nhDB1a">
 <p>如果没问题就可以通过自定义域名访问了.</p>
 <h3>Alist 保活</h3>
 <blockquote>
@@ -894,10 +852,10 @@ screen -dmS alist bash -c <span class="pl-s"><span class="pl-pds">'</span>cd ~/d
 <span class="pl-c"><span class="pl-c">#</span>screen -ls</span>
 <span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-s"><span class="pl-pds">$(</span>date <span class="pl-s"><span class="pl-pds">'</span>+%Y-%m-%d %H:%M:%S<span class="pl-pds">'</span></span><span class="pl-pds">)</span></span><span class="pl-pds">"</span></span> <span class="pl-k">&gt;</span> <span class="pl-k">~</span>/domains/alist/logfile.txt</pre></div>
 <p>转到 panel 面板, 创建 Cron Jobs 定时任务.</p>
-<p>我们需要创建2条定时任务, 一个是每小时执行, 一个是 reboot 执行,</p>
-<p>计划任务执行的是我的<code class="notranslate">runAlist.sh</code>脚本进行进程保活. 如下图:</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://ipfs.mbzj.org/ipfs/QmRgagQ4tvQ6BeD5Hcjm2tx7YdWFL6Fo3BYCiHZJD9wgSd"></p>
+<p>我们需要创建一个每小时执行的任务进行保活,</p>
+<p>计划任务执行的是我的<code class="notranslate">runAlist.sh</code>. 如下图:</p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://i1.img2ipfs.com/ipfs/QmSNKpcsXM2xbaubLF9fAWV4irZpaL74rsAQUfu22kPw2W">
 <p>成功后不出意外的话, 隔一段时间进入 Alist 网盘需要重新登陆账号, 因为定时脚本会先杀原来的 Alist 进程再重启.</p>
 <h1>Serv00+CT8 保活(可TG通知)</h1>
 <blockquote>
@@ -1129,39 +1087,39 @@ screen -dmS alist bash -c <span class="pl-s"><span class="pl-pds">'</span>cd ~/d
 }</pre></div>
 </details>
 <h2>创建 Workers</h2>
-<p>进入 Cloudflare 面板, 然后按照下图点击创建.</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://ipfs.mbzj.org/ipfs/QmXBBc5zsb3vZEbXWKjw9oUv7u6899kPV8eDz8MXZKyUpe"></p>
+<p>进入 Cloudflare 面板, 创建 Workers</p>
 <p>名字随意, 建议写<code class="notranslate">Serv00Keep</code>方便好记, 然后右下角点部署.</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://ipfs.mbzj.org/ipfs/QmNP8RrwuUE6LEauh1tEAVApPXkLzf1nH28r6mWZgV5GEg"></p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://i1.img2ipfs.com/ipfs/Qmc15LLyu3pEnWWvtxHqK48AHv49FMaXYPTgfw96JNqELt">
 <p>部署完成后点击编辑代码.</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://ipfs.mbzj.org/ipfs/QmNVaEi6uUU7AaprzNaPGGwRbKNmc1kHvXEAE6pZTPZzqa"></p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://i1.img2ipfs.com/ipfs/QmQkE6PnCBAC5Ug3pKMb6ffgTW9ybFNNhEFzkcSNSNDsXu">
 <p>粘贴 Worker 代码, 粘贴好之后点击部署.</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://ipfs.mbzj.org/ipfs/QmPh4ziXe3Wg4cagzdq5vzyn3NUTYVr3pNXpKSfbZ7v6NT"></p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://i1.img2ipfs.com/ipfs/QmPh4ziXe3Wg4cagzdq5vzyn3NUTYVr3pNXpKSfbZ7v6NT">
 <p>返回到<code class="notranslate">Serv00Keep</code>的设置, 找到<code class="notranslate">变量和机密</code></p>
 <h3>添加机密</h3>
 <p>按照<code class="notranslate">Json</code>格式编辑好自己的 serv00 账号和密码, 填入<code class="notranslate">ACCOUNTS_JSON</code>值.<br>
 按照<code class="notranslate">Json</code>格式编辑好自己的 telegram bot token, 填入<code class="notranslate">TELEGRAM_JSON</code>值.</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://ipfs.mbzj.org/ipfs/QmWrhPXgkyqwjRSPE3EbT18eCq8XtLYUPL1JaPc9bQbPw2"></p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://i1.img2ipfs.com/ipfs/QmWrhPXgkyqwjRSPE3EbT18eCq8XtLYUPL1JaPc9bQbPw2">
 <h3>添加触发事件</h3>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://ipfs.mbzj.org/ipfs/QmPmUCuANQN2UP9jKodZwiVN5xLWLNg315q8dqZdQsXuch"></p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://i1.img2ipfs.com/ipfs/QmPmUCuANQN2UP9jKodZwiVN5xLWLNg315q8dqZdQsXuch">
 <h2>手动部署</h2>
 <p>机密和触发事件填写完成之后, 我们手动部署一次.</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://ipfs.mbzj.org/ipfs/QmZvTJW7bMwv5jWK7H4sJG1GMvqBwmAiLzdhehTgLpdyao"></p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://i1.img2ipfs.com/ipfs/QmZvTJW7bMwv5jWK7H4sJG1GMvqBwmAiLzdhehTgLpdyao">
 <h2>手动执行验证效果</h2>
 <p>如下图, 进入编辑代码 → 设定时间 → 触发计划的事件, 即可手动触发.</p>
 <p>同时可以看到正常运行没问题, 接下来就是定时执行不用再管它了.</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://ipfs.mbzj.org/ipfs/QmSZWMYTY92JjWUxipWBLb9ipAWpAayYY3Jwint8Zp8XAK"></p></div>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://i1.img2ipfs.com/ipfs/QmSZWMYTY92JjWUxipWBLb9ipAWpAayYY3Jwint8Zp8XAK">
+<h1>文章引用</h1>
+<p><a href="https://saika.us.kg/2024/01/27/serv00_logs#Alist" rel="nofollow">Saika's Blog</a> | <a href="https://zhuanlan.zhihu.com/p/680607217" rel="nofollow">知乎</a></p></div>
 <div style="font-size:small;margin-top:8px;float:right;">🥰转载请注明,谢谢!🥰</div>
 
-<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<button class="btn btn-block" type="button" id="cmButton">评论</button>
 <div class="comments" id="comments"></div>
 
 </div>
@@ -1214,13 +1172,9 @@ if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
 </script>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-	const HeaderID=document.getElementById("header");const headerHeight=HeaderID.offsetHeight;header.style.height=headerHeight+"px";const writeSpeed=80;const textContent=document.querySelector('.postTitle').textContent;const textContentLen=textContent.length;const postTitle=document.querySelector('.postTitle');postTitle.textContent='';let idx=0;const writing=()=>{postTitle.textContent=textContent.slice(0,idx++);if(idx>textContentLen){clearInterval(writeTimer);postTitle.classList.remove('no-blink');}};const writeTimer=setInterval(writing,writeSpeed);postTitle.classList.add('no-blink');
-	const checkBtn=document.createElement('div');checkBtn.id='checkBtn';const functionBtn=document.getElementById('functionBtn');functionBtn.insertAdjacentElement('afterend',checkBtn);const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){functionBtn.classList.remove('Btn-flex');}else{functionBtn.classList.add('Btn-flex');}});},{threshold:0});observer.observe(checkBtn);
-	const spoilers = document.querySelectorAll(".spoilerText");
-	spoilers.length && spoilers.forEach(el => el.onclick = () => el.classList.toggle("clear"));
-});
+const postTitle=document.querySelector(".postTitle"),textContent=postTitle.textContent;postTitle.textContent="";let idx=0;const writeTimer=setInterval(()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContent.length&&(clearInterval(writeTimer),postTitle.classList.remove("no-blink"))},80);postTitle.classList.add("no-blink");const spoilers=document.querySelectorAll(".spoilerText");spoilers.length&&spoilers.forEach(t=>t.onclick=(()=>t.classList.toggle("clear"))),document.addEventListener("DOMContentLoaded",()=>{const t=document.createElement("div");t.id="checkBtn";const e=document.getElementById("functionBtn");e.insertAdjacentElement("afterend",t),new IntersectionObserver(t=>{t.forEach(t=>{const n=t.isIntersecting;e.classList.toggle("Btn-flex",!n),e.style.top=n?"0":"-100px"})},{rootMargin:"300px 0px 0px 0px",threshold:0}).observe(t);let n=0;const o=t=>{e.style.top=t>0?"-100px":"0"};document.addEventListener("touchstart",t=>n=t.touches[0].clientY),document.addEventListener("touchmove",t=>o(t.touches[0].clientY-n)),document.addEventListener("wheel",t=>o(t.deltaY))});
 document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("ArticleTOC").setAttribute("d","M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z");
 document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
 
 
@@ -1249,6 +1203,7 @@ function openComments(){
 
     int=self.setInterval("iFrameLoading()",200);
 }
+openComments();
 
 function iFrameLoading(){
     var utterances=document.getElementsByClassName('utterances');
@@ -1328,6 +1283,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 </script>
-<script src='https://www.gjkblog.us.kg/demo/ArticleJs.js'></script><script src='https://fastly.jsdelivr.net/gh/gjken/demo/static/ArticleToc-header.js'></script><script src='https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js'></script>
+<script src='https://gjken.github.io/demo/ArticleJs.min.js'></script><script src='https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js'></script>
 
 </html>

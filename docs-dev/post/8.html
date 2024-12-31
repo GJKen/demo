@@ -10,83 +10,103 @@
         let theme = localStorage.getItem("meek_theme") || "light";
         document.documentElement.setAttribute("data-color-mode", theme);
     </script>
-<meta name="description" content="Cloudflare Web Analytics CDN 国内加载缓慢的解决方法.
+<meta name="description" content="**记录翻墙软件使用记录**
 
-# 前言
+# 不同客户端汇总
 
-最近在访问博客的时候发现个别js加载失败, 检查发现原来是 CloudFlare 的 beacon.min.js 加载失败, 如下图.
+## Windows
 
-卡顿文件👉`https://static.cloudflareinsights.com/beacon.min.js`
+| Name
+|-
+| [Mihomo Party](#mihomo-party)
+| [Nekoray](#windows(nekoray))
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmfVdyTJMzA3acSeMMYX3cLq7BoWLQ4pYpjr6u4HYsmhi1'`
+## Android
 
-网上找了点教程打算关闭它.
+| Name
+|-
+| [NekoBox](#android(nekobox))
 
-> 引用来源 [ruimian](https://www.ruimian.com/cloudflare-web-analytics-slow-loading)
+# Nekoray
 
-## Cloudflare 官方解释:
+Nekoray 含 Windows 和 Andorid 版本.
 
-> [!TIP]
-> Cloudflare Web Analytics功能, 为您的网站提供免费的隐私优先分析, 无需更改 DNS 或使用 Cloudflare 的代理. Cloudflare Web Analytics 可帮助您了解网站访问者体验到的网页性能. 启用 Cloudflare Web Analytics 所需的只是您的页面上的 Cloudflare 帐户和 JavaScript 代码片段, 即可开始获取有关页面浏览量和访问者的信息. JavaScript 代码片段(也称为信标)使用 Performance API 收集指标, 该 API 可在所有主流 Web 浏览器中使用.Web Analytics 支持自适应比特率 (ABR).
-> 
-> Cloudflare 的服务器将根据数据大小、日期范围、网络连接和其他因素为每个图表或表格选择最佳分辨率.有关更多信息, 请参阅解释 Cloudflare 的 ABR Analytics.
-> 
-> Web Analytics 显示的数据为真实用户监控 (RUM), 更多信息请参考真实用户监控.
-> 
-> Cloudflare Web Analytics 不会收集或使用您的访客的个人数据.
+[官网](https://matsuridayo.github.io)
 
-# 关闭步骤
+## Windows(Nekoray)
 
-1. 选择需要管理的站点.
+[Github](https://github.com/MatsuriDayo/nekoray)
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmVbycbpbDMDnoDCAfFr2kURwgxYpMWToVscPpaQgwArKN'`
+## Android(NekoBox)
 
-2. 点按钮关闭, 再勾选禁用自动设置.
+[Github](https://github.com/MatsuriDayo/NekoBoxForAndroid)
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmYNFAyEzp9k86J4RkRSWykbVrGyNd8EL7SJe74Ch5Ws15'`
+# Mihomo Party
 
-设置完成后等 5 分钟后强制刷新网站, 就没有这个 js 的加载了.。">
-<meta property="og:title" content="Cloudflare Web Analytics 的 beacon.min.js 加载缓慢, 记录它的关闭方法">
-<meta property="og:description" content="Cloudflare Web Analytics CDN 国内加载缓慢的解决方法.
+所有订阅以及配置文件都备份到了 webdav 里, 在不同地方使用软件时可一键恢复配置, 非常方便.
 
-# 前言
+[官网](https://github.com/mihomo-party-org/mihomo-party)
 
-最近在访问博客的时候发现个别js加载失败, 检查发现原来是 CloudFlare 的 beacon.min.js 加载失败, 如下图.
+## 图示
 
-卡顿文件👉`https://static.cloudflareinsights.com/beacon.min.js`
+`Gmeek-imgbox='https://raw.githubusercontent.com/mihomo-party-org/mihomo-party/refs/heads/master/images/preview.jpg'`
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmfVdyTJMzA3acSeMMYX3cLq7BoWLQ4pYpjr6u4HYsmhi1'`
+## 覆写脚本
 
-网上找了点教程打算关闭它.
+> 引用自 [Linux.do](https://linux.do/t/topic/229208)
 
-> 引用来源 [ruimian](https://www.ruimian.com/cloudflare-web-analytics-slow-loading)
+https://github.com/GJKen/clash-Rules/blob/main/Src/Mihomo%20%E8%A6%86%E5%86%99%E8%A7%84%E5%88%99.js。">
+<meta property="og:title" content="翻墙服务端和客户端 - 使用记录">
+<meta property="og:description" content="**记录翻墙软件使用记录**
 
-## Cloudflare 官方解释:
+# 不同客户端汇总
 
-> [!TIP]
-> Cloudflare Web Analytics功能, 为您的网站提供免费的隐私优先分析, 无需更改 DNS 或使用 Cloudflare 的代理. Cloudflare Web Analytics 可帮助您了解网站访问者体验到的网页性能. 启用 Cloudflare Web Analytics 所需的只是您的页面上的 Cloudflare 帐户和 JavaScript 代码片段, 即可开始获取有关页面浏览量和访问者的信息. JavaScript 代码片段(也称为信标)使用 Performance API 收集指标, 该 API 可在所有主流 Web 浏览器中使用.Web Analytics 支持自适应比特率 (ABR).
-> 
-> Cloudflare 的服务器将根据数据大小、日期范围、网络连接和其他因素为每个图表或表格选择最佳分辨率.有关更多信息, 请参阅解释 Cloudflare 的 ABR Analytics.
-> 
-> Web Analytics 显示的数据为真实用户监控 (RUM), 更多信息请参考真实用户监控.
-> 
-> Cloudflare Web Analytics 不会收集或使用您的访客的个人数据.
+## Windows
 
-# 关闭步骤
+| Name
+|-
+| [Mihomo Party](#mihomo-party)
+| [Nekoray](#windows(nekoray))
 
-1. 选择需要管理的站点.
+## Android
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmVbycbpbDMDnoDCAfFr2kURwgxYpMWToVscPpaQgwArKN'`
+| Name
+|-
+| [NekoBox](#android(nekobox))
 
-2. 点按钮关闭, 再勾选禁用自动设置.
+# Nekoray
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmYNFAyEzp9k86J4RkRSWykbVrGyNd8EL7SJe74Ch5Ws15'`
+Nekoray 含 Windows 和 Andorid 版本.
 
-设置完成后等 5 分钟后强制刷新网站, 就没有这个 js 的加载了.。">
+[官网](https://matsuridayo.github.io)
+
+## Windows(Nekoray)
+
+[Github](https://github.com/MatsuriDayo/nekoray)
+
+## Android(NekoBox)
+
+[Github](https://github.com/MatsuriDayo/NekoBoxForAndroid)
+
+# Mihomo Party
+
+所有订阅以及配置文件都备份到了 webdav 里, 在不同地方使用软件时可一键恢复配置, 非常方便.
+
+[官网](https://github.com/mihomo-party-org/mihomo-party)
+
+## 图示
+
+`Gmeek-imgbox='https://raw.githubusercontent.com/mihomo-party-org/mihomo-party/refs/heads/master/images/preview.jpg'`
+
+## 覆写脚本
+
+> 引用自 [Linux.do](https://linux.do/t/topic/229208)
+
+https://github.com/GJKen/clash-Rules/blob/main/Src/Mihomo%20%E8%A6%86%E5%86%99%E8%A7%84%E5%88%99.js。">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://GJKen.github.io/demo/post/7.html">
+<meta property="og:url" content="https://GJKen.github.io/demo/post/8.html">
 <meta property="og:image" content="https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp">
-<title>Cloudflare Web Analytics 的 beacon.min.js 加载缓慢, 记录它的关闭方法</title>
+<title>翻墙服务端和客户端 - 使用记录</title>
 
 
 
@@ -121,20 +141,20 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 }
 
 </style>
-<style>.markdown-alert{border-radius:6px;padding:0.5rem 1rem;margin-bottom:1rem;border-left:.25em solid var(--borderColor-default,var(--color-border-default));}.markdown-alert .markdown-alert-title {display:flex;font-weight:var(--base-text-weight-medium,500);align-items:center;}.markdown-alert>:first-child {margin-top:0;}.markdown-alert>:last-child {margin-bottom:0;}</style><style>.markdown-alert.markdown-alert-tip {border-left-color:var(--borderColor-success-emphasis, var(--color-success-emphasis));background-color:var(--color-success-subtle);}.markdown-alert.markdown-alert-tip .markdown-alert-title {color: var(--fgColor-success,var(--color-success-fg));}</style>
+
 
 
 
 <body>
     <div id="header">
-<h1 class="postTitle">Cloudflare Web Analytics 的 beacon.min.js 加载缓慢, 记录它的关闭方法</h1>
+<h1 class="postTitle">翻墙服务端和客户端 - 使用记录</h1>
 </div>
     <div id="functionBtn">
 <a href="https://GJKen.github.io/demo" id="buttonHome" class="btn btn-invisible circle" title="首页">
 	<svg class="octicon" width="16" height="16"><path id="pathHome" fill-rule="evenodd"></path></svg>
 </a>
 
-<a href="https://github.com/GJKen/demo/issues/7" target="_blank" class="btn btn-invisible circle" title="Issue">
+<a href="https://github.com/GJKen/demo/issues/8" target="_blank" class="btn btn-invisible circle" title="Issue">
 	<svg class="octicon" width="16" height="16"><path id="pathIssue" fill-rule="evenodd"></path></svg>
 </a>
 
@@ -148,34 +168,55 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 </a>
 </div>
     <div id="content">
-<div class="markdown-body" id="postBody"><p>Cloudflare Web Analytics CDN 国内加载缓慢的解决方法.</p>
-<h1>前言</h1>
-<p>最近在访问博客的时候发现个别js加载失败, 检查发现原来是 CloudFlare 的 beacon.min.js 加载失败, 如下图.</p>
-<p>卡顿文件👉<code class="notranslate">https://static.cloudflareinsights.com/beacon.min.js</code></p>
+<div class="markdown-body" id="postBody"><p><strong>记录翻墙软件使用记录</strong></p>
+<h1>不同客户端汇总</h1>
+<h2>Windows</h2>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#mihomo-party">Mihomo Party</a></td>
+</tr>
+<tr>
+<td><a href="#windows(nekoray)">Nekoray</a></td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<h2>Android</h2>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#android(nekobox)">NekoBox</a></td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<h1>Nekoray</h1>
+<p>Nekoray 含 Windows 和 Andorid 版本.</p>
+<p><a href="https://matsuridayo.github.io" rel="nofollow">官网</a></p>
+<h2>Windows(Nekoray)</h2>
+<p><a href="https://github.com/MatsuriDayo/nekoray">Github</a></p>
+<h2>Android(NekoBox)</h2>
+<p><a href="https://github.com/MatsuriDayo/NekoBoxForAndroid">Github</a></p>
+<h1>Mihomo Party</h1>
+<p>所有订阅以及配置文件都备份到了 webdav 里, 在不同地方使用软件时可一键恢复配置, 非常方便.</p>
+<p><a href="https://github.com/mihomo-party-org/mihomo-party">官网</a></p>
+<h2>图示</h2>
 <div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://i0.img2ipfs.com/ipfs/QmfVdyTJMzA3acSeMMYX3cLq7BoWLQ4pYpjr6u4HYsmhi1">
-<p>网上找了点教程打算关闭它.</p>
+<img data-fancybox="gallery" img-src="https://raw.githubusercontent.com/mihomo-party-org/mihomo-party/refs/heads/master/images/preview.jpg">
+<h2>覆写脚本</h2>
 <blockquote>
-<p>引用来源 <a href="https://www.ruimian.com/cloudflare-web-analytics-slow-loading" rel="nofollow">ruimian</a></p>
+<p>引用自 <a href="https://linux.do/t/topic/229208" rel="nofollow">Linux.do</a></p>
 </blockquote>
-<h2>Cloudflare 官方解释:</h2>
-<div class="markdown-alert markdown-alert-tip"><p class="markdown-alert-title"><svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p><p>Cloudflare Web Analytics功能, 为您的网站提供免费的隐私优先分析, 无需更改 DNS 或使用 Cloudflare 的代理. Cloudflare Web Analytics 可帮助您了解网站访问者体验到的网页性能. 启用 Cloudflare Web Analytics 所需的只是您的页面上的 Cloudflare 帐户和 JavaScript 代码片段, 即可开始获取有关页面浏览量和访问者的信息. JavaScript 代码片段(也称为信标)使用 Performance API 收集指标, 该 API 可在所有主流 Web 浏览器中使用.Web Analytics 支持自适应比特率 (ABR).</p>
-<p>Cloudflare 的服务器将根据数据大小、日期范围、网络连接和其他因素为每个图表或表格选择最佳分辨率.有关更多信息, 请参阅解释 Cloudflare 的 ABR Analytics.</p>
-<p>Web Analytics 显示的数据为真实用户监控 (RUM), 更多信息请参考真实用户监控.</p>
-<p>Cloudflare Web Analytics 不会收集或使用您的访客的个人数据.</p>
-</div>
-<h1>关闭步骤</h1>
-<ol>
-<li>选择需要管理的站点.</li>
-</ol>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://i0.img2ipfs.com/ipfs/QmVbycbpbDMDnoDCAfFr2kURwgxYpMWToVscPpaQgwArKN">
-<ol start="2">
-<li>点按钮关闭, 再勾选禁用自动设置.</li>
-</ol>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://i0.img2ipfs.com/ipfs/QmYNFAyEzp9k86J4RkRSWykbVrGyNd8EL7SJe74Ch5Ws15">
-<p>设置完成后等 5 分钟后强制刷新网站, 就没有这个 js 的加载了.</p></div>
+<p><a href="https://github.com/GJKen/clash-Rules/blob/main/Src/Mihomo%20%E8%A6%86%E5%86%99%E8%A7%84%E5%88%99.js">https://github.com/GJKen/clash-Rules/blob/main/Src/Mihomo%20%E8%A6%86%E5%86%99%E8%A7%84%E5%88%99.js</a></p></div>
 <div style="font-size:small;margin-top:8px;float:right;">🥰转载请注明,谢谢!🥰</div>
 
 <button class="btn btn-block" type="button" id="cmButton">评论</button>

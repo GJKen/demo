@@ -27556,11 +27556,14 @@ a.branch-name .octicon {
 .markdown-body img {
 	max-width: 100%;
 	box-sizing: content-box;
+	transition: transform 0.3s ease, -webkit-transform 0.3s ease, clip-path 0.3s ease, -webkit-clip-path 0.3s ease;
 }
 
 .markdown-body img:hover {
 	transform: scale(1.01);
+	-webkit-transform: scale(1.01);
 	clip-path: inset(-4%);
+	-webkit-clip-path: inset(-4%);
 	cursor: zoom-in;
 }
 
@@ -30979,22 +30982,22 @@ html {
 	user-select: none;
 }
 
-        .scroll-btn-wrapper {
-        }
+.scroll-btn-wrapper {}
 
-		.percent-btn {
-			position: relative;
-			width: 16px;
-			height: 16px;
-			padding: 0 !important;
-		}
-		.percent-btn::after {
-			position: absolute;
-			content: attr(data-percent) "%";
-			top: 66%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			color:var(--title-right-svgColor);
-		}
+.percent-btn {
+	position: relative;
+	width: 16px;
+	height: 16px;
+	padding: 0 !important;
+}
+
+.percent-btn::after {
+	position: absolute;
+	content: attr(data-percent) "%";
+	top: 66%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: var(--title-right-svgColor);
+}
 
 /*# sourceMappingURL=primer.css.map */

@@ -10,83 +10,83 @@
         let theme = localStorage.getItem("meek_theme") || "light";
         document.documentElement.setAttribute("data-color-mode", theme);
     </script>
-<meta name="description" content="Cloudflare Web Analytics CDN 国内加载缓慢的解决方法.
+<meta name="description" content="> [!NOTE]
+> GPT帮写最方便.
 
-# 前言
+# 匹配关键字并删除指定行
 
-最近在访问博客的时候发现个别js加载失败, 检查发现原来是 CloudFlare 的 beacon.min.js 加载失败, 如下图.
+`^.*关键字.*\r?\n`
 
-卡顿文件👉`https://static.cloudflareinsights.com/beacon.min.js`
+# 匹配8位任意字母和数字, 并用方括号包裹
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmfVdyTJMzA3acSeMMYX3cLq7BoWLQ4pYpjr6u4HYsmhi1'`
+> 用于动漫bt重命名
 
-网上找了点教程打算关闭它.
+`\[[A-Za-z0-9]{8}\]`
 
-> 引用来源 [ruimian](https://www.ruimian.com/cloudflare-web-analytics-slow-loading)
+# 查找换行并增加空行, 增加空行同时填写内容, 最后再换行
 
-## Cloudflare 官方解释:
+> [MusicPlayer2](https://github.com/zhongyang219/MusicPlayer2) 歌单转 [poweramp](https://powerampapp.com/zh_tw/) 歌单编写时需要用到
 
-> [!TIP]
-> Cloudflare Web Analytics功能, 为您的网站提供免费的隐私优先分析, 无需更改 DNS 或使用 Cloudflare 的代理. Cloudflare Web Analytics 可帮助您了解网站访问者体验到的网页性能. 启用 Cloudflare Web Analytics 所需的只是您的页面上的 Cloudflare 帐户和 JavaScript 代码片段, 即可开始获取有关页面浏览量和访问者的信息. JavaScript 代码片段(也称为信标)使用 Performance API 收集指标, 该 API 可在所有主流 Web 浏览器中使用.Web Analytics 支持自适应比特率 (ABR).
-> 
-> Cloudflare 的服务器将根据数据大小、日期范围、网络连接和其他因素为每个图表或表格选择最佳分辨率.有关更多信息, 请参阅解释 Cloudflare 的 ABR Analytics.
-> 
-> Web Analytics 显示的数据为真实用户监控 (RUM), 更多信息请参考真实用户监控.
-> 
-> Cloudflare Web Analytics 不会收集或使用您的访客的个人数据.
+查找👉`\r\n`
+替换👉`\r\n填写的内容\r\n`
 
-# 关闭步骤
+# 在每一行后面添加 ':' 符号
 
-1. 选择需要管理的站点.
+查找👉`^.*$``
+替换👉`$0:`
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmVbycbpbDMDnoDCAfFr2kURwgxYpMWToVscPpaQgwArKN'`
+# 匹配以 ?file 开头, 并且之间有任意字符, 最后以 .jpg`或`.png` 结尾
 
-2. 点按钮关闭, 再勾选禁用自动设置.
+> ipfs 超链接重命名
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmYNFAyEzp9k86J4RkRSWykbVrGyNd8EL7SJe74Ch5Ws15'`
+`\?file.*\.{jpg|png}$
 
-设置完成后等 5 分钟后强制刷新网站, 就没有这个 js 的加载了.。">
-<meta property="og:title" content="Cloudflare Web Analytics 的 beacon.min.js 加载缓慢, 记录它的关闭方法">
-<meta property="og:description" content="Cloudflare Web Analytics CDN 国内加载缓慢的解决方法.
+# 匹配 /* */ 中间包含任意字符串
 
-# 前言
+> css注释块
 
-最近在访问博客的时候发现个别js加载失败, 检查发现原来是 CloudFlare 的 beacon.min.js 加载失败, 如下图.
+`\/\*.*?\*\/`。">
+<meta property="og:title" content="正则表达式 - 使用记录">
+<meta property="og:description" content="> [!NOTE]
+> GPT帮写最方便.
 
-卡顿文件👉`https://static.cloudflareinsights.com/beacon.min.js`
+# 匹配关键字并删除指定行
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmfVdyTJMzA3acSeMMYX3cLq7BoWLQ4pYpjr6u4HYsmhi1'`
+`^.*关键字.*\r?\n`
 
-网上找了点教程打算关闭它.
+# 匹配8位任意字母和数字, 并用方括号包裹
 
-> 引用来源 [ruimian](https://www.ruimian.com/cloudflare-web-analytics-slow-loading)
+> 用于动漫bt重命名
 
-## Cloudflare 官方解释:
+`\[[A-Za-z0-9]{8}\]`
 
-> [!TIP]
-> Cloudflare Web Analytics功能, 为您的网站提供免费的隐私优先分析, 无需更改 DNS 或使用 Cloudflare 的代理. Cloudflare Web Analytics 可帮助您了解网站访问者体验到的网页性能. 启用 Cloudflare Web Analytics 所需的只是您的页面上的 Cloudflare 帐户和 JavaScript 代码片段, 即可开始获取有关页面浏览量和访问者的信息. JavaScript 代码片段(也称为信标)使用 Performance API 收集指标, 该 API 可在所有主流 Web 浏览器中使用.Web Analytics 支持自适应比特率 (ABR).
-> 
-> Cloudflare 的服务器将根据数据大小、日期范围、网络连接和其他因素为每个图表或表格选择最佳分辨率.有关更多信息, 请参阅解释 Cloudflare 的 ABR Analytics.
-> 
-> Web Analytics 显示的数据为真实用户监控 (RUM), 更多信息请参考真实用户监控.
-> 
-> Cloudflare Web Analytics 不会收集或使用您的访客的个人数据.
+# 查找换行并增加空行, 增加空行同时填写内容, 最后再换行
 
-# 关闭步骤
+> [MusicPlayer2](https://github.com/zhongyang219/MusicPlayer2) 歌单转 [poweramp](https://powerampapp.com/zh_tw/) 歌单编写时需要用到
 
-1. 选择需要管理的站点.
+查找👉`\r\n`
+替换👉`\r\n填写的内容\r\n`
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmVbycbpbDMDnoDCAfFr2kURwgxYpMWToVscPpaQgwArKN'`
+# 在每一行后面添加 ':' 符号
 
-2. 点按钮关闭, 再勾选禁用自动设置.
+查找👉`^.*$``
+替换👉`$0:`
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmYNFAyEzp9k86J4RkRSWykbVrGyNd8EL7SJe74Ch5Ws15'`
+# 匹配以 ?file 开头, 并且之间有任意字符, 最后以 .jpg`或`.png` 结尾
 
-设置完成后等 5 分钟后强制刷新网站, 就没有这个 js 的加载了.。">
+> ipfs 超链接重命名
+
+`\?file.*\.{jpg|png}$
+
+# 匹配 /* */ 中间包含任意字符串
+
+> css注释块
+
+`\/\*.*?\*\/`。">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://GJKen.github.io/demo/post/7.html">
+<meta property="og:url" content="https://GJKen.github.io/demo/post/9.html">
 <meta property="og:image" content="https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp">
-<title>Cloudflare Web Analytics 的 beacon.min.js 加载缓慢, 记录它的关闭方法</title>
+<title>正则表达式 - 使用记录</title>
 
 
 
@@ -121,20 +121,20 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 }
 
 </style>
-<style>.markdown-alert{border-radius:6px;padding:0.5rem 1rem;margin-bottom:1rem;border-left:.25em solid var(--borderColor-default,var(--color-border-default));}.markdown-alert .markdown-alert-title {display:flex;font-weight:var(--base-text-weight-medium,500);align-items:center;}.markdown-alert>:first-child {margin-top:0;}.markdown-alert>:last-child {margin-bottom:0;}</style><style>.markdown-alert.markdown-alert-tip {border-left-color:var(--borderColor-success-emphasis, var(--color-success-emphasis));background-color:var(--color-success-subtle);}.markdown-alert.markdown-alert-tip .markdown-alert-title {color: var(--fgColor-success,var(--color-success-fg));}</style>
+<style>.markdown-alert{border-radius:6px;padding:0.5rem 1rem;margin-bottom:1rem;border-left:.25em solid var(--borderColor-default,var(--color-border-default));}.markdown-alert .markdown-alert-title {display:flex;font-weight:var(--base-text-weight-medium,500);align-items:center;}.markdown-alert>:first-child {margin-top:0;}.markdown-alert>:last-child {margin-bottom:0;}</style><style>.markdown-alert.markdown-alert-note {border-left-color:var(--borderColor-accent-emphasis, var(--color-accent-emphasis));background-color:var(--color-accent-subtle);}.markdown-alert.markdown-alert-note .markdown-alert-title {color: var(--fgColor-accent,var(--color-accent-fg));}</style>
 
 
 
 <body>
     <div id="header">
-<h1 class="postTitle">Cloudflare Web Analytics 的 beacon.min.js 加载缓慢, 记录它的关闭方法</h1>
+<h1 class="postTitle">正则表达式 - 使用记录</h1>
 </div>
     <div id="functionBtn">
 <a href="https://GJKen.github.io/demo" id="buttonHome" class="btn btn-invisible circle" title="首页">
 	<svg class="octicon" width="16" height="16"><path id="pathHome" fill-rule="evenodd"></path></svg>
 </a>
 
-<a href="https://github.com/GJKen/demo/issues/7" target="_blank" class="btn btn-invisible circle" title="Issue">
+<a href="https://github.com/GJKen/demo/issues/9" target="_blank" class="btn btn-invisible circle" title="Issue">
 	<svg class="octicon" width="16" height="16"><path id="pathIssue" fill-rule="evenodd"></path></svg>
 </a>
 
@@ -148,34 +148,33 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 </a>
 </div>
     <div id="content">
-<div class="markdown-body" id="postBody"><p>Cloudflare Web Analytics CDN 国内加载缓慢的解决方法.</p>
-<h1>前言</h1>
-<p>最近在访问博客的时候发现个别js加载失败, 检查发现原来是 CloudFlare 的 beacon.min.js 加载失败, 如下图.</p>
-<p>卡顿文件👉<code class="notranslate">https://static.cloudflareinsights.com/beacon.min.js</code></p>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://i0.img2ipfs.com/ipfs/QmfVdyTJMzA3acSeMMYX3cLq7BoWLQ4pYpjr6u4HYsmhi1">
-<p>网上找了点教程打算关闭它.</p>
-<blockquote>
-<p>引用来源 <a href="https://www.ruimian.com/cloudflare-web-analytics-slow-loading" rel="nofollow">ruimian</a></p>
-</blockquote>
-<h2>Cloudflare 官方解释:</h2>
-<div class="markdown-alert markdown-alert-tip"><p class="markdown-alert-title"><svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p><p>Cloudflare Web Analytics功能, 为您的网站提供免费的隐私优先分析, 无需更改 DNS 或使用 Cloudflare 的代理. Cloudflare Web Analytics 可帮助您了解网站访问者体验到的网页性能. 启用 Cloudflare Web Analytics 所需的只是您的页面上的 Cloudflare 帐户和 JavaScript 代码片段, 即可开始获取有关页面浏览量和访问者的信息. JavaScript 代码片段(也称为信标)使用 Performance API 收集指标, 该 API 可在所有主流 Web 浏览器中使用.Web Analytics 支持自适应比特率 (ABR).</p>
-<p>Cloudflare 的服务器将根据数据大小、日期范围、网络连接和其他因素为每个图表或表格选择最佳分辨率.有关更多信息, 请参阅解释 Cloudflare 的 ABR Analytics.</p>
-<p>Web Analytics 显示的数据为真实用户监控 (RUM), 更多信息请参考真实用户监控.</p>
-<p>Cloudflare Web Analytics 不会收集或使用您的访客的个人数据.</p>
+<div class="markdown-body" id="postBody"><div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>GPT帮写最方便.</p>
 </div>
-<h1>关闭步骤</h1>
-<ol>
-<li>选择需要管理的站点.</li>
-</ol>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://i0.img2ipfs.com/ipfs/QmVbycbpbDMDnoDCAfFr2kURwgxYpMWToVscPpaQgwArKN">
-<ol start="2">
-<li>点按钮关闭, 再勾选禁用自动设置.</li>
-</ol>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://i0.img2ipfs.com/ipfs/QmYNFAyEzp9k86J4RkRSWykbVrGyNd8EL7SJe74Ch5Ws15">
-<p>设置完成后等 5 分钟后强制刷新网站, 就没有这个 js 的加载了.</p></div>
+<h1>匹配关键字并删除指定行</h1>
+<p><code class="notranslate">^.*关键字.*\r?\n</code></p>
+<h1>匹配8位任意字母和数字, 并用方括号包裹</h1>
+<blockquote>
+<p>用于动漫bt重命名</p>
+</blockquote>
+<p><code class="notranslate">\[[A-Za-z0-9]{8}\]</code></p>
+<h1>查找换行并增加空行, 增加空行同时填写内容, 最后再换行</h1>
+<blockquote>
+<p><a href="https://github.com/zhongyang219/MusicPlayer2">MusicPlayer2</a> 歌单转 <a href="https://powerampapp.com/zh_tw/" rel="nofollow">poweramp</a> 歌单编写时需要用到</p>
+</blockquote>
+<p>查找👉<code class="notranslate">\r\n</code><br>
+替换👉<code class="notranslate">\r\n填写的内容\r\n</code></p>
+<h1>在每一行后面添加 ":" 符号</h1>
+<p>查找👉<code class="notranslate">^.*$`` 替换👉</code>$0:`</p>
+<h1>匹配以 ?file 开头, 并且之间有任意字符, 最后以 .jpg<code class="notranslate">或</code>.png` 结尾</h1>
+<blockquote>
+<p>ipfs 超链接重命名</p>
+</blockquote>
+<p>`?file.*.{jpg|png}$</p>
+<h1>匹配 /* */ 中间包含任意字符串</h1>
+<blockquote>
+<p>css注释块</p>
+</blockquote>
+<p><code class="notranslate">\/\*.*?\*\/</code></p></div>
 <div style="font-size:small;margin-top:8px;float:right;">🥰转载请注明,谢谢!🥰</div>
 
 <button class="btn btn-block" type="button" id="cmButton">评论</button>

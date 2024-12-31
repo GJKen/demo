@@ -41,7 +41,7 @@
 
 CSS 效果:
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmPJLQrhBg9opKvbgNGqQaEopEKJnsH3thbH7wNbocp6VF'`
+![2024-12-30-1-8b58a3c8283110590642d5aeb1f60ad0](https://github.com/user-attachments/assets/704ba114-c255-469e-ac71-61ccdffac962)
 
 从图中可以看到, `subTitle`字段可用 js 插入 html 实现修改文字.
 
@@ -51,7 +51,7 @@ CSS 效果:
 
 效果图:
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/Qmei764zAMx9fXgotWbrrwizXRsrk42GGiKor2Zqo8hFgy'`
+![2024-12-30-1-77a044632caf5ccc0b0ec4f986b4435d](https://github.com/user-attachments/assets/92e2da59-1bb4-4c4c-a2ae-b58105ecc230)
 
 可以用空白字符的方式, 隐藏`subTitle`这个必须字段, 无需使用 js 隐藏.
 
@@ -76,8 +76,9 @@ CSS 效果:
 `Gmeek.py`匹配转换的代码如下:
 
 ```python
-        if '<code class='notranslate'>Gmeek-imgbox' in post_body: 
-            post_body = re.sub(r'<code class='notranslate'>Gmeek-imgbox='([^']+)'</code>',lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>',post_body, flags=re.DOTALL)
+        # 剧透
+        if '<code class='notranslate'>Gmeek-spoilertxt' in post_body: 
+            post_body = re.sub(r'<code class='notranslate'>Gmeek-spoilertxt='([^']+)'</code>', lambda match: f'<span class='spoilerText'>{match.group(1)}</span>', post_body, flags=re.DOTALL)
 ```
 
 markdown 输入:
@@ -122,7 +123,7 @@ markdown 输入:
 
 图示:
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmcZLXt281ogUR7bUqReAWRhecnbGaftfaGu2wu2qugV4H'`
+![image](https://github.com/user-attachments/assets/2d12652a-ee57-44a7-bd41-17f618a0785b)
 
 可以直接引用.
 
@@ -137,9 +138,9 @@ markdown 输入:
 
 图示:
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/Qme3qiTmKATk8BVvcLj7bC87q3w8MqywJcQTJfHKQTmyvd'`
+![image](https://github.com/user-attachments/assets/cb85ad0f-0e19-42e0-bb3e-45399a5ca7f7)
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmfSbibFEBSh5YShTT6YyZwY5D2Um8avsYkZTbDcndh1dh'`
+![2024-12-30-1-b0ad706ab827b475640e589ff44a3e13](https://github.com/user-attachments/assets/3f84c22d-43cc-489f-9df0-d6ffa24feb42)
 
 ## Fancybox.js - 图片浏览器
 
@@ -184,8 +185,9 @@ document.addEventListener('DOMContentLoaded', () => {
 然后在下面增加代码:
 
 ```python
-        if '<code class='notranslate'>Gmeek-imgbox' in post_body: 
-            post_body = re.sub(r'<code class='notranslate'>Gmeek-imgbox='([^']+)'</code>',lambda match: f'<img data-fancybox='gallery' src='{match.group(1)}'>',post_body, flags=re.DOTALL)
+        # 手动插入外链图片
+        if '<code class='notranslate'>Gmeek-imgbox' in post_body:
+            post_body = re.sub(r'<p>\s*<code class='notranslate'>Gmeek-imgbox='([^']+)'</code>\s*</p>', lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>', post_body, flags=re.DOTALL)
 ```
 
 - **使用演示**
@@ -198,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 通过 Actions 转换后实际效果如下, html 里面图片标签会增加 fancybox 所需的`data-fancybox='gallery'`属性.
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmNiH2pdrA9Hb61EXgYbKtEssBAGemEjTQRBZbgutUCNx2'`
+![image](https://github.com/user-attachments/assets/90439bbe-7ced-409b-a4c7-62f859c842ab)
 
 ## 图片懒加载
 
@@ -539,12 +541,20 @@ html {
 	box-shadow: none
 }
 
-.btn-invisible:hover,
-.btn-invisible.zeroclipboard-is-hover {
+.btn-invisible:active,
+.btn-invisible.selected,
+.btn-invisible[aria-selected=true],
+.btn-invisible.zeroclipboard-is-active {
 	color: var(--fgColor-accent, var(--color-accent-fg));
-	background-color: var(--title-right-btnbg-color);
-	outline: none;
+	background: none;
+	border-color: var(--button-default-borderColor-active, var(--color-btn-active-border));
+	outline: 2px solid var(--focus-outlineColor, var(--color-accent-fg));
+	outline-offset: -2px;
 	box-shadow: none
+}
+
+.btn-invisible:active .btn-invisible.zeroclipboard-is-active {
+	background-color: var(--button-default-bgColor-selected, var(--color-btn-selected-bg))
 }
 ```
 
@@ -577,13 +587,6 @@ html {
 	box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor), -7px -7px 16px 0 var(--header-btn-shadowColor2);
 	transition: box-shadow .4s ease-in-out,filter .4s ease-in-out;
 }
-.btn-invisible:hover,
-.btn-invisible.zeroclipboard-is-hover {
-	color: var(--fgColor-accent, var(--color-accent-fg));
-	background-color: rgba(0, 0, 0, 0);
-	outline: none;
-	box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor) inset,-7px -7px 12px 0 var(--header-btn-shadowColor2) inset;
-}
 /* 图标颜色 */
 .btn-invisible svg path{
 	fill: var(--title-right-svgColor);
@@ -592,6 +595,17 @@ html {
 .btn-invisible:hover svg path,
 .btn-invisible.zeroclipboard-is-hover svg path{
 	fill: var(--title-right-svgHovercolor);
+}
+
+.btn-invisible:active,
+.btn-invisible.selected,
+.btn-invisible[aria-selected=true],
+.btn-invisible.zeroclipboard-is-active {
+	box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor) inset, -7px -7px 12px 0 var(--header-btn-shadowColor2) inset;
+}
+
+.btn-invisible:active .btn-invisible.zeroclipboard-is-active {
+	box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor) inset, -7px -7px 12px 0 var(--header-btn-shadowColor2) inset;
 }
 ```
 
@@ -1010,7 +1024,7 @@ html {
 
 效果图:
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmZS6jSp64Zg1uCQdw4hvACYUyb9cFGKrCgnBNRuf6mPVF'`
+![image](https://github.com/user-attachments/assets/f3eb7940-ca2b-4952-8fb4-e05a7acc84bd)
 
 ## 文章一键复制代码按钮样式
 
@@ -1123,7 +1137,7 @@ a {
 
 效果图:
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmTwkiuWzou5jKS9aJ5hEZKau2zBEFRLiDcC8Gn1uzwiRm'`
+![image](https://github.com/user-attachments/assets/73cdc397-e4c8-45c8-8ecf-02f32af9fd63)
 
 # 通过 Gmeek 仓库 DIY 博客
 
@@ -1133,13 +1147,13 @@ a {
 
 仓库地址👉 https://github.com/Meekdai/Gmeek
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmaJMN2pqoQwtA3c8bPbajkwWYAwaAcwbzUqBiXya836PV'`
+![image](https://github.com/user-attachments/assets/8794d347-3524-4709-a6f1-fd74c607fc22)
 
 fork 之后, 转到搭建博客的 github 源码,
 
 打开`.github/workflows/Gmeek.yml`文件, 修改构建博客仓库的地址为你自己的仓库地址
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmNa2H5MrVphqpUwAHWBv7iWw782HmDb7qjZb3JEzdjQav'`
+![image](https://github.com/user-attachments/assets/20d1b3ac-c0fc-44ad-a937-3828b6875a8f)
 
 打开`config.json`文件, 修改右边字段值为main`'GMEEK_VERSION':'main'`
 
@@ -1167,15 +1181,15 @@ fork 之后, 转到搭建博客的 github 源码,
 
 下图文字直接修改即可, 不同语言的按需修改.
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmaxN6phAHJsxfB5Q3xLCGdAwpq2CcoNLo4xoFB16DpzAs'`
+![image](https://github.com/user-attachments/assets/c0f4bca8-174d-4044-a654-12e6322cca9b)
 
 ## 修改默认 primer.css 链接
 
 打开`Gmeek.py`
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmWcdviYe3A5bmtjCjhFeFA8VaczcvTQ2HDMB5aUAnkg3v'`
+![image](https://github.com/user-attachments/assets/fd72d93f-5015-44d9-ac79-58dff7e3c116)
 
-这里我直接写改成我存放的链接 https://cdn.jsdelivr.net/gh/gjken/gjken.github.io@v1.0/static/primer.min.css
+这里我直接写改成我存放的链接, 并使用 tag 控制版本.
 
 ## 修改页面头部样式
 
@@ -1388,24 +1402,10 @@ document.addEventListener('DOMContentLoaded', () => {
         functionBtn.style.top = deltaY > 0 ? '-100px' : '0';
     };
 
-    // 判断事件目标是否位于滚动容器内
-    const isInScrollableDiv = target => {
-        let node = target;
-        while (node && node !== document.body) {
-            if (node.scrollHeight > node.clientHeight) return true;
-            node = node.parentNode;
-        }
-        return false;
-    };
-
-    // 监听触摸和滚轮事件
-    document.addEventListener('touchstart', e => startY = e.touches[0].clientY);
-    document.addEventListener('touchmove', e => handleScroll(e.touches[0].clientY - startY));
-    document.addEventListener('wheel', e => {
-        if (!isInScrollableDiv(e.target)) {
-            handleScroll(e.deltaY);
-        }
-    });
+// 监听触摸和滚轮事件
+document.addEventListener('touchstart', e => startY = e.touches[0].clientY);
+document.addEventListener('touchmove', e => handleScroll(e.touches[0].clientY - startY));
+document.addEventListener('wheel', e => handleScroll(e.deltaY));
 });
 ```
 
@@ -1639,11 +1639,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 打开`Gmeek.py`
 
-定位代码`<style>.markdown-alert{`, 增加圆角6px.
+定位代码`<style>.markdown-alert{`, 给它增加圆角6px.
 
 `border-radius:6px;`
-
-`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/QmRCXZrjvmUajTL5odC4d5oJyJwx8mrNSwDzGgTs3yuDMw'`
 
 2. **优化行高显示**
 
@@ -1651,7 +1649,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 **效果图:**
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmTWtMj5966zgsPLPYDNZDNpyQ4k6YfxMj8CazAMnnZjSQ'`
+![image](https://github.com/user-attachments/assets/db205027-0615-4456-bca3-b33856372283)
 
 # 优化任务列表样式
 
@@ -1660,6 +1658,7 @@ document.addEventListener('DOMContentLoaded', () => {
 打开`Gmeek.py`, 定位`postBase=self.blogBase.copy()`, 在它的下面增加如下代码:
 
 ```python
+        # 优化任务列表样式
         if '<ul class='contains-task-list'>' in post_body:
             issue['style']=issue['style']+'<style>.contains-task-list{padding-left:0.9em !important;list-style:none}</style>'
 ```
@@ -1727,21 +1726,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 转到页脚查看实际效果👉 [点我](#footer2)
 
-# 使用 Gmeek-html, 给博客插入图片, 防止链接自动转换
+# Gmeek-html
 
-Github 在 issues 插入的图片也会自动转换为 Github 的地址.
+Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 issues 插入的图片也会自动转换为 Github 的地址, 为了文章的多样性, 在 Gmeek 的 v2.19 版本中添加了支持 html 标签的功能.
 
-为了文章的多样性, 在 Gmeek 的`v2.19`版本中添加了支持 html 标签的功能.
-
-示例代码:
-
-```html
-`Gmeek-html<img src='https://i0.img2ipfs.com/ipfs/QmbAZqtwu2G9vXrJ8oC7ixvKh4tY8uL8NvPA9zAxDqWFPq'>`
-```
-
-效果图:
-
-`Gmeek-html<img src='https://i0.img2ipfs.com/ipfs/QmbAZqtwu2G9vXrJ8oC7ixvKh4tY8uL8NvPA9zAxDqWFPq'>`
+> Gmeek 的默认功能, 可使用这个匹配规则转换不同的html效果, 祥看 👉 [Gmeek进阶](https://blog.meekdai.com/post/%E3%80%90Gmeek-jin-jie-%E3%80%91-wen-zhang-cha-ru-html-biao-qian.html)
 
 > [!Important]
 > 如果在文章中含有代码块标签并且内容为 Gmeek-html, Action 那边会进行转换导致显示错误, 详情看[#201](https://github.com/Meekdai/Gmeek/issues/201)
@@ -1754,7 +1743,8 @@ Github 在 issues 插入的图片也会自动转换为 Github 的地址.
 替换成下面的代码:
 
 ```python
-if '<code class='notranslate'>Gmeek-html' in post_body:
+        # 给原本的Gmeek-html增加小括号判断:<>, 缩小匹配范围
+        if '<code class='notranslate'>Gmeek-html' in post_body:
             post_body = re.sub(r'<code class='notranslate'>Gmeek-html(&lt;.*?&gt;)</code>', lambda match: html.unescape(match.group(1)), post_body, flags=re.DOTALL)
 ```
 
@@ -1763,6 +1753,32 @@ if '<code class='notranslate'>Gmeek-html' in post_body:
 这种情况下, 如果在 html 中含有行内代码块标签并且内容含有 Gmeek-html, 会导致转换文章内容时出现显示错误,
 
 更改后缩小了匹配范围, 可直接用行内代码块👉`Gmeek-html`让其在文章内正常显示.
+
+# 增加图片转换, 并适配图片懒加载
+
+打开`Gmeek.py`, 定位字符串`gmeek-html`
+
+在附近任意行增加代码:
+
+```python
+        # 默认情况插入图片情况下的匹配规则<p> -> <a> -><img>
+        if '<p><a target='_blank' rel=' in post_body:
+            post_body = re.sub(r'<p>\s*<a[^>]*?href='([^']+)'[^>]*?><img[^>]*?src='\1'[^>]*?></a>\s*</p>', lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>', post_body, flags=re.DOTALL)
+
+        # 通用插入图片情况下的匹配规则<a> -><img>
+        if '<a target='_blank' rel=' in post_body:
+            post_body = re.sub(r'<a[^>]*?href='([^']+)'[^>]*?><img[^>]*?src='\1'[^>]*?></a>',lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>', post_body, flags=re.DOTALL)
+```
+
+- **使用演示**
+
+在 GitHub markdown 里上传图片, 粘贴&拖拽都行,
+
+然后通过 Actions 转换后实际效果如下, html 里面图片标签会增加 fancybox 所需的`data-fancybox='gallery'`属性.
+
+![image](https://github.com/user-attachments/assets/1800f94a-8214-4cfd-ab38-dd26f020d981)
+
+这样优化后可以在 Github issue 的 Preview 里面直接预览图片, 同时还能防备图床问题导致的图片丢失(`Gmeek-spoilertxt='Github, 稳!'`)
 
 # 添加 Gmeek-spoilertxt - 文字防剧透模糊效果
 
@@ -1859,17 +1875,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 | Label Name | Color | 效果
 |-|-|-
-| 网站 | #218155 | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=网站&color=218155'`
-| 日常 | #008672 | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=日常&color=008672'`
-| 教程 | #0075ca | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=教程&color=0075ca'`
-| Anime | #E77AB1 | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=Anime&color=E77AB1'`
-| Win | #5AB3F3 | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=Win&color=5AB3F3'`
-| VPS | #5319e7 | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=VPS&color=5319e7'`
-| JS | #AD3152 | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=JS&color=AD3152'`
-| CSS | #218155 | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=CSS&color=218155'`
-| Github | #333333 | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=Github&color=333333'`
-| CDN | #cb222c | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=CDN&color=cb222c'`
-| Bug | #D73A4A | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=Bug&color=D73A4A'`
+| 网站 | #218155 | ![](https://img.shields.io/static/v1?label=&message=网站&color=218155)
+| 日常 | #008672 | ![](https://img.shields.io/static/v1?label=&message=日常&color=008672)
+| 教程 | #0075ca | ![](https://img.shields.io/static/v1?label=&message=教程&color=0075ca)
+| Anime | #E77AB1 | ![](https://img.shields.io/static/v1?label=&message=Anime&color=E77AB1)
+| Win | #5AB3F3 | ![](https://img.shields.io/static/v1?label=&message=Win&color=5AB3F3)
+| VPS | #5319e7 | ![](https://img.shields.io/static/v1?label=&message=VPS&color=5319e7)
+| JS | #AD3152 | ![](https://img.shields.io/static/v1?label=&message=JS&color=AD3152)
+| CSS | #218155 | ![](https://img.shields.io/static/v1?label=&message=CSS&color=218155)
+| Github | #333333 | ![](https://img.shields.io/static/v1?label=&message=Github&color=333333)
+| CDN | #cb222c | ![](https://img.shields.io/static/v1?label=&message=CDN&color=cb222c)
+| Bug | #D73A4A | ![](https://img.shields.io/static/v1?label=&message=Bug&color=D73A4A)
+| 软件 | #5da167 | ![](https://img.shields.io/static/v1?label=&message=软件&color=5da167)
+| 翻墙 | #cb7b58 | ![](https://img.shields.io/static/v1?label=&message=翻墙&color=cb7b58)
 
 # Readme.md
 
@@ -1909,7 +1927,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 CSS 效果:
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmPJLQrhBg9opKvbgNGqQaEopEKJnsH3thbH7wNbocp6VF'`
+![2024-12-30-1-8b58a3c8283110590642d5aeb1f60ad0](https://github.com/user-attachments/assets/704ba114-c255-469e-ac71-61ccdffac962)
 
 从图中可以看到, `subTitle`字段可用 js 插入 html 实现修改文字.
 
@@ -1919,7 +1937,7 @@ CSS 效果:
 
 效果图:
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/Qmei764zAMx9fXgotWbrrwizXRsrk42GGiKor2Zqo8hFgy'`
+![2024-12-30-1-77a044632caf5ccc0b0ec4f986b4435d](https://github.com/user-attachments/assets/92e2da59-1bb4-4c4c-a2ae-b58105ecc230)
 
 可以用空白字符的方式, 隐藏`subTitle`这个必须字段, 无需使用 js 隐藏.
 
@@ -1944,8 +1962,9 @@ CSS 效果:
 `Gmeek.py`匹配转换的代码如下:
 
 ```python
-        if '<code class='notranslate'>Gmeek-imgbox' in post_body: 
-            post_body = re.sub(r'<code class='notranslate'>Gmeek-imgbox='([^']+)'</code>',lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>',post_body, flags=re.DOTALL)
+        # 剧透
+        if '<code class='notranslate'>Gmeek-spoilertxt' in post_body: 
+            post_body = re.sub(r'<code class='notranslate'>Gmeek-spoilertxt='([^']+)'</code>', lambda match: f'<span class='spoilerText'>{match.group(1)}</span>', post_body, flags=re.DOTALL)
 ```
 
 markdown 输入:
@@ -1990,7 +2009,7 @@ markdown 输入:
 
 图示:
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmcZLXt281ogUR7bUqReAWRhecnbGaftfaGu2wu2qugV4H'`
+![image](https://github.com/user-attachments/assets/2d12652a-ee57-44a7-bd41-17f618a0785b)
 
 可以直接引用.
 
@@ -2005,9 +2024,9 @@ markdown 输入:
 
 图示:
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/Qme3qiTmKATk8BVvcLj7bC87q3w8MqywJcQTJfHKQTmyvd'`
+![image](https://github.com/user-attachments/assets/cb85ad0f-0e19-42e0-bb3e-45399a5ca7f7)
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmfSbibFEBSh5YShTT6YyZwY5D2Um8avsYkZTbDcndh1dh'`
+![2024-12-30-1-b0ad706ab827b475640e589ff44a3e13](https://github.com/user-attachments/assets/3f84c22d-43cc-489f-9df0-d6ffa24feb42)
 
 ## Fancybox.js - 图片浏览器
 
@@ -2052,8 +2071,9 @@ document.addEventListener('DOMContentLoaded', () => {
 然后在下面增加代码:
 
 ```python
-        if '<code class='notranslate'>Gmeek-imgbox' in post_body: 
-            post_body = re.sub(r'<code class='notranslate'>Gmeek-imgbox='([^']+)'</code>',lambda match: f'<img data-fancybox='gallery' src='{match.group(1)}'>',post_body, flags=re.DOTALL)
+        # 手动插入外链图片
+        if '<code class='notranslate'>Gmeek-imgbox' in post_body:
+            post_body = re.sub(r'<p>\s*<code class='notranslate'>Gmeek-imgbox='([^']+)'</code>\s*</p>', lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>', post_body, flags=re.DOTALL)
 ```
 
 - **使用演示**
@@ -2066,7 +2086,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 通过 Actions 转换后实际效果如下, html 里面图片标签会增加 fancybox 所需的`data-fancybox='gallery'`属性.
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmNiH2pdrA9Hb61EXgYbKtEssBAGemEjTQRBZbgutUCNx2'`
+![image](https://github.com/user-attachments/assets/90439bbe-7ced-409b-a4c7-62f859c842ab)
 
 ## 图片懒加载
 
@@ -2407,12 +2427,20 @@ html {
 	box-shadow: none
 }
 
-.btn-invisible:hover,
-.btn-invisible.zeroclipboard-is-hover {
+.btn-invisible:active,
+.btn-invisible.selected,
+.btn-invisible[aria-selected=true],
+.btn-invisible.zeroclipboard-is-active {
 	color: var(--fgColor-accent, var(--color-accent-fg));
-	background-color: var(--title-right-btnbg-color);
-	outline: none;
+	background: none;
+	border-color: var(--button-default-borderColor-active, var(--color-btn-active-border));
+	outline: 2px solid var(--focus-outlineColor, var(--color-accent-fg));
+	outline-offset: -2px;
 	box-shadow: none
+}
+
+.btn-invisible:active .btn-invisible.zeroclipboard-is-active {
+	background-color: var(--button-default-bgColor-selected, var(--color-btn-selected-bg))
 }
 ```
 
@@ -2445,13 +2473,6 @@ html {
 	box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor), -7px -7px 16px 0 var(--header-btn-shadowColor2);
 	transition: box-shadow .4s ease-in-out,filter .4s ease-in-out;
 }
-.btn-invisible:hover,
-.btn-invisible.zeroclipboard-is-hover {
-	color: var(--fgColor-accent, var(--color-accent-fg));
-	background-color: rgba(0, 0, 0, 0);
-	outline: none;
-	box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor) inset,-7px -7px 12px 0 var(--header-btn-shadowColor2) inset;
-}
 /* 图标颜色 */
 .btn-invisible svg path{
 	fill: var(--title-right-svgColor);
@@ -2460,6 +2481,17 @@ html {
 .btn-invisible:hover svg path,
 .btn-invisible.zeroclipboard-is-hover svg path{
 	fill: var(--title-right-svgHovercolor);
+}
+
+.btn-invisible:active,
+.btn-invisible.selected,
+.btn-invisible[aria-selected=true],
+.btn-invisible.zeroclipboard-is-active {
+	box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor) inset, -7px -7px 12px 0 var(--header-btn-shadowColor2) inset;
+}
+
+.btn-invisible:active .btn-invisible.zeroclipboard-is-active {
+	box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor) inset, -7px -7px 12px 0 var(--header-btn-shadowColor2) inset;
 }
 ```
 
@@ -2878,7 +2910,7 @@ html {
 
 效果图:
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmZS6jSp64Zg1uCQdw4hvACYUyb9cFGKrCgnBNRuf6mPVF'`
+![image](https://github.com/user-attachments/assets/f3eb7940-ca2b-4952-8fb4-e05a7acc84bd)
 
 ## 文章一键复制代码按钮样式
 
@@ -2991,7 +3023,7 @@ a {
 
 效果图:
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmTwkiuWzou5jKS9aJ5hEZKau2zBEFRLiDcC8Gn1uzwiRm'`
+![image](https://github.com/user-attachments/assets/73cdc397-e4c8-45c8-8ecf-02f32af9fd63)
 
 # 通过 Gmeek 仓库 DIY 博客
 
@@ -3001,13 +3033,13 @@ a {
 
 仓库地址👉 https://github.com/Meekdai/Gmeek
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmaJMN2pqoQwtA3c8bPbajkwWYAwaAcwbzUqBiXya836PV'`
+![image](https://github.com/user-attachments/assets/8794d347-3524-4709-a6f1-fd74c607fc22)
 
 fork 之后, 转到搭建博客的 github 源码,
 
 打开`.github/workflows/Gmeek.yml`文件, 修改构建博客仓库的地址为你自己的仓库地址
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmNa2H5MrVphqpUwAHWBv7iWw782HmDb7qjZb3JEzdjQav'`
+![image](https://github.com/user-attachments/assets/20d1b3ac-c0fc-44ad-a937-3828b6875a8f)
 
 打开`config.json`文件, 修改右边字段值为main`'GMEEK_VERSION':'main'`
 
@@ -3035,15 +3067,15 @@ fork 之后, 转到搭建博客的 github 源码,
 
 下图文字直接修改即可, 不同语言的按需修改.
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmaxN6phAHJsxfB5Q3xLCGdAwpq2CcoNLo4xoFB16DpzAs'`
+![image](https://github.com/user-attachments/assets/c0f4bca8-174d-4044-a654-12e6322cca9b)
 
 ## 修改默认 primer.css 链接
 
 打开`Gmeek.py`
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmWcdviYe3A5bmtjCjhFeFA8VaczcvTQ2HDMB5aUAnkg3v'`
+![image](https://github.com/user-attachments/assets/fd72d93f-5015-44d9-ac79-58dff7e3c116)
 
-这里我直接写改成我存放的链接 https://cdn.jsdelivr.net/gh/gjken/gjken.github.io@v1.0/static/primer.min.css
+这里我直接写改成我存放的链接, 并使用 tag 控制版本.
 
 ## 修改页面头部样式
 
@@ -3256,24 +3288,10 @@ document.addEventListener('DOMContentLoaded', () => {
         functionBtn.style.top = deltaY > 0 ? '-100px' : '0';
     };
 
-    // 判断事件目标是否位于滚动容器内
-    const isInScrollableDiv = target => {
-        let node = target;
-        while (node && node !== document.body) {
-            if (node.scrollHeight > node.clientHeight) return true;
-            node = node.parentNode;
-        }
-        return false;
-    };
-
-    // 监听触摸和滚轮事件
-    document.addEventListener('touchstart', e => startY = e.touches[0].clientY);
-    document.addEventListener('touchmove', e => handleScroll(e.touches[0].clientY - startY));
-    document.addEventListener('wheel', e => {
-        if (!isInScrollableDiv(e.target)) {
-            handleScroll(e.deltaY);
-        }
-    });
+// 监听触摸和滚轮事件
+document.addEventListener('touchstart', e => startY = e.touches[0].clientY);
+document.addEventListener('touchmove', e => handleScroll(e.touches[0].clientY - startY));
+document.addEventListener('wheel', e => handleScroll(e.deltaY));
 });
 ```
 
@@ -3507,11 +3525,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 打开`Gmeek.py`
 
-定位代码`<style>.markdown-alert{`, 增加圆角6px.
+定位代码`<style>.markdown-alert{`, 给它增加圆角6px.
 
 `border-radius:6px;`
-
-`Gmeek-imgbox='https://i1.img2ipfs.com/ipfs/QmRCXZrjvmUajTL5odC4d5oJyJwx8mrNSwDzGgTs3yuDMw'`
 
 2. **优化行高显示**
 
@@ -3519,7 +3535,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 **效果图:**
 
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmTWtMj5966zgsPLPYDNZDNpyQ4k6YfxMj8CazAMnnZjSQ'`
+![image](https://github.com/user-attachments/assets/db205027-0615-4456-bca3-b33856372283)
 
 # 优化任务列表样式
 
@@ -3528,6 +3544,7 @@ document.addEventListener('DOMContentLoaded', () => {
 打开`Gmeek.py`, 定位`postBase=self.blogBase.copy()`, 在它的下面增加如下代码:
 
 ```python
+        # 优化任务列表样式
         if '<ul class='contains-task-list'>' in post_body:
             issue['style']=issue['style']+'<style>.contains-task-list{padding-left:0.9em !important;list-style:none}</style>'
 ```
@@ -3595,21 +3612,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 转到页脚查看实际效果👉 [点我](#footer2)
 
-# 使用 Gmeek-html, 给博客插入图片, 防止链接自动转换
+# Gmeek-html
 
-Github 在 issues 插入的图片也会自动转换为 Github 的地址.
+Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 issues 插入的图片也会自动转换为 Github 的地址, 为了文章的多样性, 在 Gmeek 的 v2.19 版本中添加了支持 html 标签的功能.
 
-为了文章的多样性, 在 Gmeek 的`v2.19`版本中添加了支持 html 标签的功能.
-
-示例代码:
-
-```html
-`Gmeek-html<img src='https://i0.img2ipfs.com/ipfs/QmbAZqtwu2G9vXrJ8oC7ixvKh4tY8uL8NvPA9zAxDqWFPq'>`
-```
-
-效果图:
-
-`Gmeek-html<img src='https://i0.img2ipfs.com/ipfs/QmbAZqtwu2G9vXrJ8oC7ixvKh4tY8uL8NvPA9zAxDqWFPq'>`
+> Gmeek 的默认功能, 可使用这个匹配规则转换不同的html效果, 祥看 👉 [Gmeek进阶](https://blog.meekdai.com/post/%E3%80%90Gmeek-jin-jie-%E3%80%91-wen-zhang-cha-ru-html-biao-qian.html)
 
 > [!Important]
 > 如果在文章中含有代码块标签并且内容为 Gmeek-html, Action 那边会进行转换导致显示错误, 详情看[#201](https://github.com/Meekdai/Gmeek/issues/201)
@@ -3622,7 +3629,8 @@ Github 在 issues 插入的图片也会自动转换为 Github 的地址.
 替换成下面的代码:
 
 ```python
-if '<code class='notranslate'>Gmeek-html' in post_body:
+        # 给原本的Gmeek-html增加小括号判断:<>, 缩小匹配范围
+        if '<code class='notranslate'>Gmeek-html' in post_body:
             post_body = re.sub(r'<code class='notranslate'>Gmeek-html(&lt;.*?&gt;)</code>', lambda match: html.unescape(match.group(1)), post_body, flags=re.DOTALL)
 ```
 
@@ -3631,6 +3639,32 @@ if '<code class='notranslate'>Gmeek-html' in post_body:
 这种情况下, 如果在 html 中含有行内代码块标签并且内容含有 Gmeek-html, 会导致转换文章内容时出现显示错误,
 
 更改后缩小了匹配范围, 可直接用行内代码块👉`Gmeek-html`让其在文章内正常显示.
+
+# 增加图片转换, 并适配图片懒加载
+
+打开`Gmeek.py`, 定位字符串`gmeek-html`
+
+在附近任意行增加代码:
+
+```python
+        # 默认情况插入图片情况下的匹配规则<p> -> <a> -><img>
+        if '<p><a target='_blank' rel=' in post_body:
+            post_body = re.sub(r'<p>\s*<a[^>]*?href='([^']+)'[^>]*?><img[^>]*?src='\1'[^>]*?></a>\s*</p>', lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>', post_body, flags=re.DOTALL)
+
+        # 通用插入图片情况下的匹配规则<a> -><img>
+        if '<a target='_blank' rel=' in post_body:
+            post_body = re.sub(r'<a[^>]*?href='([^']+)'[^>]*?><img[^>]*?src='\1'[^>]*?></a>',lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>', post_body, flags=re.DOTALL)
+```
+
+- **使用演示**
+
+在 GitHub markdown 里上传图片, 粘贴&拖拽都行,
+
+然后通过 Actions 转换后实际效果如下, html 里面图片标签会增加 fancybox 所需的`data-fancybox='gallery'`属性.
+
+![image](https://github.com/user-attachments/assets/1800f94a-8214-4cfd-ab38-dd26f020d981)
+
+这样优化后可以在 Github issue 的 Preview 里面直接预览图片, 同时还能防备图床问题导致的图片丢失(`Gmeek-spoilertxt='Github, 稳!'`)
 
 # 添加 Gmeek-spoilertxt - 文字防剧透模糊效果
 
@@ -3727,17 +3761,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 | Label Name | Color | 效果
 |-|-|-
-| 网站 | #218155 | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=网站&color=218155'`
-| 日常 | #008672 | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=日常&color=008672'`
-| 教程 | #0075ca | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=教程&color=0075ca'`
-| Anime | #E77AB1 | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=Anime&color=E77AB1'`
-| Win | #5AB3F3 | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=Win&color=5AB3F3'`
-| VPS | #5319e7 | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=VPS&color=5319e7'`
-| JS | #AD3152 | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=JS&color=AD3152'`
-| CSS | #218155 | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=CSS&color=218155'`
-| Github | #333333 | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=Github&color=333333'`
-| CDN | #cb222c | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=CDN&color=cb222c'`
-| Bug | #D73A4A | `Gmeek-imgbox='https://img.shields.io/static/v1?label=&message=Bug&color=D73A4A'`
+| 网站 | #218155 | ![](https://img.shields.io/static/v1?label=&message=网站&color=218155)
+| 日常 | #008672 | ![](https://img.shields.io/static/v1?label=&message=日常&color=008672)
+| 教程 | #0075ca | ![](https://img.shields.io/static/v1?label=&message=教程&color=0075ca)
+| Anime | #E77AB1 | ![](https://img.shields.io/static/v1?label=&message=Anime&color=E77AB1)
+| Win | #5AB3F3 | ![](https://img.shields.io/static/v1?label=&message=Win&color=5AB3F3)
+| VPS | #5319e7 | ![](https://img.shields.io/static/v1?label=&message=VPS&color=5319e7)
+| JS | #AD3152 | ![](https://img.shields.io/static/v1?label=&message=JS&color=AD3152)
+| CSS | #218155 | ![](https://img.shields.io/static/v1?label=&message=CSS&color=218155)
+| Github | #333333 | ![](https://img.shields.io/static/v1?label=&message=Github&color=333333)
+| CDN | #cb222c | ![](https://img.shields.io/static/v1?label=&message=CDN&color=cb222c)
+| Bug | #D73A4A | ![](https://img.shields.io/static/v1?label=&message=Bug&color=D73A4A)
+| 软件 | #5da167 | ![](https://img.shields.io/static/v1?label=&message=软件&color=5da167)
+| 翻墙 | #cb7b58 | ![](https://img.shields.io/static/v1?label=&message=翻墙&color=cb7b58)
 
 # Readme.md
 
@@ -3837,14 +3873,14 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 <p>代码:</p>
 <div class="highlight highlight-source-json"><pre class="notranslate"><span class="pl-ent">"subTitle"</span>:<span class="pl-s"><span class="pl-pds">"</span>&lt;script&gt;document.getElementById('content').innerHTML = `&lt;div style='text-align: center;'&gt;&lt;p&gt;CV工程师,&lt;/p&gt;&lt;p&gt;一个又菜又爱玩, 喜欢瞎折腾的流浪者.&lt;/p&gt;&lt;/div&gt;`;&lt;/script&gt;<span class="pl-pds">"</span></span>,</pre></div>
 <p>CSS 效果:</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://i0.img2ipfs.com/ipfs/QmPJLQrhBg9opKvbgNGqQaEopEKJnsH3thbH7wNbocp6VF"></p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/704ba114-c255-469e-ac71-61ccdffac962">
 <p>从图中可以看到, <code class="notranslate">subTitle</code>字段可用 js 插入 html 实现修改文字.</p>
 <h2>subTitle - 隐藏</h2>
 <p><code class="notranslate">"subTitle":" ",</code></p>
 <p>效果图:</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://i0.img2ipfs.com/ipfs/Qmei764zAMx9fXgotWbrrwizXRsrk42GGiKor2Zqo8hFgy"></p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/92e2da59-1bb4-4c4c-a2ae-b58105ecc230">
 <p>可以用空白字符的方式, 隐藏<code class="notranslate">subTitle</code>这个必须字段, 无需使用 js 隐藏.</p>
 <h1>记录功能块代码</h1>
 <p>代码摘抄自网络, 有删改, 都存放在仓库, 使用 jsdelivr CDN 加速.</p>
@@ -3856,8 +3892,9 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 <details><summary>点击展开</summary>
 <p><code class="notranslate">Gmeek-imgbox</code>首先匹配到关键字后转化标签.</p>
 <p><code class="notranslate">Gmeek.py</code>匹配转换的代码如下:</p>
-<div class="highlight highlight-source-python"><pre class="notranslate">        <span class="pl-k">if</span> <span class="pl-s">'&lt;code class="notranslate"&gt;Gmeek-imgbox'</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>: 
-            <span class="pl-s1">post_body</span> <span class="pl-c1">=</span> <span class="pl-s1">re</span>.<span class="pl-c1">sub</span>(<span class="pl-s">r'&lt;code class="notranslate"&gt;Gmeek-imgbox="([^"]+)"&lt;/code&gt;'</span>,<span class="pl-k">lambda</span> <span class="pl-s1">match</span>: <span class="pl-s">f'&lt;div class="ImgLazyLoad-circle"&gt;&lt;/div&gt;<span class="pl-cce">\n</span>&lt;img data-fancybox="gallery" img-src="<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">match</span>.<span class="pl-c1">group</span>(<span class="pl-c1">1</span>)<span class="pl-kos">}</span></span>"&gt;'</span>,<span class="pl-s1">post_body</span>, <span class="pl-s1">flags</span><span class="pl-c1">=</span><span class="pl-s1">re</span>.<span class="pl-c1">DOTALL</span>)</pre></div>
+<div class="highlight highlight-source-python"><pre class="notranslate">        <span class="pl-c"># 剧透</span>
+        <span class="pl-k">if</span> <span class="pl-s">'&lt;code class="notranslate"&gt;Gmeek-spoilertxt'</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>: 
+            <span class="pl-s1">post_body</span> <span class="pl-c1">=</span> <span class="pl-s1">re</span>.<span class="pl-c1">sub</span>(<span class="pl-s">r'&lt;code class="notranslate"&gt;Gmeek-spoilertxt="([^"]+)"&lt;/code&gt;'</span>, <span class="pl-k">lambda</span> <span class="pl-s1">match</span>: <span class="pl-s">f'&lt;span class="spoilerText"&gt;<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">match</span>.<span class="pl-c1">group</span>(<span class="pl-c1">1</span>)<span class="pl-kos">}</span></span>&lt;/span&gt;'</span>, <span class="pl-s1">post_body</span>, <span class="pl-s1">flags</span><span class="pl-c1">=</span><span class="pl-s1">re</span>.<span class="pl-c1">DOTALL</span>)</pre></div>
 <p>markdown 输入:</p>
 <pre class="notranslate"><code class="notranslate">`Gmeek-imgbox="https://example.com/image.jpg"`
 </code></pre>
@@ -3886,8 +3923,8 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 修改-滚动页面自动显示&amp;隐藏返回顶部按钮.</p>
 </blockquote>
 <p>图示:</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://i0.img2ipfs.com/ipfs/QmcZLXt281ogUR7bUqReAWRhecnbGaftfaGu2wu2qugV4H"></p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/2d12652a-ee57-44a7-bd41-17f618a0785b">
 <p>可以直接引用.</p>
 <h2>文章增加目录列表(集成到header)</h2>
 <p>这版把目录按钮集成到了文章的<code class="notranslate">#header</code>的按钮里面.</p>
@@ -3897,10 +3934,10 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 修改-文章目录增加顶部和底部跳转按钮.</p>
 </blockquote>
 <p>图示:</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://i0.img2ipfs.com/ipfs/Qme3qiTmKATk8BVvcLj7bC87q3w8MqywJcQTJfHKQTmyvd"></p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://i0.img2ipfs.com/ipfs/QmfSbibFEBSh5YShTT6YyZwY5D2Um8avsYkZTbDcndh1dh"></p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/cb85ad0f-0e19-42e0-bb3e-45399a5ca7f7">
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/3f84c22d-43cc-489f-9df0-d6ffa24feb42">
 <h2>Fancybox.js - 图片浏览器</h2>
 <blockquote>
 <p>Fancybox <a href="https://www.fancyapps.com" rel="nofollow">官网</a></p>
@@ -3930,16 +3967,17 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 </blockquote>
 <p>打开<code class="notranslate">Gmeek.py</code>文件, 定位字符串<code class="notranslate">Gmeek-html</code></p>
 <p>然后在下面增加代码:</p>
-<div class="highlight highlight-source-python"><pre class="notranslate">        <span class="pl-k">if</span> <span class="pl-s">'&lt;code class="notranslate"&gt;Gmeek-imgbox'</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>: 
-            <span class="pl-s1">post_body</span> <span class="pl-c1">=</span> <span class="pl-s1">re</span>.<span class="pl-c1">sub</span>(<span class="pl-s">r'&lt;code class="notranslate"&gt;Gmeek-imgbox="([^"]+)"&lt;/code&gt;'</span>,<span class="pl-k">lambda</span> <span class="pl-s1">match</span>: <span class="pl-s">f'&lt;img data-fancybox="gallery" src="<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">match</span>.<span class="pl-c1">group</span>(<span class="pl-c1">1</span>)<span class="pl-kos">}</span></span>"&gt;'</span>,<span class="pl-s1">post_body</span>, <span class="pl-s1">flags</span><span class="pl-c1">=</span><span class="pl-s1">re</span>.<span class="pl-c1">DOTALL</span>)</pre></div>
+<div class="highlight highlight-source-python"><pre class="notranslate">        <span class="pl-c"># 手动插入外链图片</span>
+        <span class="pl-k">if</span> <span class="pl-s">'&lt;code class="notranslate"&gt;Gmeek-imgbox'</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>:
+            <span class="pl-s1">post_body</span> <span class="pl-c1">=</span> <span class="pl-s1">re</span>.<span class="pl-c1">sub</span>(<span class="pl-s">r'&lt;p&gt;\s*&lt;code class="notranslate"&gt;Gmeek-imgbox="([^"]+)"&lt;/code&gt;\s*&lt;/p&gt;'</span>, <span class="pl-k">lambda</span> <span class="pl-s1">match</span>: <span class="pl-s">f'&lt;div class="ImgLazyLoad-circle"&gt;&lt;/div&gt;<span class="pl-cce">\n</span>&lt;img data-fancybox="gallery" img-src="<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">match</span>.<span class="pl-c1">group</span>(<span class="pl-c1">1</span>)<span class="pl-kos">}</span></span>"&gt;'</span>, <span class="pl-s1">post_body</span>, <span class="pl-s1">flags</span><span class="pl-c1">=</span><span class="pl-s1">re</span>.<span class="pl-c1">DOTALL</span>)</pre></div>
 <ul>
 <li><strong>使用演示</strong></li>
 </ul>
 <p>在 markdown 插入图片:</p>
 <div class="highlight highlight-text-html-basic"><pre class="notranslate">`Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/QmNiH2pdrA9Hb61EXgYbKtEssBAGemEjTQRBZbgutUCNx2"`</pre></div>
 <p>通过 Actions 转换后实际效果如下, html 里面图片标签会增加 fancybox 所需的<code class="notranslate">data-fancybox="gallery"</code>属性.</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://i0.img2ipfs.com/ipfs/QmNiH2pdrA9Hb61EXgYbKtEssBAGemEjTQRBZbgutUCNx2"></p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/90439bbe-7ced-409b-a4c7-62f859c842ab">
 <h2>图片懒加载</h2>
 <blockquote>
 <p>来源: <a href="https://github.com/liyifanniubi/liyifanniubi.github.io">Github</a></p>
@@ -4213,12 +4251,20 @@ svg 暗黑模式下颜色.<br>
 	<span class="pl-c1">box-shadow</span><span class="pl-kos">:</span> none
 }
 
-.<span class="pl-c1">btn-invisible</span><span class="pl-kos">:</span><span class="pl-c1">hover</span><span class="pl-kos">,</span>
-.<span class="pl-c1">btn-invisible</span>.<span class="pl-c1">zeroclipboard-is-hover</span> {
+.<span class="pl-c1">btn-invisible</span><span class="pl-kos">:</span><span class="pl-c1">active</span><span class="pl-kos">,</span>
+.<span class="pl-c1">btn-invisible</span>.<span class="pl-c1">selected</span><span class="pl-kos">,</span>
+.<span class="pl-c1">btn-invisible</span>[<span class="pl-c1">aria-selected</span><span class="pl-c1">=</span><span class="pl-s">true</span>]<span class="pl-kos">,</span>
+.<span class="pl-c1">btn-invisible</span>.<span class="pl-c1">zeroclipboard-is-active</span> {
 	<span class="pl-c1">color</span><span class="pl-kos">:</span> <span class="pl-en">var</span>(<span class="pl-s1">--fgColor-accent</span><span class="pl-kos">,</span> <span class="pl-en">var</span>(<span class="pl-s1">--color-accent-fg</span>));
-	<span class="pl-c1">background-color</span><span class="pl-kos">:</span> <span class="pl-en">var</span>(<span class="pl-s1">--title-right-btnbg-color</span>);
-	<span class="pl-c1">outline</span><span class="pl-kos">:</span> none;
+	<span class="pl-c1">background</span><span class="pl-kos">:</span> none;
+	<span class="pl-c1">border-color</span><span class="pl-kos">:</span> <span class="pl-en">var</span>(<span class="pl-s1">--button-default-borderColor-active</span><span class="pl-kos">,</span> <span class="pl-en">var</span>(<span class="pl-s1">--color-btn-active-border</span>));
+	<span class="pl-c1">outline</span><span class="pl-kos">:</span> <span class="pl-c1">2<span class="pl-smi">px</span></span> solid <span class="pl-en">var</span>(<span class="pl-s1">--focus-outlineColor</span><span class="pl-kos">,</span> <span class="pl-en">var</span>(<span class="pl-s1">--color-accent-fg</span>));
+	<span class="pl-c1">outline-offset</span><span class="pl-kos">:</span> <span class="pl-c1">-2<span class="pl-smi">px</span></span>;
 	<span class="pl-c1">box-shadow</span><span class="pl-kos">:</span> none
+}
+
+.<span class="pl-c1">btn-invisible</span><span class="pl-kos">:</span><span class="pl-c1">active</span> .<span class="pl-c1">btn-invisible</span>.<span class="pl-c1">zeroclipboard-is-active</span> {
+	<span class="pl-c1">background-color</span><span class="pl-kos">:</span> <span class="pl-en">var</span>(<span class="pl-s1">--button-default-bgColor-selected</span><span class="pl-kos">,</span> <span class="pl-en">var</span>(<span class="pl-s1">--color-btn-selected-bg</span>))
 }</pre></div>
 </details>
 <details><summary>修改后</summary>
@@ -4247,13 +4293,6 @@ svg 暗黑模式下颜色.<br>
 	<span class="pl-c1">box-shadow</span><span class="pl-kos">:</span> <span class="pl-c1">6<span class="pl-smi">px</span></span> <span class="pl-c1">6<span class="pl-smi">px</span></span> <span class="pl-c1">14<span class="pl-smi">px</span></span> <span class="pl-c1">0</span> <span class="pl-en">var</span>(<span class="pl-s1">--header-btn-shadowColor</span>)<span class="pl-kos">,</span> <span class="pl-c1">-7<span class="pl-smi">px</span></span> <span class="pl-c1">-7<span class="pl-smi">px</span></span> <span class="pl-c1">16<span class="pl-smi">px</span></span> <span class="pl-c1">0</span> <span class="pl-en">var</span>(<span class="pl-s1">--header-btn-shadowColor2</span>);
 	<span class="pl-c1">transition</span><span class="pl-kos">:</span> box-shadow <span class="pl-c1">.4<span class="pl-smi">s</span></span> ease-in-out<span class="pl-kos">,</span>filter <span class="pl-c1">.4<span class="pl-smi">s</span></span> ease-in-out;
 }
-.<span class="pl-c1">btn-invisible</span><span class="pl-kos">:</span><span class="pl-c1">hover</span><span class="pl-kos">,</span>
-.<span class="pl-c1">btn-invisible</span>.<span class="pl-c1">zeroclipboard-is-hover</span> {
-	<span class="pl-c1">color</span><span class="pl-kos">:</span> <span class="pl-en">var</span>(<span class="pl-s1">--fgColor-accent</span><span class="pl-kos">,</span> <span class="pl-en">var</span>(<span class="pl-s1">--color-accent-fg</span>));
-	<span class="pl-c1">background-color</span><span class="pl-kos">:</span> <span class="pl-en">rgba</span>(<span class="pl-c1">0</span><span class="pl-kos">,</span> <span class="pl-c1">0</span><span class="pl-kos">,</span> <span class="pl-c1">0</span><span class="pl-kos">,</span> <span class="pl-c1">0</span>);
-	<span class="pl-c1">outline</span><span class="pl-kos">:</span> none;
-	<span class="pl-c1">box-shadow</span><span class="pl-kos">:</span> <span class="pl-c1">6<span class="pl-smi">px</span></span> <span class="pl-c1">6<span class="pl-smi">px</span></span> <span class="pl-c1">14<span class="pl-smi">px</span></span> <span class="pl-c1">0</span> <span class="pl-en">var</span>(<span class="pl-s1">--header-btn-shadowColor</span>) inset<span class="pl-kos">,</span><span class="pl-c1">-7<span class="pl-smi">px</span></span> <span class="pl-c1">-7<span class="pl-smi">px</span></span> <span class="pl-c1">12<span class="pl-smi">px</span></span> <span class="pl-c1">0</span> <span class="pl-en">var</span>(<span class="pl-s1">--header-btn-shadowColor2</span>) inset;
-}
 <span class="pl-c">/* 图标颜色 */</span>
 .<span class="pl-c1">btn-invisible</span> <span class="pl-ent">svg</span> <span class="pl-ent">path</span>{
 	<span class="pl-c1">fill</span><span class="pl-kos">:</span> <span class="pl-en">var</span>(<span class="pl-s1">--title-right-svgColor</span>);
@@ -4262,6 +4301,17 @@ svg 暗黑模式下颜色.<br>
 .<span class="pl-c1">btn-invisible</span><span class="pl-kos">:</span><span class="pl-c1">hover</span> <span class="pl-ent">svg</span> <span class="pl-ent">path</span><span class="pl-kos">,</span>
 .<span class="pl-c1">btn-invisible</span>.<span class="pl-c1">zeroclipboard-is-hover</span> <span class="pl-ent">svg</span> <span class="pl-ent">path</span>{
 	<span class="pl-c1">fill</span><span class="pl-kos">:</span> <span class="pl-en">var</span>(<span class="pl-s1">--title-right-svgHovercolor</span>);
+}
+
+.<span class="pl-c1">btn-invisible</span><span class="pl-kos">:</span><span class="pl-c1">active</span><span class="pl-kos">,</span>
+.<span class="pl-c1">btn-invisible</span>.<span class="pl-c1">selected</span><span class="pl-kos">,</span>
+.<span class="pl-c1">btn-invisible</span>[<span class="pl-c1">aria-selected</span><span class="pl-c1">=</span><span class="pl-s">true</span>]<span class="pl-kos">,</span>
+.<span class="pl-c1">btn-invisible</span>.<span class="pl-c1">zeroclipboard-is-active</span> {
+	<span class="pl-c1">box-shadow</span><span class="pl-kos">:</span> <span class="pl-c1">6<span class="pl-smi">px</span></span> <span class="pl-c1">6<span class="pl-smi">px</span></span> <span class="pl-c1">14<span class="pl-smi">px</span></span> <span class="pl-c1">0</span> <span class="pl-en">var</span>(<span class="pl-s1">--header-btn-shadowColor</span>) inset<span class="pl-kos">,</span> <span class="pl-c1">-7<span class="pl-smi">px</span></span> <span class="pl-c1">-7<span class="pl-smi">px</span></span> <span class="pl-c1">12<span class="pl-smi">px</span></span> <span class="pl-c1">0</span> <span class="pl-en">var</span>(<span class="pl-s1">--header-btn-shadowColor2</span>) inset;
+}
+
+.<span class="pl-c1">btn-invisible</span><span class="pl-kos">:</span><span class="pl-c1">active</span> .<span class="pl-c1">btn-invisible</span>.<span class="pl-c1">zeroclipboard-is-active</span> {
+	<span class="pl-c1">box-shadow</span><span class="pl-kos">:</span> <span class="pl-c1">6<span class="pl-smi">px</span></span> <span class="pl-c1">6<span class="pl-smi">px</span></span> <span class="pl-c1">14<span class="pl-smi">px</span></span> <span class="pl-c1">0</span> <span class="pl-en">var</span>(<span class="pl-s1">--header-btn-shadowColor</span>) inset<span class="pl-kos">,</span> <span class="pl-c1">-7<span class="pl-smi">px</span></span> <span class="pl-c1">-7<span class="pl-smi">px</span></span> <span class="pl-c1">12<span class="pl-smi">px</span></span> <span class="pl-c1">0</span> <span class="pl-en">var</span>(<span class="pl-s1">--header-btn-shadowColor2</span>) inset;
 }</pre></div>
 </details>
 <h2>修改文章主页, 文章的列表样式</h2>
@@ -4551,8 +4601,8 @@ svg 暗黑模式下颜色.<br>
 }</pre></div>
 </details>
 <p>效果图:</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://i0.img2ipfs.com/ipfs/QmZS6jSp64Zg1uCQdw4hvACYUyb9cFGKrCgnBNRuf6mPVF"></p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/f3eb7940-ca2b-4952-8fb4-e05a7acc84bd">
 <h2>文章一键复制代码按钮样式</h2>
 <div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>给按钮增加 hover 动画, 使其显示&amp;隐藏一键复制按钮.<br>
 直接增加下面代码.</p>
@@ -4630,18 +4680,18 @@ svg 暗黑模式下颜色.<br>
 }</pre></div>
 </details>
 <p>效果图:</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://i0.img2ipfs.com/ipfs/QmTwkiuWzou5jKS9aJ5hEZKau2zBEFRLiDcC8Gn1uzwiRm"></p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/73cdc397-e4c8-45c8-8ecf-02f32af9fd63">
 <h1>通过 Gmeek 仓库 DIY 博客</h1>
 <p>为什么这样做? <span class="spoilerText">自娱自乐.~~</span></p>
 <h2>Fork Gmeek 仓库</h2>
 <p>仓库地址👉 <a href="https://github.com/Meekdai/Gmeek">https://github.com/Meekdai/Gmeek</a></p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://i0.img2ipfs.com/ipfs/QmaJMN2pqoQwtA3c8bPbajkwWYAwaAcwbzUqBiXya836PV"></p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/8794d347-3524-4709-a6f1-fd74c607fc22">
 <p>fork 之后, 转到搭建博客的 github 源码,</p>
 <p>打开<code class="notranslate">.github/workflows/Gmeek.yml</code>文件, 修改构建博客仓库的地址为你自己的仓库地址</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://i0.img2ipfs.com/ipfs/QmNa2H5MrVphqpUwAHWBv7iWw782HmDb7qjZb3JEzdjQav"></p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/20d1b3ac-c0fc-44ad-a937-3828b6875a8f">
 <p>打开<code class="notranslate">config.json</code>文件, 修改右边字段值为main<code class="notranslate">"GMEEK_VERSION":"main"</code></p>
 <div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>如果值是<code class="notranslate">last</code>的话, Actions 会失败, 因为默认值<code class="notranslate">last</code>是靠模板仓库的 tag 来构建的, 改成 main 就不会构建失败.<br>
 <del>创建新的 tag 也可以, 但是挺麻烦.</del></p>
@@ -4654,13 +4704,13 @@ svg 暗黑模式下颜色.<br>
 <h2>修改网站下方的文字</h2>
 <p>打开<code class="notranslate">Gmeek.py</code></p>
 <p>下图文字直接修改即可, 不同语言的按需修改.</p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://i0.img2ipfs.com/ipfs/QmaxN6phAHJsxfB5Q3xLCGdAwpq2CcoNLo4xoFB16DpzAs"></p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/c0f4bca8-174d-4044-a654-12e6322cca9b">
 <h2>修改默认 primer.css 链接</h2>
 <p>打开<code class="notranslate">Gmeek.py</code></p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://i0.img2ipfs.com/ipfs/QmWcdviYe3A5bmtjCjhFeFA8VaczcvTQ2HDMB5aUAnkg3v"></p>
-<p>这里我直接写改成我存放的链接 <a href="https://cdn.jsdelivr.net/gh/gjken/gjken.github.io@v1.0/static/primer.min.css" rel="nofollow">https://cdn.jsdelivr.net/gh/gjken/gjken.github.io@v1.0/static/primer.min.css</a></p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/fd72d93f-5015-44d9-ac79-58dff7e3c116">
+<p>这里我直接写改成我存放的链接, 并使用 tag 控制版本.</p>
 <h2>修改页面头部样式</h2>
 <h3>打开 base.html 文件</h3>
 <div class="markdown-alert markdown-alert-important"><p class="markdown-alert-title"><svg class="octicon octicon-report mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Important</p><p>base 这个模板文件里增加的代码可以应用到所有页面, 优先级很高.</p>
@@ -4848,24 +4898,10 @@ after 是光标, blink 是光标动画.</p>
         <span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-c1">style</span><span class="pl-kos">.</span><span class="pl-c1">top</span> <span class="pl-c1">=</span> <span class="pl-s1">deltaY</span> <span class="pl-c1">&gt;</span> <span class="pl-c1">0</span> ? <span class="pl-s">'-100px'</span> : <span class="pl-s">'0'</span><span class="pl-kos">;</span>
     <span class="pl-kos">}</span><span class="pl-kos">;</span>
 
-    <span class="pl-c">// 判断事件目标是否位于滚动容器内</span>
-    <span class="pl-k">const</span> <span class="pl-en">isInScrollableDiv</span> <span class="pl-c1">=</span> <span class="pl-s1">target</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
-        <span class="pl-k">let</span> <span class="pl-s1">node</span> <span class="pl-c1">=</span> <span class="pl-s1">target</span><span class="pl-kos">;</span>
-        <span class="pl-k">while</span> <span class="pl-kos">(</span><span class="pl-s1">node</span> <span class="pl-c1">&amp;&amp;</span> <span class="pl-s1">node</span> <span class="pl-c1">!==</span> <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-c1">body</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-            <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">node</span><span class="pl-kos">.</span><span class="pl-c1">scrollHeight</span> <span class="pl-c1">&gt;</span> <span class="pl-s1">node</span><span class="pl-kos">.</span><span class="pl-c1">clientHeight</span><span class="pl-kos">)</span> <span class="pl-k">return</span> <span class="pl-c1">true</span><span class="pl-kos">;</span>
-            <span class="pl-s1">node</span> <span class="pl-c1">=</span> <span class="pl-s1">node</span><span class="pl-kos">.</span><span class="pl-c1">parentNode</span><span class="pl-kos">;</span>
-        <span class="pl-kos">}</span>
-        <span class="pl-k">return</span> <span class="pl-c1">false</span><span class="pl-kos">;</span>
-    <span class="pl-kos">}</span><span class="pl-kos">;</span>
-
-    <span class="pl-c">// 监听触摸和滚轮事件</span>
-    <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'touchstart'</span><span class="pl-kos">,</span> <span class="pl-s1">e</span> <span class="pl-c1">=&gt;</span> <span class="pl-s1">startY</span> <span class="pl-c1">=</span> <span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-c1">touches</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span><span class="pl-kos">.</span><span class="pl-c1">clientY</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-    <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'touchmove'</span><span class="pl-kos">,</span> <span class="pl-s1">e</span> <span class="pl-c1">=&gt;</span> <span class="pl-en">handleScroll</span><span class="pl-kos">(</span><span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-c1">touches</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span><span class="pl-kos">.</span><span class="pl-c1">clientY</span> <span class="pl-c1">-</span> <span class="pl-s1">startY</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-    <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'wheel'</span><span class="pl-kos">,</span> <span class="pl-s1">e</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
-        <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-c1">!</span><span class="pl-en">isInScrollableDiv</span><span class="pl-kos">(</span><span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-c1">target</span><span class="pl-kos">)</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-            <span class="pl-en">handleScroll</span><span class="pl-kos">(</span><span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-c1">deltaY</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-        <span class="pl-kos">}</span>
-    <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-c">// 监听触摸和滚轮事件</span>
+<span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'touchstart'</span><span class="pl-kos">,</span> <span class="pl-s1">e</span> <span class="pl-c1">=&gt;</span> <span class="pl-s1">startY</span> <span class="pl-c1">=</span> <span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-c1">touches</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span><span class="pl-kos">.</span><span class="pl-c1">clientY</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'touchmove'</span><span class="pl-kos">,</span> <span class="pl-s1">e</span> <span class="pl-c1">=&gt;</span> <span class="pl-en">handleScroll</span><span class="pl-kos">(</span><span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-c1">touches</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span><span class="pl-kos">.</span><span class="pl-c1">clientY</span> <span class="pl-c1">-</span> <span class="pl-s1">startY</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'wheel'</span><span class="pl-kos">,</span> <span class="pl-s1">e</span> <span class="pl-c1">=&gt;</span> <span class="pl-en">handleScroll</span><span class="pl-kos">(</span><span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-c1">deltaY</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
 </details>
 <h3>打开 plist.html 文件</h3>
@@ -5065,21 +5101,20 @@ after 是光标, blink 是光标动画.</p>
 <li><strong>增加圆角</strong></li>
 </ol>
 <p>打开<code class="notranslate">Gmeek.py</code></p>
-<p>定位代码<code class="notranslate">&lt;style&gt;.markdown-alert{</code>, 增加圆角6px.</p>
+<p>定位代码<code class="notranslate">&lt;style&gt;.markdown-alert{</code>, 给它增加圆角6px.</p>
 <p><code class="notranslate">border-radius:6px;</code></p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://i1.img2ipfs.com/ipfs/QmRCXZrjvmUajTL5odC4d5oJyJwx8mrNSwDzGgTs3yuDMw"></p>
 <ol start="2">
 <li><strong>优化行高显示</strong></li>
 </ol>
 <p>定位<code class="notranslate">line-height:1;</code>, 直接删除这个属性.</p>
 <p><strong>效果图:</strong></p>
-<p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://i0.img2ipfs.com/ipfs/QmTWtMj5966zgsPLPYDNZDNpyQ4k6YfxMj8CazAMnnZjSQ"></p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/db205027-0615-4456-bca3-b33856372283">
 <h1>优化任务列表样式</h1>
 <p>具体问题看<a href="https://github.com/Meekdai/Gmeek/issues/202" data-hovercard-type="issue" data-hovercard-url="/Meekdai/Gmeek/issues/202/hovercard">#202</a></p>
 <p>打开<code class="notranslate">Gmeek.py</code>, 定位<code class="notranslate">postBase=self.blogBase.copy()</code>, 在它的下面增加如下代码:</p>
-<div class="highlight highlight-source-python"><pre class="notranslate">        <span class="pl-k">if</span> <span class="pl-s">'&lt;ul class="contains-task-list"&gt;'</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>:
+<div class="highlight highlight-source-python"><pre class="notranslate">        <span class="pl-c"># 优化任务列表样式</span>
+        <span class="pl-k">if</span> <span class="pl-s">'&lt;ul class="contains-task-list"&gt;'</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>:
             <span class="pl-s1">issue</span>[<span class="pl-s">"style"</span>]<span class="pl-c1">=</span><span class="pl-s1">issue</span>[<span class="pl-s">"style"</span>]<span class="pl-c1">+</span><span class="pl-s">'&lt;style&gt;.contains-task-list{padding-left:0.9em !important;list-style:none}&lt;/style&gt;'</span></pre></div>
 <h2>页面底部文字增加图标动画</h2>
 <p>爱心图标动画.</p>
@@ -5129,24 +5164,41 @@ after 是光标, blink 是光标动画.</p>
 }</pre></div>
 </details>
 <p>转到页脚查看实际效果👉 <a href="#footer2">点我</a></p>
-<h1>使用 Gmeek-html, 给博客插入图片, 防止链接自动转换</h1>
-<p>Github 在 issues 插入的图片也会自动转换为 Github 的地址.</p>
-<p>为了文章的多样性, 在 Gmeek 的<code class="notranslate">v2.19</code>版本中添加了支持 html 标签的功能.</p>
-<p>示例代码:</p>
-<div class="highlight highlight-text-html-basic"><pre class="notranslate">`Gmeek-html<span class="pl-kos">&lt;</span><span class="pl-ent">img</span> <span class="pl-c1">src</span>="<span class="pl-s">https://i0.img2ipfs.com/ipfs/QmbAZqtwu2G9vXrJ8oC7ixvKh4tY8uL8NvPA9zAxDqWFPq</span>"<span class="pl-kos">&gt;</span>`</pre></div>
-<p>效果图:</p>
-<p><img src="https://i0.img2ipfs.com/ipfs/QmbAZqtwu2G9vXrJ8oC7ixvKh4tY8uL8NvPA9zAxDqWFPq"></p>
+<h1>Gmeek-html</h1>
+<p>Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 issues 插入的图片也会自动转换为 Github 的地址, 为了文章的多样性, 在 Gmeek 的 v2.19 版本中添加了支持 html 标签的功能.</p>
+<blockquote>
+<p>Gmeek 的默认功能, 可使用这个匹配规则转换不同的html效果, 祥看 👉 <a href="https://blog.meekdai.com/post/%E3%80%90Gmeek-jin-jie-%E3%80%91-wen-zhang-cha-ru-html-biao-qian.html" rel="nofollow">Gmeek进阶</a></p>
+</blockquote>
 <div class="markdown-alert markdown-alert-important"><p class="markdown-alert-title"><svg class="octicon octicon-report mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Important</p><p>如果在文章中含有代码块标签并且内容为 Gmeek-html, Action 那边会进行转换导致显示错误, 详情看<a href="https://github.com/Meekdai/Gmeek/issues/201" data-hovercard-type="issue" data-hovercard-url="/Meekdai/Gmeek/issues/201/hovercard">#201</a><br>
 <code class="notranslate">gmeek-html</code>换成小写就不会被匹配到.</p>
 </div>
 <h1>优化 Gmeek-html, 标签转换匹配</h1>
 <p>打开<code class="notranslate">Gmeek.py</code>, 定位字符串<code class="notranslate">gmeek-html</code></p>
 <p>替换成下面的代码:</p>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">if</span> <span class="pl-s">'&lt;code class="notranslate"&gt;Gmeek-html'</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>:
+<div class="highlight highlight-source-python"><pre class="notranslate">        <span class="pl-c"># 给原本的Gmeek-html增加小括号判断:&lt;&gt;, 缩小匹配范围</span>
+        <span class="pl-k">if</span> <span class="pl-s">'&lt;code class="notranslate"&gt;Gmeek-html'</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>:
             <span class="pl-s1">post_body</span> <span class="pl-c1">=</span> <span class="pl-s1">re</span>.<span class="pl-c1">sub</span>(<span class="pl-s">r'&lt;code class="notranslate"&gt;Gmeek-html(&amp;lt;.*?&amp;gt;)&lt;/code&gt;'</span>, <span class="pl-k">lambda</span> <span class="pl-s1">match</span>: <span class="pl-s1">html</span>.<span class="pl-c1">unescape</span>(<span class="pl-s1">match</span>.<span class="pl-c1">group</span>(<span class="pl-c1">1</span>)), <span class="pl-s1">post_body</span>, <span class="pl-s1">flags</span><span class="pl-c1">=</span><span class="pl-s1">re</span>.<span class="pl-c1">DOTALL</span>)</pre></div>
 <p>原先匹配的内容为:<code class="notranslate">&lt;code class="notranslate"&gt;Gmeek-html(.*?)&lt;/code&gt;</code>,</p>
 <p>这种情况下, 如果在 html 中含有行内代码块标签并且内容含有 Gmeek-html, 会导致转换文章内容时出现显示错误,</p>
 <p>更改后缩小了匹配范围, 可直接用行内代码块👉<code class="notranslate">Gmeek-html</code>让其在文章内正常显示.</p>
+<h1>增加图片转换, 并适配图片懒加载</h1>
+<p>打开<code class="notranslate">Gmeek.py</code>, 定位字符串<code class="notranslate">gmeek-html</code></p>
+<p>在附近任意行增加代码:</p>
+<div class="highlight highlight-source-python"><pre class="notranslate">        <span class="pl-c"># 默认情况插入图片情况下的匹配规则&lt;p&gt; -&gt; &lt;a&gt; -&gt;&lt;img&gt;</span>
+        <span class="pl-k">if</span> <span class="pl-s">'&lt;p&gt;&lt;a target="_blank" rel='</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>:
+            <span class="pl-s1">post_body</span> <span class="pl-c1">=</span> <span class="pl-s1">re</span>.<span class="pl-c1">sub</span>(<span class="pl-s">r'&lt;p&gt;\s*&lt;a[^&gt;]*?href="([^"]+)"[^&gt;]*?&gt;&lt;img[^&gt;]*?src="\1"[^&gt;]*?&gt;&lt;/a&gt;\s*&lt;/p&gt;'</span>, <span class="pl-k">lambda</span> <span class="pl-s1">match</span>: <span class="pl-s">f'&lt;div class="ImgLazyLoad-circle"&gt;&lt;/div&gt;<span class="pl-cce">\n</span>&lt;img data-fancybox="gallery" img-src="<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">match</span>.<span class="pl-c1">group</span>(<span class="pl-c1">1</span>)<span class="pl-kos">}</span></span>"&gt;'</span>, <span class="pl-s1">post_body</span>, <span class="pl-s1">flags</span><span class="pl-c1">=</span><span class="pl-s1">re</span>.<span class="pl-c1">DOTALL</span>)
+
+        <span class="pl-c"># 通用插入图片情况下的匹配规则&lt;a&gt; -&gt;&lt;img&gt;</span>
+        <span class="pl-k">if</span> <span class="pl-s">'&lt;a target="_blank" rel='</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>:
+            <span class="pl-s1">post_body</span> <span class="pl-c1">=</span> <span class="pl-s1">re</span>.<span class="pl-c1">sub</span>(<span class="pl-s">r'&lt;a[^&gt;]*?href="([^"]+)"[^&gt;]*?&gt;&lt;img[^&gt;]*?src="\1"[^&gt;]*?&gt;&lt;/a&gt;'</span>,<span class="pl-k">lambda</span> <span class="pl-s1">match</span>: <span class="pl-s">f'&lt;div class="ImgLazyLoad-circle"&gt;&lt;/div&gt;<span class="pl-cce">\n</span>&lt;img data-fancybox="gallery" img-src="<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">match</span>.<span class="pl-c1">group</span>(<span class="pl-c1">1</span>)<span class="pl-kos">}</span></span>"&gt;'</span>, <span class="pl-s1">post_body</span>, <span class="pl-s1">flags</span><span class="pl-c1">=</span><span class="pl-s1">re</span>.<span class="pl-c1">DOTALL</span>)</pre></div>
+<ul>
+<li><strong>使用演示</strong></li>
+</ul>
+<p>在 GitHub markdown 里上传图片, 粘贴&amp;拖拽都行,</p>
+<p>然后通过 Actions 转换后实际效果如下, html 里面图片标签会增加 fancybox 所需的<code class="notranslate">data-fancybox="gallery"</code>属性.</p>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/1800f94a-8214-4cfd-ab38-dd26f020d981">
+<p>这样优化后可以在 Github issue 的 Preview 里面直接预览图片, 同时还能防备图床问题导致的图片丢失(<span class="spoilerText">Github, 稳!</span>)</p>
 <h1>添加 Gmeek-spoilertxt - 文字防剧透模糊效果</h1>
 <p><strong>默认模糊效果, 反复点击可反复显示或隐藏.</strong></p>
 <h2>打开 Gmeek.py</h2>
@@ -5226,67 +5278,79 @@ after 是光标, blink 是光标动画.</p>
 <td>网站</td>
 <td>#218155</td>
 <td><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=网站&amp;color=218155"></td>
+<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/09566c1a2275ef9b39a0909e90f838efb0e65319b52b65a26344931b228bef3f/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d25453725424425393125453725414225393926636f6c6f723d323138313535"></td>
 </tr>
 <tr>
 <td>日常</td>
 <td>#008672</td>
 <td><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=日常&amp;color=008672"></td>
+<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/0f9c0e6c819b283e0c44baf8320f7c1c71fe5f2d38b200d07cb850f32194815c/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d25453625393725413525453525423825423826636f6c6f723d303038363732"></td>
 </tr>
 <tr>
 <td>教程</td>
 <td>#0075ca</td>
 <td><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=教程&amp;color=0075ca"></td>
+<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/2fdb453bb2533f8895df060b587a6fceae0d8995e5de2ad48d2848ea13dbbe4a/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d25453625393525393925453725413825384226636f6c6f723d303037356361"></td>
 </tr>
 <tr>
 <td>Anime</td>
 <td>#E77AB1</td>
 <td><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=Anime&amp;color=E77AB1"></td>
+<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/4be3336d41feeb772f99ab5b157d4cb09f394c7071160088f27ac2c931a3b158/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d416e696d6526636f6c6f723d453737414231"></td>
 </tr>
 <tr>
 <td>Win</td>
 <td>#5AB3F3</td>
 <td><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=Win&amp;color=5AB3F3"></td>
+<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/7e8e476754e821c8c606cadd321ee2305e5d40421b251771279c43d2a1faefe7/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d57696e26636f6c6f723d354142334633"></td>
 </tr>
 <tr>
 <td>VPS</td>
 <td>#5319e7</td>
 <td><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=VPS&amp;color=5319e7"></td>
+<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/b81a0dea03c5ac02bcf62ad0a0600148b87473b1b1b72f4fc49ada25c98e2b77/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d56505326636f6c6f723d353331396537"></td>
 </tr>
 <tr>
 <td>JS</td>
 <td>#AD3152</td>
 <td><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=JS&amp;color=AD3152"></td>
+<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/e76c1bf0660a1e0869c123c8c0660b0468cf3bc700048b62a682c1ce399f27a6/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d4a5326636f6c6f723d414433313532"></td>
 </tr>
 <tr>
 <td>CSS</td>
 <td>#218155</td>
 <td><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=CSS&amp;color=218155"></td>
+<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/1f5abe9a8933b2b2beb1c167f8140f6e23a7a1b6985d567792ad4f97f397138f/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d43535326636f6c6f723d323138313535"></td>
 </tr>
 <tr>
 <td>Github</td>
 <td>#333333</td>
 <td><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=Github&amp;color=333333"></td>
+<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/ac5d9f066e61c6426b5a10a9f582e789dd986dc743565bb590eb8962a6c7ff53/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d47697468756226636f6c6f723d333333333333"></td>
 </tr>
 <tr>
 <td>CDN</td>
 <td>#cb222c</td>
 <td><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=CDN&amp;color=cb222c"></td>
+<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/5d77bebe22c7297f39323b9c29785aae031950659847b556db59ba0818b0f325/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d43444e26636f6c6f723d636232323263"></td>
 </tr>
 <tr>
 <td>Bug</td>
 <td>#D73A4A</td>
 <td><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=Bug&amp;color=D73A4A"></td>
+<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/ba22158a814e5f021336b6319d1714fd942d8831ecd7831607221db0855108a5/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d42756726636f6c6f723d443733413441"></td>
+</tr>
+<tr>
+<td>软件</td>
+<td>#5da167</td>
+<td><div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/771484ff854f80d1f1fee4f2147615868d328bfc7cb195ee3733384afdcfbd5f/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d25453825424425414625453425424225423626636f6c6f723d356461313637"></td>
+</tr>
+<tr>
+<td>翻墙</td>
+<td>#cb7b58</td>
+<td><div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/1bd15826faa8e7a19d4e3927f99422ba44ca5a3ccdf90c1b0b589dfbc4f851cf/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d25453725424625424225453525413225393926636f6c6f723d636237623538"></td>
 </tr>
 </tbody>
 </table></markdown-accessiblity-table>
@@ -5350,7 +5414,7 @@ if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
 </script>
 
 <script>
-const postTitle=document.querySelector(".postTitle"),textContent=postTitle.textContent;postTitle.textContent="";let idx=0;const writeTimer=setInterval(()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContent.length&&(clearInterval(writeTimer),postTitle.classList.remove("no-blink"))},80);postTitle.classList.add("no-blink"),document.querySelectorAll(".spoilerText").forEach(t=>t.addEventListener("click",()=>t.classList.toggle("clear"))),document.addEventListener("DOMContentLoaded",()=>{const t=document.createElement("div");t.id="checkBtn";const e=document.getElementById("functionBtn");e.insertAdjacentElement("afterend",t),new IntersectionObserver(t=>{t.forEach(t=>{const n=t.isIntersecting;e.classList.toggle("Btn-flex",!n),e.style.top=n?"0":"-100px"})},{rootMargin:"300px 0px 0px 0px",threshold:0}).observe(t);let n=0;const o=t=>{e.style.top=t>0?"-100px":"0"};document.addEventListener("touchstart",t=>n=t.touches[0].clientY),document.addEventListener("touchmove",t=>o(t.touches[0].clientY-n)),document.addEventListener("wheel",t=>{(t=>{let e=t;for(;e&&e!==document.body;){if(e.scrollHeight>e.clientHeight)return!0;e=e.parentNode}return!1})(t.target)||o(t.deltaY)})});
+const postTitle=document.querySelector(".postTitle"),textContent=postTitle.textContent;postTitle.textContent="";let idx=0;const writeTimer=setInterval(()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContent.length&&(clearInterval(writeTimer),postTitle.classList.remove("no-blink"))},80);postTitle.classList.add("no-blink");const spoilers=document.querySelectorAll(".spoilerText");spoilers.length&&spoilers.forEach(t=>t.onclick=(()=>t.classList.toggle("clear"))),document.addEventListener("DOMContentLoaded",()=>{const t=document.createElement("div");t.id="checkBtn";const e=document.getElementById("functionBtn");e.insertAdjacentElement("afterend",t),new IntersectionObserver(t=>{t.forEach(t=>{const n=t.isIntersecting;e.classList.toggle("Btn-flex",!n),e.style.top=n?"0":"-100px"})},{rootMargin:"300px 0px 0px 0px",threshold:0}).observe(t);let n=0;const o=t=>{e.style.top=t>0?"-100px":"0"};document.addEventListener("touchstart",t=>n=t.touches[0].clientY),document.addEventListener("touchmove",t=>o(t.touches[0].clientY-n)),document.addEventListener("wheel",t=>o(t.deltaY))});
 document.getElementById("pathHome").setAttribute("d",IconList["home"]);
 document.getElementById("ArticleTOC").setAttribute("d","M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z");
 document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
