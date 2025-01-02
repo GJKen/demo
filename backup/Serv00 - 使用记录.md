@@ -8,7 +8,7 @@
 进入 Additional services 选项卡中找到 Run your own applications 项目,
 如下图所示, 必须要设置成如图所示的 Enabled.
 
-`Gmeek-imgbox="https://ipfs.io/ipfs/QmSxxUuqJmk7f3HK7jSSzrTRa8fHRLYpNWq7JVzQ2pvpbM"`
+![1](https://github.com/user-attachments/assets/39b82af5-8dc0-4dbc-800a-124ccd1c64d4)
 
 如果不开启这一项, 自己的用户目录下的所有文件都无法添加可执行权限.
 
@@ -21,7 +21,7 @@
 每个账户只能创建3个端口.
 其中一个用来反代本地搭建 Alist 的端口, 这里我用 26666 端口.
 
-`Gmeek-imgbox="https://ipfs.io/ipfs/QmaeNdqmf9RMN6DxDiQUUEnY7F4ng4A5YmL28jsKG7TCt1"`
+![1](https://github.com/user-attachments/assets/950d6c90-56cf-457a-86fa-b9f1ff953257)
 
 ### 创建网站
 
@@ -29,7 +29,7 @@
 
 下图我写的是自己的域名.
 
-`Gmeek-imgbox="https://ipfs.io/ipfs/QmQrk88sEBPW1pykSdshM9L6gwSrANTE9wvRY1ySk5sjGW"`
+![image](https://github.com/user-attachments/assets/7a00527b-a545-48a2-8029-2d4c2b047b3c)
 
 其中 26666 这个端口是 Alist 服务的端口.
 
@@ -37,11 +37,11 @@
 
 站点创建完成后, 点击上方的 Manage SSL certificates, 再点击 Manage.
 
-`Gmeek-imgbox="https://ipfs.io/ipfs/Qmdr6rNkRPJQDpwaG4wcRDddjKtCWWwUFujpY662HH8HJf"`
+![1](https://github.com/user-attachments/assets/15e58806-d2f0-43de-bf8d-97905680e8cc)
 
-点击 Add certificate, 最后点击 Add 完成创建证书.
+点击 Add certificate, 确认好要创建证书的域名, 最后点击 Add 完成创建证书.
 
-`Gmeek-imgbox="https://ipfs.io/ipfs/QmbGd8SafDnUUWpwaFgcAStzSPoc9w3gR6qj5RBRsay67D"`
+![](https://github.com/user-attachments/assets/6371d2eb-6cb7-4cd8-9cd3-b4800b20bfa7)
 
 ### 安装 Alist
 
@@ -68,7 +68,7 @@ mkdir -p ~/domains/alist && cd ~/domains/alist && curl -L -o alist.tar.gz https:
 
 回到 Panel 面板, 找到 MySQL 选项卡, 使用 Add database 功能新建一个数据库:
 
-`Gmeek-imgbox="https://ipfs.io/ipfs/QmbLyHtCapJsYyg2LHckgYGpkuGcCnAbPkpnNR2CawrV82"`
+![1](https://github.com/user-attachments/assets/dcad4052-e060-4ac8-85cd-4ff6afd65557)
 
 Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 
@@ -80,11 +80,11 @@ Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 
 定位这个`config.json`文件, 双击编辑它:
 
-`Gmeek-imgbox="https://ipfs.io/ipfs/QmUz4eAt1DMDzxHNyYnRrrYJx1uwjrCcR61BKAGZDXYutz"`
+![1](https://github.com/user-attachments/assets/73980333-7b81-4f5a-836f-8ee7072372b8)
 
 我主要修改了`CDN` `database` `scheme`三个部分,
 
-`Gmeek-imgbox="https://ipfs.io/ipfs/QmZSbd9AMpbHWfzdNzt3EDD5ke6UjsAC77DeaG4syNpKWw"`
+![1](https://github.com/user-attachments/assets/678f7763-84db-4508-8c7a-640aa3f7dc05)
 
 <table>
   <tr>
@@ -139,7 +139,7 @@ Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 ./alist server
 ```
 
-`Gmeek-imgbox="https://ipfs.io/ipfs/Qmdw9VRvPnosHNGuZbEoi1EAr6GYxxDFmrbFM2BdB8orSD"`
+![终端](https://github.com/user-attachments/assets/58ac371d-1492-497b-b788-2e410adfc9be)
 
 运行正常, 显示的管理员账号的密码一定要记住. 接着使用 Ctrl+c 停止运行.
 
