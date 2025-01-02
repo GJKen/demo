@@ -6,6 +6,16 @@
 
 **这里主要记录一些 js 和 CSS 的修改.记录的修改不一定准确, `Gmeek-spoilertxt="因为改动的地方太多了🥴"`.**
 
+**demo模式**
+
+https://gjkblog.us.kg/demo
+
+**线上模式**
+
+https://gjkblog.us.kg
+
+**调试过程只会用 demo 演示, 确定后再同步代码到线上模式**
+
 > [!WARNING]
 > 利用 Github Page 搭建的网站内容是完全公开的, 请注意不要上传自己的隐私!!!
 
@@ -29,7 +39,7 @@
 
 CSS 效果:
 
-![2024-12-30-1-8b58a3c8283110590642d5aeb1f60ad0](https://github.com/user-attachments/assets/704ba114-c255-469e-ac71-61ccdffac962)
+![](https://github.com/user-attachments/assets/704ba114-c255-469e-ac71-61ccdffac962)
 
 从图中可以看到, `subTitle`字段可用 js 插入 html 实现修改文字.
 
@@ -39,7 +49,7 @@ CSS 效果:
 
 效果图:
 
-![2024-12-30-1-77a044632caf5ccc0b0ec4f986b4435d](https://github.com/user-attachments/assets/92e2da59-1bb4-4c4c-a2ae-b58105ecc230)
+![](https://github.com/user-attachments/assets/92e2da59-1bb4-4c4c-a2ae-b58105ecc230)
 
 可以用空白字符的方式, 隐藏`subTitle`这个必须字段, 无需使用 js 隐藏.
 
@@ -111,7 +121,7 @@ markdown 输入:
 
 图示:
 
-![image](https://github.com/user-attachments/assets/2d12652a-ee57-44a7-bd41-17f618a0785b)
+![](https://github.com/user-attachments/assets/2d12652a-ee57-44a7-bd41-17f618a0785b)
 
 可以直接引用.
 
@@ -126,9 +136,9 @@ markdown 输入:
 
 图示:
 
-![image](https://github.com/user-attachments/assets/cb85ad0f-0e19-42e0-bb3e-45399a5ca7f7)
+![](https://github.com/user-attachments/assets/cb85ad0f-0e19-42e0-bb3e-45399a5ca7f7)
 
-![2024-12-30-1-b0ad706ab827b475640e589ff44a3e13](https://github.com/user-attachments/assets/3f84c22d-43cc-489f-9df0-d6ffa24feb42)
+![](https://github.com/user-attachments/assets/3f84c22d-43cc-489f-9df0-d6ffa24feb42)
 
 ## Fancybox.js - 图片浏览器
 
@@ -166,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 修改 Gmeek 仓库的 Gmeek.py
 
-> 不知道怎么自定义 Gmeek 仓库的看这👉[通过 Gmeek 仓库 DIY 博客](#通过-gmeek-仓库-diy-博客)
+> 不知道怎么自定义 Gmeek 仓库的看这👉[通过 Gmeek 仓库美化博客](#通过-gmeek-仓库美化博客)
 
 打开`Gmeek.py`文件, 定位字符串`Gmeek-html`
 
@@ -188,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 通过 Actions 转换后实际效果如下, html 里面图片标签会增加 fancybox 所需的`data-fancybox="gallery"`属性.
 
-![image](https://github.com/user-attachments/assets/90439bbe-7ced-409b-a4c7-62f859c842ab)
+![](https://github.com/user-attachments/assets/90439bbe-7ced-409b-a4c7-62f859c842ab)
 
 ## 图片懒加载
 
@@ -428,7 +438,6 @@ body {
     background: var(--body-bgColor);
     box-shadow: 0 0 100px var(--body-shadow-color);/* 增加 */
     border-radius: 10px;/* 增加 */
-    transition: max-width 1s ease;/* 增加 */
 }
 /* 增加 */
 @media (min-width: 1080px) {
@@ -725,7 +734,6 @@ html {
 
 > [!NOTE]
 > 删除左右 padding.
-> 修改 margin-top 30px.
 
 <details><summary>修改前</summary>
 
@@ -756,7 +764,6 @@ html {
 .markdown-body h5,
 .markdown-body h6 {
     padding: .22em 0;
-    margin-top: 30px;
     margin-bottom: 16px;
     font-weight: var(--base-text-weight-semibold, 600);
     line-height: 1.25
@@ -770,7 +777,7 @@ html {
 `.markdown-body h1`
 
 > [!NOTE]
-> 修改字体大小1.85em.
+> 修改字体大小1.65em.
 > 删除下 padding, 增加左 padding .22em.
 > 增加 margin-top.
 > 优化 light & dark 主题下的背景色.
@@ -802,8 +809,8 @@ html {
     padding-left: .22em;
     background: var(--markdown-h1-bgColor);/* 增加 */
     border-radius: 6px;/* 增加 */
-    font-size: 1.85em;
-    border-left: .25em solid #32c7dd;/* 增加 */
+    font-size: 1.65em;
+    border-left: .25em solid #71c4ef63;/* 增加 */
     padding-left: .25em;/* 增加 */
     margin-top: 42px;/* 增加 */
 }
@@ -919,10 +926,10 @@ html {
 [data-color-mode=light][data-light-theme=dark]::selection,
 [data-color-mode=dark][data-dark-theme=dark],
 [data-color-mode=dark][data-dark-theme=dark]::selection {
-    --markdown-code-bgColor: #3bf6ff52;/* 增加 */
+    --markdown-code-bgColor: #0198b5a1;/* 增加 */
 }
 :root {
-    --markdown-code-bgColor: #4d4d4d38;/* 增加 */
+    --markdown-code-bgColor: #81818138;/* 增加 */
 }
 .markdown-body code,
 .markdown-body tt {
@@ -1014,7 +1021,7 @@ html {
 
 效果图:
 
-![image](https://github.com/user-attachments/assets/f3eb7940-ca2b-4952-8fb4-e05a7acc84bd)
+![](https://github.com/user-attachments/assets/f3eb7940-ca2b-4952-8fb4-e05a7acc84bd)
 
 ## 文章一键复制代码按钮样式
 
@@ -1050,8 +1057,10 @@ html {
 `a`
 
 > [!NOTE]
-> 优化 light & dark 主题下的背景色.
-> 去掉原下划线, 增加下划线动画.
+> 这个选择器经过查找发现有2行重复了, 总之合并成最靠下的那一行.
+> 如果要改白天模式下超链的颜色, 需要定位36行的选择器然后找到`--color-accent-fg: #0969da`
+> 优化 light & dark 主题下的颜色.
+> 修改下划线动画.
 
 <details><summary>修改前</summary>
 
@@ -1062,9 +1071,14 @@ html {
 [data-color-mode=dark][data-dark-theme=dark]::selection {
     --color-accent-fg: #2f81f7;
 }
-/* 这条在12345行左右出现 */
+/* 这条在12300行左右出现 */
 a {
     background-color: rgba(0, 0, 0, 0)
+}
+/* 这条在12500行左右出现 */
+a {
+	color: var(--fgColor-accent, var(--color-accent-fg));
+	text-decoration: none
 }
 ```
 
@@ -1080,14 +1094,15 @@ a {
     --color-accent-fg: #20d4ff;
 }
 /* 
-这条在12345行左右出现
-修改为下面内容
+合并靠下的那一行, 修改为下面内容:
 */
 a {
-    background: linear-gradient(#90d1ff, #90d1ff) no-repeat left bottom;
-    background-size: 0 2px;
-    transition: all 0.25s ease;
-    -webkit-transition: all 0.25s ease;
+	background: linear-gradient(#90d1ff, #90d1ff) no-repeat left bottom;
+	background-size: 0 2px;
+	transition: all 0.25s ease;
+	-webkit-transition: all 0.25s ease;
+	color: var(--fgColor-accent, var(--color-accent-fg));
+	text-decoration: none
 }
 /* 增加 */
 .markdown-body a:hover {
@@ -1127,9 +1142,9 @@ a {
 
 效果图:
 
-![image](https://github.com/user-attachments/assets/73cdc397-e4c8-45c8-8ecf-02f32af9fd63)
+![](https://github.com/user-attachments/assets/73cdc397-e4c8-45c8-8ecf-02f32af9fd63)
 
-# 通过 Gmeek 仓库 DIY 博客
+# 通过 Gmeek 仓库美化博客
 
 为什么这样做? `Gmeek-spoilertxt="自娱自乐.~~"`
 
@@ -1137,13 +1152,13 @@ a {
 
 仓库地址👉 https://github.com/Meekdai/Gmeek
 
-![image](https://github.com/user-attachments/assets/8794d347-3524-4709-a6f1-fd74c607fc22)
+![](https://github.com/user-attachments/assets/8794d347-3524-4709-a6f1-fd74c607fc22)
 
 fork 之后, 转到搭建博客的 github 源码,
 
 打开`.github/workflows/Gmeek.yml`文件, 修改构建博客仓库的地址为你自己的仓库地址
 
-![image](https://github.com/user-attachments/assets/20d1b3ac-c0fc-44ad-a937-3828b6875a8f)
+![](https://github.com/user-attachments/assets/20d1b3ac-c0fc-44ad-a937-3828b6875a8f)
 
 打开`config.json`文件, 修改右边字段值为main`"GMEEK_VERSION":"main"`
 
@@ -1171,17 +1186,17 @@ fork 之后, 转到搭建博客的 github 源码,
 
 下图文字直接修改即可, 不同语言的按需修改.
 
-![image](https://github.com/user-attachments/assets/c0f4bca8-174d-4044-a654-12e6322cca9b)
+![](https://github.com/user-attachments/assets/c0f4bca8-174d-4044-a654-12e6322cca9b)
 
 ## 修改默认 primer.css 链接
 
 打开`Gmeek.py`
 
-![image](https://github.com/user-attachments/assets/fd72d93f-5015-44d9-ac79-58dff7e3c116)
+![](https://github.com/user-attachments/assets/fd72d93f-5015-44d9-ac79-58dff7e3c116)
 
 这里我直接写改成我存放的链接, 并使用 tag 控制版本.
 
-## 修改页面头部样式
+## 修改样式
 
 ### 打开 base.html 文件
 
@@ -1192,18 +1207,42 @@ fork 之后, 转到搭建博客的 github 源码,
 
 > 文章头部背景色.
 > 打字效果动画.
-> 动画(已引用的地方:#header 打字机光标, #header 图标渐显).
-> 分离图标的`#functionBtn`样式. 
+> 动画(已引用的地方:`#header`打字机光标, `body``.title-left a``functionBtn`向上渐显动画).
+> 分离图标的`#functionBtn`样式.
 
 ```CSS
 :root{--functionBtnFlex-bgColor:#ffffff61;}
 [data-color-mode=light][data-light-theme=dark],[data-color-mode=light][data-light-theme=dark]::selection,[data-color-mode=dark][data-dark-theme=dark],[data-color-mode=dark][data-dark-theme=dark]::selection{--functionBtnFlex-bgColor:#ffffff00;}
 
-@keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@keyframes blink{50%{opacity:0}100%{opacity:1}}@-webkit-keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes blink{50%{opacity:0}100%{opacity:1}}
+@keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes fadeIn{0%{opacity:0}100%{opacity:1}}
+
+@keyframes blink{50%{opacity:0}100%{opacity:1}}@-webkit-keyframes blink{50%{opacity:0}100%{opacity:1}}
+
+@keyframes grow {
+    0% {opacity: 0.85;transform: scale(0.5);}
+    100% {opacity: 1;transform: translate(1);}
+}
+@-webkit-keyframes grow {
+    0% {opacity: 0.85;-webkit-transform: scale(0.5);}
+    100% {opacity: 1;-webkit-transform: translate(1);}
+}
+
+@keyframes slide-fade-in {
+	0% {opacity: 0;transform: translate3d(0, 20px, 0);}
+	100% {opacity: 1;transform: translate(0, 0, 0);}
+}
+@-webkit-keyframes slide-fade-in {
+	0% {opacity: 0;-webkit-transform: translate3d(0, 20px, 0);}
+	100% {opacity: 1;-webkit-transform: translate(0, 0, 0);}
+}
 
 #functionBtn{display:flex;justify-content:center;margin:20px 0;gap:20px;transition: transform 0.3s ease-in-out;}
-#functionBtn a, #functionBtn div{padding:14px 16px;animation:fadeIn .7s ease-in 0s forwards;}
-#functionBtn.Btn-flex{position:fixed;margin:0;padding:20px 0;top:-100px;left:0;width:100%;min-width:500px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;animation:fadeIn.2s ease-in 0s forwards;transition:top 0.3s ease-in-out}
+#functionBtn a{padding:14px 16px;}
+#functionBtn.Btn-flex{position:fixed;margin:0;padding:20px 0;top:-100px;left:0;width:100%;min-width:500px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;}
+
+body,#content{-webkit-animation:slide-fade-in 1.2s ease;animation:slide-fade-in 1.2s ease}
+#functionBtn a,.tagTitle,.title-left a,.subnav-search{-webkit-animation:slide-fade-in 0.8s ease;animation:slide-fade-in 0.8s ease}
+.title-left img{animation:grow 0.5s cubic-bezier(0.23,1,0.32,1);-webkit-animation:grow 0.5s cubic-bezier(0.23,1,0.32,1);}
 ```
 
 2. **定位`#header`, 修改样式.**
@@ -1250,21 +1289,11 @@ fork 之后, 转到搭建博客的 github 源码,
 -#functionBtn .circle{padding: 14px 16px;margin-right:8px;}
 ```
 
-4. **头部文字和图标样式.**
-
-> 文章标题选择器增加淡入动画.
-> 给`#functionBtn`增加子元素 DIV 的样式, 因为我增加了一个 DIV 元素显示文章目录按钮图标, 这里刚好需要 CSS 控制它.
-
-```CSS
-#header.article-header{animation:fadeIn .7s ease-in 0s forwards;}
-#functionBtn a, #functionBtn div{padding:14px 16px;}
-```
-
-5. **body响应**
+4. **body响应**
 
 定位`@media (max-width:600px) {`, 给 body 增加最小宽度500px: `min-width:500px;`
 
-6. **分离header文字以及图标**
+5. **分离header文字以及图标**
 
 > 需要把`.title-right`这个类名全部重命名为`#functionBtn`
 > 增加文章目录按钮
@@ -1337,7 +1366,7 @@ fork 之后, 转到搭建博客的 github 源码,
 document.getElementById("ArticleTOC").setAttribute("d","M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z");
 ```
 
-7. **添加自定义 JS 代码.**
+6. **添加自定义 JS 代码.**
 
 > 添加打字效果.
 > 添加滚动切换显示顶部按钮导航.
@@ -1400,7 +1429,6 @@ document.addEventListener('wheel', e => handleScroll(e.deltaY));
 ```
 
 </details>
-
 
 ### 打开 plist.html 文件
 
@@ -1639,9 +1667,9 @@ document.addEventListener('wheel', e => handleScroll(e.deltaY));
 
 **效果图:**
 
-![image](https://github.com/user-attachments/assets/db205027-0615-4456-bca3-b33856372283)
+![](https://github.com/user-attachments/assets/db205027-0615-4456-bca3-b33856372283)
 
-# 优化任务列表样式
+## 优化任务列表样式
 
 具体问题看[#202](https://github.com/Meekdai/Gmeek/issues/202)
 
@@ -1652,7 +1680,6 @@ document.addEventListener('wheel', e => handleScroll(e.deltaY));
         if '<ul class="contains-task-list">' in post_body:
             issue["style"]=issue["style"]+'<style>.contains-task-list{padding-left:0.9em !important;list-style:none}</style>'
 ```
-
 
 ## 页面底部文字增加图标动画
 
@@ -1766,7 +1793,7 @@ Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 
 然后通过 Actions 转换后实际效果如下, html 里面图片标签会增加 fancybox 所需的`data-fancybox="gallery"`属性.
 
-![image](https://github.com/user-attachments/assets/1800f94a-8214-4cfd-ab38-dd26f020d981)
+![](https://github.com/user-attachments/assets/1800f94a-8214-4cfd-ab38-dd26f020d981)
 
 这样优化后可以在 Github issue 的 Preview 里面直接预览图片, 同时还能防备图床问题导致的图片丢失(`Gmeek-spoilertxt="Github, 稳!"`)
 
@@ -1817,7 +1844,7 @@ document.addEventListener('DOMContentLoaded', () => {
 3. **markdown 输入:**
 
 ```
-测试剧透👉`Gmeek-spoilertxt="666666"`
+测试剧透👉`Gmeek-spoilertxt="666666"`.
 ```
 
 4. **实际展示:**
