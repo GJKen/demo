@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Demo</title><link>https://GJKen.github.io/demo</link><description> </description><copyright>Demo</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp</url><title>avatar</title><link>https://GJKen.github.io/demo</link></image><lastBuildDate>Thu, 02 Jan 2025 06:41:41 +0000</lastBuildDate><managingEditor>Demo</managingEditor><ttl>60</ttl><webMaster>Demo</webMaster><item><title>正则表达式 - 使用记录</title><link>https://GJKen.github.io/demo/post/9.html</link><description>&gt; [!NOTE]&#13;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Demo</title><link>https://GJKen.github.io/demo</link><description> </description><copyright>Demo</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp</url><title>avatar</title><link>https://GJKen.github.io/demo</link></image><lastBuildDate>Thu, 02 Jan 2025 06:43:24 +0000</lastBuildDate><managingEditor>Demo</managingEditor><ttl>60</ttl><webMaster>Demo</webMaster><item><title>正则表达式 - 使用记录</title><link>https://GJKen.github.io/demo/post/9.html</link><description>&gt; [!NOTE]&#13;
 &gt; GPT帮写最方便.&#13;
 &#13;
 # 匹配关键字并删除指定行&#13;
@@ -82,7 +82,7 @@ https://github.com/GJKen/clash-Rules/blob/main/Src/Mihomo%20%E8%A6%86%E5%86%99%E
 &#13;
 卡顿文件👉`https://static.cloudflareinsights.com/beacon.min.js`&#13;
 &#13;
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmfVdyTJMzA3acSeMMYX3cLq7BoWLQ4pYpjr6u4HYsmhi1'`&#13;
+![](https://github.com/user-attachments/assets/f271135e-e255-4c58-8b6c-127d79b76b8c)&#13;
 &#13;
 网上找了点教程打算关闭它.&#13;
 &#13;
@@ -103,11 +103,11 @@ https://github.com/GJKen/clash-Rules/blob/main/Src/Mihomo%20%E8%A6%86%E5%86%99%E
 &#13;
 1. 选择需要管理的站点.&#13;
 &#13;
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmVbycbpbDMDnoDCAfFr2kURwgxYpMWToVscPpaQgwArKN'`&#13;
+![](https://github.com/user-attachments/assets/2c2382d3-ebcf-4f63-93df-861df36c9798)&#13;
 &#13;
-2. 点按钮关闭, 再勾选禁用自动设置.&#13;
+3. 点按钮关闭, 再勾选禁用自动设置.&#13;
 &#13;
-`Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmYNFAyEzp9k86J4RkRSWykbVrGyNd8EL7SJe74Ch5Ws15'`&#13;
+![](https://github.com/user-attachments/assets/00fb53d8-3fac-420a-b0d3-46bf699dbf55)&#13;
 &#13;
 设置完成后等 5 分钟后强制刷新网站, 就没有这个 js 的加载了.。</description><guid isPermaLink="true">https://GJKen.github.io/demo/post/7.html</guid><pubDate>Mon, 09 Dec 2024 07:02:34 +0000</pubDate></item><item><title>Github Markdown 使用笔记</title><link>https://GJKen.github.io/demo/post/6.html</link><description>&gt; [!NOTE]&#13;
 &gt; Markdown 是一种轻量级标记语言, 它允许人们使用易读易写的纯文本格式编写文档, 然后转换成结构化的 HTML 代码. Markdown 语法简单, 但功能强大, 广泛应用于博客、笔记、文档编写等方面.  &#13;
