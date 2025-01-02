@@ -6,21 +6,21 @@
 
 必须要创建一个 GitHub 仓库, 并且存放你需要加速的文件.
 
-# 创建版本号
+# 创建版本号(Releases)
 
-进入仓库点击 Releases.
+进入仓库并创建 Releases:
 
-`Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/QmezvVPRyL9frLHxBtG5SnuxNLjxwN6tbHDTPK7zhYeSM7"`
+![](https://github.com/user-attachments/assets/8158f40f-e239-425b-bd48-c7764204d839)
 
-简单命名版本
+名称建议规范一点.
 
-`Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/Qmb81JPfuBkDAaVSSFSNEC31q6nPfQw3BeTWK48u96kAza"`
+![](https://github.com/user-attachments/assets/75b43baa-0c2e-43c5-9cc2-52a8e848582a)
 
 # 创建标签(Tags)
 
 创建 Tags 和 Releases 步骤一样, 下图是入口.
 
-`Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/QmbpnHcxKXJNYuEvrT5tg4CwAiJNgpc3BRNE7h6ebhYgsK"`
+![](https://github.com/user-attachments/assets/a2ee1c1f-0031-4e12-997f-65e74a3e399b)
 
 # 使用方法
 
