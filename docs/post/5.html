@@ -20,7 +20,7 @@
 进入 Additional services 选项卡中找到 Run your own applications 项目,
 如下图所示, 必须要设置成如图所示的 Enabled.
 
-![1](https://github.com/user-attachments/assets/39b82af5-8dc0-4dbc-800a-124ccd1c64d4)
+![]https://github.com/user-attachments/assets/39b82af5-8dc0-4dbc-800a-124ccd1c64d4)
 
 如果不开启这一项, 自己的用户目录下的所有文件都无法添加可执行权限.
 
@@ -33,7 +33,7 @@
 每个账户只能创建3个端口.
 其中一个用来反代本地搭建 Alist 的端口, 这里我用 26666 端口.
 
-![1](https://github.com/user-attachments/assets/950d6c90-56cf-457a-86fa-b9f1ff953257)
+![]https://github.com/user-attachments/assets/950d6c90-56cf-457a-86fa-b9f1ff953257)
 
 ### 创建网站
 
@@ -49,7 +49,7 @@
 
 站点创建完成后, 点击上方的 Manage SSL certificates, 再点击 Manage.
 
-![1](https://github.com/user-attachments/assets/15e58806-d2f0-43de-bf8d-97905680e8cc)
+![]https://github.com/user-attachments/assets/15e58806-d2f0-43de-bf8d-97905680e8cc)
 
 点击 Add certificate, 确认好要创建证书的域名, 最后点击 Add 完成创建证书.
 
@@ -80,7 +80,7 @@ mkdir -p ~/domains/alist && cd ~/domains/alist && curl -L -o alist.tar.gz https:
 
 回到 Panel 面板, 找到 MySQL 选项卡, 使用 Add database 功能新建一个数据库:
 
-![1](https://github.com/user-attachments/assets/dcad4052-e060-4ac8-85cd-4ff6afd65557)
+![]https://github.com/user-attachments/assets/dcad4052-e060-4ac8-85cd-4ff6afd65557)
 
 Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 
@@ -92,11 +92,11 @@ Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 
 定位这个`config.json`文件, 双击编辑它:
 
-![1](https://github.com/user-attachments/assets/73980333-7b81-4f5a-836f-8ee7072372b8)
+![]https://github.com/user-attachments/assets/73980333-7b81-4f5a-836f-8ee7072372b8)
 
 我主要修改了`CDN` `database` `scheme`三个部分,
 
-![1](https://github.com/user-attachments/assets/f76aafe2-8c6b-4fff-bed9-2ce87aea19b0)
+![]https://github.com/user-attachments/assets/f76aafe2-8c6b-4fff-bed9-2ce87aea19b0)
 
 <table>
   <tr>
@@ -167,11 +167,11 @@ Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 
 然后复制 Cloudflare 给的 dns 名称服务器.
 
-![1](https://github.com/user-attachments/assets/789049b8-b944-4862-b5f2-dcb8d396bc1a)
+![]https://github.com/user-attachments/assets/789049b8-b944-4862-b5f2-dcb8d396bc1a)
 
 然后转到你的域名提供服务商, 添加 dns 记录.
 
-![1](https://github.com/user-attachments/assets/78a5b240-ca86-4ff1-96f3-9b0f5386d313)
+![]https://github.com/user-attachments/assets/78a5b240-ca86-4ff1-96f3-9b0f5386d313)
 
 如果没问题就可以通过自定义域名访问了.
 
@@ -195,7 +195,7 @@ echo '$(date '+%Y-%m-%d %H:%M:%S')' > ~/domains/alist/logfile.txt
 
 计划任务执行的是我的`runAlist.sh`. 如下图:
 
-![1](https://github.com/user-attachments/assets/44941b64-1c4b-4063-8a57-ec8c305f4553)
+![]https://github.com/user-attachments/assets/44941b64-1c4b-4063-8a57-ec8c305f4553)
 
 成功后不出意外的话, 隔一段时间进入 Alist 网盘需要重新登陆账号, 因为定时脚本会先杀原来的 Alist 进程再重启.
 
@@ -337,7 +337,7 @@ async function loginAccount(account) {
 进入 Additional services 选项卡中找到 Run your own applications 项目,
 如下图所示, 必须要设置成如图所示的 Enabled.
 
-![1](https://github.com/user-attachments/assets/39b82af5-8dc0-4dbc-800a-124ccd1c64d4)
+![]https://github.com/user-attachments/assets/39b82af5-8dc0-4dbc-800a-124ccd1c64d4)
 
 如果不开启这一项, 自己的用户目录下的所有文件都无法添加可执行权限.
 
@@ -350,7 +350,7 @@ async function loginAccount(account) {
 每个账户只能创建3个端口.
 其中一个用来反代本地搭建 Alist 的端口, 这里我用 26666 端口.
 
-![1](https://github.com/user-attachments/assets/950d6c90-56cf-457a-86fa-b9f1ff953257)
+![]https://github.com/user-attachments/assets/950d6c90-56cf-457a-86fa-b9f1ff953257)
 
 ### 创建网站
 
@@ -366,7 +366,7 @@ async function loginAccount(account) {
 
 站点创建完成后, 点击上方的 Manage SSL certificates, 再点击 Manage.
 
-![1](https://github.com/user-attachments/assets/15e58806-d2f0-43de-bf8d-97905680e8cc)
+![]https://github.com/user-attachments/assets/15e58806-d2f0-43de-bf8d-97905680e8cc)
 
 点击 Add certificate, 确认好要创建证书的域名, 最后点击 Add 完成创建证书.
 
@@ -397,7 +397,7 @@ mkdir -p ~/domains/alist && cd ~/domains/alist && curl -L -o alist.tar.gz https:
 
 回到 Panel 面板, 找到 MySQL 选项卡, 使用 Add database 功能新建一个数据库:
 
-![1](https://github.com/user-attachments/assets/dcad4052-e060-4ac8-85cd-4ff6afd65557)
+![]https://github.com/user-attachments/assets/dcad4052-e060-4ac8-85cd-4ff6afd65557)
 
 Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 
@@ -409,11 +409,11 @@ Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 
 定位这个`config.json`文件, 双击编辑它:
 
-![1](https://github.com/user-attachments/assets/73980333-7b81-4f5a-836f-8ee7072372b8)
+![]https://github.com/user-attachments/assets/73980333-7b81-4f5a-836f-8ee7072372b8)
 
 我主要修改了`CDN` `database` `scheme`三个部分,
 
-![1](https://github.com/user-attachments/assets/f76aafe2-8c6b-4fff-bed9-2ce87aea19b0)
+![]https://github.com/user-attachments/assets/f76aafe2-8c6b-4fff-bed9-2ce87aea19b0)
 
 <table>
   <tr>
@@ -484,11 +484,11 @@ Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 
 然后复制 Cloudflare 给的 dns 名称服务器.
 
-![1](https://github.com/user-attachments/assets/789049b8-b944-4862-b5f2-dcb8d396bc1a)
+![]https://github.com/user-attachments/assets/789049b8-b944-4862-b5f2-dcb8d396bc1a)
 
 然后转到你的域名提供服务商, 添加 dns 记录.
 
-![1](https://github.com/user-attachments/assets/78a5b240-ca86-4ff1-96f3-9b0f5386d313)
+![]https://github.com/user-attachments/assets/78a5b240-ca86-4ff1-96f3-9b0f5386d313)
 
 如果没问题就可以通过自定义域名访问了.
 
@@ -512,7 +512,7 @@ echo '$(date '+%Y-%m-%d %H:%M:%S')' > ~/domains/alist/logfile.txt
 
 计划任务执行的是我的`runAlist.sh`. 如下图:
 
-![1](https://github.com/user-attachments/assets/44941b64-1c4b-4063-8a57-ec8c305f4553)
+![]https://github.com/user-attachments/assets/44941b64-1c4b-4063-8a57-ec8c305f4553)
 
 成功后不出意外的话, 隔一段时间进入 Alist 网盘需要重新登陆账号, 因为定时脚本会先杀原来的 Alist 进程再重启.
 
@@ -726,16 +726,14 @@ body,#content{-webkit-animation:slide-fade-in 1.2s ease;animation:slide-fade-in 
 <h1>准备工作</h1>
 <p>进入 Additional services 选项卡中找到 Run your own applications 项目,<br>
 如下图所示, 必须要设置成如图所示的 Enabled.</p>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/39b82af5-8dc0-4dbc-800a-124ccd1c64d4">
+<p>![]<a href="https://github.com/user-attachments/assets/39b82af5-8dc0-4dbc-800a-124ccd1c64d4">https://github.com/user-attachments/assets/39b82af5-8dc0-4dbc-800a-124ccd1c64d4</a>)</p>
 <p>如果不开启这一项, 自己的用户目录下的所有文件都无法添加可执行权限.</p>
 <h1>部署记录</h1>
 <h2>Alist</h2>
 <h3>创建端口</h3>
 <p>每个账户只能创建3个端口.<br>
 其中一个用来反代本地搭建 Alist 的端口, 这里我用 26666 端口.</p>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/950d6c90-56cf-457a-86fa-b9f1ff953257">
+<p>![]<a href="https://github.com/user-attachments/assets/950d6c90-56cf-457a-86fa-b9f1ff953257">https://github.com/user-attachments/assets/950d6c90-56cf-457a-86fa-b9f1ff953257</a>)</p>
 <h3>创建网站</h3>
 <blockquote>
 <p>Serv00 账号创建好之后默认就有一个网站, 一般是<code class="notranslate">USERNAME.serv00.net</code>, 可以随意删除.</p>
@@ -746,8 +744,7 @@ body,#content{-webkit-animation:slide-fade-in 1.2s ease;animation:slide-fade-in 
 <p>其中 26666 这个端口是 Alist 服务的端口.</p>
 <h3>网站添加 SSL 证书</h3>
 <p>站点创建完成后, 点击上方的 Manage SSL certificates, 再点击 Manage.</p>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/15e58806-d2f0-43de-bf8d-97905680e8cc">
+<p>![]<a href="https://github.com/user-attachments/assets/15e58806-d2f0-43de-bf8d-97905680e8cc">https://github.com/user-attachments/assets/15e58806-d2f0-43de-bf8d-97905680e8cc</a>)</p>
 <p>点击 Add certificate, 确认好要创建证书的域名, 最后点击 Add 完成创建证书.</p>
 <div class="ImgLazyLoad-circle"></div>
 <img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/6371d2eb-6cb7-4cd8-9cd3-b4800b20bfa7">
@@ -762,8 +759,7 @@ body,#content{-webkit-animation:slide-fade-in 1.2s ease;animation:slide-fade-in 
 <div class="highlight highlight-source-shell"><pre class="notranslate">./alist server</pre></div>
 <h3>创建 Alist 所需数据库</h3>
 <p>回到 Panel 面板, 找到 MySQL 选项卡, 使用 Add database 功能新建一个数据库:</p>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/dcad4052-e060-4ac8-85cd-4ff6afd65557">
+<p>![]<a href="https://github.com/user-attachments/assets/dcad4052-e060-4ac8-85cd-4ff6afd65557">https://github.com/user-attachments/assets/dcad4052-e060-4ac8-85cd-4ff6afd65557</a>)</p>
 <p>Database name 和 Username 字段为了方便好记就写 Alist 就行了.</p>
 <blockquote>
 <p>密码要求含有大写字母, 小写字母和数字三种字符, 且长度必须超过6个字符.</p>
@@ -771,11 +767,9 @@ body,#content{-webkit-animation:slide-fade-in 1.2s ease;animation:slide-fade-in 
 <h3>修改配置文件</h3>
 <p>进入 Panel 面板, 找到 File manager 选项卡, 会如下图的进入文件管理器.</p>
 <p>定位这个<code class="notranslate">config.json</code>文件, 双击编辑它:</p>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/73980333-7b81-4f5a-836f-8ee7072372b8">
+<p>![]<a href="https://github.com/user-attachments/assets/73980333-7b81-4f5a-836f-8ee7072372b8">https://github.com/user-attachments/assets/73980333-7b81-4f5a-836f-8ee7072372b8</a>)</p>
 <p>我主要修改了<code class="notranslate">CDN</code> <code class="notranslate">database</code> <code class="notranslate">scheme</code>三个部分,</p>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/f76aafe2-8c6b-4fff-bed9-2ce87aea19b0">
+<p>![]<a href="https://github.com/user-attachments/assets/f76aafe2-8c6b-4fff-bed9-2ce87aea19b0">https://github.com/user-attachments/assets/f76aafe2-8c6b-4fff-bed9-2ce87aea19b0</a>)</p>
 <markdown-accessiblity-table><table role="table">
   <tbody><tr>
     <td><p>CDN</p></td>
@@ -831,11 +825,9 @@ body,#content{-webkit-animation:slide-fade-in 1.2s ease;animation:slide-fade-in 
 <p>我们进入 <a href="https://dash.cloudflare.com" rel="nofollow">https://dash.cloudflare.com</a></p>
 <p>点击添加域, 再输入自己的域名, 选择最底下的 free 计划一路创建.</p>
 <p>然后复制 Cloudflare 给的 dns 名称服务器.</p>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/789049b8-b944-4862-b5f2-dcb8d396bc1a">
+<p>![]<a href="https://github.com/user-attachments/assets/789049b8-b944-4862-b5f2-dcb8d396bc1a">https://github.com/user-attachments/assets/789049b8-b944-4862-b5f2-dcb8d396bc1a</a>)</p>
 <p>然后转到你的域名提供服务商, 添加 dns 记录.</p>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/78a5b240-ca86-4ff1-96f3-9b0f5386d313">
+<p>![]<a href="https://github.com/user-attachments/assets/78a5b240-ca86-4ff1-96f3-9b0f5386d313">https://github.com/user-attachments/assets/78a5b240-ca86-4ff1-96f3-9b0f5386d313</a>)</p>
 <p>如果没问题就可以通过自定义域名访问了.</p>
 <h3>Alist 保活</h3>
 <blockquote>
@@ -850,8 +842,7 @@ screen -dmS alist bash -c <span class="pl-s"><span class="pl-pds">'</span>cd ~/d
 <p>转到 panel 面板, 创建 Cron Jobs 定时任务.</p>
 <p>我们需要创建一个每小时执行的任务进行保活,</p>
 <p>计划任务执行的是我的<code class="notranslate">runAlist.sh</code>. 如下图:</p>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/44941b64-1c4b-4063-8a57-ec8c305f4553">
+<p>![]<a href="https://github.com/user-attachments/assets/44941b64-1c4b-4063-8a57-ec8c305f4553">https://github.com/user-attachments/assets/44941b64-1c4b-4063-8a57-ec8c305f4553</a>)</p>
 <p>成功后不出意外的话, 隔一段时间进入 Alist 网盘需要重新登陆账号, 因为定时脚本会先杀原来的 Alist 进程再重启.</p>
 <h1>Serv00+CT8 保活(可TG通知)</h1>
 <blockquote>
@@ -1085,32 +1076,25 @@ screen -dmS alist bash -c <span class="pl-s"><span class="pl-pds">'</span>cd ~/d
 <h2>创建 Workers</h2>
 <p>进入 Cloudflare 面板, 创建 Workers</p>
 <p>名字随意, 建议写<code class="notranslate">Serv00Keep</code>方便好记, 然后右下角点部署.</p>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/696581ca-d3c2-475c-8b0c-490245f61bf7">
+<p>![]<a href="https://github.com/user-attachments/assets/696581ca-d3c2-475c-8b0c-490245f61bf7">https://github.com/user-attachments/assets/696581ca-d3c2-475c-8b0c-490245f61bf7</a>)</p>
 <p>部署完成后点击编辑代码.</p>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/54428f5e-311c-43ad-ba0e-b25a7e4e9606">
+<p>![]<a href="https://github.com/user-attachments/assets/54428f5e-311c-43ad-ba0e-b25a7e4e9606">https://github.com/user-attachments/assets/54428f5e-311c-43ad-ba0e-b25a7e4e9606</a>)</p>
 <p>粘贴 JavaScript 代码, 粘贴好之后点击部署.</p>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/bf5b5261-3124-4c96-be86-30b2ae647e84">
+<p>![]<a href="https://github.com/user-attachments/assets/bf5b5261-3124-4c96-be86-30b2ae647e84">https://github.com/user-attachments/assets/bf5b5261-3124-4c96-be86-30b2ae647e84</a>)</p>
 <p>返回到<code class="notranslate">Serv00Keep</code>的设置, 找到<code class="notranslate">变量和机密</code></p>
 <h3>添加机密</h3>
 <p>按照<code class="notranslate">Json</code>格式编辑好自己的 serv00 账号和密码, 填入<code class="notranslate">ACCOUNTS_JSON</code>值.<br>
 按照<code class="notranslate">Json</code>格式编辑好自己的 telegram bot token, 填入<code class="notranslate">TELEGRAM_JSON</code>值.</p>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/8069f3fa-4b3b-431d-b110-5f95ac5ad487">
+<p>![]<a href="https://github.com/user-attachments/assets/8069f3fa-4b3b-431d-b110-5f95ac5ad487">https://github.com/user-attachments/assets/8069f3fa-4b3b-431d-b110-5f95ac5ad487</a>)</p>
 <h3>添加触发事件</h3>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/9d41dbfd-cf04-493a-87c9-cf94d121f309">
+<p>![]<a href="https://github.com/user-attachments/assets/9d41dbfd-cf04-493a-87c9-cf94d121f309">https://github.com/user-attachments/assets/9d41dbfd-cf04-493a-87c9-cf94d121f309</a>)</p>
 <h2>手动部署</h2>
 <p>机密和触发事件填写完成之后, 我们手动部署一次.</p>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/2ed0ee89-c738-42c5-95cd-18a6430212cd">
+<p>![]<a href="https://github.com/user-attachments/assets/2ed0ee89-c738-42c5-95cd-18a6430212cd">https://github.com/user-attachments/assets/2ed0ee89-c738-42c5-95cd-18a6430212cd</a>)</p>
 <h2>手动执行验证效果</h2>
 <p>如下图, 进入编辑代码 → 设定时间 → 触发计划的事件, 即可手动触发.</p>
 <p>同时可以看到正常运行没问题, 接下来就是定时执行不用再管它了.</p>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/02d8b180-4891-4c71-8da2-b30570483594">
+<p>![]<a href="https://github.com/user-attachments/assets/02d8b180-4891-4c71-8da2-b30570483594">https://github.com/user-attachments/assets/02d8b180-4891-4c71-8da2-b30570483594</a>)</p>
 <h1>文章引用</h1>
 <p><a href="https://saika.us.kg/2024/01/27/serv00_logs#Alist" rel="nofollow">Saika's Blog</a> | <a href="https://zhuanlan.zhihu.com/p/680607217" rel="nofollow">知乎</a></p></div>
 <div style="font-size:small;margin-top:8px;float:right;">🥰转载请注明,谢谢!🥰</div>

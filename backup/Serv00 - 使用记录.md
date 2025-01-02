@@ -8,7 +8,7 @@
 进入 Additional services 选项卡中找到 Run your own applications 项目,
 如下图所示, 必须要设置成如图所示的 Enabled.
 
-![1](https://github.com/user-attachments/assets/39b82af5-8dc0-4dbc-800a-124ccd1c64d4)
+![]https://github.com/user-attachments/assets/39b82af5-8dc0-4dbc-800a-124ccd1c64d4)
 
 如果不开启这一项, 自己的用户目录下的所有文件都无法添加可执行权限.
 
@@ -21,7 +21,7 @@
 每个账户只能创建3个端口.
 其中一个用来反代本地搭建 Alist 的端口, 这里我用 26666 端口.
 
-![1](https://github.com/user-attachments/assets/950d6c90-56cf-457a-86fa-b9f1ff953257)
+![]https://github.com/user-attachments/assets/950d6c90-56cf-457a-86fa-b9f1ff953257)
 
 ### 创建网站
 
@@ -37,7 +37,7 @@
 
 站点创建完成后, 点击上方的 Manage SSL certificates, 再点击 Manage.
 
-![1](https://github.com/user-attachments/assets/15e58806-d2f0-43de-bf8d-97905680e8cc)
+![]https://github.com/user-attachments/assets/15e58806-d2f0-43de-bf8d-97905680e8cc)
 
 点击 Add certificate, 确认好要创建证书的域名, 最后点击 Add 完成创建证书.
 
@@ -68,7 +68,7 @@ mkdir -p ~/domains/alist && cd ~/domains/alist && curl -L -o alist.tar.gz https:
 
 回到 Panel 面板, 找到 MySQL 选项卡, 使用 Add database 功能新建一个数据库:
 
-![1](https://github.com/user-attachments/assets/dcad4052-e060-4ac8-85cd-4ff6afd65557)
+![]https://github.com/user-attachments/assets/dcad4052-e060-4ac8-85cd-4ff6afd65557)
 
 Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 
@@ -80,11 +80,11 @@ Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 
 定位这个`config.json`文件, 双击编辑它:
 
-![1](https://github.com/user-attachments/assets/73980333-7b81-4f5a-836f-8ee7072372b8)
+![]https://github.com/user-attachments/assets/73980333-7b81-4f5a-836f-8ee7072372b8)
 
 我主要修改了`CDN` `database` `scheme`三个部分,
 
-![1](https://github.com/user-attachments/assets/f76aafe2-8c6b-4fff-bed9-2ce87aea19b0)
+![]https://github.com/user-attachments/assets/f76aafe2-8c6b-4fff-bed9-2ce87aea19b0)
 
 <table>
   <tr>
@@ -155,11 +155,11 @@ Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 
 然后复制 Cloudflare 给的 dns 名称服务器.
 
-![1](https://github.com/user-attachments/assets/789049b8-b944-4862-b5f2-dcb8d396bc1a)
+![]https://github.com/user-attachments/assets/789049b8-b944-4862-b5f2-dcb8d396bc1a)
 
 然后转到你的域名提供服务商, 添加 dns 记录.
 
-![1](https://github.com/user-attachments/assets/78a5b240-ca86-4ff1-96f3-9b0f5386d313)
+![]https://github.com/user-attachments/assets/78a5b240-ca86-4ff1-96f3-9b0f5386d313)
 
 如果没问题就可以通过自定义域名访问了.
 
@@ -183,7 +183,7 @@ echo "$(date '+%Y-%m-%d %H:%M:%S')" > ~/domains/alist/logfile.txt
 
 计划任务执行的是我的`runAlist.sh`. 如下图:
 
-![1](https://github.com/user-attachments/assets/44941b64-1c4b-4063-8a57-ec8c305f4553)
+![]https://github.com/user-attachments/assets/44941b64-1c4b-4063-8a57-ec8c305f4553)
 
 成功后不出意外的话, 隔一段时间进入 Alist 网盘需要重新登陆账号, 因为定时脚本会先杀原来的 Alist 进程再重启.
 
@@ -442,15 +442,15 @@ function delay(ms) {
 
 名字随意, 建议写`Serv00Keep`方便好记, 然后右下角点部署.
 
-![1](https://github.com/user-attachments/assets/696581ca-d3c2-475c-8b0c-490245f61bf7)
+![]https://github.com/user-attachments/assets/696581ca-d3c2-475c-8b0c-490245f61bf7)
 
 部署完成后点击编辑代码.
 
-![1](https://github.com/user-attachments/assets/54428f5e-311c-43ad-ba0e-b25a7e4e9606)
+![]https://github.com/user-attachments/assets/54428f5e-311c-43ad-ba0e-b25a7e4e9606)
 
 粘贴 JavaScript 代码, 粘贴好之后点击部署.
 
-![1](https://github.com/user-attachments/assets/bf5b5261-3124-4c96-be86-30b2ae647e84)
+![]https://github.com/user-attachments/assets/bf5b5261-3124-4c96-be86-30b2ae647e84)
 
 返回到`Serv00Keep`的设置, 找到`变量和机密`
 
@@ -459,17 +459,17 @@ function delay(ms) {
 按照`Json`格式编辑好自己的 serv00 账号和密码, 填入`ACCOUNTS_JSON`值.
 按照`Json`格式编辑好自己的 telegram bot token, 填入`TELEGRAM_JSON`值.
 
-![1](https://github.com/user-attachments/assets/8069f3fa-4b3b-431d-b110-5f95ac5ad487)
+![]https://github.com/user-attachments/assets/8069f3fa-4b3b-431d-b110-5f95ac5ad487)
 
 ### 添加触发事件
 
-![1](https://github.com/user-attachments/assets/9d41dbfd-cf04-493a-87c9-cf94d121f309)
+![]https://github.com/user-attachments/assets/9d41dbfd-cf04-493a-87c9-cf94d121f309)
 
 ## 手动部署
 
 机密和触发事件填写完成之后, 我们手动部署一次.
 
-![1](https://github.com/user-attachments/assets/2ed0ee89-c738-42c5-95cd-18a6430212cd)
+![]https://github.com/user-attachments/assets/2ed0ee89-c738-42c5-95cd-18a6430212cd)
 
 ## 手动执行验证效果
 
@@ -477,7 +477,7 @@ function delay(ms) {
 
 同时可以看到正常运行没问题, 接下来就是定时执行不用再管它了.
 
-![1](https://github.com/user-attachments/assets/02d8b180-4891-4c71-8da2-b30570483594)
+![]https://github.com/user-attachments/assets/02d8b180-4891-4c71-8da2-b30570483594)
 
 # 文章引用
 

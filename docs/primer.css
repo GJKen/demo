@@ -23,12 +23,6 @@
 }
 
 :root,
-[data-color-mode=light][data-light-theme=light],
-[data-color-mode=dark][data-dark-theme=light] {
-	/*! */
-}
-
-:root,
 :root::selection,
 [data-color-mode=light][data-light-theme=light],
 [data-color-mode=light][data-light-theme=light]::selection,
@@ -5456,7 +5450,7 @@
 [data-color-mode=dark][data-dark-theme=dark]::selection {
 	--body-bgColor: #3b3b3bd9;
 	--body-shadow-color: #52afff3d;
-	--markdown-code-bgColor: #3bf6ff52;
+	--markdown-code-bgColor: #00829bad;
 	--markdown-blockquote-color: #ffffff8c;
 	--markdown-blockquote-borderLeft-color: #bbbbbb8c;
 	--markdown-pre-bgColor: #27282d;
@@ -12351,17 +12345,6 @@ template,
 	display: none !important
 }
 
-a {
-	background: linear-gradient(#90d1ff, #90d1ff) no-repeat left bottom;
-	background-size: 0 2px;
-	transition: all 0.25s ease;
-	-webkit-transition: all 0.25s ease;
-}
-
-.markdown-body a:hover {
-	background-size: 100% 2px;
-}
-
 abbr[title] {
 	border-bottom: none;
 	text-decoration: underline;
@@ -12537,8 +12520,16 @@ body {
 }
 
 a {
+	background: linear-gradient(#90d1ff, #90d1ff) no-repeat left bottom;
+	background-size: 0 2px;
+	transition: all 0.25s ease;
+	-webkit-transition: all 0.25s ease;
 	color: var(--fgColor-accent, var(--color-accent-fg));
 	text-decoration: none
+}
+
+.markdown-body a:hover {
+	background-size: 100% 2px;
 }
 
 b,
@@ -16300,7 +16291,7 @@ input.FormControl-radio[type=radio]:focus-visible {
 	--Layout-inner-spacing-max: 0px;
 	--body-bgColor: #ffffffde;
 	--body-shadow-color: #50a8e726;
-	--markdown-code-bgColor: #4d4d4d38;
+	--markdown-code-bgColor: #81818138;
 	--title-right-svgColor: #000;
 	--title-right-svgHovercolor: #ff7804;
 	--SideNav-bgColor: #ffffff99;
@@ -27381,8 +27372,8 @@ a.branch-name .octicon {
 .markdown-body h1 {
 	background: var(--markdown-h1-bgColor);
 	border-radius: 6px;
-	font-size: 1.85em;
-	border-left: .25em solid #32c7dd;
+	font-size: 1.65em;
+	border-left: .25em solid #71c4ef63;
 	padding-left: .25em;
 	margin-top: 42px
 }
