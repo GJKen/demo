@@ -183,7 +183,7 @@ echo "$(date '+%Y-%m-%d %H:%M:%S')" > ~/domains/alist/logfile.txt
 
 计划任务执行的是我的`runAlist.sh`. 如下图:
 
-`Gmeek-imgbox="https://ipfs.io/ipfs/QmSNKpcsXM2xbaubLF9fAWV4irZpaL74rsAQUfu22kPw2W"`
+![1](https://github.com/user-attachments/assets/44941b64-1c4b-4063-8a57-ec8c305f4553)
 
 成功后不出意外的话, 隔一段时间进入 Alist 网盘需要重新登陆账号, 因为定时脚本会先杀原来的 Alist 进程再重启.
 
