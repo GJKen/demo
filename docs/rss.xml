@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Demo</title><link>https://GJKen.github.io/demo</link><description> </description><copyright>Demo</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp</url><title>avatar</title><link>https://GJKen.github.io/demo</link></image><lastBuildDate>Fri, 03 Jan 2025 03:50:32 +0000</lastBuildDate><managingEditor>Demo</managingEditor><ttl>60</ttl><webMaster>Demo</webMaster><item><title>AssetRipper - 开源的 Unity 游戏资源提取工具</title><link>https://GJKen.github.io/demo/post/11.html</link><description># 简介&#13;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Demo</title><link>https://GJKen.github.io/demo</link><description> </description><copyright>Demo</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp</url><title>avatar</title><link>https://GJKen.github.io/demo</link></image><lastBuildDate>Fri, 03 Jan 2025 05:15:07 +0000</lastBuildDate><managingEditor>Demo</managingEditor><ttl>60</ttl><webMaster>Demo</webMaster><item><title>AssetRipper - 开源的 Unity 游戏资源提取工具</title><link>https://GJKen.github.io/demo/post/11.html</link><description># 简介&#13;
 &#13;
 AssetRipper是一个强大的开源工具, 它旨在帮助开发者和爱好者从Unity序列化文件(.cab-, .assets, .sharedAssets)以及资产包(.unity3d, .bundle)中提取原始数据, 并将其转换为Unity引擎可识别的本机格式.&#13;
 &#13;
@@ -7,7 +7,9 @@ AssetRipper是一个强大的开源工具, 它旨在帮助开发者和爱好者�
 &#13;
 # 地址&#13;
 &#13;
-https://github.com/AssetRipper/AssetRipper&#13;
+Github: https://github.com/AssetRipper/AssetRipper&#13;
+&#13;
+下载地址: https://assetripper.github.io/AssetRipper/articles/Downloads.html&#13;
 &#13;
 # 使用&#13;
 &#13;
