@@ -397,6 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
 > 优化 light & dark 主题下的背景色.
 > 增加宽高过渡动画.
 > 增加 1080px 屏幕宽度响应
+> 增加高度 auto 过渡动画, 这是一个较新的属性, Chrome 129+ 才支持.
 
 <details><summary>修改前</summary>
 
@@ -425,6 +426,7 @@ body {
 :root {
     --body-bgColor: #ffffffde;/* 增加 */
     --body-shadow-color: #50a8e726;/* 增加 */
+	interpolate-size: allow-keywords;/* 增加 */
 }
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
@@ -434,6 +436,7 @@ body {
     background: var(--body-bgColor);
     box-shadow: 0 0 100px var(--body-shadow-color);/* 增加 */
     border-radius: 10px;/* 增加 */
+	height: auto;
 }
 /* 增加 */
 @media (min-width: 1080px) {
@@ -610,7 +613,7 @@ html {
 ## 修改文章主页, 文章的列表样式
 
 > [!NOTE]
-> 还没想好要怎么改.
+> 还未想好要怎么改, 占位.
 
 <details><summary>修改前</summary>
 
@@ -675,13 +678,6 @@ html {
 ```
 
 </details>
-
-## 主页文章列表样式
-
-`.SideNav-item:last-child`
-
-> [!NOTE]
-> 直接移除这个选择器的所有样式.
 
 ## 文章文字通用样式
 

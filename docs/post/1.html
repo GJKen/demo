@@ -409,6 +409,7 @@ document.addEventListener('DOMContentLoaded', () => {
 > 优化 light & dark 主题下的背景色.
 > 增加宽高过渡动画.
 > 增加 1080px 屏幕宽度响应
+> 增加高度 auto 过渡动画, 这是一个较新的属性, Chrome 129+ 才支持.
 
 <details><summary>修改前</summary>
 
@@ -437,6 +438,7 @@ body {
 :root {
     --body-bgColor: #ffffffde;/* 增加 */
     --body-shadow-color: #50a8e726;/* 增加 */
+	interpolate-size: allow-keywords;/* 增加 */
 }
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
@@ -446,6 +448,7 @@ body {
     background: var(--body-bgColor);
     box-shadow: 0 0 100px var(--body-shadow-color);/* 增加 */
     border-radius: 10px;/* 增加 */
+	height: auto;
 }
 /* 增加 */
 @media (min-width: 1080px) {
@@ -622,7 +625,7 @@ html {
 ## 修改文章主页, 文章的列表样式
 
 > [!NOTE]
-> 还没想好要怎么改.
+> 还未想好要怎么改, 占位.
 
 <details><summary>修改前</summary>
 
@@ -687,13 +690,6 @@ html {
 ```
 
 </details>
-
-## 主页文章列表样式
-
-`.SideNav-item:last-child`
-
-> [!NOTE]
-> 直接移除这个选择器的所有样式.
 
 ## 文章文字通用样式
 
@@ -2325,6 +2321,7 @@ document.addEventListener('DOMContentLoaded', () => {
 > 优化 light & dark 主题下的背景色.
 > 增加宽高过渡动画.
 > 增加 1080px 屏幕宽度响应
+> 增加高度 auto 过渡动画, 这是一个较新的属性, Chrome 129+ 才支持.
 
 <details><summary>修改前</summary>
 
@@ -2353,6 +2350,7 @@ body {
 :root {
     --body-bgColor: #ffffffde;/* 增加 */
     --body-shadow-color: #50a8e726;/* 增加 */
+	interpolate-size: allow-keywords;/* 增加 */
 }
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
@@ -2362,6 +2360,7 @@ body {
     background: var(--body-bgColor);
     box-shadow: 0 0 100px var(--body-shadow-color);/* 增加 */
     border-radius: 10px;/* 增加 */
+	height: auto;
 }
 /* 增加 */
 @media (min-width: 1080px) {
@@ -2538,7 +2537,7 @@ html {
 ## 修改文章主页, 文章的列表样式
 
 > [!NOTE]
-> 还没想好要怎么改.
+> 还未想好要怎么改, 占位.
 
 <details><summary>修改前</summary>
 
@@ -2603,13 +2602,6 @@ html {
 ```
 
 </details>
-
-## 主页文章列表样式
-
-`.SideNav-item:last-child`
-
-> [!NOTE]
-> 直接移除这个选择器的所有样式.
 
 ## 文章文字通用样式
 
@@ -4207,7 +4199,8 @@ pv 修改成 uv 计数.</p>
 <p><code class="notranslate">body</code></p>
 <div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>优化 light &amp; dark 主题下的背景色.<br>
 增加宽高过渡动画.<br>
-增加 1080px 屏幕宽度响应</p>
+增加 1080px 屏幕宽度响应<br>
+增加高度 auto 过渡动画, 这是一个较新的属性, Chrome 129+ 才支持.</p>
 </div>
 <details><summary>修改前</summary>
 <div class="highlight highlight-source-css"><pre class="notranslate"><span class="pl-ent">body</span> {
@@ -4229,6 +4222,7 @@ pv 修改成 uv 计数.</p>
 <span class="pl-kos">:</span><span class="pl-c1">root</span> {
     <span class="pl-s1">--body-bgColor</span><span class="pl-kos">:</span> <span class="pl-pds"><span class="pl-kos">#</span>ffffffde</span>;<span class="pl-c">/* 增加 */</span>
     <span class="pl-s1">--body-shadow-color</span><span class="pl-kos">:</span> <span class="pl-pds"><span class="pl-kos">#</span>50a8e726</span>;<span class="pl-c">/* 增加 */</span>
+	<span class="pl-c1">interpolate-size</span><span class="pl-kos">:</span> allow-keywords;<span class="pl-c">/* 增加 */</span>
 }
 <span class="pl-ent">body</span> {
     <span class="pl-c1">font-family</span><span class="pl-kos">:</span> -apple-system<span class="pl-kos">,</span> BlinkMacSystemFont<span class="pl-kos">,</span> <span class="pl-s">"Segoe UI"</span><span class="pl-kos">,</span> <span class="pl-s">"Noto Sans"</span><span class="pl-kos">,</span> Helvetica<span class="pl-kos">,</span> Arial<span class="pl-kos">,</span> sans-serif<span class="pl-kos">,</span> <span class="pl-s">"Apple Color Emoji"</span><span class="pl-kos">,</span> <span class="pl-s">"Segoe UI Emoji"</span>;
@@ -4238,6 +4232,7 @@ pv 修改成 uv 计数.</p>
     <span class="pl-c1">background</span><span class="pl-kos">:</span> <span class="pl-en">var</span>(<span class="pl-s1">--body-bgColor</span>);
     <span class="pl-c1">box-shadow</span><span class="pl-kos">:</span> <span class="pl-c1">0</span> <span class="pl-c1">0</span> <span class="pl-c1">100<span class="pl-smi">px</span></span> <span class="pl-en">var</span>(<span class="pl-s1">--body-shadow-color</span>);<span class="pl-c">/* 增加 */</span>
     <span class="pl-c1">border-radius</span><span class="pl-kos">:</span> <span class="pl-c1">10<span class="pl-smi">px</span></span>;<span class="pl-c">/* 增加 */</span>
+	<span class="pl-c1">height</span><span class="pl-kos">:</span> auto;
 }
 <span class="pl-c">/* 增加 */</span>
 <span class="pl-k">@media</span> (<span class="pl-c1">min-width</span><span class="pl-kos">:</span> <span class="pl-c1">1080<span class="pl-smi">px</span></span>) {
@@ -4381,7 +4376,7 @@ svg 暗黑模式下颜色.<br>
 }</pre></div>
 </details>
 <h2>修改文章主页, 文章的列表样式</h2>
-<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>还没想好要怎么改.</p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>还未想好要怎么改, 占位.</p>
 </div>
 <details><summary>修改前</summary>
 <div class="highlight highlight-source-css"><pre class="notranslate">.<span class="pl-c1">border</span> {
@@ -4424,10 +4419,6 @@ svg 暗黑模式下颜色.<br>
     <span class="pl-c1">border-left</span><span class="pl-kos">:</span> <span class="pl-c1">.25<span class="pl-smi">em</span></span> solid <span class="pl-en">var</span>(<span class="pl-s1">--markdown-blockquote-borderLeft-color</span>)
 }</pre></div>
 </details>
-<h2>主页文章列表样式</h2>
-<p><code class="notranslate">.SideNav-item:last-child</code></p>
-<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>直接移除这个选择器的所有样式.</p>
-</div>
 <h2>文章文字通用样式</h2>
 <p><code class="notranslate">.markdown-body p, .markdown-body blockquote, .markdown-body ul, .markdown-body ol, .markdown-body dl, .markdown-body table, .markdown-body pre, .markdown-body details</code></p>
 <div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>修改行高为 1.75</p>
