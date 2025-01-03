@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Demo</title><link>https://GJKen.github.io/demo</link><description> </description><copyright>Demo</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp</url><title>avatar</title><link>https://GJKen.github.io/demo</link></image><lastBuildDate>Fri, 03 Jan 2025 03:26:09 +0000</lastBuildDate><managingEditor>Demo</managingEditor><ttl>60</ttl><webMaster>Demo</webMaster><item><title>图片超分 - Real-ESRGAN GUI</title><link>https://GJKen.github.io/demo/post/10.html</link><description># 简介&#13;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Demo</title><link>https://GJKen.github.io/demo</link><description> </description><copyright>Demo</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp</url><title>avatar</title><link>https://GJKen.github.io/demo</link></image><lastBuildDate>Fri, 03 Jan 2025 03:29:49 +0000</lastBuildDate><managingEditor>Demo</managingEditor><ttl>60</ttl><webMaster>Demo</webMaster><item><title>图片超分 - Real-ESRGAN GUI</title><link>https://GJKen.github.io/demo/post/10.html</link><description># 简介&#13;
 &#13;
 这个程序是 Real-ESRGAN 的命令行程序 Real-ESRGAN-ncnn-vulkan 的图形界面, 使用 Python 和 tkinter 编写, 同时支持 Windows、Ubuntu 和 macOS 平台.&#13;
 &#13;
@@ -9,8 +9,7 @@ https://github.com/TransparentLC/realesrgan-gui&#13;
 &#13;
 # 图示&#13;
 &#13;
-![1](https://github.com/user-attachments/assets/c0cefbf9-bd73-4328-943f-01d2b0050ee3)&#13;
-。</description><guid isPermaLink="true">https://GJKen.github.io/demo/post/10.html</guid><pubDate>Fri, 03 Jan 2025 03:25:45 +0000</pubDate></item><item><title>正则表达式 - 使用记录</title><link>https://GJKen.github.io/demo/post/9.html</link><description>&gt; [!NOTE]&#13;
+![1](https://github.com/user-attachments/assets/c0cefbf9-bd73-4328-943f-01d2b0050ee3)。</description><guid isPermaLink="true">https://GJKen.github.io/demo/post/10.html</guid><pubDate>Fri, 03 Jan 2025 03:25:45 +0000</pubDate></item><item><title>正则表达式 - 使用记录</title><link>https://GJKen.github.io/demo/post/9.html</link><description>&gt; [!NOTE]&#13;
 &gt; GPT帮写最方便.&#13;
 &#13;
 # 匹配关键字并删除指定行&#13;
