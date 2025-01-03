@@ -17402,7 +17402,7 @@ a.tabnav-extra:hover {
 }
 
 .SideNav-item:last-child {
-	border-bottom: 0
+	border-top: 0
 }
 
 .SideNav-item::before {
