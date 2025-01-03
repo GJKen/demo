@@ -1905,6 +1905,7 @@ document.addEventListener('DOMContentLoaded', () => {
 | Github | #333333 | ![](https://img.shields.io/static/v1?label=&message=Github&color=333333)
 | CDN | #cb222c | ![](https://img.shields.io/static/v1?label=&message=CDN&color=cb222c)
 | Bug | #D73A4A | ![](https://img.shields.io/static/v1?label=&message=Bug&color=D73A4A)
+| Game | #BC49AB | ![](https://img.shields.io/static/v1?label=&message=Bug&color=BC49AB)
 
 # Readme.md
 
