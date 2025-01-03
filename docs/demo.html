@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo页</title>
+	
+    <style>
+        *{box-sizing: border-box;}
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+	
+	<link href='https://gjkblog.us.kg/demo/primer.css' rel='stylesheet' />
+</head>
+<body>
+    <div id="header">
+<h1 class="postTitle">AssetRipper - 开源的 Unity 游戏资源提取工具</h1>
+</div>
+    <div id="functionBtn">
+<a href="https://GJKen.github.io/demo" id="buttonHome" class="btn btn-invisible circle" title="首页">
+	<svg class="octicon" width="16" height="16"><path id="pathHome" fill-rule="evenodd"></path></svg>
+</a>
+
+<a href="https://github.com/GJKen/demo/issues/11" target="_blank" class="btn btn-invisible circle" title="Issue">
+	<svg class="octicon" width="16" height="16"><path id="pathIssue" fill-rule="evenodd"></path></svg>
+</a>
+
+
+<a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+	<svg class="octicon" width="16" height="16" ><path id="themeSwitch" fill-rule="evenodd"></path></svg>
+</a>
+
+<a class="ArticleTOC btn btn-invisible circle" title="文章目录">
+	<svg class="octicon" width="16" height="16"><path id="ArticleTOC"></path></svg>
+</a>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><h1>简介</h1>
+<p>AssetRipper 是一个强大的开源工具, 它旨在帮助开发者和爱好者从 Unity 序列化文件(.cab-, .assets, .sharedAssets)以及资产包(.unity3d, .bundle)中提取原始数据, 并将其转换为 Unity 引擎可识别的本机格式.</p>
+<p>无论你是想要深入研究游戏内部机制, 还是进行游戏模组开发, AssetRipper 都是一个不可或缺的助手.</p>
+<h1>地址</h1>
+<p>Github: <a href="https://github.com/AssetRipper/AssetRipper">https://github.com/AssetRipper/AssetRipper</a></p>
+<p>下载地址: <a href="https://assetripper.github.io/AssetRipper/articles/Downloads.html" rel="nofollow">https://assetripper.github.io/AssetRipper/articles/Downloads.html</a></p>
+<h1>使用</h1>
+<ol>
+<li>
+<p><a href="https://github.com/AssetRipper/AssetRipper/releases">Releases</a> 下载.</p>
+</li>
+<li>
+<p>双击解压后的 <code class="notranslate">AssetRipper.exe</code> 文件启动程序, 会开启本地服务, 同时到浏览器打开.</p>
+</li>
+</ol></div>
+<div style="font-size:small;margin-top:8px;float:right;">🥰转载请注明,谢谢!🥰</div>
+
+<button class="btn btn-block" type="button" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://GJKen.github.io/demo">Demo</a></div>
+<div id="footer2">
+    <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" style="margin-right: 4px;height:18px;vertical-align: bottom;fill: #ff5a5a;"class="animate_heartBeatScale"><path d="M1017.152 426.592a263.296 263.296 0 0 0-502.304-133.92 263.328 263.328 0 0 0-502.304 133.92s5.152 259.264 505.536 520.096c500.32-260.832 499.072-520.096 499.072-520.096zM282.016 194.976a43.2 43.2 0 1 1 .096 86.4 43.2 43.2 0 0 1-.096-86.4zm-135.04 323.232a45.12 45.12 0 0 1-55.488-31.328 289.472 289.472 0 0 1-10.816-66.592C76.64 313.824 142.24 261.472 145.504 258.88a45.024 45.024 0 0 1 63.2 8.032c15.168 19.488 11.744 47.36-7.328 62.72-2.336 1.952-30.784 27.52-30.592 82.24.096 14.752 2.208 31.616 7.488 50.784a45.12 45.12 0 0 1-31.296 55.552z"/></svg><span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if("11/01/2024"!=""){
+    var startSite=new Date("11/01/2024");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站已运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<!-- <script src='./ArticleJs-demo.js'></script> -->
+<script src='https://gjken.github.io/demo/ArticleJs-demo.js'></script>
+</html>
