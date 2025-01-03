@@ -17401,8 +17401,12 @@ a.tabnav-extra:hover {
 	border-top: 1px solid var(--borderColor-muted, var(--color-border-muted));
 }
 
-.SideNav-item:last-child {
+.SideNav-item:first-child {
 	border-top: 0
+}
+
+.SideNav-item:last-child {
+	box-shadow: 0 1px 0 var(--borderColor-default, var(--color-border-default))
 }
 
 .SideNav-item::before {
