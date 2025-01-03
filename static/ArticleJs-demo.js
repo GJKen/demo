@@ -1,4 +1,3 @@
-debugInfo.textContent = `脚本加载开始执行`;
 //////////////// 文章目录代码块 part1 start ////////////////
 
 	//////////////// 插入css的函数 start ////////////////
@@ -109,6 +108,7 @@ function toggleTOC() {
 //////////////// 文章目录代码块 part1 end ////////////////
 
 document.addEventListener('DOMContentLoaded', () => {
+	document.body.insertAdjacentHTML('beforeend', 'js代码开始执行<br>');
 	//////////////// 懒加载图片 start ////////////////
 	const ob = new IntersectionObserver((entries) => {
 		entries.forEach(entry => {
