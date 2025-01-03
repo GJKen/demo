@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sticky Clipboard</title>
+    <style>
+        *{box-sizing: border-box;}
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        pre.notranslate {
+            padding: 16px;
+            overflow: auto;
+            font-size: 85%;
+            line-height: 1.45;
+			border: 1px solid;
+            border-radius: 6px;
+			height: 1500px;
+        }
+        .clipboard-container {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: inline-block;
+        }
+        .snippet-clipboard-content {
+            position: relative;
+			width: 500px;
+        }
+    </style>
+</head>
+<body>
+	<h1>111</h1>
+	<h1>111</h1>
+	<h1>111</h1>
+	<h1>111</h1>
+    <div class="snippet-clipboard-content position-relative overflow-auto">
+        <pre class="notranslate">
+            <code class="notranslate">
+            Your code content here...
+            Your code content here...
+            </code>
+        </pre>
+        <div class="clipboard-container">
+            <clipboard-copy class="ClipboardButton btn m-2 p-0" role="button">
+                <svg height="16" width="16" class="octicon octicon-copy m-2">
+                    <path
+                        d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                </svg>
+                Copy
+            </clipboard-copy>
+        </div>
+    </div>
+</body>
+</html>
