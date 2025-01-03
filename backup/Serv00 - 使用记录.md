@@ -37,7 +37,7 @@
 
 站点创建完成后, 点击上方的 Manage SSL certificates, 再点击 Manage.
 
-![]https://github.com/user-attachments/assets/15e58806-d2f0-43de-bf8d-97905680e8cc)
+![](https://github.com/user-attachments/assets/15e58806-d2f0-43de-bf8d-97905680e8cc)
 
 点击 Add certificate, 确认好要创建证书的域名, 最后点击 Add 完成创建证书.
 
