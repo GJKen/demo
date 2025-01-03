@@ -6,15 +6,11 @@
 
 **这里主要记录一些 js 和 CSS 的修改.记录的修改不一定准确, `Gmeek-spoilertxt="因为改动的地方太多了🥴"`.**
 
-**demo模式**
+**demo模式:** https://gjkblog.us.kg/demo
 
-https://gjkblog.us.kg/demo
+**线上模式:** https://gjkblog.us.kg
 
-**线上模式**
-
-https://gjkblog.us.kg
-
-**调试过程只会用 demo 演示, 确定后再同步代码到线上模式**
+**调试过程只会用 demo 演示, 确定后再同步代码到线上模式.**
 
 > [!WARNING]
 > 利用 Github Page 搭建的网站内容是完全公开的, 请注意不要上传自己的隐私!!!
@@ -174,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ### 增加自定义匹配 - Gmeek-imgbox
 
-修改 Gmeek 仓库的 Gmeek.py
+修改 Gmeek 仓库的 Gmeek.py.
 
 > 不知道怎么自定义 Gmeek 仓库的看这👉[通过 Gmeek 仓库美化博客](#通过-gmeek-仓库美化博客)
 
@@ -451,7 +447,10 @@ body {
 
 ## 博客滚动条样式
 
-直接增加下面代码.
+`::-webkit-scrollbar`
+
+> [!NOTE]
+> 直接增加下面代码.
 
 <details><summary>CSS Code</summary>
 
@@ -825,7 +824,7 @@ html {
 > [!NOTE]
 > 删除 padding-bottom.
 > 增加下划线动画.
-> 增加阴影样式
+> 增加阴影样式.
 
 <details><summary>修改前</summary>
 
@@ -945,7 +944,7 @@ html {
 
 > [!NOTE]
 > 优化 light & dark 主题下的背景色.
-> 增加内阴影
+> 增加内阴影.
 
 <details><summary>修改前</summary>
 
@@ -1160,7 +1159,7 @@ fork 之后, 转到搭建博客的 github 源码,
 
 ![](https://github.com/user-attachments/assets/20d1b3ac-c0fc-44ad-a937-3828b6875a8f)
 
-打开`config.json`文件, 修改右边字段值为main`"GMEEK_VERSION":"main"`
+打开`config.json`文件, 修改右边字段值为👉main, `"GMEEK_VERSION":"main"`
 
 > [!NOTE]
 > 如果值是`last`的话, Actions 会失败, 因为默认值`last`是靠模板仓库的 tag 来构建的, 改成 main 就不会构建失败.
