@@ -17400,10 +17400,10 @@ a.tabnav-extra:hover {
 	border: 0;
 	border-top: 1px solid var(--borderColor-muted, var(--color-border-muted));
 }
-/* 
-.SideNav-item:first-child {
-	border-top: 0
-} */
+
+.SideNav-item:last-child {
+	border-bottom: 0
+}
 
 .SideNav-item::before {
 	position: absolute;
