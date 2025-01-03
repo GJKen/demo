@@ -1891,9 +1891,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 | Label Name | Color | 效果
 |-|-|-
+| 翻墙 | #cb7b58 | ![](https://img.shields.io/static/v1?label=&message=翻墙&color=cb7b58)
+| 软件 | #5da167 | ![](https://img.shields.io/static/v1?label=&message=软件&color=5da167)
 | 网站 | #218155 | ![](https://img.shields.io/static/v1?label=&message=网站&color=218155)
 | 日常 | #008672 | ![](https://img.shields.io/static/v1?label=&message=日常&color=008672)
 | 教程 | #0075ca | ![](https://img.shields.io/static/v1?label=&message=教程&color=0075ca)
+| 图片处理 | #4c6cc5 | ![](https://img.shields.io/static/v1?label=&message=图片处理&color=4c6cc5)
 | Anime | #E77AB1 | ![](https://img.shields.io/static/v1?label=&message=Anime&color=E77AB1)
 | Win | #5AB3F3 | ![](https://img.shields.io/static/v1?label=&message=Win&color=5AB3F3)
 | VPS | #5319e7 | ![](https://img.shields.io/static/v1?label=&message=VPS&color=5319e7)
@@ -1902,8 +1905,6 @@ document.addEventListener('DOMContentLoaded', () => {
 | Github | #333333 | ![](https://img.shields.io/static/v1?label=&message=Github&color=333333)
 | CDN | #cb222c | ![](https://img.shields.io/static/v1?label=&message=CDN&color=cb222c)
 | Bug | #D73A4A | ![](https://img.shields.io/static/v1?label=&message=Bug&color=D73A4A)
-| 软件 | #5da167 | ![](https://img.shields.io/static/v1?label=&message=软件&color=5da167)
-| 翻墙 | #cb7b58 | ![](https://img.shields.io/static/v1?label=&message=翻墙&color=cb7b58)
 
 # Readme.md
 
