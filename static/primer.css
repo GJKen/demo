@@ -12517,6 +12517,7 @@ body {
 	background: var(--body-bgColor);
 	box-shadow: 0 0 100px var(--body-shadow-color);
 	border-radius: 10px;
+	height: auto;
 }
 
 a {
@@ -16306,7 +16307,8 @@ input.FormControl-radio[type=radio]:focus-visible {
 	--header-btn-shadowColor: #fbfbfb26;
 	--header-btn-shadowColor2: #5f5f5f26;
 	--ImgLazyLoad-circle-shadowColor: #0000;
-	--ImgLazyLoad-circle-shadowColor2: #ebfffe
+	--ImgLazyLoad-circle-shadowColor2: #ebfffe;
+	interpolate-size: allow-keywords;
 }
 
 .PageLayout {
@@ -17398,10 +17400,10 @@ a.tabnav-extra:hover {
 	border: 0;
 	border-top: 1px solid var(--borderColor-muted, var(--color-border-muted));
 }
-
+/* 
 .SideNav-item:first-child {
 	border-top: 0
-}
+} */
 
 .SideNav-item::before {
 	position: absolute;

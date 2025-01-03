@@ -235,7 +235,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			display: inherit;
 			position: sticky;
 			top: 0;
-			margin: 0 0 10px 0;
 			z-index: 999999;
 		}
 		.toc-btn div{
@@ -255,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 		/* 标题 */
 		.toc-title{
-			padding: 5px 10px 0;
+			padding: 10px 10px 0;
 			max-height: calc(50vh - 59px);
 			overflow-y: auto;
 			overflow-y: scroll;

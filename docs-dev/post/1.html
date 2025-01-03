@@ -4,7 +4,7 @@
     <meta content="text/html; charset=utf-8" http-equiv="content-type" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href='../../static/primer.css' rel='stylesheet' />
+    <link href='https://fastly.jsdelivr.net/gh/gjken/gjken.github.io@v2.2/static/primer.min.css' rel='stylesheet' />
     
     <link rel="icon" href="https://pic.imgdb.cn/item/6734c652d29ded1a8cc038aa.jpg"><script>
         let theme = localStorage.getItem("meek_theme") || "light";
@@ -891,14 +891,16 @@ html {
 .markdown-body img {
     max-width: 100%;
     box-sizing: content-box;
-    transition: transform 0.3s ease, clip-path 0.3s ease;/* 增加 */
-    -webkit-transition: -webkit-transform 0.3s ease, -webkit-clip-path 0.3s ease;/* 增加 */
+	/* 增加 */
+    transition: transform 0.3s ease, -webkit-transform 0.3s ease, clip-path 0.3s ease, -webkit-clip-path 0.3s ease;
 }
 /* 增加 */
 .markdown-body img:hover {
-    transform: scale(1.01);
-    clip-path: inset(-4%);
-    cursor: zoom-in;
+	transform: scale(1.01);
+	-webkit-transform: scale(1.01);
+	clip-path: inset(-4%);
+	-webkit-clip-path: inset(-4%);
+	cursor: zoom-in;
 }
 ```
 
@@ -2777,14 +2779,16 @@ html {
 .markdown-body img {
     max-width: 100%;
     box-sizing: content-box;
-    transition: transform 0.3s ease, clip-path 0.3s ease;/* 增加 */
-    -webkit-transition: -webkit-transform 0.3s ease, -webkit-clip-path 0.3s ease;/* 增加 */
+	/* 增加 */
+    transition: transform 0.3s ease, -webkit-transform 0.3s ease, clip-path 0.3s ease, -webkit-clip-path 0.3s ease;
 }
 /* 增加 */
 .markdown-body img:hover {
-    transform: scale(1.01);
-    clip-path: inset(-4%);
-    cursor: zoom-in;
+	transform: scale(1.01);
+	-webkit-transform: scale(1.01);
+	clip-path: inset(-4%);
+	-webkit-clip-path: inset(-4%);
+	cursor: zoom-in;
 }
 ```
 
@@ -3785,37 +3789,24 @@ document.addEventListener('DOMContentLoaded', () => {
 <meta property="og:url" content="https://GJKen.github.io/demo/post/1.html">
 <meta property="og:image" content="https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp">
 <title>Gmeek - 记录使用过程</title>
-<!-- <link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" /> -->
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
 
 
 </head>
 <style>
 :root{--functionBtnFlex-bgColor:#ffffff61;}
 [data-color-mode=light][data-light-theme=dark],[data-color-mode=light][data-light-theme=dark]::selection,[data-color-mode=dark][data-dark-theme=dark],[data-color-mode=dark][data-dark-theme=dark]::selection{--functionBtnFlex-bgColor:#ffffff00;}
-@keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@keyframes blink{50%{opacity:0}100%{opacity:1}}@-webkit-keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes blink{50%{opacity:0}100%{opacity:1}}
-@-webkit-keyframes grow {
-    0% {opacity: 0.85;-webkit-transform: scale(0.5);}
-    100% {opacity: 1;-webkit-transform: translate(1);}
-}
-@keyframes grow {
-    0% {opacity: 0.85;transform: scale(0.5);}
-    100% {opacity: 1;transform: translate(1);}
-}
-
-@-webkit-keyframes slide-fade-in {
-	0% {opacity: 0;-webkit-transform: translate3d(0, 20px, 0);}
-	100% {opacity: 1;-webkit-transform: translate(0, 0, 0);}
-}
-@keyframes slide-fade-in {
-	0% {opacity: 0;transform: translate3d(0, 20px, 0);}
-	100% {opacity: 1;transform: translate(0, 0, 0);}
-}
-body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padding:45px;font-size:16px;font-family:sans-serif;line-height:1.25;height:calc-size(auto);animation:fadeIn 0.8s ease-out forwards;}
+@keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@keyframes blink{50%{opacity:0}100%{opacity:1}}@-webkit-keyframes blink{50%{opacity:0}100%{opacity:1}}@keyframes grow{0%{opacity:0.85;transform:scale(0.5);}100%{opacity:1;transform:translate(1);}}@-webkit-keyframes grow{0%{opacity:0.85;-webkit-transform:scale(0.5);}100%{opacity:1;-webkit-transform:translate(1);}}@keyframes slide-fade-in{0%{opacity:0;transform:translate3d(0,20px,0);}100%{opacity:1;transform:translate(0,0,0);}}@-webkit-keyframes slide-fade-in{0%{opacity:0;-webkit-transform:translate3d(0,20px,0);}100%{opacity:1;-webkit-transform:translate(0,0,0);}}
+body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padding:45px;font-size:16px;font-family:sans-serif;line-height:1.25}
+body,#content{-webkit-animation:slide-fade-in 1.2s ease;animation:slide-fade-in 1.2s ease}
 #header{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:24px;}
 #functionBtn{display:flex;justify-content:center;margin:20px 0;gap:20px;}
-#functionBtn a, #functionBtn div{padding:14px 16px;animation:fadeIn .7s ease-in 0s forwards;}
+#functionBtn a{padding:14px 16px;}
 #functionBtn.Btn-flex{position:fixed;margin:0;padding:20px 0;top:-100px;left:0;width:100%;min-width:500px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;animation:fadeIn.2s ease-in 0s forwards;transition:top 0.3s ease-in-out}
-#footer{margin-top:64px; text-align:center;font-size:small;}
+#footer{margin-top:64px;text-align:center;font-size:small;}
+
+#functionBtn a,.tagTitle,.title-left a,.subnav-search{-webkit-animation:slide-fade-in 0.8s ease;animation:slide-fade-in 0.8s ease}
+.title-left img{animation:grow 0.5s cubic-bezier(0.23,1,0.32,1);-webkit-animation:grow 0.5s cubic-bezier(0.23,1,0.32,1);}
 
 </style>
 
@@ -4522,14 +4513,16 @@ svg 暗黑模式下颜色.<br>
 .<span class="pl-c1">markdown-body</span> <span class="pl-ent">img</span> {
     <span class="pl-c1">max-width</span><span class="pl-kos">:</span> <span class="pl-c1">100<span class="pl-smi">%</span></span>;
     <span class="pl-c1">box-sizing</span><span class="pl-kos">:</span> content-box;
-    <span class="pl-c1">transition</span><span class="pl-kos">:</span> transform <span class="pl-c1">0.3<span class="pl-smi">s</span></span> ease<span class="pl-kos">,</span> clip-path <span class="pl-c1">0.3<span class="pl-smi">s</span></span> ease;<span class="pl-c">/* 增加 */</span>
-    <span class="pl-c1">-webkit-transition</span><span class="pl-kos">:</span> -webkit-transform <span class="pl-c1">0.3<span class="pl-smi">s</span></span> ease<span class="pl-kos">,</span> -webkit-clip-path <span class="pl-c1">0.3<span class="pl-smi">s</span></span> ease;<span class="pl-c">/* 增加 */</span>
+	<span class="pl-c">/* 增加 */</span>
+    <span class="pl-c1">transition</span><span class="pl-kos">:</span> transform <span class="pl-c1">0.3<span class="pl-smi">s</span></span> ease<span class="pl-kos">,</span> -webkit-transform <span class="pl-c1">0.3<span class="pl-smi">s</span></span> ease<span class="pl-kos">,</span> clip-path <span class="pl-c1">0.3<span class="pl-smi">s</span></span> ease<span class="pl-kos">,</span> -webkit-clip-path <span class="pl-c1">0.3<span class="pl-smi">s</span></span> ease;
 }
 <span class="pl-c">/* 增加 */</span>
 .<span class="pl-c1">markdown-body</span> <span class="pl-ent">img</span><span class="pl-kos">:</span><span class="pl-c1">hover</span> {
-    <span class="pl-c1">transform</span><span class="pl-kos">:</span> <span class="pl-en">scale</span>(<span class="pl-c1">1.01</span>);
-    <span class="pl-c1">clip-path</span><span class="pl-kos">:</span> <span class="pl-en">inset</span>(<span class="pl-c1">-4<span class="pl-smi">%</span></span>);
-    <span class="pl-c1">cursor</span><span class="pl-kos">:</span> zoom-in;
+	<span class="pl-c1">transform</span><span class="pl-kos">:</span> <span class="pl-en">scale</span>(<span class="pl-c1">1.01</span>);
+	<span class="pl-c1">-webkit-transform</span><span class="pl-kos">:</span> <span class="pl-en">scale</span>(<span class="pl-c1">1.01</span>);
+	<span class="pl-c1">clip-path</span><span class="pl-kos">:</span> <span class="pl-en">inset</span>(<span class="pl-c1">-4<span class="pl-smi">%</span></span>);
+	<span class="pl-c1">-webkit-clip-path</span><span class="pl-kos">:</span> <span class="pl-en">inset</span>(<span class="pl-c1">-4<span class="pl-smi">%</span></span>);
+	<span class="pl-c1">cursor</span><span class="pl-kos">:</span> zoom-in;
 }</pre></div>
 </details>
 <h2>文章 &lt;code&gt; 标签样式</h2>
@@ -5542,7 +5535,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 </script>
-<!-- <script src='../../static/ArticleJs.min.js'></script> -->
-<script src='../../static/ArticleJs.js'></script>
-<script src='https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js'></script>
+<script src='https://gjken.github.io/demo/ArticleJs.min.js'></script><script src='https://fastly.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js'></script>
+
 </html>
