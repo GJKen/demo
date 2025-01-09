@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	// 检测 URL 是否含锚点并跳转到对应 ID
 	const hash = window.location.hash.substring(1);
 	const target = hash && document.getElementById(hash);
-	target?.scrollIntoView({ behavior: 'smooth' });
+	if (target) target.scrollIntoView();
 	//////////////// 懒加载图片 start ////////////////
 	const ob = new IntersectionObserver((entries) => {
 		entries.forEach(entry => {
