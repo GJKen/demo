@@ -26,8 +26,7 @@ jobs:
 
       - name: Process MD files and reopen issues
         run: |
-          python -c "
-import os
+          python -c "import os
 import requests
 
 # GitHub API 信息
