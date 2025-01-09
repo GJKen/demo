@@ -25,5 +25,7 @@ jobs:
           pip install requests
 
       - name: Run Python script to reopen issues
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_PAT }}  # 使用 GitHub Secrets 存储 PAT
         run: |
           python restore_issues.py

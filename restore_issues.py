@@ -1,17 +1,23 @@
 import os
 import requests
 
+# 获取 Personal Access Token (PAT)
+token = os.getenv('GITHUB_PAT')
+
 # GitHub API 信息
-owner = 'your-username'  # 请替换为您的用户名
+owner = 'your-username'  # 请替换为您的 GitHub 用户名
 repo = 'your-repository'  # 请替换为您的仓库名
 api_url = f'https://api.github.com/repos/{owner}/{repo}/issues'
-token = os.getenv('GITHUB_TOKEN')  # GitHub自动提供Token
+
+# 验证 token 是否有效
+if not token:
+    print("GITHUB_PAT is not set.")
+    exit(1)
 
 # 遍历 recover_issues 文件夹中的 .md 文件
 md_folder = 'recover_issues'
 for filename in os.listdir(md_folder):
     if filename.endswith('.md'):
-        # 提取 issue 编号和标题
         issue_number, title = filename.replace('.md', '').split('_', 1)
         issue_number = int(issue_number)
 
@@ -23,7 +29,7 @@ for filename in os.listdir(md_folder):
         response = requests.post(
             f'{api_url}/{issue_number}/reopen',
             headers={
-                'Authorization': f'Bearer {token}',
+                'Authorization': f'Bearer {token}',  # 使用 PAT 进行认证
                 'Accept': 'application/vnd.github.v3+json'
             },
             json={
