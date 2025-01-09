@@ -1,0 +1,66 @@
+name: Recover Issues
+
+on:
+  push:
+    paths:
+      - 'recover_issues/*.md'  # 监听 recover_issues 文件夹下的所有 .md 文件
+  workflow_dispatch:  # 支持手动触发
+
+jobs:
+  recover-issues:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python environment
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install requests package
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Process MD files and reopen issues
+        run: |
+          import os
+          import requests
+
+          # GitHub API
+          owner = "your-username"
+          repo = "your-repository"
+          api_url = f"https://api.github.com/repos/{owner}/{repo}/issues"
+          token = os.getenv("GITHUB_TOKEN")  # GitHub自动提供Token
+
+          # 遍历 recover_issues 文件夹中的 .md 文件
+          md_folder = "recover_issues"
+          for filename in os.listdir(md_folder):
+              if filename.endswith(".md"):
+                  # 获取 issue 编号和标题
+                  issue_number, title = filename.replace(".md", "").split("_", 1)
+                  issue_number = int(issue_number)
+
+                  # 读取 MD 文件内容
+                  with open(os.path.join(md_folder, filename), "r") as file:
+                      content = file.read()
+
+                  # 请求 GitHub API 恢复 issue
+                  response = requests.post(
+                      f"{api_url}/{issue_number}/reopen",
+                      headers={
+                          "Authorization": f"Bearer {token}",
+                          "Accept": "application/vnd.github.v3+json"
+                      },
+                      json={
+                          "title": title,  # 用文件名中的标题
+                          "body": content  # 用文件内容作为 issue 内容
+                      }
+                  )
+
+                  if response.status_code == 200:
+                      print(f"Issue #{issue_number} reopened successfully")
+                  else:
+                      print(f"Failed to reopen issue #{issue_number}: {response.status_code}, {response.text}")
