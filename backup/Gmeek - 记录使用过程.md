@@ -46,7 +46,7 @@
 
 `"subTitle":" ",`
 
-效果图:
+- 效果图:
 
 ![1](https://github.com/user-attachments/assets/a10a731d-60e0-4916-a65a-d1f2c094c3cd)
 
@@ -149,7 +149,7 @@ markdown 输入:
 
 CSS写入到了👉[文章自定义 js 代码](#articlejs.js---文章自定义-js-代码)
 
-内容如下:
+- 内容如下:
 
 意思是页面加载完成再加载 CSS, 同时增加 fancybox 必要的绑定函数.
 
@@ -1778,9 +1778,9 @@ Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 
 在 GitHub markdown 里上传图片, 粘贴&拖拽都行,
 
-然后通过 Actions 转换后实际效果如下, html 里面图片标签会增加 fancybox 所需的`data-fancybox="gallery"`属性.
+然后通过 Actions 转换后实际效果如下, html 里面 img 标签会增加 fancybox 所需的`data-fancybox="gallery"`属性.
 
-![](https://github.com/user-attachments/assets/1800f94a-8214-4cfd-ab38-dd26f020d981)
+![](https://github.com/user-attachments/assets/f57b9f81-36b2-4484-835f-3105d54412a4)
 
 这样优化后可以在 Github issue 的 Preview 里面直接预览图片, 同时还能防备图床问题导致的图片丢失(`Gmeek-spoilertxt="Github, 稳!"`)
 
