@@ -1154,7 +1154,7 @@ fork 之后, 转到搭建博客的 github 源码,
 
 ![1](https://github.com/user-attachments/assets/06cd12c2-5166-4598-a4f6-cbc55563f7d7)
 
-打开`config.json`文件, 把`GMEEK_VERSION`修改值为👉`main`, `"GMEEK_VERSION":"main"`
+打开`config.json`文件, 把`GMEEK_VERSION`的修改值为👉`main`
 
 > [!NOTE]
 > 如果值是`last`的话, Actions 会失败, 因为默认值`last`是靠模板仓库的 tag 来构建的, 改成 main 就不会构建失败.
@@ -1786,7 +1786,7 @@ Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 
 这样优化后可以在 Github issue 的 Preview 里面直接预览图片, 同时还能防备图床问题导致的图片丢失(`Gmeek-spoilertxt="Github, 稳!"`)
 
-唯一缺点就是当 issues 删除后, 图片也会跟着消失, 无法再被外部引用.
+唯一缺点就是当 issues 删除后, 图片也会跟着消失, 无法再被外部引用, 所以删除仓库以及 issues 的时候一定要确保图片先备份哦~
 
 # 添加 Gmeek-spoilertxt - 文字防剧透模糊效果
 
