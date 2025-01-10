@@ -1180,13 +1180,13 @@ fork 之后, 转到搭建博客的 github 源码,
 
 下图文字直接修改即可, 不同语言的按需修改.
 
-![](https://github.com/user-attachments/assets/c0f4bca8-174d-4044-a654-12e6322cca9b)
+![1](https://github.com/user-attachments/assets/3534d8e2-7a5c-4084-9f86-eade92cc050f)
 
 ## 修改默认 primer.css 链接
 
 打开`Gmeek.py`
 
-![](https://github.com/user-attachments/assets/fd72d93f-5015-44d9-ac79-58dff7e3c116)
+![1](https://github.com/user-attachments/assets/1b93636b-a4af-45fc-a97a-af84b0d37f3e)
 
 这里我直接写改成我存放的链接, 并使用 tag 控制版本.
 
