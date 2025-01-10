@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 通过 Actions 转换后实际效果如下, html 里面图片标签会增加 fancybox 所需的`data-fancybox="gallery"`属性.
 
-![](https://github.com/user-attachments/assets/90439bbe-7ced-409b-a4c7-62f859c842ab)
+![1](https://github.com/user-attachments/assets/1bca7934-827b-4375-9a79-9582200cde63)
 
 ## 图片懒加载
 
