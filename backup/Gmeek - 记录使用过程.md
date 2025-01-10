@@ -20,7 +20,7 @@
 **线上模式的仓库用 tag 区分代码版本, release 可有可无, 主要是用来说明版本改动(`Gmeek-spoilertxt="懒得写"`)**
 
 > [!NOTE]
-> static 这个目录里的文件发生了改动, 一定要手动 Actions 之后, 再等待20多分钟(~~猜的~~)才会更新外链内容.
+> static 这个目录里的文件发生了改动, 一定要手动 Actions 之后, 再等待20多分钟(`Gmeek-spoilertxt="测试的大概结果"`)才会更新外链内容.
 
 # Config.json 小妙用
 
@@ -34,17 +34,13 @@
 
 ## subTitle - js插入
 
+`subTitle`字段可用 js 插入 html 实现修改文字.
+
 代码:
 
 ```json
 "subTitle":"<script>document.getElementById('content').innerHTML = `<div style='text-align: center;'><p>CV工程师,</p><p>一个又菜又爱玩, 喜欢瞎折腾的流浪者.</p></div>`;</script>",
 ```
-
-效果图:
-
-![](https://github.com/user-attachments/assets/704ba114-c255-469e-ac71-61ccdffac962)
-
-从图中可以看到, `subTitle`字段可用 js 插入 html 实现修改文字.
 
 ## subTitle - 隐藏
 
@@ -52,7 +48,7 @@
 
 效果图:
 
-![](https://github.com/user-attachments/assets/92e2da59-1bb4-4c4c-a2ae-b58105ecc230)
+![1](https://github.com/user-attachments/assets/a10a731d-60e0-4916-a65a-d1f2c094c3cd)
 
 可以用空白字符的方式, 隐藏`subTitle`这个必须字段, 无需使用 js 隐藏.
 
@@ -122,10 +118,6 @@ markdown 输入:
 > 修改-动画和样式.
 > 修改-滚动页面自动显示&隐藏返回顶部按钮.
 
-图示:
-
-![](https://github.com/user-attachments/assets/2d12652a-ee57-44a7-bd41-17f618a0785b)
-
 可以直接引用.
 
 ## 文章增加目录列表(集成到header)
@@ -139,9 +131,7 @@ markdown 输入:
 
 图示:
 
-![](https://github.com/user-attachments/assets/cb85ad0f-0e19-42e0-bb3e-45399a5ca7f7)
-
-![](https://github.com/user-attachments/assets/3f84c22d-43cc-489f-9df0-d6ffa24feb42)
+![1](https://github.com/user-attachments/assets/0908287f-3bca-4e11-a6a0-c4919bae120f)
 
 ## Fancybox.js - 图片浏览器
 
