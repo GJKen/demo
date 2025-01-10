@@ -103,6 +103,13 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
 #postBody hr{height:2px;}
 #cmButton{height:48px;margin-top:48px;}
 #comments{margin-top:64px;}
+#toogleBtn{
+    position: relative;
+    left: 208px;
+    cursor: pointer;
+	display: flex;
+	align-items: center;
+}
 .g-emoji{font-size:24px;}
 @media (max-width:600px) {
     body {padding:8px;min-width:500px;}
@@ -119,28 +126,33 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
 <h1 class="postTitle">demo测试页</h1>
 </div>
     <div id="functionBtn">
-<a href="https://GJKen.github.io/demo" id="buttonHome" class="btn btn-invisible circle" title="首页">
-	<svg class="octicon" width="16" height="16"><path id="pathHome" fill-rule="evenodd"></path></svg>
-</a>
-
-<a href="https://github.com/GJKen/demo/issues/2" target="_blank" class="btn btn-invisible circle" title="Issue">
-	<svg class="octicon" width="16" height="16"><path id="pathIssue" fill-rule="evenodd"></path></svg>
-</a>
-
-
-<a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
-	<svg class="octicon" width="16" height="16" ><path id="themeSwitch" fill-rule="evenodd"></path></svg>
-</a>
-
-<a href="https://GJKen.github.io/demo/tag.html" id="buttonSearch" class="btn btn-invisible circle" title="搜索">
-	<svg class="octicon" width="16" height="16" >
-		<path id="pathSearch" fill-rule="evenodd"></path>
-	</svg>
-</a>
-
-<a class="ArticleTOC btn btn-invisible circle" title="文章目录">
-	<svg class="octicon" width="16" height="16"><path id="ArticleTOC"></path></svg>
-</a>
+<div>
+	<a href="https://GJKen.github.io/demo" id="buttonHome" class="btn btn-invisible circle" title="首页">
+		<svg class="octicon" width="16" height="16"><path id="pathHome" fill-rule="evenodd"></path></svg>
+	</a>
+	
+	<a href="https://github.com/GJKen/demo/issues/2" target="_blank" class="btn btn-invisible circle" title="Issue">
+		<svg class="octicon" width="16" height="16"><path id="pathIssue" fill-rule="evenodd"></path></svg>
+	</a>
+	
+	
+	<a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+		<svg class="octicon" width="16" height="16" ><path id="themeSwitch" fill-rule="evenodd"></path></svg>
+	</a>
+	
+	<a href="https://GJKen.github.io/demo/tag.html" id="buttonSearch" class="btn btn-invisible circle" title="搜索">
+		<svg class="octicon" width="16" height="16" >
+			<path id="pathSearch" fill-rule="evenodd"></path>
+		</svg>
+	</a>
+	
+	<a class="ArticleTOC btn btn-invisible circle" title="文章目录">
+		<svg class="octicon" width="16" height="16"><path id="ArticleTOC"></path></svg>
+	</a>
+</div>
+<div id="toogleBtn">
+	<svg class="octicon" width="16" height="16"><path id="ArticleTOC" d="M3.22 10.53a.749.749 0 0 1 0-1.06l4.25-4.25a.749.749 0 0 1 1.06 0l4.25 4.25a.749.749 0 1 1-1.06 1.06L8 6.811 4.28 10.53a.749.749 0 0 1-1.06 0Z"></path></svg>
+</div>
 </div>
     <div id="content">
 <div class="markdown-body" id="postBody"><h1>标题1</h1>

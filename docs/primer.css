@@ -27551,6 +27551,7 @@ a.branch-name .octicon {
 }
 
 .markdown-body img {
+	display: block;
 	max-width: 100%;
 	box-sizing: content-box;
 	transition: transform 0.3s ease, -webkit-transform 0.3s ease, clip-path 0.3s ease, -webkit-clip-path 0.3s ease;
