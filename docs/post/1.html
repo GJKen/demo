@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
 `Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmNiH2pdrA9Hb61EXgYbKtEssBAGemEjTQRBZbgutUCNx2'`
 ```
 
-通过 Actions 转换后实际效果如下, html 里面图片标签会增加 fancybox 所需的`data-fancybox='gallery'`属性.
+通过 Actions 转换后实际效果如下, html 的 img 标签会增加 fancybox 所需的`data-fancybox='gallery'`属性.
 
 ![1](https://github.com/user-attachments/assets/1bca7934-827b-4375-9a79-9582200cde63)
 
@@ -864,6 +864,7 @@ html {
 > [!NOTE]
 > 优化 light & dark 主题下的背景色.
 > 增加 hover 动画.
+> img 标签增加`display: block;`, 防止 Actions 之后显示错误.
 
 <details><summary>修改前</summary>
 
@@ -888,6 +889,7 @@ html {
     -webkit-clip-path: inset(0);
 }
 .markdown-body img {
+	display: block;
     max-width: 100%;
     box-sizing: content-box;
 	/* 增加 */
@@ -2115,7 +2117,7 @@ document.addEventListener('DOMContentLoaded', () => {
 `Gmeek-imgbox='https://i0.img2ipfs.com/ipfs/QmNiH2pdrA9Hb61EXgYbKtEssBAGemEjTQRBZbgutUCNx2'`
 ```
 
-通过 Actions 转换后实际效果如下, html 里面图片标签会增加 fancybox 所需的`data-fancybox='gallery'`属性.
+通过 Actions 转换后实际效果如下, html 的 img 标签会增加 fancybox 所需的`data-fancybox='gallery'`属性.
 
 ![1](https://github.com/user-attachments/assets/1bca7934-827b-4375-9a79-9582200cde63)
 
@@ -2778,6 +2780,7 @@ html {
 > [!NOTE]
 > 优化 light & dark 主题下的背景色.
 > 增加 hover 动画.
+> img 标签增加`display: block;`, 防止 Actions 之后显示错误.
 
 <details><summary>修改前</summary>
 
@@ -2802,6 +2805,7 @@ html {
     -webkit-clip-path: inset(0);
 }
 .markdown-body img {
+	display: block;
     max-width: 100%;
     box-sizing: content-box;
 	/* 增加 */
@@ -4041,7 +4045,7 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
 </ul>
 <p>在 markdown 插入图片:</p>
 <div class="highlight highlight-text-html-basic"><pre class="notranslate">`Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/QmNiH2pdrA9Hb61EXgYbKtEssBAGemEjTQRBZbgutUCNx2"`</pre></div>
-<p>通过 Actions 转换后实际效果如下, html 里面图片标签会增加 fancybox 所需的<code class="notranslate">data-fancybox="gallery"</code>属性.</p>
+<p>通过 Actions 转换后实际效果如下, html 的 img 标签会增加 fancybox 所需的<code class="notranslate">data-fancybox="gallery"</code>属性.</p>
 <div class="ImgLazyLoad-circle"></div>
 <img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/1bca7934-827b-4375-9a79-9582200cde63">
 <h2>图片懒加载</h2>
@@ -4549,7 +4553,8 @@ svg 暗黑模式下颜色.<br>
 <h2>文章 &lt;img&gt; 标签样式</h2>
 <p><code class="notranslate">.markdown-body img</code></p>
 <div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>优化 light &amp; dark 主题下的背景色.<br>
-增加 hover 动画.</p>
+增加 hover 动画.<br>
+img 标签增加<code class="notranslate">display: block;</code>, 防止 Actions 之后显示错误.</p>
 </div>
 <details><summary>修改前</summary>
 <div class="highlight highlight-source-css"><pre class="notranslate">.<span class="pl-c1">markdown-body</span> <span class="pl-ent">img</span> {
@@ -4567,6 +4572,7 @@ svg 暗黑模式下颜色.<br>
     <span class="pl-c1">-webkit-clip-path</span><span class="pl-kos">:</span> <span class="pl-en">inset</span>(<span class="pl-c1">0</span>);
 }
 .<span class="pl-c1">markdown-body</span> <span class="pl-ent">img</span> {
+	<span class="pl-c1">display</span><span class="pl-kos">:</span> block;
     <span class="pl-c1">max-width</span><span class="pl-kos">:</span> <span class="pl-c1">100<span class="pl-smi">%</span></span>;
     <span class="pl-c1">box-sizing</span><span class="pl-kos">:</span> content-box;
 	<span class="pl-c">/* 增加 */</span>

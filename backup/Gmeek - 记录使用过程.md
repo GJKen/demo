@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
 `Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/QmNiH2pdrA9Hb61EXgYbKtEssBAGemEjTQRBZbgutUCNx2"`
 ```
 
-通过 Actions 转换后实际效果如下, html 里面图片标签会增加 fancybox 所需的`data-fancybox="gallery"`属性.
+通过 Actions 转换后实际效果如下, html 的 img 标签会增加 fancybox 所需的`data-fancybox="gallery"`属性.
 
 ![1](https://github.com/user-attachments/assets/1bca7934-827b-4375-9a79-9582200cde63)
 
@@ -852,6 +852,7 @@ html {
 > [!NOTE]
 > 优化 light & dark 主题下的背景色.
 > 增加 hover 动画.
+> img 标签增加`display: block;`, 防止 Actions 之后显示错误.
 
 <details><summary>修改前</summary>
 
@@ -876,6 +877,7 @@ html {
     -webkit-clip-path: inset(0);
 }
 .markdown-body img {
+	display: block;
     max-width: 100%;
     box-sizing: content-box;
 	/* 增加 */
