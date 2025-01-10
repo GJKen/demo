@@ -1013,7 +1013,7 @@ html {
 
 </details>
 
-效果图:
+- 效果图:
 
 ![1](https://github.com/user-attachments/assets/c7579ba1-bad8-4caa-acd8-790def5ad56c)
 
@@ -1134,7 +1134,7 @@ a {
 
 </details>
 
-效果图:
+- 效果图:
 
 ![1](https://github.com/user-attachments/assets/004a8bcb-712a-4a1c-943d-49f1a6779b62)
 
@@ -1654,7 +1654,7 @@ document.addEventListener('wheel', e => handleScroll(e.deltaY));
 
 定位`line-height:1;`, 直接删除这个属性.
 
-**效果图:**
+- 效果图:
 
 ![1](https://github.com/user-attachments/assets/884a4371-975b-44a4-8201-80afc1274671)
 
