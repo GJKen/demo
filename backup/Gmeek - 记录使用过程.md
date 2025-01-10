@@ -988,7 +988,7 @@ html {
 ## 文章 diff 代码块样式
 
 > [!NOTE]
-> 默认的效果可以双击复制到+和-号, 通过 CSS 控制使其无法被选中复制.
+> 因默认的效果可以双击复制到+和-号, 现通过 CSS 控制使其无法被选中复制.
 > 直接增加下面代码.
 
 <details><summary>CSS Code</summary>
@@ -1015,7 +1015,7 @@ html {
 
 效果图:
 
-![](https://github.com/user-attachments/assets/f3eb7940-ca2b-4952-8fb4-e05a7acc84bd)
+![1](https://github.com/user-attachments/assets/c7579ba1-bad8-4caa-acd8-790def5ad56c)
 
 ## 文章一键复制代码按钮样式
 
@@ -1136,7 +1136,7 @@ a {
 
 效果图:
 
-![](https://github.com/user-attachments/assets/73cdc397-e4c8-45c8-8ecf-02f32af9fd63)
+![1](https://github.com/user-attachments/assets/004a8bcb-712a-4a1c-943d-49f1a6779b62)
 
 # 通过 Gmeek 仓库美化博客
 
@@ -1146,15 +1146,15 @@ a {
 
 仓库地址👉 https://github.com/Meekdai/Gmeek
 
-![](https://github.com/user-attachments/assets/8794d347-3524-4709-a6f1-fd74c607fc22)
+![1](https://github.com/user-attachments/assets/77c9c42c-3f00-49bd-a492-6fe298391239)
 
 fork 之后, 转到搭建博客的 github 源码,
 
 打开`.github/workflows/Gmeek.yml`文件, 修改构建博客仓库的地址为你自己的仓库地址
 
-![](https://github.com/user-attachments/assets/20d1b3ac-c0fc-44ad-a937-3828b6875a8f)
+![1](https://github.com/user-attachments/assets/06cd12c2-5166-4598-a4f6-cbc55563f7d7)
 
-打开`config.json`文件, 修改右边字段值为👉main, `"GMEEK_VERSION":"main"`
+打开`config.json`文件, 把`GMEEK_VERSION`修改值为👉`main`, `"GMEEK_VERSION":"main"`
 
 > [!NOTE]
 > 如果值是`last`的话, Actions 会失败, 因为默认值`last`是靠模板仓库的 tag 来构建的, 改成 main 就不会构建失败.
