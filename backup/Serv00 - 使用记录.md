@@ -8,7 +8,7 @@
 进入 Additional services 选项卡中找到 Run your own applications 项目,
 如下图所示, 必须要设置成如图所示的 Enabled.
 
-![1](https://github.com/user-attachments/assets/f1035178-d821-4704-85ce-0728cb44869a)
+![](https://github.com/user-attachments/assets/f1035178-d821-4704-85ce-0728cb44869a)
 
 如果不开启这一项, 自己的用户目录下的所有文件都无法添加可执行权限.
 
@@ -21,7 +21,7 @@
 每个账户只能创建3个端口.
 其中一个用来反代本地搭建 Alist 的端口, 这里我用 26666 端口.
 
-![2](https://github.com/user-attachments/assets/0d7b8337-b3b6-4d36-a257-6fb414bc06c6)
+![](https://github.com/user-attachments/assets/0d7b8337-b3b6-4d36-a257-6fb414bc06c6)
 
 ### 创建网站
 
@@ -29,7 +29,7 @@
 
 下图我写的是自己的域名.
 
-![3](https://github.com/user-attachments/assets/6cd71d0d-a0b9-4870-94dc-c43614d621a7)
+![](https://github.com/user-attachments/assets/6cd71d0d-a0b9-4870-94dc-c43614d621a7)
 
 其中 26666 这个端口是 Alist 服务的端口.
 
@@ -37,11 +37,11 @@
 
 站点创建完成后, 点击右边的 SSL 👉 WWW websites 👉 Manage.
 
-![4](https://github.com/user-attachments/assets/deb88a16-4e70-4a7d-aa8b-8cf6f37c6294)
+![](https://github.com/user-attachments/assets/deb88a16-4e70-4a7d-aa8b-8cf6f37c6294)
 
 点击 Add certificate, 确认好要创建证书的域名, 最后点击 Add 完成创建证书.
 
-![5](https://github.com/user-attachments/assets/81770332-00e0-4a12-9abe-b0a38978bbd3)
+![](https://github.com/user-attachments/assets/81770332-00e0-4a12-9abe-b0a38978bbd3)
 
 ### 安装 Alist
 
@@ -68,7 +68,7 @@ mkdir -p ~/domains/alist && cd ~/domains/alist && curl -L -o alist.tar.gz https:
 
 回到 Panel 面板, 找到 MySQL 选项卡, 使用 Add database 功能新建一个数据库:
 
-![6](https://github.com/user-attachments/assets/1bb33d42-3023-4eaf-9110-9357ffd1adfe)
+![](https://github.com/user-attachments/assets/1bb33d42-3023-4eaf-9110-9357ffd1adfe)
 
 Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 
@@ -80,11 +80,11 @@ Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 
 定位这个`config.json`文件, 双击编辑它:
 
-![7](https://github.com/user-attachments/assets/217ac434-f85c-4ca7-b649-a746e3d516a2)
+![](https://github.com/user-attachments/assets/217ac434-f85c-4ca7-b649-a746e3d516a2)
 
 我主要修改了`CDN` `database` `scheme`三个部分,
 
-![8](https://github.com/user-attachments/assets/ad8bafbc-f342-45b8-8e0f-944f06713078)
+![](https://github.com/user-attachments/assets/ad8bafbc-f342-45b8-8e0f-944f06713078)
 
 <table>
   <tr>
@@ -139,7 +139,7 @@ Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 ./alist server
 ```
 
-![9](https://github.com/user-attachments/assets/fffb55cc-ce5b-4943-8e2c-30580d85edce)
+![](https://github.com/user-attachments/assets/fffb55cc-ce5b-4943-8e2c-30580d85edce)
 
 运行正常, 显示的管理员账号的密码一定要记住. 接着使用 Ctrl+c 停止运行.
 
@@ -155,7 +155,7 @@ Database name 和 Username 字段为了方便好记就写 Alist 就行了.
 
 然后复制 Cloudflare 给的 dns 名称服务器.
 
-![10](https://github.com/user-attachments/assets/18a37ecb-fcb1-4ac6-b326-357c9c464070)
+![](https://github.com/user-attachments/assets/18a37ecb-fcb1-4ac6-b326-357c9c464070)
 
 然后转到你的域名提供服务商, 添加 dns 记录.
 
@@ -181,7 +181,7 @@ echo "$(date '+%Y-%m-%d %H:%M:%S')" > ~/domains/alist/logfile.txt
 
 我们需要创建一个每小时执行的任务进行保活, 如下图:
 
-![11](https://github.com/user-attachments/assets/d15aef00-9874-48ac-b5f4-0c4850b21bcb)
+![](https://github.com/user-attachments/assets/d15aef00-9874-48ac-b5f4-0c4850b21bcb)
 
 计划任务执行的是我的`runAlist.sh`脚本.
 
@@ -440,19 +440,19 @@ function delay(ms) {
 
 进入 Cloudflare 面板, 创建 Workers
 
-![1](https://github.com/user-attachments/assets/2faedb72-470b-41fd-9f1d-8a37663d3f2c)
+![](https://github.com/user-attachments/assets/2faedb72-470b-41fd-9f1d-8a37663d3f2c)
 
 名字随意, 建议写`Serv00Keep`方便好记, 然后右下角点部署.
 
-![2](https://github.com/user-attachments/assets/3be5f144-2992-45aa-b46f-0a8a88515211)
+![](https://github.com/user-attachments/assets/3be5f144-2992-45aa-b46f-0a8a88515211)
 
 部署完成后点击编辑代码.
 
-![3](https://github.com/user-attachments/assets/f53f84c0-5985-468d-9b6f-2204f3bbc0ca)
+![](https://github.com/user-attachments/assets/f53f84c0-5985-468d-9b6f-2204f3bbc0ca)
 
 粘贴 JavaScript 代码之后再点击部署.
 
-![4](https://github.com/user-attachments/assets/f6ffccb3-f80e-4db6-9347-3264c693289a)
+![](https://github.com/user-attachments/assets/f6ffccb3-f80e-4db6-9347-3264c693289a)
 
 ### 添加机密
 
@@ -461,17 +461,17 @@ function delay(ms) {
 按照`Json`格式编辑好自己的 serv00 账号和密码, 创建`ACCOUNTS_JSON`变量.
 按照`Json`格式编辑好自己的 telegram bot token, 创建`TELEGRAM_JSON`变量.
 
-![5](https://github.com/user-attachments/assets/22f0cb60-050a-4fd7-b264-08c590bc8362)
+![](https://github.com/user-attachments/assets/22f0cb60-050a-4fd7-b264-08c590bc8362)
 
 ### 添加触发事件
 
-![8](https://github.com/user-attachments/assets/e3e2ddf8-45ff-4a39-8743-dd8eb75ed1bf)
+![](https://github.com/user-attachments/assets/e3e2ddf8-45ff-4a39-8743-dd8eb75ed1bf)
 
 ## 手动部署
 
 机密和触发事件填写完成之后, 我们手动部署一次.
 
-![6](https://github.com/user-attachments/assets/3e9b4d9d-b222-4629-8868-5fee615c6411)
+![](https://github.com/user-attachments/assets/3e9b4d9d-b222-4629-8868-5fee615c6411)
 
 ## 手动执行验证效果
 
@@ -479,7 +479,7 @@ function delay(ms) {
 
 同时可以看到正常运行没问题, 接下来就是定时执行不用再管它了.
 
-![7](https://github.com/user-attachments/assets/d6f0ff1d-2408-4fbd-9071-2d01fb5a7763)
+![](https://github.com/user-attachments/assets/d6f0ff1d-2408-4fbd-9071-2d01fb5a7763)
 
 # 文章引用
 
