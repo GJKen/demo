@@ -1666,7 +1666,7 @@ document.addEventListener('wheel', e => handleScroll(e.deltaY));
 
 **效果图:**
 
-![](https://github.com/user-attachments/assets/db205027-0615-4456-bca3-b33856372283)
+![1](https://github.com/user-attachments/assets/884a4371-975b-44a4-8201-80afc1274671)
 
 ## 优化任务列表样式
 
@@ -1772,7 +1772,7 @@ Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 
 # 增加图片转换, 并适配图片懒加载
 
-打开`Gmeek.py`, 定位字符串`gmeek-html`
+打开`Gmeek.py`, 定位字符串`Gmeek-html`
 
 在附近任意行增加代码:
 
@@ -1795,6 +1795,8 @@ Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 ![](https://github.com/user-attachments/assets/f57b9f81-36b2-4484-835f-3105d54412a4)
 
 这样优化后可以在 Github issue 的 Preview 里面直接预览图片, 同时还能防备图床问题导致的图片丢失(`Gmeek-spoilertxt='Github, 稳!'`)
+
+唯一缺点就是当 issues 删除后, 图片也会跟着消失, 无法再被外部引用.
 
 # 添加 Gmeek-spoilertxt - 文字防剧透模糊效果
 
@@ -3578,7 +3580,7 @@ document.addEventListener('wheel', e => handleScroll(e.deltaY));
 
 **效果图:**
 
-![](https://github.com/user-attachments/assets/db205027-0615-4456-bca3-b33856372283)
+![1](https://github.com/user-attachments/assets/884a4371-975b-44a4-8201-80afc1274671)
 
 ## 优化任务列表样式
 
@@ -3684,7 +3686,7 @@ Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 
 # 增加图片转换, 并适配图片懒加载
 
-打开`Gmeek.py`, 定位字符串`gmeek-html`
+打开`Gmeek.py`, 定位字符串`Gmeek-html`
 
 在附近任意行增加代码:
 
@@ -3707,6 +3709,8 @@ Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 ![](https://github.com/user-attachments/assets/f57b9f81-36b2-4484-835f-3105d54412a4)
 
 这样优化后可以在 Github issue 的 Preview 里面直接预览图片, 同时还能防备图床问题导致的图片丢失(`Gmeek-spoilertxt='Github, 稳!'`)
+
+唯一缺点就是当 issues 删除后, 图片也会跟着消失, 无法再被外部引用.
 
 # 添加 Gmeek-spoilertxt - 文字防剧透模糊效果
 
@@ -5191,7 +5195,7 @@ after 是光标, blink 是光标动画.</p>
 <p>定位<code class="notranslate">line-height:1;</code>, 直接删除这个属性.</p>
 <p><strong>效果图:</strong></p>
 <div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/db205027-0615-4456-bca3-b33856372283">
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/884a4371-975b-44a4-8201-80afc1274671">
 <h2>优化任务列表样式</h2>
 <p>具体问题看<a href="https://github.com/Meekdai/Gmeek/issues/202" data-hovercard-type="issue" data-hovercard-url="/Meekdai/Gmeek/issues/202/hovercard">#202</a></p>
 <p>打开<code class="notranslate">Gmeek.py</code>, 定位<code class="notranslate">postBase=self.blogBase.copy()</code>, 在它的下面增加如下代码:</p>
@@ -5264,7 +5268,7 @@ after 是光标, blink 是光标动画.</p>
 <p>这种情况下, 如果在 html 中含有行内代码块标签并且内容含有 Gmeek-html, 会导致转换文章内容时出现显示错误,</p>
 <p>更改后缩小了匹配范围, 可直接用行内代码块👉<code class="notranslate">Gmeek-html</code>让其在文章内正常显示.</p>
 <h1>增加图片转换, 并适配图片懒加载</h1>
-<p>打开<code class="notranslate">Gmeek.py</code>, 定位字符串<code class="notranslate">gmeek-html</code></p>
+<p>打开<code class="notranslate">Gmeek.py</code>, 定位字符串<code class="notranslate">Gmeek-html</code></p>
 <p>在附近任意行增加代码:</p>
 <div class="highlight highlight-source-python"><pre class="notranslate">        <span class="pl-c"># 默认情况插入图片情况下的匹配规则&lt;p&gt; -&gt; &lt;a&gt; -&gt;&lt;img&gt;</span>
         <span class="pl-k">if</span> <span class="pl-s">'&lt;p&gt;&lt;a target="_blank" rel='</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>:
@@ -5281,6 +5285,7 @@ after 是光标, blink 是光标动画.</p>
 <div class="ImgLazyLoad-circle"></div>
 <img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/f57b9f81-36b2-4484-835f-3105d54412a4">
 <p>这样优化后可以在 Github issue 的 Preview 里面直接预览图片, 同时还能防备图床问题导致的图片丢失(<span class="spoilerText">Github, 稳!</span>)</p>
+<p>唯一缺点就是当 issues 删除后, 图片也会跟着消失, 无法再被外部引用.</p>
 <h1>添加 Gmeek-spoilertxt - 文字防剧透模糊效果</h1>
 <p><strong>默认模糊效果, 反复点击可反复显示或隐藏.</strong></p>
 <h2>打开 Gmeek.py</h2>

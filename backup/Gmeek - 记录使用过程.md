@@ -1654,7 +1654,7 @@ document.addEventListener('wheel', e => handleScroll(e.deltaY));
 
 **效果图:**
 
-![](https://github.com/user-attachments/assets/db205027-0615-4456-bca3-b33856372283)
+![1](https://github.com/user-attachments/assets/884a4371-975b-44a4-8201-80afc1274671)
 
 ## 优化任务列表样式
 
@@ -1760,7 +1760,7 @@ Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 
 # 增加图片转换, 并适配图片懒加载
 
-打开`Gmeek.py`, 定位字符串`gmeek-html`
+打开`Gmeek.py`, 定位字符串`Gmeek-html`
 
 在附近任意行增加代码:
 
@@ -1783,6 +1783,8 @@ Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 ![](https://github.com/user-attachments/assets/f57b9f81-36b2-4484-835f-3105d54412a4)
 
 这样优化后可以在 Github issue 的 Preview 里面直接预览图片, 同时还能防备图床问题导致的图片丢失(`Gmeek-spoilertxt="Github, 稳!"`)
+
+唯一缺点就是当 issues 删除后, 图片也会跟着消失, 无法再被外部引用.
 
 # 添加 Gmeek-spoilertxt - 文字防剧透模糊效果
 
