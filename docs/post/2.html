@@ -80,8 +80,8 @@
 
 </head>
 <style>
-:root{--functionBtnFlex-bgColor:#ffffff61;}
-[data-color-mode=light][data-light-theme=dark],[data-color-mode=light][data-light-theme=dark]::selection,[data-color-mode=dark][data-dark-theme=dark],[data-color-mode=dark][data-dark-theme=dark]::selection{--functionBtnFlex-bgColor:#ffffff00;}
+:root{--functionBtnFlex-bgColor:#ffffff61;--tooglebtn-bgColor:#c0e4ff9c}
+[data-color-mode=light][data-light-theme=dark],[data-color-mode=light][data-light-theme=dark]::selection,[data-color-mode=dark][data-dark-theme=dark],[data-color-mode=dark][data-dark-theme=dark]::selection{--functionBtnFlex-bgColor:#ffffff00;--tooglebtn-bgColor:#7dc2ff7a}
 @keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@keyframes blink{50%{opacity:0}100%{opacity:1}}@-webkit-keyframes blink{50%{opacity:0}100%{opacity:1}}@keyframes grow{0%{opacity:0.85;transform:scale(0.5);}100%{opacity:1;transform:translate(1);}}@-webkit-keyframes grow{0%{opacity:0.85;-webkit-transform:scale(0.5);}100%{opacity:1;-webkit-transform:translate(1);}}@keyframes slide-fade-in{0%{opacity:0;transform:translate3d(0,20px,0);}100%{opacity:1;transform:translate(0,0,0);}}@-webkit-keyframes slide-fade-in{0%{opacity:0;-webkit-transform:translate3d(0,20px,0);}100%{opacity:1;-webkit-transform:translate(0,0,0);}}
 body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padding:45px;font-size:16px;font-family:sans-serif;line-height:1.25}
 #header{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:24px;}
@@ -104,8 +104,20 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
 #cmButton{height:48px;margin-top:48px;}
 #comments{margin-top:64px;}
 #toogleBtn{
-    position: absolute;
-    left: 98px;
+    position: fixed;
+	top:120px;
+    left: 6%;
+	display: none;
+}
+#toogleBtn.active{
+	display: flex;
+	padding: 8px 9px;
+	color: #fff;
+	cursor: pointer;
+	transition: transform 0.5s ease-in-out;
+	background: var(--tooglebtn-bgColor);
+	backdrop-filter: blur(30px);
+	color: var(--fgColor-muted, var(--color-fg-muted));
 }
 #functionBtn div:first-of-type{display: flex;gap:20px}
 .g-emoji{font-size:24px;}
@@ -247,6 +259,7 @@ spoilers.length && spoilers.forEach(t => t.onclick = (() => t.classList.toggle("
 	// 创建检查按钮, 插入到指定id #functionBtn 的后面
 	const checkBtn = document.createElement('div');
 	checkBtn.id = 'checkBtn';
+	const toogleBtn = document.getElementById('toogleBtn');
 	const functionBtn = document.getElementById('functionBtn');
 	functionBtn.insertAdjacentElement('afterend', checkBtn);
 	
@@ -254,10 +267,15 @@ spoilers.length && spoilers.forEach(t => t.onclick = (() => t.classList.toggle("
 	const observer = new IntersectionObserver(entries => {
 		entries.forEach(entry => {
 			// 直接在 toggle 中使用 isIntersecting
+			toogleBtn.classList.toggle('active', !entry.isIntersecting);
 			functionBtn.classList.toggle('Btn-flex', !entry.isIntersecting);
 		});
 	}, { rootMargin: '300px 0px 0px 0px', threshold: 0 });
 	observer.observe(checkBtn);
+	// 为 toogleBtn 添加点击事件，修改 functionBtn 的 top 值
+	toogleBtn.addEventListener('click', () => {
+		functionBtn.style.top = functionBtn.style.top === '0px' ? '-64px' : '0'; 
+	});
 });
 document.getElementById("pathHome").setAttribute("d",IconList["home"]);
 document.getElementById("ArticleTOC").setAttribute("d","M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z");
