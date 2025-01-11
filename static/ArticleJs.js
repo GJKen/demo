@@ -285,6 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			height: 60%;
 			background-color: var(--toc-h1-after-bgColor);
 			transform: translateY(-50%);
+			border-radius: 6px;
 		}
 		/* 目录按钮 */
 		.toc-btn{
