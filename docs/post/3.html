@@ -677,9 +677,9 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
 #comments{margin-top:64px;}
 #toogleBtn{
     position: absolute;
-    left: 208px;
+    left: 98px;
 }
-#functionBtn div:first-of-type{gap:20px}
+#functionBtn div:first-of-type{display: flex;gap:20px}
 .g-emoji{font-size:24px;}
 @media (max-width:600px) {
     body {padding:8px;min-width:500px;}
@@ -730,9 +730,6 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
 		<svg class="octicon" width="16" height="16"><path id="ArticleTOC"></path></svg>
 	</a>
 </div>
-<a class="btn btn-invisible circle" id="toogleBtn">
-	<svg class="octicon" width="16" height="16"><path id="ArticleTOC" d="M3.22 10.53a.749.749 0 0 1 0-1.06l4.25-4.25a.749.749 0 0 1 1.06 0l4.25 4.25a.749.749 0 1 1-1.06 1.06L8 6.811 4.28 10.53a.749.749 0 0 1-1.06 0Z"></path></svg>
-</a>
 </div>
     <div id="content">
 <div class="markdown-body" id="postBody"><h1>注册 Serv00</h1>
@@ -1185,7 +1182,32 @@ if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
 </script>
 
 <script>
-const postTitle=document.querySelector(".postTitle"),textContent=postTitle.textContent;postTitle.textContent="";let idx=0;const writeTimer=setInterval(()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContent.length&&(clearInterval(writeTimer),postTitle.classList.remove("no-blink"))},80);postTitle.classList.add("no-blink");const spoilers=document.querySelectorAll(".spoilerText");spoilers.length&&spoilers.forEach(t=>t.onclick=(()=>t.classList.toggle("clear"))),document.addEventListener("DOMContentLoaded",()=>{const t=document.createElement("div");t.id="checkBtn";const e=document.getElementById("functionBtn");e.insertAdjacentElement("afterend",t),new IntersectionObserver(t=>{t.forEach(t=>{const n=t.isIntersecting;e.classList.toggle("Btn-flex",!n),e.style.top=n?"0":"-100px"})},{rootMargin:"300px 0px 0px 0px",threshold:0}).observe(t);let n=0;const o=t=>{e.style.top=t>0?"-100px":"0"};document.addEventListener("touchstart",t=>n=t.touches[0].clientY),document.addEventListener("touchmove",t=>o(t.touches[0].clientY-n)),document.addEventListener("wheel",t=>o(t.deltaY))});
+// const postTitle=document.querySelector(".postTitle"),textContent=postTitle.textContent;postTitle.textContent="";let idx=0;const writeTimer=setInterval(()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContent.length&&(clearInterval(writeTimer),postTitle.classList.remove("no-blink"))},80);postTitle.classList.add("no-blink");const spoilers=document.querySelectorAll(".spoilerText");spoilers.length&&spoilers.forEach(t=>t.onclick=(()=>t.classList.toggle("clear"))),document.addEventListener("DOMContentLoaded",()=>{const t=document.createElement("div");t.id="checkBtn";const e=document.getElementById("functionBtn");e.insertAdjacentElement("afterend",t),new IntersectionObserver(t=>{t.forEach(t=>{const n=t.isIntersecting;e.classList.toggle("Btn-flex",!n),e.style.top=n?"0":"-100px"})},{rootMargin:"300px 0px 0px 0px",threshold:0}).observe(t);let n=0;const o=t=>{e.style.top=t>0?"-100px":"0"};document.addEventListener("touchstart",t=>n=t.touches[0].clientY),document.addEventListener("touchmove",t=>o(t.touches[0].clientY-n)),document.addEventListener("wheel",t=>o(t.deltaY))});
+const postTitle = document.querySelector(".postTitle"),
+    textContent = postTitle.textContent;
+postTitle.textContent = "";
+let idx = 0;
+const writeTimer = setInterval(() => {
+    postTitle.textContent = textContent.slice(0, idx++), idx > textContent.length && (clearInterval(writeTimer), postTitle.classList.remove("no-blink"))
+}, 80);
+postTitle.classList.add("no-blink");
+const spoilers = document.querySelectorAll(".spoilerText");
+spoilers.length && spoilers.forEach(t => t.onclick = (() => t.classList.toggle("clear"))), document.addEventListener("DOMContentLoaded", () => {
+	// 创建检查按钮, 插入到指定id #functionBtn 的后面
+	const checkBtn = document.createElement('div');
+	checkBtn.id = 'checkBtn';
+	const functionBtn = document.getElementById('functionBtn');
+	functionBtn.insertAdjacentElement('afterend', checkBtn);
+	
+	// 用 IntersectionObserver 观察 checkBtn 这个div的可见性
+	const observer = new IntersectionObserver(entries => {
+		entries.forEach(entry => {
+			// 直接在 toggle 中使用 isIntersecting
+			functionBtn.classList.toggle('Btn-flex', !entry.isIntersecting);
+		});
+	}, { rootMargin: '300px 0px 0px 0px', threshold: 0 });
+	observer.observe(checkBtn);
+});
 document.getElementById("pathHome").setAttribute("d",IconList["home"]);
 document.getElementById("ArticleTOC").setAttribute("d","M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z");
 document.getElementById("pathSearch").setAttribute("d","M15.7 13.3l-3.81-3.83A5.93 5.93 0 0 0 13 6c0-3.31-2.69-6-6-6S1 2.69 1 6s2.69 6 6 6c1.3 0 2.48-.41 3.47-1.11l3.83 3.81c.19.2.45.3.7.3.25 0 .52-.09.7-.3a.996.996 0 0 0 0-1.41v.01zM7 10.7c-2.59 0-4.7-2.11-4.7-4.7 0-2.59 2.11-4.7 4.7-4.7 2.59 0 4.7 2.11 4.7 4.7 0 2.59-2.11 4.7-4.7 4.7z");
