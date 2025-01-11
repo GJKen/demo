@@ -22,7 +22,7 @@
 
 ![1](https://github.com/user-attachments/assets/9b5e0421-f960-4f1c-aad5-73e11acfd8ac)
 
-选择好之后点击 Install 就行, 我安装时的版本时0.6.6.
+选择好之后点击 Install 就行, 我安装时的版本是`0.6.6`
 
 安装完成即可关闭它.
 
@@ -32,6 +32,6 @@
 
 去 release 找到最新的文件并下载解压它 👉 [Github Release](https://github.com/YusufOzmen01/desktopmate-custom-avatar-loader/releases), 直接解压到 Desktop Meta 目录里面即可.
 
-> 本人当时使用 1.0.3版本
+> 本人当时使用`1.0.3`版本
 
 ![1](https://github.com/user-attachments/assets/f2bd1cb9-9127-481d-b269-6417b271be19)
