@@ -1,5 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Demo</title><link>https://GJKen.github.io/demo</link><description> </description><copyright>Demo</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp</url><title>avatar</title><link>https://GJKen.github.io/demo</link></image><lastBuildDate>Sun, 12 Jan 2025 15:49:53 +0000</lastBuildDate><managingEditor>Demo</managingEditor><ttl>60</ttl><webMaster>Demo</webMaster><item><title>FFmpeg - 使用记录</title><link>https://GJKen.github.io/demo/post/5.html</link><description># 前言&#13;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Demo</title><link>https://GJKen.github.io/demo</link><description> </description><copyright>Demo</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp</url><title>avatar</title><link>https://GJKen.github.io/demo</link></image><lastBuildDate>Thu, 06 Mar 2025 09:06:22 +0000</lastBuildDate><managingEditor>Demo</managingEditor><ttl>60</ttl><webMaster>Demo</webMaster><item><title>BD压制组鉴别心得</title><link>https://GJKen.github.io/demo/post/6.html</link><description>**U2分享園@動漫花園 论坛--&gt;会员交流区--&gt;日本动画压制组异闻录(2020.05.04 更新，增补内容，迫害群友)**
+
+&gt; 来源: https://u2.dmhy.org/forums.php?a ... &amp;authorid=42308
+https://www.tsdm39.com/forum.php?mod=viewthread&amp;tid=1121482
+
+# 写在最前面
+
+本帖主要写一些压制组的特点和轶事，来源于本人亲身经历和各处见闻，以及各论坛、Q群、大佬闲聊家常和网络传说，附带一些字幕组的相关闲谈，不求百分百准确，但求百分百娱乐。</description><guid isPermaLink="true">https://GJKen.github.io/demo/post/6.html</guid><pubDate>Thu, 06 Mar 2025 09:05:55 +0000</pubDate></item><item><title>FFmpeg - 使用记录</title><link>https://GJKen.github.io/demo/post/5.html</link><description># 前言&#13;
 &#13;
 Github 地址: https://github.com/FFmpeg/FFmpeg&#13;
 &#13;
