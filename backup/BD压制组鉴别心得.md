@@ -1,6 +1,6 @@
 **U2分享園@動漫花園 论坛-->会员交流区-->日本动画压制组异闻录(2020.05.04 更新，增补内容，迫害群友)**
 
-> 来源: https://u2.dmhy.org/forums.php?a ... &authorid=42308
+> 来源👉https://u2.dmhy.org/forums.php?action=viewtopic&topicid=11263&authorid=42308
 https://www.tsdm39.com/forum.php?mod=viewthread&tid=1121482
 
 # 写在最前面
