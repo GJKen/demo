@@ -12,172 +12,94 @@ https://www.nexusmods.com/games/broforce/mods
 3. [RocketLib](https://www.nexusmods.com/broforce/mods/9)
 
 选择免费的慢速下载就行.
-![](https://github.com/user-attachments/assets/a0b3ba8a-2a2f-466a-b49e-953160fe4b2b)
+![](https://github.com/user-attachments/assets/92ea5ba2-7b44-4b75-8143-c5860cb16ac3)
 
 ## 安装Utility Mod
 Utility Mod下载完成后可随意放在自己喜欢的地方并运行它.
 
 接着按图中所示下拉找到 Broforce,
-![](https://github.com/user-attachments/assets/43d74510-f3ab-47fb-8979-831f8dfe3335)
+<img width="367" height="625" alt="Image" src="https://github.com/user-attachments/assets/7344509d-ab8a-4983-b103-b775c1d3e97a" />
 
 没记错的话它会自动识别 Steam 已安装的 Broforce 文件路径.
-![](https://github.com/user-attachments/assets/eab700cb-cb55-407b-8746-cbe4627a933d)
+<img width="643" height="502" alt="Image" src="https://github.com/user-attachments/assets/403e8a02-d58f-4f8a-930e-f12ddb2f0428" />
 
 ## 安装Mod
 打开 Utility Mod, 转到Mods界面, 在这里可以直接把下载好的 mod 压缩包拖进来安装, 手动选择路径也行, 2种选择.
-![](https://github.com/user-attachments/assets/1869795e-e062-44a6-8e57-6cc58cefbd95)
+<img width="374" height="508" alt="Image" src="https://github.com/user-attachments/assets/debd579f-f6fd-4dcc-b7e6-935c41eab743" />
 
 > [!IMPORTANT]
 > BroMaker 和 RocketLib 是必须要安装的
 > 使用其它 mod 之前, 须安装完三件套之后运行一次游戏再安装其它 mod.
 
 安装效果图, 默认快捷键是 Ctrl+f10, 关卡中也可以打开.
-![](https://github.com/user-attachments/assets/1ed49336-f3b9-4623-ae9b-ec82ef58bfab)
+<img width="1913" height="1080" alt="Image" src="https://github.com/user-attachments/assets/904aa640-c5f6-4b62-b85b-ac305899d5cc" />
 
 设置中可以修改默认快捷键
-![](https://github.com/user-attachments/assets/874f3d3f-06a6-4a21-b757-8ee96afc19bb)
+<img width="996" height="239" alt="Image" src="https://github.com/user-attachments/assets/1feaa3f3-e84b-4b91-b0ad-ee8507612692" />
 
 # 记录自用Mod
 
 ## 角色
-| Name | 图片
-|-|-
-| [Captain Ameribro](https://www.nexusmods.com/broforce/mods/34) | ![](https://github.com/user-attachments/assets/7ba4091a-27d5-4683-9de8-af1f6b385a39)
-| [Mission Impossibro](https://www.nexusmods.com/broforce/mods/36) | ![](https://github.com/user-attachments/assets/db3144d4-53f5-4e5a-b223-fbc9111432dc)
-| [Brostbuster](https://www.nexusmods.com/broforce/mods/39) | ![](https://github.com/user-attachments/assets/cfc69d59-f954-4050-9aaf-31c30a3d87bd)
-| [R.J. Brocready](https://www.nexusmods.com/broforce/mods/41) | ![](https://github.com/user-attachments/assets/e558b189-f3e7-412f-a246-74ae7d8c559a) |
-| [Imperator Furibrosa](https://www.nexusmods.com/broforce/mods/43) | ![](https://github.com/user-attachments/assets/291a7051-15c3-469a-b6e5-874ea44704e0)
 
-<details><summary>感谢以下大佬提供的插件, 爱来自开源❤❤❤</summary>
-
-> 以下排名不分先后
+<details><summary>点击查看</summary>
 <table>
-  <tr>
-  <td align="center">
-		<a href="https://steamcommunity.com/id/sorallll">
-			<img src="https://avatars.githubusercontent.com/u/49420198" width="60px;" alt="钵钵鸡"/>
-			<p>Captain Ameribro</p>
-		</a>
-		<a href="https://www.nexusmods.com/broforce/mods/34">l4d2</a>
-	</td>
-	<td align="center">
-		<a href="https://github.com/Target5150">
-			<img src="https://avatars.githubusercontent.com/u/42076548" width="60px;" alt="Target5150"/>
-			<p>Target5150</p>
-		<a href="https://github.com/Target5150/MoYu_Server_Stupid_Plugins">MoYu_Server_Stupid_Plugins</a>
-		</a>
-	</td>
-	<td align="center">
-		<a href="https://github.com/Lin515">
-			<img src="https://avatars.githubusercontent.com/u/35224561" width="60px;" alt="Lin515"/>
-			<p>Lin515</p>
-		<a href="https://github.com/Lin515/L4D_LinGe_Plugins">L4D2_LinGe_VScripts</a>
-		</a>
-	</td>
-	<td align="center">
-		<a href="https://github.com/fbef0102">
-			<img src="https://avatars.githubusercontent.com/u/12229810" width="60px;" alt="fbef0102"/>
-			<p>fbef0102</p>
-		</a>
-		<a href="https://github.com/fbef0102/L4D1_2-Plugins">L4D1_2-Plugins</a>
-	</td>
-	<td align="center">
-		<a href="https://github.com/Caibiii">
-			<img src="https://avatars.githubusercontent.com/u/64267950" width="60px;" alt="Caibiii"/>
-			<p style="margin-bottom: 0;">Caibiii</p>
-			<a href="https://github.com/Caibiii/AnneServer">AnneServer</a>
-		</a>
-	</td>
-	</tr>
-	<tr>
-	<td align="center">
-		<a href="https://github.com/fdxx">
-			<img src="https://avatars.githubusercontent.com/u/44993923" width="60px;" alt="fdxx"/>
-			<p>fdxx</p>
-		</a>
-		<a href="https://github.com/fdxx/l4d2_plugins">l4d2_plugins</a>
-	</td>
-	<td align="center">
-		<a href="https://github.com/SilvDev">
-			<img src="https://avatars.githubusercontent.com/u/6685181" width="60px;" alt="Silvers"/>
-			<p>Silvers</p>
-		</a>
-		<a href="https://www.sourcemod.net/plugins.php?author=Silvers&search=1&sortby=title&order=0">his plugins</a>
-	</td>
-	<td align="center">
-		<a href="https://github.com/SirPlease">
-			<img src="https://avatars.githubusercontent.com/u/2643403" width="60px;" alt="SirPlease"/>
-			<p>SirPlease</p>
-		</a>
-		<a href="https://github.com/SirPlease/L4D2-Competitive-Rework">L4D2-Competitive-Rework</a>
-	</td>
-	<td align="center">
-		<a href="https://github.com/PencilMario">
-			<img src="https://avatars.githubusercontent.com/u/72117241" width="60px;" alt="PencilMario"/>
-			<p>PencilMario</p>
-			</a>
-		<a href="https://github.com/PencilMario/L4D2-Not0721Here-CoopSvPlugins">L4D2-Not0721Here-CoopSvPlugins</a>
-	</td>
-	<td align="center">
-		<a href="https://github.com/fantasylidong">
-			<img src="https://avatars.githubusercontent.com/u/22582796" width="60px;" alt="fantasylidong"/>
-			<p>fantasylidong</p>
-		</a>
-		<a href="https://github.com/fantasylidong/CompetitiveWithAnne">CompetitiveWithAnne</a>
-	</td>
-	</tr>
-	<tr>
-	<td align="center">
-		<a href="https://github.com/NanakaNeko">
-			<img src="https://avatars.githubusercontent.com/u/81429435" width="60px;" alt="NanakaNeko"/>
-			<p>NanakaNeko</p>
-		</a>
-		<a href="https://github.com/NanakaNeko/l4d2_plugins_coop">l4d2_plugins_coop</a>
-	</td>
-	<td align="center">
-		<a href="https://github.com/accelerator74">
-			<img src="https://avatars.githubusercontent.com/u/18032476" width="60px;" alt="accelerator74"/>
-			<p>accelerator74</p>
-		</a>
-		<a href="https://github.com/accelerator74/sp-plugins">l4d2_plugins_coop</a>
-	</td>
-	<td align="center">
-		<a href="https://github.com/GlowingTree880">
-			<img src="https://avatars.githubusercontent.com/u/85665832" width="60px;" alt="GlowingTree880"/>
-			<p>夜雨真白</p>
-		</a>
-		<a href="https://github.com/GlowingTree880/L4D2_LittlePlugins">L4D2_LittlePlugins</a>
-	</td>
-	<td align="center">
-		<a href="https://github.com/txuk1x">
-			<img src="https://cdn-fusion.imgimg.cc/i/2023/xzLEe175aEhb2A7u.jpg" width="60px;" alt="Kita"/>
-			<p>Kita</p>
-		</a>
-		<p>已跑路</p>
-	</td>
-	<td align="center">
-		<a href="https://github.com/Hatsune-Imagine">
-			<img src="https://cdn-fusion.imgimg.cc/i/2023/efygQTyatPX1Q9uy.jpg" width="60px;" alt="Hatsune Imagine"/>
-			<p>Hatsune Imagine</p>
-		</a>
-		<a href="https://github.com/Hatsune-Imagine/l4d2-plugins">l4d2-plugins</a>
-	</td>
-	</tr>
+	<thead>
+		<tr>
+			<th align="center">Name</th>
+			<th align="center">Preview</th>
+		</tr>
+	</thead>
 	<tr>
 		<td align="center">
-				<img src="https://cdn-fusion.imgimg.cc/i/2023/MpOZcjEy3hqU8Vzl.jpg" width="60px;" alt="豆瓣酱な"/>
-				<p>豆瓣酱な</p>
-				<a href="https://github.com/apples1949/douban-l4d2-plugins-set">douban-l4d2-plugins-set</a>
+			<a href="https://www.nexusmods.com/broforce/mods/34"><p>Captain Ameribro</p></a>
 		</td>
 		<td align="center">
-			<a href="https://github.com/apples1949">
-				<img src="https://avatars.githubusercontent.com/u/49244656" width="60px;" alt="apples1949"/>
-				<p>apples1949</p>
-				<a href="https://github.com/apples1949/l4dplugins">l4dplugins</a>
+			<img src="https://github.com/user-attachments/assets/0c566b45-f969-4031-9b71-9e51e9a43b20" alt="Captain Ameribro"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="center">
+			<a href="https://www.nexusmods.com/broforce/mods/36"><p>Mission Impossibro</p></a>
+		</td>
+		<td align="center">
+			<img src="https://github.com/user-attachments/assets/f1e55bcc-8926-4611-8efc-29f507c8bbd3" alt="Mission Impossibro"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="center">
+			<a href="https://www.nexusmods.com/broforce/mods/39"><p>Brostbuster</p></a>
+		</td>
+		<td align="center">
+			<img src="https://github.com/user-attachments/assets/711b1aa0-3792-4170-8315-d1ab63b37df5" alt="Brostbuster"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="center">
+			<a href="https://www.nexusmods.com/broforce/mods/36"><p>R.J. Brocready</p></a>
+		</td>
+		<td align="center">
+			<img src="https://github.com/user-attachments/assets/28151c9b-1f35-4f6d-8279-da7a3801cbf0" alt="R.J. Brocready"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="center">
+			<a href="https://www.nexusmods.com/broforce/mods/36"><p>Imperator Furibrosa</p></a>
+		</td>
+		<td align="center">
+			<img src="https://github.com/user-attachments/assets/97601e8f-ab72-4610-962f-002756fd43b3" alt="Imperator Furibrosa"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="center">
+			<a href="https://www.nexusmods.com/broforce/mods/52"><p>Jack Broton</p></a>
+		</td>
+		<td align="center">
+			<img src="https://github.com/user-attachments/assets/ef3fffc8-e6cb-41a2-bf6b-67b4a4b00668" alt="Jack Broton"/>
 		</td>
 	</tr>
 </table>
 </details>
+
 
 ## 功能性
 | Name | Function
@@ -185,3 +107,6 @@ Utility Mod下载完成后可随意放在自己喜欢的地方并运行它.
 | [Swap Bros](https://www.nexusmods.com/broforce/mods/1) | 设置里可自定义快捷键顺序切换角色, 包括添加的自定义角色, 还可屏蔽角色顺序切换.
 
 ## 界面
+| Name | Function
+|-|-
+| [Smaller HUD](https://www.nexusmods.com/broforce/mods/29) | 设置里可调整HUD大小的缩放, 调至最小可隐藏
