@@ -3850,14 +3850,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </head>
 <style>
-:root{--functionBtnFlex-bgColor:#ffffff61;}
-[data-color-mode=light][data-light-theme=dark],[data-color-mode=light][data-light-theme=dark]::selection,[data-color-mode=dark][data-dark-theme=dark],[data-color-mode=dark][data-dark-theme=dark]::selection{--functionBtnFlex-bgColor:#ffffff00;}
+:root{--functionBtnFlex-bgColor:#ffffff61;--tooglebtn-bgColor:#c0e4ff9c}
+[data-color-mode=light][data-light-theme=dark],[data-color-mode=light][data-light-theme=dark]::selection,[data-color-mode=dark][data-dark-theme=dark],[data-color-mode=dark][data-dark-theme=dark]::selection{--functionBtnFlex-bgColor:#ffffff00;--tooglebtn-bgColor:#7dc2ff7a}
 @keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@keyframes blink{50%{opacity:0}100%{opacity:1}}@-webkit-keyframes blink{50%{opacity:0}100%{opacity:1}}@keyframes grow{0%{opacity:0.85;transform:scale(0.5);}100%{opacity:1;transform:translate(1);}}@-webkit-keyframes grow{0%{opacity:0.85;-webkit-transform:scale(0.5);}100%{opacity:1;-webkit-transform:translate(1);}}@keyframes slide-fade-in{0%{opacity:0;transform:translate3d(0,20px,0);}100%{opacity:1;transform:translate(0,0,0);}}@-webkit-keyframes slide-fade-in{0%{opacity:0;-webkit-transform:translate3d(0,20px,0);}100%{opacity:1;-webkit-transform:translate(0,0,0);}}
 body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padding:45px;font-size:16px;font-family:sans-serif;line-height:1.25}
 #header{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:24px;}
 #functionBtn{display:flex;justify-content:center;margin:20px 0;gap:20px;}
 #functionBtn a{padding:14px 16px;}
-#functionBtn.Btn-flex{position:fixed;margin:0;padding:20px 0;top:-100px;left:0;width:100%;min-width:500px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;animation:fadeIn.2s ease-in 0s forwards;transition:top 0.3s ease-in-out}
+#functionBtn.Btn-flex{position:fixed;margin:0;padding:8px 0;top:-64px;left:0;width:100%;min-width:500px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;animation:fadeIn.2s ease-in 0s forwards;transition:top 0.3s ease-in-out}
 #footer{margin-top:64px;text-align:center;font-size:small;}
 body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animation:slide-fade-in 0.8s ease;animation:slide-fade-in 0.8s ease}
 .title-left img{animation:grow 0.5s cubic-bezier(0.23,1,0.32,1);-webkit-animation:grow 0.5s cubic-bezier(0.23,1,0.32,1);}
@@ -3873,6 +3873,12 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
 #postBody hr{height:2px;}
 #cmButton{height:48px;margin-top:48px;}
 #comments{margin-top:64px;}
+
+#toogleBtn{position:fixed;top:51px;right:6%;display:none;}
+#toogleBtn.active,#toogleBtn path{display:flex;padding:6px 7px;fill:var(--title-right-svgColor);cursor:pointer;transition:transform 0.3s ease-in-out;background:var(--tooglebtn-bgColor)}
+#toogleBtn.active:hover svg path{fill:var(--title-right-svgHovercolor);}
+#functionBtn div:first-of-type{display:flex;gap:20px}
+
 .g-emoji{font-size:24px;}
 @media (max-width:600px) {
     body {padding:8px;min-width:500px;}
@@ -3899,27 +3905,32 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
 <h1 class="postTitle">Gmeek - 记录使用过程</h1>
 </div>
     <div id="functionBtn">
-<a href="https://GJKen.github.io/demo" id="buttonHome" class="btn btn-invisible circle" title="首页">
-	<svg class="octicon" width="16" height="16"><path id="pathHome" fill-rule="evenodd"></path></svg>
-</a>
-
-<a href="https://github.com/GJKen/demo/issues/1" target="_blank" class="btn btn-invisible circle" title="Issue">
-	<svg class="octicon" width="16" height="16"><path id="pathIssue" fill-rule="evenodd"></path></svg>
-</a>
-
-
-<a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
-	<svg class="octicon" width="16" height="16" ><path id="themeSwitch" fill-rule="evenodd"></path></svg>
-</a>
-
-<a href="https://GJKen.github.io/demo/tag.html" id="buttonSearch" class="btn btn-invisible circle" title="搜索">
-	<svg class="octicon" width="16" height="16" >
-		<path id="pathSearch" fill-rule="evenodd"></path>
-	</svg>
-</a>
-
-<a class="ArticleTOC btn btn-invisible circle" title="文章目录">
-	<svg class="octicon" width="16" height="16"><path id="ArticleTOC"></path></svg>
+<div>
+	<a href="https://GJKen.github.io/demo" id="buttonHome" class="btn btn-invisible circle" title="首页">
+		<svg class="octicon" width="16" height="16"><path id="pathHome" fill-rule="evenodd"></path></svg>
+	</a>
+	
+	<a href="https://github.com/GJKen/demo/issues/1" target="_blank" class="btn btn-invisible circle" title="Issue">
+		<svg class="octicon" width="16" height="16"><path id="pathIssue" fill-rule="evenodd"></path></svg>
+	</a>
+	
+	
+	<a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+		<svg class="octicon" width="16" height="16" ><path id="themeSwitch" fill-rule="evenodd"></path></svg>
+	</a>
+	
+	<a href="https://GJKen.github.io/demo/tag.html" id="buttonSearch" class="btn btn-invisible circle" title="搜索">
+		<svg class="octicon" width="16" height="16" >
+			<path id="pathSearch" fill-rule="evenodd"></path>
+		</svg>
+	</a>
+	
+	<a class="ArticleTOC btn btn-invisible circle" title="文章目录">
+		<svg class="octicon" width="16" height="16"><path id="ArticleTOC"></path></svg>
+	</a>
+</div>
+<a class="circle" id="toogleBtn">
+	<svg class="octicon" width="24" height="24"><path id="ArticleTOC" d="M5.22 8.22a.749.749 0 0 0 0 1.06l6.25 6.25a.749.749 0 0 0 1.06 0l6.25-6.25a.749.749 0 1 0-1.06-1.06L12 13.939 6.28 8.22a.749.749 0 0 0-1.06 0Z"></path></svg>
 </a>
 </div>
     <div id="content">
@@ -5529,7 +5540,8 @@ if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
 </script>
 
 <script>
-const postTitle=document.querySelector(".postTitle"),textContent=postTitle.textContent;postTitle.textContent="";let idx=0;const writeTimer=setInterval(()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContent.length&&(clearInterval(writeTimer),postTitle.classList.remove("no-blink"))},80);postTitle.classList.add("no-blink");const spoilers=document.querySelectorAll(".spoilerText");spoilers.length&&spoilers.forEach(t=>t.onclick=(()=>t.classList.toggle("clear"))),document.addEventListener("DOMContentLoaded",()=>{const t=document.createElement("div");t.id="checkBtn";const e=document.getElementById("functionBtn");e.insertAdjacentElement("afterend",t),new IntersectionObserver(t=>{t.forEach(t=>{const n=t.isIntersecting;e.classList.toggle("Btn-flex",!n),e.style.top=n?"0":"-100px"})},{rootMargin:"300px 0px 0px 0px",threshold:0}).observe(t);let n=0;const o=t=>{e.style.top=t>0?"-100px":"0"};document.addEventListener("touchstart",t=>n=t.touches[0].clientY),document.addEventListener("touchmove",t=>o(t.touches[0].clientY-n)),document.addEventListener("wheel",t=>o(t.deltaY))});
+// const postTitle=document.querySelector(".postTitle"),textContent=postTitle.textContent;postTitle.textContent="";let idx=0;const writeTimer=setInterval(()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContent.length&&(clearInterval(writeTimer),postTitle.classList.remove("no-blink"))},80);postTitle.classList.add("no-blink");const spoilers=document.querySelectorAll(".spoilerText");spoilers.length&&spoilers.forEach(t=>t.onclick=(()=>t.classList.toggle("clear"))),document.addEventListener("DOMContentLoaded",()=>{const t=document.createElement("div");t.id="checkBtn";const e=document.getElementById("functionBtn");e.insertAdjacentElement("afterend",t),new IntersectionObserver(t=>{t.forEach(t=>{const n=t.isIntersecting;e.classList.toggle("Btn-flex",!n),e.style.top=n?"0":"-100px"})},{rootMargin:"300px 0px 0px 0px",threshold:0}).observe(t);let n=0;const o=t=>{e.style.top=t>0?"-100px":"0"};document.addEventListener("touchstart",t=>n=t.touches[0].clientY),document.addEventListener("touchmove",t=>o(t.touches[0].clientY-n)),document.addEventListener("wheel",t=>o(t.deltaY))});
+const postTitle=document.querySelector(".postTitle"),textContent=postTitle.textContent;postTitle.textContent="";let idx=0;const writeTimer=setInterval(()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContent.length&&(clearInterval(writeTimer),postTitle.classList.remove("no-blink"))},80);postTitle.classList.add("no-blink");const spoilers=document.querySelectorAll(".spoilerText");spoilers.length&&spoilers.forEach(t=>t.onclick=(()=>t.classList.toggle("clear"))),document.addEventListener("DOMContentLoaded",()=>{const t=document.createElement("div");t.id="checkBtn";const e=document.getElementById("toogleBtn"),n=document.getElementById("functionBtn");n.insertAdjacentElement("afterend",t),new IntersectionObserver(t=>{t.forEach(t=>{e.classList.toggle("active",!t.isIntersecting),n.classList.toggle("Btn-flex",!t.isIntersecting)})},{rootMargin:"300px 0px 0px 0px",threshold:0}).observe(t),e.addEventListener("click",()=>{n.style.top="0px"===n.style.top?"-64px":"0",e.style.transform="rotate(180deg)"===e.style.transform?"rotate(0deg)":"rotate(180deg)"})});
 document.getElementById("pathHome").setAttribute("d",IconList["home"]);
 document.getElementById("ArticleTOC").setAttribute("d","M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z");
 document.getElementById("pathSearch").setAttribute("d","M15.7 13.3l-3.81-3.83A5.93 5.93 0 0 0 13 6c0-3.31-2.69-6-6-6S1 2.69 1 6s2.69 6 6 6c1.3 0 2.48-.41 3.47-1.11l3.83 3.81c.19.2.45.3.7.3.25 0 .52-.09.7-.3a.996.996 0 0 0 0-1.41v.01zM7 10.7c-2.59 0-4.7-2.11-4.7-4.7 0-2.59 2.11-4.7 4.7-4.7 2.59 0 4.7 2.11 4.7 4.7 0 2.59-2.11 4.7-4.7 4.7z");
