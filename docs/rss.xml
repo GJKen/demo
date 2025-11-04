@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Demo</title><link>https://GJKen.github.io/demo</link><description> </description><copyright>Demo</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp</url><title>avatar</title><link>https://GJKen.github.io/demo</link></image><lastBuildDate>Tue, 04 Nov 2025 12:16:26 +0000</lastBuildDate><managingEditor>Demo</managingEditor><ttl>60</ttl><webMaster>Demo</webMaster><item><title>Brofroce Mod使用教程</title><link>https://GJKen.github.io/demo/post/7.html</link><description># 前言
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Demo</title><link>https://GJKen.github.io/demo</link><description> </description><copyright>Demo</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp</url><title>avatar</title><link>https://GJKen.github.io/demo</link></image><lastBuildDate>Tue, 04 Nov 2025 12:22:23 +0000</lastBuildDate><managingEditor>Demo</managingEditor><ttl>60</ttl><webMaster>Demo</webMaster><item><title>Brofroce Mod使用教程</title><link>https://GJKen.github.io/demo/post/7.html</link><description># 前言
 **此教程主要记录 borforce 的 mod 安装以及自用的 mod**
 &gt; 引用来源: [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=2434812447)
 
 # Mod 网址
 https://www.nexusmods.com/games/broforce/mods
 
-# 三件套
+# 安装
 首先下载下面链接的这3个文件:
 1. [Utility Mod](https://www.nexusmods.com/broforce/mods/2)
 2. [BroMaker](https://www.nexusmods.com/broforce/mods/13)
@@ -37,6 +37,10 @@ Utility Mod下载完成后可随意放在自己喜欢的地方并运行它.
 
 设置中可以修改默认快捷键
 &lt;img width='996' height='239' alt='Image' src='https://github.com/user-attachments/assets/1feaa3f3-e84b-4b91-b0ad-ee8507612692' /&gt;
+
+## 安装角色类Mod
+找到 Broforce 的安装路径, 如下图所示进入 `BroMaker_Storage` 文件夹, 把角色类 Mod 解压后丢这里就行.
+&lt;img width='792' height='297' alt='Image' src='https://github.com/user-attachments/assets/8cd7e4df-806c-46f4-bf9f-78e9dc07ddc6' /&gt;
 
 # 记录自用Mod
 
@@ -101,7 +105,6 @@ Utility Mod下载完成后可随意放在自己喜欢的地方并运行它.
 &lt;/table&gt;
 &lt;/details&gt;
 
-
 ## 功能性
 | Name | Function
 |-|-
@@ -110,7 +113,7 @@ Utility Mod下载完成后可随意放在自己喜欢的地方并运行它.
 ## 界面
 | Name | Function
 |-|-
-| [Smaller HUD](https://www.nexusmods.com/broforce/mods/29) | 设置里可调整HUD大小的缩放, 调至最小可隐藏。</description><guid isPermaLink="true">https://GJKen.github.io/demo/post/7.html</guid><pubDate>Tue, 04 Nov 2025 09:08:32 +0000</pubDate></item><item><title>BD压制组鉴别心得</title><link>https://GJKen.github.io/demo/post/6.html</link><description>**U2分享園@動漫花園 论坛--&gt;会员交流区--&gt;日本动画压制组异闻录(2020.05.04 更新，增补内容，迫害群友)**
+| [Smaller HUD](https://www.nexusmods.com/broforce/mods/29) | 设置里可调整 HUD 大小的缩放, 调至最小可隐藏.。</description><guid isPermaLink="true">https://GJKen.github.io/demo/post/7.html</guid><pubDate>Tue, 04 Nov 2025 09:08:32 +0000</pubDate></item><item><title>BD压制组鉴别心得</title><link>https://GJKen.github.io/demo/post/6.html</link><description>**U2分享園@動漫花園 论坛--&gt;会员交流区--&gt;日本动画压制组异闻录(2020.05.04 更新，增补内容，迫害群友)**
 
 &gt; 来源👉https://u2.dmhy.org/forums.php?action=viewtopic&amp;topicid=11263&amp;authorid=42308
 https://www.tsdm39.com/forum.php?mod=viewthread&amp;tid=1121482

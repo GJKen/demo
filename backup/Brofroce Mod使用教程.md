@@ -5,7 +5,7 @@
 # Mod 网址
 https://www.nexusmods.com/games/broforce/mods
 
-# 三件套
+# 安装
 首先下载下面链接的这3个文件:
 1. [Utility Mod](https://www.nexusmods.com/broforce/mods/2)
 2. [BroMaker](https://www.nexusmods.com/broforce/mods/13)
@@ -36,6 +36,10 @@ Utility Mod下载完成后可随意放在自己喜欢的地方并运行它.
 
 设置中可以修改默认快捷键
 <img width="996" height="239" alt="Image" src="https://github.com/user-attachments/assets/1feaa3f3-e84b-4b91-b0ad-ee8507612692" />
+
+## 安装角色类Mod
+找到 Broforce 的安装路径, 如下图所示进入 `BroMaker_Storage` 文件夹, 把角色类 Mod 解压后丢这里就行.
+<img width="792" height="297" alt="Image" src="https://github.com/user-attachments/assets/8cd7e4df-806c-46f4-bf9f-78e9dc07ddc6" />
 
 # 记录自用Mod
 
@@ -100,7 +104,6 @@ Utility Mod下载完成后可随意放在自己喜欢的地方并运行它.
 </table>
 </details>
 
-
 ## 功能性
 | Name | Function
 |-|-
@@ -109,4 +112,4 @@ Utility Mod下载完成后可随意放在自己喜欢的地方并运行它.
 ## 界面
 | Name | Function
 |-|-
-| [Smaller HUD](https://www.nexusmods.com/broforce/mods/29) | 设置里可调整HUD大小的缩放, 调至最小可隐藏
+| [Smaller HUD](https://www.nexusmods.com/broforce/mods/29) | 设置里可调整 HUD 大小的缩放, 调至最小可隐藏.
