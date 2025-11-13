@@ -4,664 +4,230 @@
     <meta content="text/html; charset=utf-8" http-equiv="content-type" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href='https://gjkblog.us.kg/demo/primer.css' rel='stylesheet' />
+    <link href='https://gjken.github.io/demo/primer.css' rel='stylesheet' />
     
     <link rel="icon" href="https://pic.imgdb.cn/item/6734c652d29ded1a8cc038aa.jpg"><script>
         let theme = localStorage.getItem("meek_theme") || "light";
         document.documentElement.setAttribute("data-color-mode", theme);
     </script>
-<meta name="description" content="# 注册 Serv00
+<meta name="description" content="# 前言
 
-注册没什么好说的, gmail+干净一点的ip基本上都可以成功, 这里不多做展开.
-收不到邮件信息的估计是邮箱问题. 比如:https://mail.proton.me
+Github 地址: https://github.com/FFmpeg/FFmpeg
 
-# 准备工作
+> [!NOTE]
+> cmd 命令行使用如果没有写输出路径的话默认输出在:`C:\Users\Administrator`
 
-进入 Additional services 选项卡中找到 Run your own applications 项目,
-如下图所示, 必须要设置成如图所示的 Enabled.
+# 视频转格式
 
-![]https://github.com/user-attachments/assets/39b82af5-8dc0-4dbc-800a-124ccd1c64d4)
+如果只是容器改变, 编码没改,可以使用`-c copy`参数或`-c:a copy`参数或`-c:v copy`参数.
 
-如果不开启这一项, 自己的用户目录下的所有文件都无法添加可执行权限.
+比如:
 
-# 部署记录
-
-## Alist
-
-### 创建端口
-
-每个账户只能创建3个端口.
-其中一个用来反代本地搭建 Alist 的端口, 这里我用 26666 端口.
-
-![]https://github.com/user-attachments/assets/950d6c90-56cf-457a-86fa-b9f1ff953257)
-
-### 创建网站
-
-> Serv00 账号创建好之后默认就有一个网站, 一般是`USERNAME.serv00.net`, 可以随意删除.
-
-下图我写的是自己的域名.
-
-![image](https://github.com/user-attachments/assets/7a00527b-a545-48a2-8029-2d4c2b047b3c)
-
-其中 26666 这个端口是 Alist 服务的端口.
-
-### 网站添加 SSL 证书
-
-站点创建完成后, 点击上方的 Manage SSL certificates, 再点击 Manage.
-
-![](https://github.com/user-attachments/assets/15e58806-d2f0-43de-bf8d-97905680e8cc)
-
-点击 Add certificate, 确认好要创建证书的域名, 最后点击 Add 完成创建证书.
-
-![](https://github.com/user-attachments/assets/6371d2eb-6cb7-4cd8-9cd3-b4800b20bfa7)
-
-### 安装 Alist
-
-> [!TIP]
-> Alist 官方在 24年8月17日, 增加了 [beta](https://github.com/AlistGo/alist/releases/tag/beta) 版本, 支持 FreeBSD 系统下能够运行的 Alist 可执行文件🎉
-
-Serv00 本身提供的网站托管在`~/domains`路径下, 所以我建议把 Alist 也部署到这个路径下的子目录.
-
-一键创建目录并下载 Alist, 增加执行权限, 复制到终端粘贴使用.
-
-```bash
-mkdir -p ~/domains/alist && cd ~/domains/alist && curl -L -o alist.tar.gz https://github.com/AlistGo/alist/releases/download/beta/alist-freebsd-amd64.tar.gz && tar -xzf alist.tar.gz && chomd +x alist
+```
+ffmpeg -i input.avi -q 1 -c copy output.mov
 ```
 
-### 第一次启动 Alist 生成配置文件
+# 提取视频中的音频
 
-然后需要先启动一次 Alist 让它生成配置文件, 此次启动一定会失败, 请不用在意~
+## 提取 mp3 格式
 
-```bash
-./alist server
+```
+ffmpeg -i input.mp4 -vn -c:a libmp3lame output.mp3
 ```
 
-### 创建 Alist 所需数据库
+## 提取无损 wav 格式
 
-回到 Panel 面板, 找到 MySQL 选项卡, 使用 Add database 功能新建一个数据库:
-
-![]https://github.com/user-attachments/assets/dcad4052-e060-4ac8-85cd-4ff6afd65557)
-
-Database name 和 Username 字段为了方便好记就写 Alist 就行了.
-
-> 密码要求含有大写字母, 小写字母和数字三种字符, 且长度必须超过6个字符.
-
-### 修改配置文件
-
-进入 Panel 面板, 找到 File manager 选项卡, 会如下图的进入文件管理器.
-
-定位这个`config.json`文件, 双击编辑它:
-
-![]https://github.com/user-attachments/assets/73980333-7b81-4f5a-836f-8ee7072372b8)
-
-我主要修改了`CDN` `database` `scheme`三个部分,
-
-![]https://github.com/user-attachments/assets/f76aafe2-8c6b-4fff-bed9-2ce87aea19b0)
-
-<table>
-  <tr>
-    <td><p>CDN</p></td>
-    <td colspan='2'>
-      <p><span>可以在 <a href='https://alist.nn.ci/zh/config/configuration.html#cdn'>Alist</a> 的官方文档找到, 请选择你本地网络连接速度最快的一个.</span></p>
-    </td>
-  </tr>
-  <tr>
-    <td rowspan='6'>database</td>
-    <td>type</td>
-    <td>因为我们创建的数据库类型是 mysql, 就写<code class='notranslate'>mysql</code>.</td>
-  </tr>
-  <tr>
-    <td>host</td>
-    <td>例如我的 serv00 是12, 就写<code class='notranslate'>mysql12.serv00.com</code>, 自己看着写.</td>
-  </tr>
-  <tr>
-    <td>port</td>
-    <td>mysql 端口, 默认<code class='notranslate'>3306</code>.</td>
-  </tr>
-  <tr>
-    <td>user</td>
-    <td>填写创建的数据库用户名</td>
-  </tr>
-  <tr>
-    <td>passdowd</td>
-    <td>填写创建的数据密码</td>
-  </tr>
-  <tr>
-    <td>name</td>
-    <td>填写创建的数据表名称</td>
-  </tr>
-  <tr>
-    <td rowspan='2'>scheme</td>
-    <td>address</td>
-    <td>0.0.0.0</td>
-  </tr>
-  <tr>
-    <td>http_port</td>
-    <td>填写创建的端口</td>
-  </tr>
-</table>
-
-改完之后, 点击 save 保存.
-
-### 再次启动 Alist
-
-回到 SSH 窗口中进行操作.
-
-```bash
-./alist server
+```
+ffmpeg -i input.mp4 -vn -acodec pcm_s16le -ar 44100 -ac 2 output.wav
 ```
 
-![终端](https://github.com/user-attachments/assets/58ac371d-1492-497b-b788-2e410adfc9be)
+# 去掉视频中的音频
 
-运行正常, 显示的管理员账号的密码一定要记住. 接着使用 Ctrl+c 停止运行.
-
-### 自定义域名绑定
-
-我这边使用 [us.kg](https://nic.us.kg) 的免费域名进行访问 Alist.
-
-因为 serv00 的域名基本上都会被墙, 没办法只能用~~Cloudflare减速器~~跨墙了, ~~CDN 回源加速不会弄.~~
-
-我们进入 https://dash.cloudflare.com
-
-点击添加域, 再输入自己的域名, 选择最底下的 free 计划一路创建.
-
-然后复制 Cloudflare 给的 dns 名称服务器.
-
-![]https://github.com/user-attachments/assets/789049b8-b944-4862-b5f2-dcb8d396bc1a)
-
-然后转到你的域名提供服务商, 添加 dns 记录.
-
-![]https://github.com/user-attachments/assets/78a5b240-ca86-4ff1-96f3-9b0f5386d313)
-
-如果没问题就可以通过自定义域名访问了.
-
-### Alist 保活
-
-> 因为 Serv00 会不定时杀进程😅, 所以诞生此方案.
-
-我在 Alist 目录下创建了`runAlist.sh`脚本, 内容如下:
-
-```bash
-screen -ls | awk 'NR>=2&&NR<=20{print $1}' | awk '{print 'screen -S '$1' -X quit'}' | sh
-echo 'Attempting to start screen session 'alist''
-screen -dmS alist bash -c 'cd ~/domains/alist && ./alist server'
-#screen -ls
-echo '$(date '+%Y-%m-%d %H:%M:%S')' > ~/domains/alist/logfile.txt
+```
+ffmpeg -i [File] -c:v copy -an [File2]
 ```
 
-转到 panel 面板, 创建 Cron Jobs 定时任务.
+# 音视频合并
 
-我们需要创建一个每小时执行的任务进行保活,
-
-计划任务执行的是我的`runAlist.sh`. 如下图:
-
-![]https://github.com/user-attachments/assets/44941b64-1c4b-4063-8a57-ec8c305f4553)
-
-成功后不出意外的话, 隔一段时间进入 Alist 网盘需要重新登陆账号, 因为定时脚本会先杀原来的 Alist 进程再重启.
-
-# Serv00+CT8 保活(可TG通知)
-
-> 引用自 [Linux.do](https://linux.do/t/topic/180293)
-
-## 先决条件
-
-- [x] 假设你已经拥有了一个 telegram bot.
-
-## 首先上代码
-
-Worker 代码:
-
-<details><summary>JavaScript Code</summary>
-
-```JavaScript
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request))
-})
-
-addEventListener('scheduled', event => {
-  event.waitUntil(handleScheduled(event.scheduledTime))
-})
-
-async function handleRequest(request) {
-  return new Response('Worker is running')
-}
-
-async function handleScheduled(scheduledTime) {
-  const accounts = JSON.parse(ACCOUNTS_JSON)
-  const results = await loginAccounts(accounts)
-  await sendSummary(results)
-}
-
-async function loginAccounts(accounts) {
-  const results = []
-  for (const account of accounts) {
-    const result = await loginAccount(account)
-    results.push({ ...account, ...result })
-    await delay(Math.floor(Math.random() * 8000) + 1000)
-  }
-  return results
-}
-
-function generateRandomUserAgent() {
-  const browsers = ['Chrome', 'Firefox', 'Safari', 'Edge', 'Opera'];
-  const browser = browsers[Math.floor(Math.random() * browsers.length)];
-  const version = Math.floor(Math.random() * 100) + 1;
-  const os = ['Windows NT 10.0', 'Macintosh', 'X11'];
-  const selectedOS = os[Math.floor(Math.random() * os.length)];
-  const osVersion = selectedOS === 'X11' ? 'Linux x86_64' : selectedOS === 'Macintosh' ? 'Intel Mac OS X 10_15_7' : 'Win64; x64';
-
-  return `Mozilla/5.0 (${selectedOS}; ${osVersion}) AppleWebKit/537.36 (KHTML, like Gecko) ${browser}/${version}.0.0.0 Safari/537.36`;
-}
-
-async function loginAccount(account) {
-  const { username, password, panelnum, type } = account
-  let url = type === 'ct8' 
-    ? 'https://panel.ct8.pl/login/?next=/' 
-    : `https://panel${panelnum}.serv00.com/login/?next=/`
-
-  const userAgent = generateRandomUserAgent();
-
-  try {
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'User-Agent': userAgent,
-      },
-    })
-
-    const pageContent = await response.text()
-    const csrfMatch = pageContent.match(/name='csrfmiddlewaretoken' value='([^']*)'/)
-    const csrfToken = csrfMatch ? csrfMatch[1] : null
-
-    if (!csrfToken) {
-      throw new Error('CSRF token not found')
-    }
-
-    const initialCookies = response.headers.get('set-cookie') || ''
-
-    const formData = new URLSearchParams({
-      'username': username,
-      'password': password,
-      'csrfmiddlewaretoken': csrfToken,
-      'next': '/'
-    })
-
-    const loginResponse = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Referer': url,
-        'User-Agent': userAgent,
-        'Cookie': initialCookies,
-      },
-      body: formData.toString(),
-      redirect: 'manual'
-    })
-
-    console.log(`Login response status: ${loginResponse.status}`)
-    console.log(`Login response headers: ${JSON.stringify(Object.fromEntries(loginResponse.headers))}`)
-
-    const loginResponseBody = await loginResponse.text()
-    console.log(`Login response body: ${loginResponseBody.substring(0, 200)}...`)
-
-    if (loginResponse.status === 302 && loginResponse.headers.get('location') === '/') {
-      const loginCookies = loginResponse.headers.get('set-cookie') || ''
-      const allCookies = combineCookies(initialCookies, loginCookies)
-
-      const dashboardResponse = await fetch(url.replace('/login/', '/'), {
-        headers: {
-          'Cookie': allCookies,
-          'User-Agent': userAgent,
-        }
-      })
-      const dashboardContent = await dashboardResponse.text()
-      console.log(`Dashboard content: ${dashboardContent.substring(0, 200)}...`)
-
-      if (dashboardContent.includes('href='/logout/'') || dashboardContent.includes('href='/wyloguj/'')) {
-        const nowUtc = formatToISO(new Date())
-        const nowBeijing = formatToISO(new Date(Date.now() + 8 * 60 * 60 * 1000))
-        const message = `账号 ${username} (${type}) 于北京时间 ${nowBeijing}（UTC时间 ${nowUtc}）登录成功！`
-        console.log(message)
-        await sendTelegramMessage(message)
-        return { success: true, message }
-      } else {
-        const message = `账号 ${username} (${type}) 登录后未找到登出链接，可能登录失败。">
-<meta property="og:title" content="Serv00 - 使用记录">
-<meta property="og:description" content="# 注册 Serv00
-
-注册没什么好说的, gmail+干净一点的ip基本上都可以成功, 这里不多做展开.
-收不到邮件信息的估计是邮箱问题. 比如:https://mail.proton.me
-
-# 准备工作
-
-进入 Additional services 选项卡中找到 Run your own applications 项目,
-如下图所示, 必须要设置成如图所示的 Enabled.
-
-![]https://github.com/user-attachments/assets/39b82af5-8dc0-4dbc-800a-124ccd1c64d4)
-
-如果不开启这一项, 自己的用户目录下的所有文件都无法添加可执行权限.
-
-# 部署记录
-
-## Alist
-
-### 创建端口
-
-每个账户只能创建3个端口.
-其中一个用来反代本地搭建 Alist 的端口, 这里我用 26666 端口.
-
-![]https://github.com/user-attachments/assets/950d6c90-56cf-457a-86fa-b9f1ff953257)
-
-### 创建网站
-
-> Serv00 账号创建好之后默认就有一个网站, 一般是`USERNAME.serv00.net`, 可以随意删除.
-
-下图我写的是自己的域名.
-
-![image](https://github.com/user-attachments/assets/7a00527b-a545-48a2-8029-2d4c2b047b3c)
-
-其中 26666 这个端口是 Alist 服务的端口.
-
-### 网站添加 SSL 证书
-
-站点创建完成后, 点击上方的 Manage SSL certificates, 再点击 Manage.
-
-![](https://github.com/user-attachments/assets/15e58806-d2f0-43de-bf8d-97905680e8cc)
-
-点击 Add certificate, 确认好要创建证书的域名, 最后点击 Add 完成创建证书.
-
-![](https://github.com/user-attachments/assets/6371d2eb-6cb7-4cd8-9cd3-b4800b20bfa7)
-
-### 安装 Alist
-
-> [!TIP]
-> Alist 官方在 24年8月17日, 增加了 [beta](https://github.com/AlistGo/alist/releases/tag/beta) 版本, 支持 FreeBSD 系统下能够运行的 Alist 可执行文件🎉
-
-Serv00 本身提供的网站托管在`~/domains`路径下, 所以我建议把 Alist 也部署到这个路径下的子目录.
-
-一键创建目录并下载 Alist, 增加执行权限, 复制到终端粘贴使用.
-
-```bash
-mkdir -p ~/domains/alist && cd ~/domains/alist && curl -L -o alist.tar.gz https://github.com/AlistGo/alist/releases/download/beta/alist-freebsd-amd64.tar.gz && tar -xzf alist.tar.gz && chomd +x alist
+```
+ffmpeg -i [File] -c:v copy -c:a aac -strict experimental [File2]
 ```
 
-### 第一次启动 Alist 生成配置文件
+如果视频中已经包含了音频,这个时候还可以替换视频中的音频,使用下面命令行.
 
-然后需要先启动一次 Alist 让它生成配置文件, 此次启动一定会失败, 请不用在意~
+```
+ffmpeg -i [File] -c:v copy -c:a aac -strict experimental -map 0:v:0 -map 1:a:0 [File2]
 
-```bash
-./alist server
 ```
 
-### 创建 Alist 所需数据库
+# 视频裁切
 
-回到 Panel 面板, 找到 MySQL 选项卡, 使用 Add database 功能新建一个数据库:
-
-![]https://github.com/user-attachments/assets/dcad4052-e060-4ac8-85cd-4ff6afd65557)
-
-Database name 和 Username 字段为了方便好记就写 Alist 就行了.
-
-> 密码要求含有大写字母, 小写字母和数字三种字符, 且长度必须超过6个字符.
-
-### 修改配置文件
-
-进入 Panel 面板, 找到 File manager 选项卡, 会如下图的进入文件管理器.
-
-定位这个`config.json`文件, 双击编辑它:
-
-![]https://github.com/user-attachments/assets/73980333-7b81-4f5a-836f-8ee7072372b8)
-
-我主要修改了`CDN` `database` `scheme`三个部分,
-
-![]https://github.com/user-attachments/assets/f76aafe2-8c6b-4fff-bed9-2ce87aea19b0)
-
-<table>
-  <tr>
-    <td><p>CDN</p></td>
-    <td colspan='2'>
-      <p><span>可以在 <a href='https://alist.nn.ci/zh/config/configuration.html#cdn'>Alist</a> 的官方文档找到, 请选择你本地网络连接速度最快的一个.</span></p>
-    </td>
-  </tr>
-  <tr>
-    <td rowspan='6'>database</td>
-    <td>type</td>
-    <td>因为我们创建的数据库类型是 mysql, 就写<code class='notranslate'>mysql</code>.</td>
-  </tr>
-  <tr>
-    <td>host</td>
-    <td>例如我的 serv00 是12, 就写<code class='notranslate'>mysql12.serv00.com</code>, 自己看着写.</td>
-  </tr>
-  <tr>
-    <td>port</td>
-    <td>mysql 端口, 默认<code class='notranslate'>3306</code>.</td>
-  </tr>
-  <tr>
-    <td>user</td>
-    <td>填写创建的数据库用户名</td>
-  </tr>
-  <tr>
-    <td>passdowd</td>
-    <td>填写创建的数据密码</td>
-  </tr>
-  <tr>
-    <td>name</td>
-    <td>填写创建的数据表名称</td>
-  </tr>
-  <tr>
-    <td rowspan='2'>scheme</td>
-    <td>address</td>
-    <td>0.0.0.0</td>
-  </tr>
-  <tr>
-    <td>http_port</td>
-    <td>填写创建的端口</td>
-  </tr>
-</table>
-
-改完之后, 点击 save 保存.
-
-### 再次启动 Alist
-
-回到 SSH 窗口中进行操作.
-
-```bash
-./alist server
+```
+ffmpeg -i [File] -ss 00:04:53 -c copy -t 00:00:03 -codec copy [File2]
 ```
 
-![终端](https://github.com/user-attachments/assets/58ac371d-1492-497b-b788-2e410adfc9be)
+> -ss 表示开始切割的时间
+> -t 表示要切多少. 上面例子就是从头开始, 切3秒钟出来
 
-运行正常, 显示的管理员账号的密码一定要记住. 接着使用 Ctrl+c 停止运行.
+注意一个问题, ffmpeg 在切割视频的时候无法做到时间绝对准确,因为视频编码中关键帧(I帧)和跟随它的B帧、P帧是无法分割开的, 否则就需要进行重新帧内编码, 会让视频体积增大.
 
-### 自定义域名绑定
+所以, 如果切割的位置刚好在两个关键帧中间, 那么 ffmpeg 会向前/向后切割, 最后切割出的 chunk 长度总是会大于等于应有的长度.
 
-我这边使用 [us.kg](https://nic.us.kg) 的免费域名进行访问 Alist.
+达成相同效果,也可以用`-ss`和`-to`选项.
 
-因为 serv00 的域名基本上都会被墙, 没办法只能用~~Cloudflare减速器~~跨墙了, ~~CDN 回源加速不会弄.~~
-
-我们进入 https://dash.cloudflare.com
-
-点击添加域, 再输入自己的域名, 选择最底下的 free 计划一路创建.
-
-然后复制 Cloudflare 给的 dns 名称服务器.
-
-![]https://github.com/user-attachments/assets/789049b8-b944-4862-b5f2-dcb8d396bc1a)
-
-然后转到你的域名提供服务商, 添加 dns 记录.
-
-![]https://github.com/user-attachments/assets/78a5b240-ca86-4ff1-96f3-9b0f5386d313)
-
-如果没问题就可以通过自定义域名访问了.
-
-### Alist 保活
-
-> 因为 Serv00 会不定时杀进程😅, 所以诞生此方案.
-
-我在 Alist 目录下创建了`runAlist.sh`脚本, 内容如下:
-
-```bash
-screen -ls | awk 'NR>=2&&NR<=20{print $1}' | awk '{print 'screen -S '$1' -X quit'}' | sh
-echo 'Attempting to start screen session 'alist''
-screen -dmS alist bash -c 'cd ~/domains/alist && ./alist server'
-#screen -ls
-echo '$(date '+%Y-%m-%d %H:%M:%S')' > ~/domains/alist/logfile.txt
+```
+ffmpeg -i [File] -ss 30 -c copy -to 40 -codec copy [File2]
 ```
 
-转到 panel 面板, 创建 Cron Jobs 定时任务.
+# 视频转码
 
-我们需要创建一个每小时执行的任务进行保活,
+```
+ffmpeg -i [File] -vcodec h264 [File2]
+```
 
-计划任务执行的是我的`runAlist.sh`. 如下图:
+> -vcodec 设定视频编解码器, 未设定时则使用与输入流相同的编解码器
 
-![]https://github.com/user-attachments/assets/44941b64-1c4b-4063-8a57-ec8c305f4553)
+当然了, 如果 ffmpeg 当时编译时, 添加了外部的 x265 或者 x264, 那也可以用外部的编码器来编码.(不知道什么是x265, 可以 [Google](https://www.google.com/search?q=%E4%BB%80%E4%B9%88%E6%98%AFx265) 一下, 简单的说, 就是它不包含在 ffmpeg 的源码里, 是独立的一个开源代码, 用于编码 HEVC, ffmpeg 编码时可以调用它. 当然, ffmpeg 也有自己的编码器)
 
-成功后不出意外的话, 隔一段时间进入 Alist 网盘需要重新登陆账号, 因为定时脚本会先杀原来的 Alist 进程再重启.
+```
+ffmpeg -i [File] -c:v libx265 [File2]
+```
 
-# Serv00+CT8 保活(可TG通知)
+```
+ffmpeg -i [File] -c:v libx264 [File2]
+```
 
-> 引用自 [Linux.do](https://linux.do/t/topic/180293)
+# 视频转分辨率
 
-## 先决条件
+```
+ffmpeg -i [File] -vf scale=1280:720 [File2]
+```
 
-- [x] 假设你已经拥有了一个 telegram bot.
+# 调整播放速度
 
-## 首先上代码
+加速四倍:
 
-Worker 代码:
+```
+ffmpeg -i [File] -vf 'setpts=0.25*PTS' [File2]
+```。">
+<meta property="og:title" content="FFmpeg - 使用记录">
+<meta property="og:description" content="# 前言
 
-<details><summary>JavaScript Code</summary>
+Github 地址: https://github.com/FFmpeg/FFmpeg
 
-```JavaScript
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request))
-})
+> [!NOTE]
+> cmd 命令行使用如果没有写输出路径的话默认输出在:`C:\Users\Administrator`
 
-addEventListener('scheduled', event => {
-  event.waitUntil(handleScheduled(event.scheduledTime))
-})
+# 视频转格式
 
-async function handleRequest(request) {
-  return new Response('Worker is running')
-}
+如果只是容器改变, 编码没改,可以使用`-c copy`参数或`-c:a copy`参数或`-c:v copy`参数.
 
-async function handleScheduled(scheduledTime) {
-  const accounts = JSON.parse(ACCOUNTS_JSON)
-  const results = await loginAccounts(accounts)
-  await sendSummary(results)
-}
+比如:
 
-async function loginAccounts(accounts) {
-  const results = []
-  for (const account of accounts) {
-    const result = await loginAccount(account)
-    results.push({ ...account, ...result })
-    await delay(Math.floor(Math.random() * 8000) + 1000)
-  }
-  return results
-}
+```
+ffmpeg -i input.avi -q 1 -c copy output.mov
+```
 
-function generateRandomUserAgent() {
-  const browsers = ['Chrome', 'Firefox', 'Safari', 'Edge', 'Opera'];
-  const browser = browsers[Math.floor(Math.random() * browsers.length)];
-  const version = Math.floor(Math.random() * 100) + 1;
-  const os = ['Windows NT 10.0', 'Macintosh', 'X11'];
-  const selectedOS = os[Math.floor(Math.random() * os.length)];
-  const osVersion = selectedOS === 'X11' ? 'Linux x86_64' : selectedOS === 'Macintosh' ? 'Intel Mac OS X 10_15_7' : 'Win64; x64';
+# 提取视频中的音频
 
-  return `Mozilla/5.0 (${selectedOS}; ${osVersion}) AppleWebKit/537.36 (KHTML, like Gecko) ${browser}/${version}.0.0.0 Safari/537.36`;
-}
+## 提取 mp3 格式
 
-async function loginAccount(account) {
-  const { username, password, panelnum, type } = account
-  let url = type === 'ct8' 
-    ? 'https://panel.ct8.pl/login/?next=/' 
-    : `https://panel${panelnum}.serv00.com/login/?next=/`
+```
+ffmpeg -i input.mp4 -vn -c:a libmp3lame output.mp3
+```
 
-  const userAgent = generateRandomUserAgent();
+## 提取无损 wav 格式
 
-  try {
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'User-Agent': userAgent,
-      },
-    })
+```
+ffmpeg -i input.mp4 -vn -acodec pcm_s16le -ar 44100 -ac 2 output.wav
+```
 
-    const pageContent = await response.text()
-    const csrfMatch = pageContent.match(/name='csrfmiddlewaretoken' value='([^']*)'/)
-    const csrfToken = csrfMatch ? csrfMatch[1] : null
+# 去掉视频中的音频
 
-    if (!csrfToken) {
-      throw new Error('CSRF token not found')
-    }
+```
+ffmpeg -i [File] -c:v copy -an [File2]
+```
 
-    const initialCookies = response.headers.get('set-cookie') || ''
+# 音视频合并
 
-    const formData = new URLSearchParams({
-      'username': username,
-      'password': password,
-      'csrfmiddlewaretoken': csrfToken,
-      'next': '/'
-    })
+```
+ffmpeg -i [File] -c:v copy -c:a aac -strict experimental [File2]
+```
 
-    const loginResponse = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Referer': url,
-        'User-Agent': userAgent,
-        'Cookie': initialCookies,
-      },
-      body: formData.toString(),
-      redirect: 'manual'
-    })
+如果视频中已经包含了音频,这个时候还可以替换视频中的音频,使用下面命令行.
 
-    console.log(`Login response status: ${loginResponse.status}`)
-    console.log(`Login response headers: ${JSON.stringify(Object.fromEntries(loginResponse.headers))}`)
+```
+ffmpeg -i [File] -c:v copy -c:a aac -strict experimental -map 0:v:0 -map 1:a:0 [File2]
 
-    const loginResponseBody = await loginResponse.text()
-    console.log(`Login response body: ${loginResponseBody.substring(0, 200)}...`)
+```
 
-    if (loginResponse.status === 302 && loginResponse.headers.get('location') === '/') {
-      const loginCookies = loginResponse.headers.get('set-cookie') || ''
-      const allCookies = combineCookies(initialCookies, loginCookies)
+# 视频裁切
 
-      const dashboardResponse = await fetch(url.replace('/login/', '/'), {
-        headers: {
-          'Cookie': allCookies,
-          'User-Agent': userAgent,
-        }
-      })
-      const dashboardContent = await dashboardResponse.text()
-      console.log(`Dashboard content: ${dashboardContent.substring(0, 200)}...`)
+```
+ffmpeg -i [File] -ss 00:04:53 -c copy -t 00:00:03 -codec copy [File2]
+```
 
-      if (dashboardContent.includes('href='/logout/'') || dashboardContent.includes('href='/wyloguj/'')) {
-        const nowUtc = formatToISO(new Date())
-        const nowBeijing = formatToISO(new Date(Date.now() + 8 * 60 * 60 * 1000))
-        const message = `账号 ${username} (${type}) 于北京时间 ${nowBeijing}（UTC时间 ${nowUtc}）登录成功！`
-        console.log(message)
-        await sendTelegramMessage(message)
-        return { success: true, message }
-      } else {
-        const message = `账号 ${username} (${type}) 登录后未找到登出链接，可能登录失败。">
+> -ss 表示开始切割的时间
+> -t 表示要切多少. 上面例子就是从头开始, 切3秒钟出来
+
+注意一个问题, ffmpeg 在切割视频的时候无法做到时间绝对准确,因为视频编码中关键帧(I帧)和跟随它的B帧、P帧是无法分割开的, 否则就需要进行重新帧内编码, 会让视频体积增大.
+
+所以, 如果切割的位置刚好在两个关键帧中间, 那么 ffmpeg 会向前/向后切割, 最后切割出的 chunk 长度总是会大于等于应有的长度.
+
+达成相同效果,也可以用`-ss`和`-to`选项.
+
+```
+ffmpeg -i [File] -ss 30 -c copy -to 40 -codec copy [File2]
+```
+
+# 视频转码
+
+```
+ffmpeg -i [File] -vcodec h264 [File2]
+```
+
+> -vcodec 设定视频编解码器, 未设定时则使用与输入流相同的编解码器
+
+当然了, 如果 ffmpeg 当时编译时, 添加了外部的 x265 或者 x264, 那也可以用外部的编码器来编码.(不知道什么是x265, 可以 [Google](https://www.google.com/search?q=%E4%BB%80%E4%B9%88%E6%98%AFx265) 一下, 简单的说, 就是它不包含在 ffmpeg 的源码里, 是独立的一个开源代码, 用于编码 HEVC, ffmpeg 编码时可以调用它. 当然, ffmpeg 也有自己的编码器)
+
+```
+ffmpeg -i [File] -c:v libx265 [File2]
+```
+
+```
+ffmpeg -i [File] -c:v libx264 [File2]
+```
+
+# 视频转分辨率
+
+```
+ffmpeg -i [File] -vf scale=1280:720 [File2]
+```
+
+# 调整播放速度
+
+加速四倍:
+
+```
+ffmpeg -i [File] -vf 'setpts=0.25*PTS' [File2]
+```。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://GJKen.github.io/demo/post/5.html">
 <meta property="og:image" content="https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp">
-<title>Serv00 - 使用记录</title>
-<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+<title>FFmpeg - 使用记录</title>
+
 
 
 </head>
 <style>
-:root{--functionBtnFlex-bgColor:#ffffff61;}
-[data-color-mode=light][data-light-theme=dark],[data-color-mode=light][data-light-theme=dark]::selection,[data-color-mode=dark][data-dark-theme=dark],[data-color-mode=dark][data-dark-theme=dark]::selection{--functionBtnFlex-bgColor:#ffffff00;}
+:root{--functionBtnFlex-bgColor:#ffffff61;--tooglebtn-bgColor:#c0e4ff9c}
+[data-color-mode=light][data-light-theme=dark],[data-color-mode=light][data-light-theme=dark]::selection,[data-color-mode=dark][data-dark-theme=dark],[data-color-mode=dark][data-dark-theme=dark]::selection{--functionBtnFlex-bgColor:#ffffff00;--tooglebtn-bgColor:#7dc2ff7a}
 @keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@keyframes blink{50%{opacity:0}100%{opacity:1}}@-webkit-keyframes blink{50%{opacity:0}100%{opacity:1}}@keyframes grow{0%{opacity:0.85;transform:scale(0.5);}100%{opacity:1;transform:translate(1);}}@-webkit-keyframes grow{0%{opacity:0.85;-webkit-transform:scale(0.5);}100%{opacity:1;-webkit-transform:translate(1);}}@keyframes slide-fade-in{0%{opacity:0;transform:translate3d(0,20px,0);}100%{opacity:1;transform:translate(0,0,0);}}@-webkit-keyframes slide-fade-in{0%{opacity:0;-webkit-transform:translate3d(0,20px,0);}100%{opacity:1;-webkit-transform:translate(0,0,0);}}
-/* body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padding:45px;font-size:16px;font-family:sans-serif;line-height:1.25} */
-body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padding:45px;font-size:16px;font-family:"Punctuation SC","Inter",ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";line-height:1.25}
-/* {-webkit-animation:slide-fade-in 1.2s ease;animation:slide-fade-in 1.2s ease} */
+body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padding:45px;font-size:16px;font-family:sans-serif;line-height:1.25}
 #header{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:24px;}
 #functionBtn{display:flex;justify-content:center;margin:20px 0;gap:20px;}
 #functionBtn a{padding:14px 16px;}
-#functionBtn.Btn-flex{position:fixed;margin:0;padding:20px 0;top:-100px;left:0;width:100%;min-width:500px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;animation:fadeIn.2s ease-in 0s forwards;transition:top 0.3s ease-in-out}
+#functionBtn.Btn-flex{position:fixed;margin:0;padding:8px 0;top:-64px;left:0;width:100%;min-width:500px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;animation:fadeIn.2s ease-in 0s forwards;transition:top 0.3s ease-in-out}
 #footer{margin-top:64px;text-align:center;font-size:small;}
 body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animation:slide-fade-in 0.8s ease;animation:slide-fade-in 0.8s ease}
 .title-left img{animation:grow 0.5s cubic-bezier(0.23,1,0.32,1);-webkit-animation:grow 0.5s cubic-bezier(0.23,1,0.32,1);}
@@ -677,6 +243,13 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
 #postBody hr{height:2px;}
 #cmButton{height:48px;margin-top:48px;}
 #comments{margin-top:64px;}
+
+#toogleBtn{position:fixed;top:51px;right:6%;display:none;}
+#toogleBtn.active,#toogleBtn path{display:flex;padding:6px 7px;fill:var(--title-right-svgColor);cursor:pointer;transition:transform 0.3s ease-in-out;background:var(--tooglebtn-bgColor)}
+#toogleBtn.active:hover svg path{fill:var(--title-right-svgHovercolor);}
+#toogleBtn.btn-fadeout{opacity:0;}
+#functionBtn div:first-of-type{display:flex;gap:20px}
+
 .g-emoji{font-size:24px;}
 @media (max-width:600px) {
     body {padding:8px;min-width:500px;}
@@ -694,417 +267,100 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
     font-size:12px;
 }
 </style>
-<style>.markdown-alert{border-radius:6px;padding:0.5rem 1rem;margin-bottom:1rem;border-left:.25em solid var(--borderColor-default,var(--color-border-default));}.markdown-alert .markdown-alert-title {display:flex;font-weight:var(--base-text-weight-medium,500);align-items:center;}.markdown-alert>:first-child {margin-top:0;}.markdown-alert>:last-child {margin-bottom:0;}</style><style>.markdown-alert.markdown-alert-tip {border-left-color:var(--borderColor-success-emphasis, var(--color-success-emphasis));background-color:var(--color-success-subtle);}.markdown-alert.markdown-alert-tip .markdown-alert-title {color: var(--fgColor-success,var(--color-success-fg));}</style><style>.contains-task-list{padding-left:0.9em !important;list-style:none}</style>
+<style>.markdown-alert{border-radius:6px;padding:0.5rem 1rem;margin-bottom:1rem;border-left:.25em solid var(--borderColor-default,var(--color-border-default));}.markdown-alert .markdown-alert-title {display:flex;font-weight:var(--base-text-weight-medium,500);align-items:center;}.markdown-alert>:first-child {margin-top:0;}.markdown-alert>:last-child {margin-bottom:0;}</style><style>.markdown-alert.markdown-alert-note {border-left-color:var(--borderColor-accent-emphasis, var(--color-accent-emphasis));background-color:var(--color-accent-subtle);}.markdown-alert.markdown-alert-note .markdown-alert-title {color: var(--fgColor-accent,var(--color-accent-fg));}</style>
 
 
 
 <body>
     <div id="header">
-<h1 class="postTitle">Serv00 - 使用记录</h1>
+<h1 class="postTitle">FFmpeg - 使用记录</h1>
 </div>
     <div id="functionBtn">
-<a href="https://GJKen.github.io/demo" id="buttonHome" class="btn btn-invisible circle" title="首页">
-	<svg class="octicon" width="16" height="16"><path id="pathHome" fill-rule="evenodd"></path></svg>
-</a>
-
-<a href="https://github.com/GJKen/demo/issues/5" target="_blank" class="btn btn-invisible circle" title="Issue">
-	<svg class="octicon" width="16" height="16"><path id="pathIssue" fill-rule="evenodd"></path></svg>
-</a>
-
-
-<a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
-	<svg class="octicon" width="16" height="16" ><path id="themeSwitch" fill-rule="evenodd"></path></svg>
-</a>
-
-<a href="https://GJKen.github.io/demo/tag.html" id="buttonSearch" class="btn btn-invisible circle" title="搜索">
-	<svg class="octicon" width="16" height="16" >
-		<path id="pathSearch" fill-rule="evenodd"></path>
-	</svg>
-</a>
-
-<a class="ArticleTOC btn btn-invisible circle" title="文章目录">
-	<svg class="octicon" width="16" height="16"><path id="ArticleTOC"></path></svg>
+<div>
+	<a href="https://GJKen.github.io/demo" id="buttonHome" class="btn btn-invisible circle" title="首页">
+		<svg class="octicon" width="16" height="16"><path id="pathHome" fill-rule="evenodd"></path></svg>
+	</a>
+	
+	<a href="https://github.com/GJKen/demo/issues/5" target="_blank" class="btn btn-invisible circle" title="Issue">
+		<svg class="octicon" width="16" height="16"><path id="pathIssue" fill-rule="evenodd"></path></svg>
+	</a>
+	
+	
+	<a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+		<svg class="octicon" width="16" height="16" ><path id="themeSwitch" fill-rule="evenodd"></path></svg>
+	</a>
+	
+	<a href="https://GJKen.github.io/demo/tag.html" id="buttonSearch" class="btn btn-invisible circle" title="搜索">
+		<svg class="octicon" width="16" height="16" >
+			<path id="pathSearch" fill-rule="evenodd"></path>
+		</svg>
+	</a>
+	
+	<a class="ArticleTOC btn btn-invisible circle" title="文章目录">
+		<svg class="octicon" width="16" height="16"><path id="ArticleTOC"></path></svg>
+	</a>
+</div>
+<a class="circle" id="toogleBtn">
+	<svg class="octicon" width="24" height="24"><path id="ArticleTOC" d="M5.22 8.22a.749.749 0 0 0 0 1.06l6.25 6.25a.749.749 0 0 0 1.06 0l6.25-6.25a.749.749 0 1 0-1.06-1.06L12 13.939 6.28 8.22a.749.749 0 0 0-1.06 0Z"></path></svg>
 </a>
 </div>
     <div id="content">
-<div class="markdown-body" id="postBody"><h1>注册 Serv00</h1>
-<p>注册没什么好说的, gmail+干净一点的ip基本上都可以成功, 这里不多做展开.<br>
-收不到邮件信息的估计是邮箱问题. 比如:<a href="https://mail.proton.me" rel="nofollow">https://mail.proton.me</a></p>
-<h1>准备工作</h1>
-<p>进入 Additional services 选项卡中找到 Run your own applications 项目,<br>
-如下图所示, 必须要设置成如图所示的 Enabled.</p>
-<p>![]<a href="https://github.com/user-attachments/assets/39b82af5-8dc0-4dbc-800a-124ccd1c64d4">https://github.com/user-attachments/assets/39b82af5-8dc0-4dbc-800a-124ccd1c64d4</a>)</p>
-<p>如果不开启这一项, 自己的用户目录下的所有文件都无法添加可执行权限.</p>
-<h1>部署记录</h1>
-<h2>Alist</h2>
-<h3>创建端口</h3>
-<p>每个账户只能创建3个端口.<br>
-其中一个用来反代本地搭建 Alist 的端口, 这里我用 26666 端口.</p>
-<p>![]<a href="https://github.com/user-attachments/assets/950d6c90-56cf-457a-86fa-b9f1ff953257">https://github.com/user-attachments/assets/950d6c90-56cf-457a-86fa-b9f1ff953257</a>)</p>
-<h3>创建网站</h3>
-<blockquote>
-<p>Serv00 账号创建好之后默认就有一个网站, 一般是<code class="notranslate">USERNAME.serv00.net</code>, 可以随意删除.</p>
-</blockquote>
-<p>下图我写的是自己的域名.</p>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/7a00527b-a545-48a2-8029-2d4c2b047b3c">
-<p>其中 26666 这个端口是 Alist 服务的端口.</p>
-<h3>网站添加 SSL 证书</h3>
-<p>站点创建完成后, 点击上方的 Manage SSL certificates, 再点击 Manage.</p>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/15e58806-d2f0-43de-bf8d-97905680e8cc">
-<p>点击 Add certificate, 确认好要创建证书的域名, 最后点击 Add 完成创建证书.</p>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/6371d2eb-6cb7-4cd8-9cd3-b4800b20bfa7">
-<h3>安装 Alist</h3>
-<div class="markdown-alert markdown-alert-tip"><p class="markdown-alert-title"><svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p><p>Alist 官方在 24年8月17日, 增加了 <a href="https://github.com/AlistGo/alist/releases/tag/beta">beta</a> 版本, 支持 FreeBSD 系统下能够运行的 Alist 可执行文件🎉</p>
+<div class="markdown-body" id="postBody"><h1>前言</h1>
+<p>Github 地址: <a href="https://github.com/FFmpeg/FFmpeg">https://github.com/FFmpeg/FFmpeg</a></p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>cmd 命令行使用如果没有写输出路径的话默认输出在:<code class="notranslate">C:\Users\Administrator</code></p>
 </div>
-<p>Serv00 本身提供的网站托管在<code class="notranslate">~/domains</code>路径下, 所以我建议把 Alist 也部署到这个路径下的子目录.</p>
-<p>一键创建目录并下载 Alist, 增加执行权限, 复制到终端粘贴使用.</p>
-<div class="highlight highlight-source-shell"><pre class="notranslate">mkdir -p <span class="pl-k">~</span>/domains/alist <span class="pl-k">&amp;&amp;</span> <span class="pl-c1">cd</span> <span class="pl-k">~</span>/domains/alist <span class="pl-k">&amp;&amp;</span> curl -L -o alist.tar.gz https://github.com/AlistGo/alist/releases/download/beta/alist-freebsd-amd64.tar.gz <span class="pl-k">&amp;&amp;</span> tar -xzf alist.tar.gz <span class="pl-k">&amp;&amp;</span> chomd +x alist</pre></div>
-<h3>第一次启动 Alist 生成配置文件</h3>
-<p>然后需要先启动一次 Alist 让它生成配置文件, 此次启动一定会失败, 请不用在意~</p>
-<div class="highlight highlight-source-shell"><pre class="notranslate">./alist server</pre></div>
-<h3>创建 Alist 所需数据库</h3>
-<p>回到 Panel 面板, 找到 MySQL 选项卡, 使用 Add database 功能新建一个数据库:</p>
-<p>![]<a href="https://github.com/user-attachments/assets/dcad4052-e060-4ac8-85cd-4ff6afd65557">https://github.com/user-attachments/assets/dcad4052-e060-4ac8-85cd-4ff6afd65557</a>)</p>
-<p>Database name 和 Username 字段为了方便好记就写 Alist 就行了.</p>
+<h1>视频转格式</h1>
+<p>如果只是容器改变, 编码没改,可以使用<code class="notranslate">-c copy</code>参数或<code class="notranslate">-c:a copy</code>参数或<code class="notranslate">-c:v copy</code>参数.</p>
+<p>比如:</p>
+<pre class="notranslate"><code class="notranslate">ffmpeg -i input.avi -q 1 -c copy output.mov
+</code></pre>
+<h1>提取视频中的音频</h1>
+<h2>提取 mp3 格式</h2>
+<pre class="notranslate"><code class="notranslate">ffmpeg -i input.mp4 -vn -c:a libmp3lame output.mp3
+</code></pre>
+<h2>提取无损 wav 格式</h2>
+<pre class="notranslate"><code class="notranslate">ffmpeg -i input.mp4 -vn -acodec pcm_s16le -ar 44100 -ac 2 output.wav
+</code></pre>
+<h1>去掉视频中的音频</h1>
+<pre class="notranslate"><code class="notranslate">ffmpeg -i [File] -c:v copy -an [File2]
+</code></pre>
+<h1>音视频合并</h1>
+<pre class="notranslate"><code class="notranslate">ffmpeg -i [File] -c:v copy -c:a aac -strict experimental [File2]
+</code></pre>
+<p>如果视频中已经包含了音频,这个时候还可以替换视频中的音频,使用下面命令行.</p>
+<pre class="notranslate"><code class="notranslate">ffmpeg -i [File] -c:v copy -c:a aac -strict experimental -map 0:v:0 -map 1:a:0 [File2]
+
+</code></pre>
+<h1>视频裁切</h1>
+<pre class="notranslate"><code class="notranslate">ffmpeg -i [File] -ss 00:04:53 -c copy -t 00:00:03 -codec copy [File2]
+</code></pre>
 <blockquote>
-<p>密码要求含有大写字母, 小写字母和数字三种字符, 且长度必须超过6个字符.</p>
+<p>-ss 表示开始切割的时间<br>
+-t 表示要切多少. 上面例子就是从头开始, 切3秒钟出来</p>
 </blockquote>
-<h3>修改配置文件</h3>
-<p>进入 Panel 面板, 找到 File manager 选项卡, 会如下图的进入文件管理器.</p>
-<p>定位这个<code class="notranslate">config.json</code>文件, 双击编辑它:</p>
-<p>![]<a href="https://github.com/user-attachments/assets/73980333-7b81-4f5a-836f-8ee7072372b8">https://github.com/user-attachments/assets/73980333-7b81-4f5a-836f-8ee7072372b8</a>)</p>
-<p>我主要修改了<code class="notranslate">CDN</code> <code class="notranslate">database</code> <code class="notranslate">scheme</code>三个部分,</p>
-<p>![]<a href="https://github.com/user-attachments/assets/f76aafe2-8c6b-4fff-bed9-2ce87aea19b0">https://github.com/user-attachments/assets/f76aafe2-8c6b-4fff-bed9-2ce87aea19b0</a>)</p>
-<markdown-accessiblity-table><table role="table">
-  <tbody><tr>
-    <td><p>CDN</p></td>
-    <td colspan="2">
-      <p><span>可以在 <a href="https://alist.nn.ci/zh/config/configuration.html#cdn" rel="nofollow">Alist</a> 的官方文档找到, 请选择你本地网络连接速度最快的一个.</span></p>
-    </td>
-  </tr>
-  <tr>
-    <td rowspan="6">database</td>
-    <td>type</td>
-    <td>因为我们创建的数据库类型是 mysql, 就写<code class="notranslate">mysql</code>.</td>
-  </tr>
-  <tr>
-    <td>host</td>
-    <td>例如我的 serv00 是12, 就写<code class="notranslate">mysql12.serv00.com</code>, 自己看着写.</td>
-  </tr>
-  <tr>
-    <td>port</td>
-    <td>mysql 端口, 默认<code class="notranslate">3306</code>.</td>
-  </tr>
-  <tr>
-    <td>user</td>
-    <td>填写创建的数据库用户名</td>
-  </tr>
-  <tr>
-    <td>passdowd</td>
-    <td>填写创建的数据密码</td>
-  </tr>
-  <tr>
-    <td>name</td>
-    <td>填写创建的数据表名称</td>
-  </tr>
-  <tr>
-    <td rowspan="2">scheme</td>
-    <td>address</td>
-    <td>0.0.0.0</td>
-  </tr>
-  <tr>
-    <td>http_port</td>
-    <td>填写创建的端口</td>
-  </tr>
-</tbody></table></markdown-accessiblity-table>
-<p>改完之后, 点击 save 保存.</p>
-<h3>再次启动 Alist</h3>
-<p>回到 SSH 窗口中进行操作.</p>
-<div class="highlight highlight-source-shell"><pre class="notranslate">./alist server</pre></div>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/58ac371d-1492-497b-b788-2e410adfc9be">
-<p>运行正常, 显示的管理员账号的密码一定要记住. 接着使用 Ctrl+c 停止运行.</p>
-<h3>自定义域名绑定</h3>
-<p>我这边使用 <a href="https://nic.us.kg" rel="nofollow">us.kg</a> 的免费域名进行访问 Alist.</p>
-<p>因为 serv00 的域名基本上都会被墙, 没办法只能用<del>Cloudflare减速器</del>跨墙了, <del>CDN 回源加速不会弄.</del></p>
-<p>我们进入 <a href="https://dash.cloudflare.com" rel="nofollow">https://dash.cloudflare.com</a></p>
-<p>点击添加域, 再输入自己的域名, 选择最底下的 free 计划一路创建.</p>
-<p>然后复制 Cloudflare 给的 dns 名称服务器.</p>
-<p>![]<a href="https://github.com/user-attachments/assets/789049b8-b944-4862-b5f2-dcb8d396bc1a">https://github.com/user-attachments/assets/789049b8-b944-4862-b5f2-dcb8d396bc1a</a>)</p>
-<p>然后转到你的域名提供服务商, 添加 dns 记录.</p>
-<p>![]<a href="https://github.com/user-attachments/assets/78a5b240-ca86-4ff1-96f3-9b0f5386d313">https://github.com/user-attachments/assets/78a5b240-ca86-4ff1-96f3-9b0f5386d313</a>)</p>
-<p>如果没问题就可以通过自定义域名访问了.</p>
-<h3>Alist 保活</h3>
+<p>注意一个问题, ffmpeg 在切割视频的时候无法做到时间绝对准确,因为视频编码中关键帧(I帧)和跟随它的B帧、P帧是无法分割开的, 否则就需要进行重新帧内编码, 会让视频体积增大.</p>
+<p>所以, 如果切割的位置刚好在两个关键帧中间, 那么 ffmpeg 会向前/向后切割, 最后切割出的 chunk 长度总是会大于等于应有的长度.</p>
+<p>达成相同效果,也可以用<code class="notranslate">-ss</code>和<code class="notranslate">-to</code>选项.</p>
+<pre class="notranslate"><code class="notranslate">ffmpeg -i [File] -ss 30 -c copy -to 40 -codec copy [File2]
+</code></pre>
+<h1>视频转码</h1>
+<pre class="notranslate"><code class="notranslate">ffmpeg -i [File] -vcodec h264 [File2]
+</code></pre>
 <blockquote>
-<p>因为 Serv00 会不定时杀进程😅, 所以诞生此方案.</p>
+<p>-vcodec 设定视频编解码器, 未设定时则使用与输入流相同的编解码器</p>
 </blockquote>
-<p>我在 Alist 目录下创建了<code class="notranslate">runAlist.sh</code>脚本, 内容如下:</p>
-<div class="highlight highlight-source-shell"><pre class="notranslate">screen -ls <span class="pl-k">|</span> awk <span class="pl-s"><span class="pl-pds">'</span>NR&gt;=2&amp;&amp;NR&lt;=20{print $1}<span class="pl-pds">'</span></span> <span class="pl-k">|</span> awk <span class="pl-s"><span class="pl-pds">'</span>{print "screen -S "$1" -X quit"}<span class="pl-pds">'</span></span> <span class="pl-k">|</span> sh
-<span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>Attempting to start screen session 'alist'<span class="pl-pds">"</span></span>
-screen -dmS alist bash -c <span class="pl-s"><span class="pl-pds">'</span>cd ~/domains/alist &amp;&amp; ./alist server<span class="pl-pds">'</span></span>
-<span class="pl-c"><span class="pl-c">#</span>screen -ls</span>
-<span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-s"><span class="pl-pds">$(</span>date <span class="pl-s"><span class="pl-pds">'</span>+%Y-%m-%d %H:%M:%S<span class="pl-pds">'</span></span><span class="pl-pds">)</span></span><span class="pl-pds">"</span></span> <span class="pl-k">&gt;</span> <span class="pl-k">~</span>/domains/alist/logfile.txt</pre></div>
-<p>转到 panel 面板, 创建 Cron Jobs 定时任务.</p>
-<p>我们需要创建一个每小时执行的任务进行保活,</p>
-<p>计划任务执行的是我的<code class="notranslate">runAlist.sh</code>. 如下图:</p>
-<p>![]<a href="https://github.com/user-attachments/assets/44941b64-1c4b-4063-8a57-ec8c305f4553">https://github.com/user-attachments/assets/44941b64-1c4b-4063-8a57-ec8c305f4553</a>)</p>
-<p>成功后不出意外的话, 隔一段时间进入 Alist 网盘需要重新登陆账号, 因为定时脚本会先杀原来的 Alist 进程再重启.</p>
-<h1>Serv00+CT8 保活(可TG通知)</h1>
-<blockquote>
-<p>引用自 <a href="https://linux.do/t/topic/180293" rel="nofollow">Linux.do</a></p>
-</blockquote>
-<h2>先决条件</h2>
-<ul class="contains-task-list">
-<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox" checked=""> 假设你已经拥有了一个 telegram bot.</li>
-</ul>
-<h2>首先上代码</h2>
-<p>Worker 代码:</p>
-<details><summary>JavaScript Code</summary>
-<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'fetch'</span><span class="pl-kos">,</span> <span class="pl-s1">event</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
-  <span class="pl-s1">event</span><span class="pl-kos">.</span><span class="pl-en">respondWith</span><span class="pl-kos">(</span><span class="pl-en">handleRequest</span><span class="pl-kos">(</span><span class="pl-s1">event</span><span class="pl-kos">.</span><span class="pl-c1">request</span><span class="pl-kos">)</span><span class="pl-kos">)</span>
-<span class="pl-kos">}</span><span class="pl-kos">)</span>
-
-<span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'scheduled'</span><span class="pl-kos">,</span> <span class="pl-s1">event</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
-  <span class="pl-s1">event</span><span class="pl-kos">.</span><span class="pl-en">waitUntil</span><span class="pl-kos">(</span><span class="pl-en">handleScheduled</span><span class="pl-kos">(</span><span class="pl-s1">event</span><span class="pl-kos">.</span><span class="pl-c1">scheduledTime</span><span class="pl-kos">)</span><span class="pl-kos">)</span>
-<span class="pl-kos">}</span><span class="pl-kos">)</span>
-
-<span class="pl-k">async</span> <span class="pl-k">function</span> <span class="pl-en">handleRequest</span><span class="pl-kos">(</span><span class="pl-s1">request</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-  <span class="pl-k">return</span> <span class="pl-k">new</span> <span class="pl-v">Response</span><span class="pl-kos">(</span><span class="pl-s">'Worker is running'</span><span class="pl-kos">)</span>
-<span class="pl-kos">}</span>
-
-<span class="pl-k">async</span> <span class="pl-k">function</span> <span class="pl-en">handleScheduled</span><span class="pl-kos">(</span><span class="pl-s1">scheduledTime</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-  <span class="pl-k">const</span> <span class="pl-s1">accounts</span> <span class="pl-c1">=</span> <span class="pl-c1">JSON</span><span class="pl-kos">.</span><span class="pl-en">parse</span><span class="pl-kos">(</span><span class="pl-c1">ACCOUNTS_JSON</span><span class="pl-kos">)</span>
-  <span class="pl-k">const</span> <span class="pl-s1">results</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-en">loginAccounts</span><span class="pl-kos">(</span><span class="pl-s1">accounts</span><span class="pl-kos">)</span>
-  <span class="pl-k">await</span> <span class="pl-en">sendSummary</span><span class="pl-kos">(</span><span class="pl-s1">results</span><span class="pl-kos">)</span>
-<span class="pl-kos">}</span>
-
-<span class="pl-k">async</span> <span class="pl-k">function</span> <span class="pl-en">loginAccounts</span><span class="pl-kos">(</span><span class="pl-s1">accounts</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-  <span class="pl-k">const</span> <span class="pl-s1">results</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-kos">]</span>
-  <span class="pl-k">for</span> <span class="pl-kos">(</span><span class="pl-k">const</span> <span class="pl-s1">account</span> <span class="pl-k">of</span> <span class="pl-s1">accounts</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-    <span class="pl-k">const</span> <span class="pl-s1">result</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-en">loginAccount</span><span class="pl-kos">(</span><span class="pl-s1">account</span><span class="pl-kos">)</span>
-    <span class="pl-s1">results</span><span class="pl-kos">.</span><span class="pl-en">push</span><span class="pl-kos">(</span><span class="pl-kos">{</span> ...<span class="pl-s1">account</span><span class="pl-kos">,</span> ...<span class="pl-s1">result</span> <span class="pl-kos">}</span><span class="pl-kos">)</span>
-    <span class="pl-k">await</span> <span class="pl-en">delay</span><span class="pl-kos">(</span><span class="pl-v">Math</span><span class="pl-kos">.</span><span class="pl-en">floor</span><span class="pl-kos">(</span><span class="pl-v">Math</span><span class="pl-kos">.</span><span class="pl-en">random</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">*</span> <span class="pl-c1">8000</span><span class="pl-kos">)</span> <span class="pl-c1">+</span> <span class="pl-c1">1000</span><span class="pl-kos">)</span>
-  <span class="pl-kos">}</span>
-  <span class="pl-k">return</span> <span class="pl-s1">results</span>
-<span class="pl-kos">}</span>
-
-<span class="pl-k">function</span> <span class="pl-en">generateRandomUserAgent</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-  <span class="pl-k">const</span> <span class="pl-s1">browsers</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">'Chrome'</span><span class="pl-kos">,</span> <span class="pl-s">'Firefox'</span><span class="pl-kos">,</span> <span class="pl-s">'Safari'</span><span class="pl-kos">,</span> <span class="pl-s">'Edge'</span><span class="pl-kos">,</span> <span class="pl-s">'Opera'</span><span class="pl-kos">]</span><span class="pl-kos">;</span>
-  <span class="pl-k">const</span> <span class="pl-s1">browser</span> <span class="pl-c1">=</span> <span class="pl-s1">browsers</span><span class="pl-kos">[</span><span class="pl-v">Math</span><span class="pl-kos">.</span><span class="pl-en">floor</span><span class="pl-kos">(</span><span class="pl-v">Math</span><span class="pl-kos">.</span><span class="pl-en">random</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">*</span> <span class="pl-s1">browsers</span><span class="pl-kos">.</span><span class="pl-c1">length</span><span class="pl-kos">)</span><span class="pl-kos">]</span><span class="pl-kos">;</span>
-  <span class="pl-k">const</span> <span class="pl-s1">version</span> <span class="pl-c1">=</span> <span class="pl-v">Math</span><span class="pl-kos">.</span><span class="pl-en">floor</span><span class="pl-kos">(</span><span class="pl-v">Math</span><span class="pl-kos">.</span><span class="pl-en">random</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">*</span> <span class="pl-c1">100</span><span class="pl-kos">)</span> <span class="pl-c1">+</span> <span class="pl-c1">1</span><span class="pl-kos">;</span>
-  <span class="pl-k">const</span> <span class="pl-s1">os</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">'Windows NT 10.0'</span><span class="pl-kos">,</span> <span class="pl-s">'Macintosh'</span><span class="pl-kos">,</span> <span class="pl-s">'X11'</span><span class="pl-kos">]</span><span class="pl-kos">;</span>
-  <span class="pl-k">const</span> <span class="pl-s1">selectedOS</span> <span class="pl-c1">=</span> <span class="pl-s1">os</span><span class="pl-kos">[</span><span class="pl-v">Math</span><span class="pl-kos">.</span><span class="pl-en">floor</span><span class="pl-kos">(</span><span class="pl-v">Math</span><span class="pl-kos">.</span><span class="pl-en">random</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">*</span> <span class="pl-s1">os</span><span class="pl-kos">.</span><span class="pl-c1">length</span><span class="pl-kos">)</span><span class="pl-kos">]</span><span class="pl-kos">;</span>
-  <span class="pl-k">const</span> <span class="pl-s1">osVersion</span> <span class="pl-c1">=</span> <span class="pl-s1">selectedOS</span> <span class="pl-c1">===</span> <span class="pl-s">'X11'</span> ? <span class="pl-s">'Linux x86_64'</span> : <span class="pl-s1">selectedOS</span> <span class="pl-c1">===</span> <span class="pl-s">'Macintosh'</span> ? <span class="pl-s">'Intel Mac OS X 10_15_7'</span> : <span class="pl-s">'Win64; x64'</span><span class="pl-kos">;</span>
-
-  <span class="pl-k">return</span> <span class="pl-s">`Mozilla/5.0 (<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">selectedOS</span><span class="pl-kos">}</span></span>; <span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">osVersion</span><span class="pl-kos">}</span></span>) AppleWebKit/537.36 (KHTML, like Gecko) <span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">browser</span><span class="pl-kos">}</span></span>/<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">version</span><span class="pl-kos">}</span></span>.0.0.0 Safari/537.36`</span><span class="pl-kos">;</span>
-<span class="pl-kos">}</span>
-
-<span class="pl-k">async</span> <span class="pl-k">function</span> <span class="pl-en">loginAccount</span><span class="pl-kos">(</span><span class="pl-s1">account</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-  <span class="pl-k">const</span> <span class="pl-kos">{</span> username<span class="pl-kos">,</span> password<span class="pl-kos">,</span> panelnum<span class="pl-kos">,</span> type <span class="pl-kos">}</span> <span class="pl-c1">=</span> <span class="pl-s1">account</span>
-  <span class="pl-k">let</span> <span class="pl-s1">url</span> <span class="pl-c1">=</span> <span class="pl-s1">type</span> <span class="pl-c1">===</span> <span class="pl-s">'ct8'</span> 
-    ? <span class="pl-s">'https://panel.ct8.pl/login/?next=/'</span> 
-    : <span class="pl-s">`https://panel<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">panelnum</span><span class="pl-kos">}</span></span>.serv00.com/login/?next=/`</span>
-
-  <span class="pl-k">const</span> <span class="pl-s1">userAgent</span> <span class="pl-c1">=</span> <span class="pl-en">generateRandomUserAgent</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-
-  <span class="pl-k">try</span> <span class="pl-kos">{</span>
-    <span class="pl-k">const</span> <span class="pl-s1">response</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-en">fetch</span><span class="pl-kos">(</span><span class="pl-s1">url</span><span class="pl-kos">,</span> <span class="pl-kos">{</span>
-      <span class="pl-c1">method</span>: <span class="pl-s">'GET'</span><span class="pl-kos">,</span>
-      <span class="pl-c1">headers</span>: <span class="pl-kos">{</span>
-        <span class="pl-s">'User-Agent'</span>: <span class="pl-s1">userAgent</span><span class="pl-kos">,</span>
-      <span class="pl-kos">}</span><span class="pl-kos">,</span>
-    <span class="pl-kos">}</span><span class="pl-kos">)</span>
-
-    <span class="pl-k">const</span> <span class="pl-s1">pageContent</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-s1">response</span><span class="pl-kos">.</span><span class="pl-en">text</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
-    <span class="pl-k">const</span> <span class="pl-s1">csrfMatch</span> <span class="pl-c1">=</span> <span class="pl-s1">pageContent</span><span class="pl-kos">.</span><span class="pl-en">match</span><span class="pl-kos">(</span><span class="pl-pds"><span class="pl-c1">/</span>name="csrfmiddlewaretoken" value="([^"]*)"<span class="pl-c1">/</span></span><span class="pl-kos">)</span>
-    <span class="pl-k">const</span> <span class="pl-s1">csrfToken</span> <span class="pl-c1">=</span> <span class="pl-s1">csrfMatch</span> ? <span class="pl-s1">csrfMatch</span><span class="pl-kos">[</span><span class="pl-c1">1</span><span class="pl-kos">]</span> : <span class="pl-c1">null</span>
-
-    <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-c1">!</span><span class="pl-s1">csrfToken</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-      <span class="pl-k">throw</span> <span class="pl-k">new</span> <span class="pl-v">Error</span><span class="pl-kos">(</span><span class="pl-s">'CSRF token not found'</span><span class="pl-kos">)</span>
-    <span class="pl-kos">}</span>
-
-    <span class="pl-k">const</span> <span class="pl-s1">initialCookies</span> <span class="pl-c1">=</span> <span class="pl-s1">response</span><span class="pl-kos">.</span><span class="pl-c1">headers</span><span class="pl-kos">.</span><span class="pl-en">get</span><span class="pl-kos">(</span><span class="pl-s">'set-cookie'</span><span class="pl-kos">)</span> <span class="pl-c1">||</span> <span class="pl-s">''</span>
-
-    <span class="pl-k">const</span> <span class="pl-s1">formData</span> <span class="pl-c1">=</span> <span class="pl-k">new</span> <span class="pl-v">URLSearchParams</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
-      <span class="pl-s">'username'</span>: <span class="pl-s1">username</span><span class="pl-kos">,</span>
-      <span class="pl-s">'password'</span>: <span class="pl-s1">password</span><span class="pl-kos">,</span>
-      <span class="pl-s">'csrfmiddlewaretoken'</span>: <span class="pl-s1">csrfToken</span><span class="pl-kos">,</span>
-      <span class="pl-s">'next'</span>: <span class="pl-s">'/'</span>
-    <span class="pl-kos">}</span><span class="pl-kos">)</span>
-
-    <span class="pl-k">const</span> <span class="pl-s1">loginResponse</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-en">fetch</span><span class="pl-kos">(</span><span class="pl-s1">url</span><span class="pl-kos">,</span> <span class="pl-kos">{</span>
-      <span class="pl-c1">method</span>: <span class="pl-s">'POST'</span><span class="pl-kos">,</span>
-      <span class="pl-c1">headers</span>: <span class="pl-kos">{</span>
-        <span class="pl-s">'Content-Type'</span>: <span class="pl-s">'application/x-www-form-urlencoded'</span><span class="pl-kos">,</span>
-        <span class="pl-s">'Referer'</span>: <span class="pl-s1">url</span><span class="pl-kos">,</span>
-        <span class="pl-s">'User-Agent'</span>: <span class="pl-s1">userAgent</span><span class="pl-kos">,</span>
-        <span class="pl-s">'Cookie'</span>: <span class="pl-s1">initialCookies</span><span class="pl-kos">,</span>
-      <span class="pl-kos">}</span><span class="pl-kos">,</span>
-      <span class="pl-c1">body</span>: <span class="pl-s1">formData</span><span class="pl-kos">.</span><span class="pl-en">toString</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">,</span>
-      <span class="pl-c1">redirect</span>: <span class="pl-s">'manual'</span>
-    <span class="pl-kos">}</span><span class="pl-kos">)</span>
-
-    <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">`Login response status: <span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">loginResponse</span><span class="pl-kos">.</span><span class="pl-c1">status</span><span class="pl-kos">}</span></span>`</span><span class="pl-kos">)</span>
-    <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">`Login response headers: <span class="pl-s1"><span class="pl-kos">${</span><span class="pl-c1">JSON</span><span class="pl-kos">.</span><span class="pl-en">stringify</span><span class="pl-kos">(</span><span class="pl-v">Object</span><span class="pl-kos">.</span><span class="pl-en">fromEntries</span><span class="pl-kos">(</span><span class="pl-s1">loginResponse</span><span class="pl-kos">.</span><span class="pl-c1">headers</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">}</span></span>`</span><span class="pl-kos">)</span>
-
-    <span class="pl-k">const</span> <span class="pl-s1">loginResponseBody</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-s1">loginResponse</span><span class="pl-kos">.</span><span class="pl-en">text</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
-    <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">`Login response body: <span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">loginResponseBody</span><span class="pl-kos">.</span><span class="pl-en">substring</span><span class="pl-kos">(</span><span class="pl-c1">0</span><span class="pl-kos">,</span> <span class="pl-c1">200</span><span class="pl-kos">)</span><span class="pl-kos">}</span></span>...`</span><span class="pl-kos">)</span>
-
-    <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">loginResponse</span><span class="pl-kos">.</span><span class="pl-c1">status</span> <span class="pl-c1">===</span> <span class="pl-c1">302</span> <span class="pl-c1">&amp;&amp;</span> <span class="pl-s1">loginResponse</span><span class="pl-kos">.</span><span class="pl-c1">headers</span><span class="pl-kos">.</span><span class="pl-en">get</span><span class="pl-kos">(</span><span class="pl-s">'location'</span><span class="pl-kos">)</span> <span class="pl-c1">===</span> <span class="pl-s">'/'</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-      <span class="pl-k">const</span> <span class="pl-s1">loginCookies</span> <span class="pl-c1">=</span> <span class="pl-s1">loginResponse</span><span class="pl-kos">.</span><span class="pl-c1">headers</span><span class="pl-kos">.</span><span class="pl-en">get</span><span class="pl-kos">(</span><span class="pl-s">'set-cookie'</span><span class="pl-kos">)</span> <span class="pl-c1">||</span> <span class="pl-s">''</span>
-      <span class="pl-k">const</span> <span class="pl-s1">allCookies</span> <span class="pl-c1">=</span> <span class="pl-en">combineCookies</span><span class="pl-kos">(</span><span class="pl-s1">initialCookies</span><span class="pl-kos">,</span> <span class="pl-s1">loginCookies</span><span class="pl-kos">)</span>
-
-      <span class="pl-k">const</span> <span class="pl-s1">dashboardResponse</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-en">fetch</span><span class="pl-kos">(</span><span class="pl-s1">url</span><span class="pl-kos">.</span><span class="pl-en">replace</span><span class="pl-kos">(</span><span class="pl-s">'/login/'</span><span class="pl-kos">,</span> <span class="pl-s">'/'</span><span class="pl-kos">)</span><span class="pl-kos">,</span> <span class="pl-kos">{</span>
-        <span class="pl-c1">headers</span>: <span class="pl-kos">{</span>
-          <span class="pl-s">'Cookie'</span>: <span class="pl-s1">allCookies</span><span class="pl-kos">,</span>
-          <span class="pl-s">'User-Agent'</span>: <span class="pl-s1">userAgent</span><span class="pl-kos">,</span>
-        <span class="pl-kos">}</span>
-      <span class="pl-kos">}</span><span class="pl-kos">)</span>
-      <span class="pl-k">const</span> <span class="pl-s1">dashboardContent</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-s1">dashboardResponse</span><span class="pl-kos">.</span><span class="pl-en">text</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
-      <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">`Dashboard content: <span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">dashboardContent</span><span class="pl-kos">.</span><span class="pl-en">substring</span><span class="pl-kos">(</span><span class="pl-c1">0</span><span class="pl-kos">,</span> <span class="pl-c1">200</span><span class="pl-kos">)</span><span class="pl-kos">}</span></span>...`</span><span class="pl-kos">)</span>
-
-      <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">dashboardContent</span><span class="pl-kos">.</span><span class="pl-en">includes</span><span class="pl-kos">(</span><span class="pl-s">'href="/logout/"'</span><span class="pl-kos">)</span> <span class="pl-c1">||</span> <span class="pl-s1">dashboardContent</span><span class="pl-kos">.</span><span class="pl-en">includes</span><span class="pl-kos">(</span><span class="pl-s">'href="/wyloguj/"'</span><span class="pl-kos">)</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-        <span class="pl-k">const</span> <span class="pl-s1">nowUtc</span> <span class="pl-c1">=</span> <span class="pl-en">formatToISO</span><span class="pl-kos">(</span><span class="pl-k">new</span> <span class="pl-v">Date</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">)</span>
-        <span class="pl-k">const</span> <span class="pl-s1">nowBeijing</span> <span class="pl-c1">=</span> <span class="pl-en">formatToISO</span><span class="pl-kos">(</span><span class="pl-k">new</span> <span class="pl-v">Date</span><span class="pl-kos">(</span><span class="pl-v">Date</span><span class="pl-kos">.</span><span class="pl-en">now</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">+</span> <span class="pl-c1">8</span> <span class="pl-c1">*</span> <span class="pl-c1">60</span> <span class="pl-c1">*</span> <span class="pl-c1">60</span> <span class="pl-c1">*</span> <span class="pl-c1">1000</span><span class="pl-kos">)</span><span class="pl-kos">)</span>
-        <span class="pl-k">const</span> <span class="pl-s1">message</span> <span class="pl-c1">=</span> <span class="pl-s">`账号 <span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">username</span><span class="pl-kos">}</span></span> (<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">type</span><span class="pl-kos">}</span></span>) 于北京时间 <span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">nowBeijing</span><span class="pl-kos">}</span></span>（UTC时间 <span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">nowUtc</span><span class="pl-kos">}</span></span>）登录成功！`</span>
-        <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s1">message</span><span class="pl-kos">)</span>
-        <span class="pl-k">await</span> <span class="pl-en">sendTelegramMessage</span><span class="pl-kos">(</span><span class="pl-s1">message</span><span class="pl-kos">)</span>
-        <span class="pl-k">return</span> <span class="pl-kos">{</span> <span class="pl-c1">success</span>: <span class="pl-c1">true</span><span class="pl-kos">,</span> message <span class="pl-kos">}</span>
-      <span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
-        <span class="pl-k">const</span> <span class="pl-s1">message</span> <span class="pl-c1">=</span> <span class="pl-s">`账号 <span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">username</span><span class="pl-kos">}</span></span> (<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">type</span><span class="pl-kos">}</span></span>) 登录后未找到登出链接，可能登录失败。`</span>
-        <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">error</span><span class="pl-kos">(</span><span class="pl-s1">message</span><span class="pl-kos">)</span>
-        <span class="pl-k">await</span> <span class="pl-en">sendTelegramMessage</span><span class="pl-kos">(</span><span class="pl-s1">message</span><span class="pl-kos">)</span>
-        <span class="pl-k">return</span> <span class="pl-kos">{</span> <span class="pl-c1">success</span>: <span class="pl-c1">false</span><span class="pl-kos">,</span> message <span class="pl-kos">}</span>
-      <span class="pl-kos">}</span>
-    <span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">loginResponseBody</span><span class="pl-kos">.</span><span class="pl-en">includes</span><span class="pl-kos">(</span><span class="pl-s">'Nieprawidłowy login lub hasło'</span><span class="pl-kos">)</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-      <span class="pl-k">const</span> <span class="pl-s1">message</span> <span class="pl-c1">=</span> <span class="pl-s">`账号 <span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">username</span><span class="pl-kos">}</span></span> (<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">type</span><span class="pl-kos">}</span></span>) 登录失败: 用户名或密码错误。`</span>
-      <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">error</span><span class="pl-kos">(</span><span class="pl-s1">message</span><span class="pl-kos">)</span>
-      <span class="pl-k">await</span> <span class="pl-en">sendTelegramMessage</span><span class="pl-kos">(</span><span class="pl-s1">message</span><span class="pl-kos">)</span>
-      <span class="pl-k">return</span> <span class="pl-kos">{</span> <span class="pl-c1">success</span>: <span class="pl-c1">false</span><span class="pl-kos">,</span> message <span class="pl-kos">}</span>
-    <span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
-      <span class="pl-k">const</span> <span class="pl-s1">message</span> <span class="pl-c1">=</span> <span class="pl-s">`账号 <span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">username</span><span class="pl-kos">}</span></span> (<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">type</span><span class="pl-kos">}</span></span>) 登录失败，未知原因。请检查账号和密码是否正确。`</span>
-      <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">error</span><span class="pl-kos">(</span><span class="pl-s1">message</span><span class="pl-kos">)</span>
-      <span class="pl-k">await</span> <span class="pl-en">sendTelegramMessage</span><span class="pl-kos">(</span><span class="pl-s1">message</span><span class="pl-kos">)</span>
-      <span class="pl-k">return</span> <span class="pl-kos">{</span> <span class="pl-c1">success</span>: <span class="pl-c1">false</span><span class="pl-kos">,</span> message <span class="pl-kos">}</span>
-    <span class="pl-kos">}</span>
-  <span class="pl-kos">}</span> <span class="pl-k">catch</span> <span class="pl-kos">(</span><span class="pl-s1">error</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-    <span class="pl-k">const</span> <span class="pl-s1">message</span> <span class="pl-c1">=</span> <span class="pl-s">`账号 <span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">username</span><span class="pl-kos">}</span></span> (<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">type</span><span class="pl-kos">}</span></span>) 登录时出现错误: <span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">error</span><span class="pl-kos">.</span><span class="pl-c1">message</span><span class="pl-kos">}</span></span>`</span>
-    <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">error</span><span class="pl-kos">(</span><span class="pl-s1">message</span><span class="pl-kos">)</span>
-    <span class="pl-k">await</span> <span class="pl-en">sendTelegramMessage</span><span class="pl-kos">(</span><span class="pl-s1">message</span><span class="pl-kos">)</span>
-    <span class="pl-k">return</span> <span class="pl-kos">{</span> <span class="pl-c1">success</span>: <span class="pl-c1">false</span><span class="pl-kos">,</span> message <span class="pl-kos">}</span>
-  <span class="pl-kos">}</span>
-<span class="pl-kos">}</span>
-
-<span class="pl-k">function</span> <span class="pl-en">combineCookies</span><span class="pl-kos">(</span><span class="pl-s1">cookies1</span><span class="pl-kos">,</span> <span class="pl-s1">cookies2</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-  <span class="pl-k">const</span> <span class="pl-s1">cookieMap</span> <span class="pl-c1">=</span> <span class="pl-k">new</span> <span class="pl-v">Map</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
-  
-  <span class="pl-k">const</span> <span class="pl-en">parseCookies</span> <span class="pl-c1">=</span> <span class="pl-kos">(</span><span class="pl-s1">cookieString</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
-    <span class="pl-s1">cookieString</span><span class="pl-kos">.</span><span class="pl-en">split</span><span class="pl-kos">(</span><span class="pl-s">','</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">forEach</span><span class="pl-kos">(</span><span class="pl-s1">cookie</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
-      <span class="pl-k">const</span> <span class="pl-kos">[</span><span class="pl-s1">fullCookie</span><span class="pl-kos">]</span> <span class="pl-c1">=</span> <span class="pl-s1">cookie</span><span class="pl-kos">.</span><span class="pl-en">trim</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">split</span><span class="pl-kos">(</span><span class="pl-s">';'</span><span class="pl-kos">)</span>
-      <span class="pl-k">const</span> <span class="pl-kos">[</span><span class="pl-s1">name</span><span class="pl-kos">,</span> <span class="pl-s1">value</span><span class="pl-kos">]</span> <span class="pl-c1">=</span> <span class="pl-s1">fullCookie</span><span class="pl-kos">.</span><span class="pl-en">split</span><span class="pl-kos">(</span><span class="pl-s">'='</span><span class="pl-kos">)</span>
-      <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">name</span> <span class="pl-c1">&amp;&amp;</span> <span class="pl-s1">value</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-        <span class="pl-s1">cookieMap</span><span class="pl-kos">.</span><span class="pl-en">set</span><span class="pl-kos">(</span><span class="pl-s1">name</span><span class="pl-kos">.</span><span class="pl-en">trim</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">,</span> <span class="pl-s1">value</span><span class="pl-kos">.</span><span class="pl-en">trim</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">)</span>
-      <span class="pl-kos">}</span>
-    <span class="pl-kos">}</span><span class="pl-kos">)</span>
-  <span class="pl-kos">}</span>
-
-  <span class="pl-en">parseCookies</span><span class="pl-kos">(</span><span class="pl-s1">cookies1</span><span class="pl-kos">)</span>
-  <span class="pl-en">parseCookies</span><span class="pl-kos">(</span><span class="pl-s1">cookies2</span><span class="pl-kos">)</span>
-
-  <span class="pl-k">return</span> <span class="pl-v">Array</span><span class="pl-kos">.</span><span class="pl-en">from</span><span class="pl-kos">(</span><span class="pl-s1">cookieMap</span><span class="pl-kos">.</span><span class="pl-en">entries</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">map</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-kos">[</span><span class="pl-s1">name</span><span class="pl-kos">,</span> <span class="pl-s1">value</span><span class="pl-kos">]</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-s">`<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">name</span><span class="pl-kos">}</span></span>=<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">value</span><span class="pl-kos">}</span></span>`</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">join</span><span class="pl-kos">(</span><span class="pl-s">'; '</span><span class="pl-kos">)</span>
-<span class="pl-kos">}</span>
-
-<span class="pl-k">async</span> <span class="pl-k">function</span> <span class="pl-en">sendSummary</span><span class="pl-kos">(</span><span class="pl-s1">results</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-  <span class="pl-k">const</span> <span class="pl-s1">successfulLogins</span> <span class="pl-c1">=</span> <span class="pl-s1">results</span><span class="pl-kos">.</span><span class="pl-en">filter</span><span class="pl-kos">(</span><span class="pl-s1">r</span> <span class="pl-c1">=&gt;</span> <span class="pl-s1">r</span><span class="pl-kos">.</span><span class="pl-c1">success</span><span class="pl-kos">)</span>
-  <span class="pl-k">const</span> <span class="pl-s1">failedLogins</span> <span class="pl-c1">=</span> <span class="pl-s1">results</span><span class="pl-kos">.</span><span class="pl-en">filter</span><span class="pl-kos">(</span><span class="pl-s1">r</span> <span class="pl-c1">=&gt;</span> <span class="pl-c1">!</span><span class="pl-s1">r</span><span class="pl-kos">.</span><span class="pl-c1">success</span><span class="pl-kos">)</span>
-
-  <span class="pl-k">let</span> <span class="pl-s1">summaryMessage</span> <span class="pl-c1">=</span> <span class="pl-s">'登录结果统计: \n'</span>
-  <span class="pl-s1">summaryMessage</span> <span class="pl-c1">+=</span> <span class="pl-s">`成功登录的账号: <span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">successfulLogins</span><span class="pl-kos">.</span><span class="pl-c1">length</span><span class="pl-kos">}</span></span>\n`</span>
-  <span class="pl-s1">summaryMessage</span> <span class="pl-c1">+=</span> <span class="pl-s">`登录失败的账号: <span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">failedLogins</span><span class="pl-kos">.</span><span class="pl-c1">length</span><span class="pl-kos">}</span></span>\n`</span>
-
-  <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">failedLogins</span><span class="pl-kos">.</span><span class="pl-c1">length</span> <span class="pl-c1">&gt;</span> <span class="pl-c1">0</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-    <span class="pl-s1">summaryMessage</span> <span class="pl-c1">+=</span> <span class="pl-s">'\n登录失败的账号列表: \n'</span>
-    <span class="pl-s1">failedLogins</span><span class="pl-kos">.</span><span class="pl-en">forEach</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-kos">{</span> username<span class="pl-kos">,</span> type<span class="pl-kos">,</span> message <span class="pl-kos">}</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
-      <span class="pl-s1">summaryMessage</span> <span class="pl-c1">+=</span> <span class="pl-s">`- <span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">username</span><span class="pl-kos">}</span></span> (<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">type</span><span class="pl-kos">}</span></span>): <span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">message</span><span class="pl-kos">}</span></span>\n`</span>
-    <span class="pl-kos">}</span><span class="pl-kos">)</span>
-  <span class="pl-kos">}</span>
-
-  <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s1">summaryMessage</span><span class="pl-kos">)</span>
-  <span class="pl-k">await</span> <span class="pl-en">sendTelegramMessage</span><span class="pl-kos">(</span><span class="pl-s1">summaryMessage</span><span class="pl-kos">)</span>
-<span class="pl-kos">}</span>
-
-<span class="pl-k">async</span> <span class="pl-k">function</span> <span class="pl-en">sendTelegramMessage</span><span class="pl-kos">(</span><span class="pl-s1">message</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-  <span class="pl-k">const</span> <span class="pl-s1">telegramConfig</span> <span class="pl-c1">=</span> <span class="pl-c1">JSON</span><span class="pl-kos">.</span><span class="pl-en">parse</span><span class="pl-kos">(</span><span class="pl-c1">TELEGRAM_JSON</span><span class="pl-kos">)</span>
-  <span class="pl-k">const</span> <span class="pl-kos">{</span> telegramBotToken<span class="pl-kos">,</span> telegramBotUserId <span class="pl-kos">}</span> <span class="pl-c1">=</span> <span class="pl-s1">telegramConfig</span>
-  <span class="pl-k">const</span> <span class="pl-s1">url</span> <span class="pl-c1">=</span> <span class="pl-s">`https://api.telegram.org/bot<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">telegramBotToken</span><span class="pl-kos">}</span></span>/sendMessage`</span>
-  
-  <span class="pl-k">try</span> <span class="pl-kos">{</span>
-    <span class="pl-k">await</span> <span class="pl-en">fetch</span><span class="pl-kos">(</span><span class="pl-s1">url</span><span class="pl-kos">,</span> <span class="pl-kos">{</span>
-      <span class="pl-c1">method</span>: <span class="pl-s">'POST'</span><span class="pl-kos">,</span>
-      <span class="pl-c1">headers</span>: <span class="pl-kos">{</span> <span class="pl-s">'Content-Type'</span>: <span class="pl-s">'application/json'</span> <span class="pl-kos">}</span><span class="pl-kos">,</span>
-      <span class="pl-c1">body</span>: <span class="pl-c1">JSON</span><span class="pl-kos">.</span><span class="pl-en">stringify</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
-        <span class="pl-c1">chat_id</span>: <span class="pl-s1">telegramBotUserId</span><span class="pl-kos">,</span>
-        <span class="pl-c1">text</span>: <span class="pl-s1">message</span>
-      <span class="pl-kos">}</span><span class="pl-kos">)</span>
-    <span class="pl-kos">}</span><span class="pl-kos">)</span>
-  <span class="pl-kos">}</span> <span class="pl-k">catch</span> <span class="pl-kos">(</span><span class="pl-s1">error</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-    <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">error</span><span class="pl-kos">(</span><span class="pl-s">'Error sending Telegram message:'</span><span class="pl-kos">,</span> <span class="pl-s1">error</span><span class="pl-kos">)</span>
-  <span class="pl-kos">}</span>
-<span class="pl-kos">}</span>
-
-<span class="pl-k">function</span> <span class="pl-en">formatToISO</span><span class="pl-kos">(</span><span class="pl-s1">date</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-  <span class="pl-k">return</span> <span class="pl-s1">date</span><span class="pl-kos">.</span><span class="pl-en">toISOString</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">replace</span><span class="pl-kos">(</span><span class="pl-s">'T'</span><span class="pl-kos">,</span> <span class="pl-s">' '</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">replace</span><span class="pl-kos">(</span><span class="pl-s">'Z'</span><span class="pl-kos">,</span> <span class="pl-s">''</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">replace</span><span class="pl-kos">(</span><span class="pl-pds"><span class="pl-c1">/</span>\.\d{3}Z<span class="pl-c1">/</span></span><span class="pl-kos">,</span> <span class="pl-s">''</span><span class="pl-kos">)</span>
-<span class="pl-kos">}</span>
-
-<span class="pl-k">function</span> <span class="pl-en">delay</span><span class="pl-kos">(</span><span class="pl-s1">ms</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-  <span class="pl-k">return</span> <span class="pl-k">new</span> <span class="pl-v">Promise</span><span class="pl-kos">(</span><span class="pl-s1">resolve</span> <span class="pl-c1">=&gt;</span> <span class="pl-en">setTimeout</span><span class="pl-kos">(</span><span class="pl-s1">resolve</span><span class="pl-kos">,</span> <span class="pl-s1">ms</span><span class="pl-kos">)</span><span class="pl-kos">)</span>
-<span class="pl-kos">}</span></pre></div>
-</details>
-<p>变量:</p>
-<p><code class="notranslate">ACCOUNTS_JSON</code></p>
-<details><summary>Json</summary>
-<div class="highlight highlight-source-json"><pre class="notranslate">[  
-  { <span class="pl-ent">"username"</span>: <span class="pl-s"><span class="pl-pds">"</span>serv00user1<span class="pl-pds">"</span></span>, <span class="pl-ent">"password"</span>: <span class="pl-s"><span class="pl-pds">"</span>serv00password1<span class="pl-pds">"</span></span>, <span class="pl-ent">"panelnum"</span>: <span class="pl-s"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span>, <span class="pl-ent">"type"</span>: <span class="pl-s"><span class="pl-pds">"</span>serv00<span class="pl-pds">"</span></span> },
-  { <span class="pl-ent">"username"</span>: <span class="pl-s"><span class="pl-pds">"</span>serv00user2<span class="pl-pds">"</span></span>, <span class="pl-ent">"password"</span>: <span class="pl-s"><span class="pl-pds">"</span>serv00password2<span class="pl-pds">"</span></span>, <span class="pl-ent">"panelnum"</span>: <span class="pl-s"><span class="pl-pds">"</span>4<span class="pl-pds">"</span></span>, <span class="pl-ent">"type"</span>: <span class="pl-s"><span class="pl-pds">"</span>serv00<span class="pl-pds">"</span></span> },
-  { <span class="pl-ent">"username"</span>: <span class="pl-s"><span class="pl-pds">"</span>serv00user3<span class="pl-pds">"</span></span>, <span class="pl-ent">"password"</span>: <span class="pl-s"><span class="pl-pds">"</span>serv00password3<span class="pl-pds">"</span></span>, <span class="pl-ent">"panelnum"</span>: <span class="pl-s"><span class="pl-pds">"</span>7<span class="pl-pds">"</span></span>, <span class="pl-ent">"type"</span>: <span class="pl-s"><span class="pl-pds">"</span>serv00<span class="pl-pds">"</span></span> },
-  { <span class="pl-ent">"username"</span>: <span class="pl-s"><span class="pl-pds">"</span>ct8user1<span class="pl-pds">"</span></span>, <span class="pl-ent">"password"</span>: <span class="pl-s"><span class="pl-pds">"</span>ct8password1<span class="pl-pds">"</span></span>, <span class="pl-ent">"type"</span>: <span class="pl-s"><span class="pl-pds">"</span>ct8<span class="pl-pds">"</span></span> },
-  { <span class="pl-ent">"username"</span>: <span class="pl-s"><span class="pl-pds">"</span>ct8user2<span class="pl-pds">"</span></span>, <span class="pl-ent">"password"</span>: <span class="pl-s"><span class="pl-pds">"</span>ct8password2<span class="pl-pds">"</span></span>, <span class="pl-ent">"type"</span>: <span class="pl-s"><span class="pl-pds">"</span>ct8<span class="pl-pds">"</span></span> }
-]</pre></div>
-</details>
-<p><code class="notranslate">TELEGRAM_JSON</code></p>
-<details><summary>Json</summary>
-<div class="highlight highlight-source-json"><pre class="notranslate">{
-  <span class="pl-ent">"telegramBotToken"</span>: <span class="pl-s"><span class="pl-pds">"</span>YOUR_BOT_TOKEN<span class="pl-pds">"</span></span>,
-  <span class="pl-ent">"telegramBotUserId"</span>: <span class="pl-s"><span class="pl-pds">"</span>YOUR_USER_ID<span class="pl-pds">"</span></span>
-}</pre></div>
-</details>
-<h2>创建 Workers</h2>
-<p>进入 Cloudflare 面板, 创建 Workers</p>
-<p>名字随意, 建议写<code class="notranslate">Serv00Keep</code>方便好记, 然后右下角点部署.</p>
-<p>![]<a href="https://github.com/user-attachments/assets/696581ca-d3c2-475c-8b0c-490245f61bf7">https://github.com/user-attachments/assets/696581ca-d3c2-475c-8b0c-490245f61bf7</a>)</p>
-<p>部署完成后点击编辑代码.</p>
-<p>![]<a href="https://github.com/user-attachments/assets/54428f5e-311c-43ad-ba0e-b25a7e4e9606">https://github.com/user-attachments/assets/54428f5e-311c-43ad-ba0e-b25a7e4e9606</a>)</p>
-<p>粘贴 JavaScript 代码, 粘贴好之后点击部署.</p>
-<p>![]<a href="https://github.com/user-attachments/assets/bf5b5261-3124-4c96-be86-30b2ae647e84">https://github.com/user-attachments/assets/bf5b5261-3124-4c96-be86-30b2ae647e84</a>)</p>
-<p>返回到<code class="notranslate">Serv00Keep</code>的设置, 找到<code class="notranslate">变量和机密</code></p>
-<h3>添加机密</h3>
-<p>按照<code class="notranslate">Json</code>格式编辑好自己的 serv00 账号和密码, 填入<code class="notranslate">ACCOUNTS_JSON</code>值.<br>
-按照<code class="notranslate">Json</code>格式编辑好自己的 telegram bot token, 填入<code class="notranslate">TELEGRAM_JSON</code>值.</p>
-<p>![]<a href="https://github.com/user-attachments/assets/8069f3fa-4b3b-431d-b110-5f95ac5ad487">https://github.com/user-attachments/assets/8069f3fa-4b3b-431d-b110-5f95ac5ad487</a>)</p>
-<h3>添加触发事件</h3>
-<p>![]<a href="https://github.com/user-attachments/assets/9d41dbfd-cf04-493a-87c9-cf94d121f309">https://github.com/user-attachments/assets/9d41dbfd-cf04-493a-87c9-cf94d121f309</a>)</p>
-<h2>手动部署</h2>
-<p>机密和触发事件填写完成之后, 我们手动部署一次.</p>
-<p>![]<a href="https://github.com/user-attachments/assets/2ed0ee89-c738-42c5-95cd-18a6430212cd">https://github.com/user-attachments/assets/2ed0ee89-c738-42c5-95cd-18a6430212cd</a>)</p>
-<h2>手动执行验证效果</h2>
-<p>如下图, 进入编辑代码 → 设定时间 → 触发计划的事件, 即可手动触发.</p>
-<p>同时可以看到正常运行没问题, 接下来就是定时执行不用再管它了.</p>
-<p>![]<a href="https://github.com/user-attachments/assets/02d8b180-4891-4c71-8da2-b30570483594">https://github.com/user-attachments/assets/02d8b180-4891-4c71-8da2-b30570483594</a>)</p>
-<h1>文章引用</h1>
-<p><a href="https://saika.us.kg/2024/01/27/serv00_logs#Alist" rel="nofollow">Saika's Blog</a> | <a href="https://zhuanlan.zhihu.com/p/680607217" rel="nofollow">知乎</a></p></div>
+<p>当然了, 如果 ffmpeg 当时编译时, 添加了外部的 x265 或者 x264, 那也可以用外部的编码器来编码.(不知道什么是x265, 可以 <a href="https://www.google.com/search?q=%E4%BB%80%E4%B9%88%E6%98%AFx265" rel="nofollow">Google</a> 一下, 简单的说, 就是它不包含在 ffmpeg 的源码里, 是独立的一个开源代码, 用于编码 HEVC, ffmpeg 编码时可以调用它. 当然, ffmpeg 也有自己的编码器)</p>
+<pre class="notranslate"><code class="notranslate">ffmpeg -i [File] -c:v libx265 [File2]
+</code></pre>
+<pre class="notranslate"><code class="notranslate">ffmpeg -i [File] -c:v libx264 [File2]
+</code></pre>
+<h1>视频转分辨率</h1>
+<pre class="notranslate"><code class="notranslate">ffmpeg -i [File] -vf scale=1280:720 [File2]
+</code></pre>
+<h1>调整播放速度</h1>
+<p>加速四倍:</p>
+<pre class="notranslate"><code class="notranslate">ffmpeg -i [File] -vf "setpts=0.25*PTS" [File2]
+</code></pre></div>
 <div style="font-size:small;margin-top:8px;float:right;">🥰转载请注明,谢谢!🥰</div>
 
 <button class="btn btn-block" type="button" id="cmButton">评论</button>
@@ -1160,7 +416,8 @@ if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
 </script>
 
 <script>
-const postTitle=document.querySelector(".postTitle"),textContent=postTitle.textContent;postTitle.textContent="";let idx=0;const writeTimer=setInterval(()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContent.length&&(clearInterval(writeTimer),postTitle.classList.remove("no-blink"))},80);postTitle.classList.add("no-blink");const spoilers=document.querySelectorAll(".spoilerText");spoilers.length&&spoilers.forEach(t=>t.onclick=(()=>t.classList.toggle("clear"))),document.addEventListener("DOMContentLoaded",()=>{const t=document.createElement("div");t.id="checkBtn";const e=document.getElementById("functionBtn");e.insertAdjacentElement("afterend",t),new IntersectionObserver(t=>{t.forEach(t=>{const n=t.isIntersecting;e.classList.toggle("Btn-flex",!n),e.style.top=n?"0":"-100px"})},{rootMargin:"300px 0px 0px 0px",threshold:0}).observe(t);let n=0;const o=t=>{e.style.top=t>0?"-100px":"0"};document.addEventListener("touchstart",t=>n=t.touches[0].clientY),document.addEventListener("touchmove",t=>o(t.touches[0].clientY-n)),document.addEventListener("wheel",t=>o(t.deltaY))});
+// const postTitle=document.querySelector(".postTitle"),textContent=postTitle.textContent;postTitle.textContent="";let idx=0;const writeTimer=setInterval(()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContent.length&&(clearInterval(writeTimer),postTitle.classList.remove("no-blink"))},80);postTitle.classList.add("no-blink");const spoilers=document.querySelectorAll(".spoilerText");spoilers.length&&spoilers.forEach(t=>t.onclick=(()=>t.classList.toggle("clear"))),document.addEventListener("DOMContentLoaded",()=>{const t=document.createElement("div");t.id="checkBtn";const e=document.getElementById("functionBtn");e.insertAdjacentElement("afterend",t),new IntersectionObserver(t=>{t.forEach(t=>{const n=t.isIntersecting;e.classList.toggle("Btn-flex",!n),e.style.top=n?"0":"-100px"})},{rootMargin:"300px 0px 0px 0px",threshold:0}).observe(t);let n=0;const o=t=>{e.style.top=t>0?"-100px":"0"};document.addEventListener("touchstart",t=>n=t.touches[0].clientY),document.addEventListener("touchmove",t=>o(t.touches[0].clientY-n)),document.addEventListener("wheel",t=>o(t.deltaY))});
+const postTitle=document.querySelector(".postTitle"),textContent=postTitle.textContent;postTitle.textContent="";let idx=0;const writeTimer=setInterval(()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContent.length&&(clearInterval(writeTimer),postTitle.classList.remove("no-blink"))},80);postTitle.classList.add("no-blink");const spoilers=document.querySelectorAll(".spoilerText");spoilers.length&&spoilers.forEach(t=>t.onclick=(()=>t.classList.toggle("clear"))),document.addEventListener("DOMContentLoaded",()=>{const t=document.createElement("div");t.id="checkBtn";const e=document.getElementById("toogleBtn"),n=document.getElementById("functionBtn");n.insertAdjacentElement("afterend",t),new IntersectionObserver(t=>{t.forEach(t=>{e.classList.toggle("active",!t.isIntersecting),n.classList.toggle("Btn-flex",!t.isIntersecting)})},{rootMargin:"300px 0px 0px 0px",threshold:0}).observe(t),e.addEventListener("click",()=>{n.style.top="0px"===n.style.top?"-64px":"0",e.style.transform="rotate(180deg)"===e.style.transform?"rotate(0deg)":"rotate(180deg)"})});
 document.getElementById("pathHome").setAttribute("d",IconList["home"]);
 document.getElementById("ArticleTOC").setAttribute("d","M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z");
 document.getElementById("pathSearch").setAttribute("d","M15.7 13.3l-3.81-3.83A5.93 5.93 0 0 0 13 6c0-3.31-2.69-6-6-6S1 2.69 1 6s2.69 6 6 6c1.3 0 2.48-.41 3.47-1.11l3.83 3.81c.19.2.45.3.7.3.25 0 .52-.09.7-.3a.996.996 0 0 0 0-1.41v.01zM7 10.7c-2.59 0-4.7-2.11-4.7-4.7 0-2.59 2.11-4.7 4.7-4.7 2.59 0 4.7 2.11 4.7 4.7 0 2.59-2.11 4.7-4.7 4.7z");
