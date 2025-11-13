@@ -4,7 +4,7 @@
     <meta content="text/html; charset=utf-8" http-equiv="content-type" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href='../static/primer.min.css' rel='stylesheet' />
+    <link href='https://gjken.github.io/demo/primer.css' rel='stylesheet' />
     
     <link rel="icon" href="https://pic.imgdb.cn/item/6734c652d29ded1a8cc038aa.jpg"><script>
         let theme = localStorage.getItem("meek_theme") || "light";
@@ -20,17 +20,16 @@
 
 </head>
 <style>
-:root{--functionBtnFlex-bgColor:#ffffff61;}
-[data-color-mode=light][data-light-theme=dark],[data-color-mode=light][data-light-theme=dark]::selection,[data-color-mode=dark][data-dark-theme=dark],[data-color-mode=dark][data-dark-theme=dark]::selection{--functionBtnFlex-bgColor:#ffffff00;}
+:root{--functionBtnFlex-bgColor:#ffffff61;--tooglebtn-bgColor:#c0e4ff9c}
+[data-color-mode=light][data-light-theme=dark],[data-color-mode=light][data-light-theme=dark]::selection,[data-color-mode=dark][data-dark-theme=dark],[data-color-mode=dark][data-dark-theme=dark]::selection{--functionBtnFlex-bgColor:#ffffff00;--tooglebtn-bgColor:#7dc2ff7a}
 @keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@keyframes blink{50%{opacity:0}100%{opacity:1}}@-webkit-keyframes blink{50%{opacity:0}100%{opacity:1}}@keyframes grow{0%{opacity:0.85;transform:scale(0.5);}100%{opacity:1;transform:translate(1);}}@-webkit-keyframes grow{0%{opacity:0.85;-webkit-transform:scale(0.5);}100%{opacity:1;-webkit-transform:translate(1);}}@keyframes slide-fade-in{0%{opacity:0;transform:translate3d(0,20px,0);}100%{opacity:1;transform:translate(0,0,0);}}@-webkit-keyframes slide-fade-in{0%{opacity:0;-webkit-transform:translate3d(0,20px,0);}100%{opacity:1;-webkit-transform:translate(0,0,0);}}
 body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padding:45px;font-size:16px;font-family:sans-serif;line-height:1.25}
-body,#content{-webkit-animation:slide-fade-in 1.2s ease;animation:slide-fade-in 1.2s ease}
 #header{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:24px;}
 #functionBtn{display:flex;justify-content:center;margin:20px 0;gap:20px;}
 #functionBtn a{padding:14px 16px;}
-#functionBtn.Btn-flex{position:fixed;margin:0;padding:20px 0;top:-100px;left:0;width:100%;min-width:500px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;animation:fadeIn.2s ease-in 0s forwards;transition:top 0.3s ease-in-out}
+#functionBtn.Btn-flex{position:fixed;margin:0;padding:8px 0;top:-64px;left:0;width:100%;min-width:500px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;animation:fadeIn.2s ease-in 0s forwards;transition:top 0.3s ease-in-out}
 #footer{margin-top:64px;text-align:center;font-size:small;}
-#functionBtn a,.tagTitle,.title-left a,.subnav-search{-webkit-animation:slide-fade-in 0.8s ease;animation:slide-fade-in 0.8s ease}
+body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animation:slide-fade-in 0.8s ease;animation:slide-fade-in 0.8s ease}
 .title-left img{animation:grow 0.5s cubic-bezier(0.23,1,0.32,1);-webkit-animation:grow 0.5s cubic-bezier(0.23,1,0.32,1);}
 </style>
 
@@ -90,84 +89,40 @@ body,#content{-webkit-animation:slide-fade-in 1.2s ease;animation:slide-fade-in 
     <div id="content">
 <div style="margin-bottom:16px;"> </div>
 <nav class="SideNav border">
-<a class="SideNav-item d-flex flex-items-center flex-justify-between" href="post/1.html">
-    <div class="d-flex flex-items-center">
-        <svg class="SideNav-icon octicon" style="witdh:16px;height:16px"><path class="svgTop1" d=""></path>
-        </svg>
-        <span class="listTitle">Gmeek - 记录使用过程</span>
-    </div>
-    <div class="listLabels">
-        
-        <span class="Label LabelName" style="background-color:#218155"><object><a style="color:#fff" href="tag.html#CSS">CSS</a></object></span><span class="Label LabelName" style="background-color:#333333"><object><a style="color:#fff" href="tag.html#Github">Github</a></object></span><span class="Label LabelName" style="background-color:#AD3152"><object><a style="color:#fff" href="tag.html#JS">JS</a></object></span><span class="Label LabelName" style="background-color:#7057ff"><object><a style="color:#fff" href="tag.html#网站">网站</a></object></span>
-        <span class="Label LabelTime" style="background-color:#bc4c00">2024-11-11</span>
-    </div>
-</a><a class="SideNav-item d-flex flex-items-center flex-justify-between" href="post/11.html">
+<a class="SideNav-item d-flex flex-items-center flex-justify-between" href="post/6.html">
     <div class="d-flex flex-items-center">
         <svg class="SideNav-icon octicon" style="witdh:16px;height:16px"><path class="svgTop0" d=""></path>
         </svg>
-        <span class="listTitle">AssetRipper - 开源的 Unity 游戏资源提取工具</span>
+        <span class="listTitle">BD压制组鉴别心得</span>
     </div>
     <div class="listLabels">
         
-        <span class="Label LabelName" style="background-color:#5da167"><object><a style="color:#fff" href="tag.html#软件">软件</a></object></span><span class="Label LabelName" style="background-color:#BC49AB"><object><a style="color:#fff" href="tag.html#Game">Game</a></object></span>
-        <span class="Label LabelTime" style="background-color:#0969da">2025-01-03</span>
-    </div>
-</a><a class="SideNav-item d-flex flex-items-center flex-justify-between" href="post/10.html">
-    <div class="d-flex flex-items-center">
-        <svg class="SideNav-icon octicon" style="witdh:16px;height:16px"><path class="svgTop0" d=""></path>
-        </svg>
-        <span class="listTitle">图片超分 - Real-ESRGAN GUI</span>
-    </div>
-    <div class="listLabels">
-        
-        <span class="Label LabelName" style="background-color:#5AB3F3"><object><a style="color:#fff" href="tag.html#Win">Win</a></object></span><span class="Label LabelName" style="background-color:#5da167"><object><a style="color:#fff" href="tag.html#软件">软件</a></object></span><span class="Label LabelName" style="background-color:#4c6cc5"><object><a style="color:#fff" href="tag.html#图片处理">图片处理</a></object></span>
-        <span class="Label LabelTime" style="background-color:#0969da">2025-01-03</span>
-    </div>
-</a><a class="SideNav-item d-flex flex-items-center flex-justify-between" href="post/9.html">
-    <div class="d-flex flex-items-center">
-        <svg class="SideNav-icon octicon" style="witdh:16px;height:16px"><path class="svgTop0" d=""></path>
-        </svg>
-        <span class="listTitle">正则表达式 - 使用记录</span>
-    </div>
-    <div class="listLabels">
-        
-        <span class="Label LabelName" style="background-color:#008672"><object><a style="color:#fff" href="tag.html#日常">日常</a></object></span>
-        <span class="Label LabelTime" style="background-color:#bc4c00">2024-12-30</span>
-    </div>
-</a><a class="SideNav-item d-flex flex-items-center flex-justify-between" href="post/8.html">
-    <div class="d-flex flex-items-center">
-        <svg class="SideNav-icon octicon" style="witdh:16px;height:16px"><path class="svgTop0" d=""></path>
-        </svg>
-        <span class="listTitle">翻墙服务端和客户端 - 使用记录</span>
-    </div>
-    <div class="listLabels">
-        
-        <span class="Label LabelName" style="background-color:#5da167"><object><a style="color:#fff" href="tag.html#软件">软件</a></object></span><span class="Label LabelName" style="background-color:#cb7b58"><object><a style="color:#fff" href="tag.html#翻墙">翻墙</a></object></span>
-        <span class="Label LabelTime" style="background-color:#bc4c00">2024-12-30</span>
-    </div>
-</a><a class="SideNav-item d-flex flex-items-center flex-justify-between" href="post/7.html">
-    <div class="d-flex flex-items-center">
-        <svg class="SideNav-icon octicon" style="witdh:16px;height:16px"><path class="svgTop0" d=""></path>
-        </svg>
-        <span class="listTitle">Cloudflare Web Analytics 的 beacon.min.js 加载缓慢, 记录它的关闭方法</span>
-    </div>
-    <div class="listLabels">
-        
-        <span class="Label LabelName" style="background-color:#7057ff"><object><a style="color:#fff" href="tag.html#网站">网站</a></object></span><span class="Label LabelName" style="background-color:#cb222c"><object><a style="color:#fff" href="tag.html#CDN">CDN</a></object></span>
-        <span class="Label LabelTime" style="background-color:#bc4c00">2024-12-09</span>
-    </div>
-</a><a class="SideNav-item d-flex flex-items-center flex-justify-between" href="post/6.html">
-    <div class="d-flex flex-items-center">
-        <svg class="SideNav-icon octicon" style="witdh:16px;height:16px"><path class="svgTop0" d=""></path>
-        </svg>
-        <span class="listTitle">Github Markdown 使用笔记</span>
-    </div>
-    <div class="listLabels">
-        
-        <span class="Label LabelName" style="background-color:#333333"><object><a style="color:#fff" href="tag.html#Github">Github</a></object></span>
-        <span class="Label LabelTime" style="background-color:#bc4c00">2024-11-19</span>
+        <span class="Label LabelName" style="background-color:#0075ca"><object><a style="color:#fff" href="tag.html#教程">教程</a></object></span><span class="Label LabelName" style="background-color:#E77AB1"><object><a style="color:#fff" href="tag.html#Anime">Anime</a></object></span>
+        <span class="Label LabelTime" style="background-color:#0969da">2025-03-06</span>
     </div>
 </a><a class="SideNav-item d-flex flex-items-center flex-justify-between" href="post/5.html">
+    <div class="d-flex flex-items-center">
+        <svg class="SideNav-icon octicon" style="witdh:16px;height:16px"><path class="svgTop0" d=""></path>
+        </svg>
+        <span class="listTitle">FFmpeg - 使用记录</span>
+    </div>
+    <div class="listLabels">
+        
+        <span class="Label LabelName" style="background-color:#5da167"><object><a style="color:#fff" href="tag.html#软件">软件</a></object></span><span class="Label LabelName" style="background-color:#0075ca"><object><a style="color:#fff" href="tag.html#教程">教程</a></object></span>
+        <span class="Label LabelTime" style="background-color:#0969da">2025-01-12</span>
+    </div>
+</a><a class="SideNav-item d-flex flex-items-center flex-justify-between" href="post/4.html">
+    <div class="d-flex flex-items-center">
+        <svg class="SideNav-icon octicon" style="witdh:16px;height:16px"><path class="svgTop0" d=""></path>
+        </svg>
+        <span class="listTitle">Desktop Meta - 桌面3D模型宠物</span>
+    </div>
+    <div class="listLabels">
+        
+        <span class="Label LabelName" style="background-color:#5da167"><object><a style="color:#fff" href="tag.html#软件">软件</a></object></span><span class="Label LabelName" style="background-color:#0075ca"><object><a style="color:#fff" href="tag.html#教程">教程</a></object></span>
+        <span class="Label LabelTime" style="background-color:#0969da">2025-01-11</span>
+    </div>
+</a><a class="SideNav-item d-flex flex-items-center flex-justify-between" href="post/3.html">
     <div class="d-flex flex-items-center">
         <svg class="SideNav-icon octicon" style="witdh:16px;height:16px"><path class="svgTop0" d=""></path>
         </svg>
@@ -175,41 +130,30 @@ body,#content{-webkit-animation:slide-fade-in 1.2s ease;animation:slide-fade-in 
     </div>
     <div class="listLabels">
         
-        <span class="Label LabelName" style="background-color:#7057ff"><object><a style="color:#fff" href="tag.html#网站">网站</a></object></span>
-        <span class="Label LabelTime" style="background-color:#bc4c00">2024-11-15</span>
-    </div>
-</a><a class="SideNav-item d-flex flex-items-center flex-justify-between" href="post/4.html">
-    <div class="d-flex flex-items-center">
-        <svg class="SideNav-icon octicon" style="witdh:16px;height:16px"><path class="svgTop0" d=""></path>
-        </svg>
-        <span class="listTitle">Cloudflare 域名 DNS 托管 + GitHub Pages 自定义域名</span>
-    </div>
-    <div class="listLabels">
-        
-        <span class="Label LabelName" style="background-color:#7057ff"><object><a style="color:#fff" href="tag.html#网站">网站</a></object></span><span class="Label LabelName" style="background-color:#cb222c"><object><a style="color:#fff" href="tag.html#CDN">CDN</a></object></span>
-        <span class="Label LabelTime" style="background-color:#bc4c00">2024-11-15</span>
-    </div>
-</a><a class="SideNav-item d-flex flex-items-center flex-justify-between" href="post/3.html">
-    <div class="d-flex flex-items-center">
-        <svg class="SideNav-icon octicon" style="witdh:16px;height:16px"><path class="svgTop0" d=""></path>
-        </svg>
-        <span class="listTitle">纪念下SAO通关-2024-11-07</span>
-    </div>
-    <div class="listLabels">
-        
-        <span class="Label LabelName" style="background-color:#E77AB1"><object><a style="color:#fff" href="tag.html#Anime">Anime</a></object></span><span class="Label LabelName" style="background-color:#008672"><object><a style="color:#fff" href="tag.html#日常">日常</a></object></span>
-        <span class="Label LabelTime" style="background-color:#bc4c00">2024-11-14</span>
+        <span class="Label LabelName" style="background-color:#0075ca"><object><a style="color:#fff" href="tag.html#教程">教程</a></object></span><span class="Label LabelName" style="background-color:#5319e7"><object><a style="color:#fff" href="tag.html#VPS">VPS</a></object></span>
+        <span class="Label LabelTime" style="background-color:#0969da">2025-01-10</span>
     </div>
 </a><a class="SideNav-item d-flex flex-items-center flex-justify-between" href="post/2.html">
     <div class="d-flex flex-items-center">
         <svg class="SideNav-icon octicon" style="witdh:16px;height:16px"><path class="svgTop0" d=""></path>
         </svg>
-        <span class="listTitle">免费CDN - jsDelivr+Github 使用方法</span>
+        <span class="listTitle">demo测试页</span>
     </div>
     <div class="listLabels">
         
-        <span class="Label LabelName" style="background-color:#7057ff"><object><a style="color:#fff" href="tag.html#网站">网站</a></object></span><span class="Label LabelName" style="background-color:#cb222c"><object><a style="color:#fff" href="tag.html#CDN">CDN</a></object></span>
-        <span class="Label LabelTime" style="background-color:#bc4c00">2024-11-14</span>
+        <span class="Label LabelName" style="background-color:#333333"><object><a style="color:#fff" href="tag.html#Github">Github</a></object></span>
+        <span class="Label LabelTime" style="background-color:#0969da">2025-01-09</span>
+    </div>
+</a><a class="SideNav-item d-flex flex-items-center flex-justify-between" href="post/1.html">
+    <div class="d-flex flex-items-center">
+        <svg class="SideNav-icon octicon" style="witdh:16px;height:16px"><path class="svgTop0" d=""></path>
+        </svg>
+        <span class="listTitle">Gmeek - 记录使用过程</span>
+    </div>
+    <div class="listLabels">
+        
+        <span class="Label LabelName" style="background-color:#7057ff"><object><a style="color:#fff" href="tag.html#网站">网站</a></object></span><span class="Label LabelName" style="background-color:#AD3152"><object><a style="color:#fff" href="tag.html#JS">JS</a></object></span><span class="Label LabelName" style="background-color:#333333"><object><a style="color:#fff" href="tag.html#Github">Github</a></object></span><span class="Label LabelName" style="background-color:#218155"><object><a style="color:#fff" href="tag.html#CSS">CSS</a></object></span>
+        <span class="Label LabelTime" style="background-color:#0969da">2025-01-09</span>
     </div>
 </a>
 </nav>
