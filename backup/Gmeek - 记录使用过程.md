@@ -11,7 +11,7 @@
 
 ## 博客调试
 
-**为了方便调试代码, 创建了一个名为 demo 的仓库, 调试过程只会用 demo 演示, 确定后再同步代码到线上模式.
+**为了方便调试代码, 创建了一个名为 demo 的仓库, 调试过程只会用 demo 演示, 确定后再同步代码到线上模式.**
 
 **demo模式:** https://gjken.github.io/demo
 
@@ -48,7 +48,7 @@
 
 - 效果图:
 
-![1](https://github.com/user-attachments/assets/a10a731d-60e0-4916-a65a-d1f2c094c3cd)
+![](https://github.com/user-attachments/assets/297cd65b-95cb-4931-8846-53f777923e51)
 
 可以用空白字符的方式, 隐藏`subTitle`这个必须字段, 无需使用 js 隐藏.
 
@@ -129,9 +129,9 @@ markdown 输入:
 > 修改-当滚动页面使`#functionBtn`按钮不可见时, 使其悬浮在顶部.
 > 修改-文章目录增加顶部和底部跳转按钮.
 
-图示:
+- 图示:
 
-![1](https://github.com/user-attachments/assets/0908287f-3bca-4e11-a6a0-c4919bae120f)
+![](https://github.com/user-attachments/assets/7b02e4e8-7502-44e8-a48c-2a45bb0d5c2f)
 
 ## Fancybox.js - 图片浏览器
 
@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 通过 Actions 转换后实际效果如下, html 的 img 标签会增加 fancybox 所需的`data-fancybox="gallery"`属性.
 
-![1](https://github.com/user-attachments/assets/1bca7934-827b-4375-9a79-9582200cde63)
+![](https://github.com/user-attachments/assets/372c5d55-5aae-4f2e-a900-7f93d94e21bd)
 
 ## 图片懒加载
 
@@ -1015,7 +1015,7 @@ html {
 
 - 效果图:
 
-![1](https://github.com/user-attachments/assets/c7579ba1-bad8-4caa-acd8-790def5ad56c)
+![](https://github.com/user-attachments/assets/7ee3a3f5-0074-4bf0-9e22-4be7fccd69e5)
 
 ## 文章一键复制代码按钮样式
 
@@ -1136,7 +1136,7 @@ a {
 
 - 效果图:
 
-![1](https://github.com/user-attachments/assets/004a8bcb-712a-4a1c-943d-49f1a6779b62)
+![](https://github.com/user-attachments/assets/f921eaa2-cfc3-4c3a-bb96-3d58a519a7dc)
 
 # 通过 Gmeek 仓库美化博客
 
@@ -1146,13 +1146,13 @@ a {
 
 仓库地址👉 https://github.com/Meekdai/Gmeek
 
-![1](https://github.com/user-attachments/assets/77c9c42c-3f00-49bd-a492-6fe298391239)
+![](https://github.com/user-attachments/assets/363f7bc7-34e0-4089-ab15-0a05e82a5a1c)
 
 fork 之后, 转到搭建博客的 github 源码,
 
 打开`.github/workflows/Gmeek.yml`文件, 修改构建博客仓库的地址为你自己的仓库地址
 
-![1](https://github.com/user-attachments/assets/06cd12c2-5166-4598-a4f6-cbc55563f7d7)
+![](https://github.com/user-attachments/assets/206e274c-860f-4292-b710-bf904688cc86)
 
 打开`config.json`文件, 把`GMEEK_VERSION`的修改值为👉`main`
 
@@ -1180,13 +1180,13 @@ fork 之后, 转到搭建博客的 github 源码,
 
 下图文字直接修改即可, 不同语言的按需修改.
 
-![1](https://github.com/user-attachments/assets/3534d8e2-7a5c-4084-9f86-eade92cc050f)
+![](https://github.com/user-attachments/assets/32be66c5-d8f2-4476-a46c-074f49162868)
 
 ## 修改默认 primer.css 链接
 
 打开`Gmeek.py`
 
-![1](https://github.com/user-attachments/assets/1b93636b-a4af-45fc-a97a-af84b0d37f3e)
+![](https://github.com/user-attachments/assets/539ccdbe-68e4-4d14-b293-171a4b524bef)
 
 这里我直接写改成我存放的链接, 并使用 tag 控制版本.
 
@@ -1204,9 +1204,11 @@ fork 之后, 转到搭建博客的 github 源码,
 > 动画(已引用的地方:`#header`打字机光标, `body``#content``functionBtn``.tagTitle``.title-left a``.subnav-search`向上渐显动画).
 > 分离图标的`#functionBtn`样式.
 
+<details><summary>CSS Code</summary>
+
 ```CSS
-:root{--functionBtnFlex-bgColor:#ffffff61;}
-[data-color-mode=light][data-light-theme=dark],[data-color-mode=light][data-light-theme=dark]::selection,[data-color-mode=dark][data-dark-theme=dark],[data-color-mode=dark][data-dark-theme=dark]::selection{--functionBtnFlex-bgColor:#ffffff00;}
+:root{--functionBtnFlex-bgColor:#ffffff61;--tooglebtn-bgColor:#c0e4ff9c}
+[data-color-mode=light][data-light-theme=dark],[data-color-mode=light][data-light-theme=dark]::selection,[data-color-mode=dark][data-dark-theme=dark],[data-color-mode=dark][data-dark-theme=dark]::selection{--functionBtnFlex-bgColor:#ffffff00;--tooglebtn-bgColor:#7dc2ff7a}
 
 @keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes fadeIn{0%{opacity:0}100%{opacity:1}}
 
@@ -1232,14 +1234,16 @@ fork 之后, 转到搭建博客的 github 源码,
 
 #functionBtn{display:flex;justify-content:center;margin:20px 0;gap:20px;transition: transform 0.3s ease-in-out;}
 #functionBtn a{padding:14px 16px;}
-#functionBtn.Btn-flex{position:fixed;margin:0;padding:20px 0;top:-100px;left:0;width:100%;min-width:500px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;}
+#functionBtn.Btn-flex{position:fixed;margin:0;padding:8px 0;top:-64px;left:0;width:100%;min-width:500px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;animation:fadeIn.2s ease-in 0s forwards;transition:top 0.3s ease-in-out}
 
 body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animation:slide-fade-in 0.8s ease;animation:slide-fade-in 0.8s ease}
 ```
 
+</details>
+
 2. **定位`#header`, 修改样式.**
 
-> 使用类名区分首页和文章页.
+> 去除下划线, 优化布局.
 
 ```Diff
 +#header .homepage-header{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:24px;}
@@ -1280,8 +1284,8 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
 5. **分离 header 文字以及图标**
 
 > 需要把`.title-right`这个类名全部重命名为`#functionBtn`
-> 增加搜索页按钮
-> 增加文章目录按钮
+> 增加搜索页按钮.
+> 增加文章目录按钮.
 
 <details><summary>修改前</summary>
 
@@ -1358,7 +1362,18 @@ document.getElementById("ArticleTOC").setAttribute("d","M1 2.75A.75.75 0 0 1 1.7
 document.getElementById("pathSearch").setAttribute("d","M15.7 13.3l-3.81-3.83A5.93 5.93 0 0 0 13 6c0-3.31-2.69-6-6-6S1 2.69 1 6s2.69 6 6 6c1.3 0 2.48-.41 3.47-1.11l3.83 3.81c.19.2.45.3.7.3.25 0 .52-.09.7-.3a.996.996 0 0 0 0-1.41v.01zM7 10.7c-2.59 0-4.7-2.11-4.7-4.7 0-2.59 2.11-4.7 4.7-4.7 2.59 0 4.7 2.11 4.7 4.7 0 2.59-2.11 4.7-4.7 4.7z");
 ```
 
-6. **添加自定义 JS 代码.**
+6. **#toogleBtn 按钮样式**
+
+> 点击展开&关闭悬浮导航.
+
+```CSS
+#toogleBtn{position:fixed;top:51px;right:6%;display:none;}
+#toogleBtn.active,#toogleBtn path{display:flex;padding:6px 7px;fill:var(--title-right-svgColor);cursor:pointer;transition:transform 0.3s ease-in-out;background:var(--tooglebtn-bgColor)}
+#toogleBtn.active:hover svg path{fill:var(--title-right-svgHovercolor);}
+#functionBtn div:first-of-type{display:flex;gap:20px}
+```
+
+7. **添加自定义 JS 代码.**
 
 > 添加打字效果.
 > 添加滚动切换显示顶部按钮导航.
@@ -1366,7 +1381,8 @@ document.getElementById("pathSearch").setAttribute("d","M15.7 13.3l-3.81-3.83A5.
 定位`<script>`标签, 在里面增加 JS 代码:
 
 > [!NOTE]
-> `document.addEventListener("DOMContentLoaded", () => {`这个监听不止可写当前功能, 还可写其它功能的代码进去.
+> `document.addEventListener('DOMContentLoaded', () => {`
+这段监听函数还可另增加额外的功能.
 > 实际应用场景我把这块的代码都压缩合并了.
 
 <details><summary>JavaScript</summary>
@@ -1389,34 +1405,30 @@ const writeTimer = setInterval(() => {
 
 postTitle.classList.add('no-blink');
 
-document.addEventListener('DOMContentLoaded', () => {
-    // 创建检查按钮, 插入到指定id #functionBtn 的后面
-    const checkBtn = document.createElement('div');
-    checkBtn.id = 'checkBtn';
-    const functionBtn = document.getElementById('functionBtn');
-    functionBtn.insertAdjacentElement('afterend', checkBtn);
+document.addEventListener("DOMContentLoaded", () => {
+	// 创建检查按钮, 插入到指定id #functionBtn 的后面
+	const checkBtn = document.createElement('div');
+	checkBtn.id = 'checkBtn';
+	const toogleBtn = document.getElementById('toogleBtn');
+	const functionBtn = document.getElementById('functionBtn');
+	functionBtn.insertAdjacentElement('afterend', checkBtn);
 
-    // 用 IntersectionObserver 观察 checkBtn 这个div的可见性
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            const isIntersecting = entry.isIntersecting;
-            functionBtn.classList.toggle('Btn-flex', !isIntersecting);
-            functionBtn.style.top = isIntersecting ? '0' : '-100px';
-        });
-    }, { rootMargin: '300px 0px 0px 0px', threshold: 0 });
-    observer.observe(checkBtn);
+	// 用 IntersectionObserver 观察 checkBtn 这个div的可见性
+	const observer = new IntersectionObserver(entries => {
+		entries.forEach(entry => {
+			const isIntersecting = entry.isIntersecting;
+			toogleBtn.classList.toggle('active', !isIntersecting);
+			functionBtn.classList.toggle('Btn-flex', !isIntersecting);
+			functionBtn.classList.toggle('btn-fadeout', !isIntersecting);
+		});
+	}, { rootMargin: '300px 0px 0px 0px', threshold: 0 });
+	observer.observe(checkBtn);
 
-    let startY = 0;
-
-    // 通用滚动处理函数
-    const handleScroll = deltaY => {
-        functionBtn.style.top = deltaY > 0 ? '-100px' : '0';
-    };
-
-// 监听触摸和滚轮事件
-document.addEventListener('touchstart', e => startY = e.touches[0].clientY);
-document.addEventListener('touchmove', e => handleScroll(e.touches[0].clientY - startY));
-document.addEventListener('wheel', e => handleScroll(e.deltaY));
+	// 为 toogleBtn 添加点击事件修改悬浮样式
+	toogleBtn.addEventListener('click', () => {
+		functionBtn.style.top = functionBtn.style.top === '0px' ? '-64px' : '0';
+		toogleBtn.style.transform = toogleBtn.style.transform === 'rotate(180deg)' ? 'rotate(0deg)' : 'rotate(180deg)';
+	});
 });
 ```
 
@@ -1427,7 +1439,7 @@ document.addEventListener('wheel', e => handleScroll(e.deltaY));
 > [!Important]
 > plist 这个模板文件里增加的代码可以应用到博客首页.
 
-1. **增加样式.**
+1. **增加样式**
 
 ```CSS
 .title-left{display:flex;flex-direction:column;align-items:center;gap:20px;}
@@ -1435,13 +1447,13 @@ document.addEventListener('wheel', e => handleScroll(e.deltaY));
 
 2. **定位样式`.title-left`, 直接删除相关的所有样式**
 
-3. **定位`.avatar:hover`, 修改样式.**
+3. **定位`.avatar:hover`, 修改样式**
 
 ```CSS
 .avatar:hover{transform:scale(1.5) rotate(720deg);box-shadow:0 0 10px #2dfaffbd;}
 ```
 
-4. **分离#header的文字以及图标.**
+4. **分离#header的文字以及图标**
 
 <details><summary>修改前</summary>
 
@@ -1656,7 +1668,7 @@ document.addEventListener('wheel', e => handleScroll(e.deltaY));
 
 - 效果图:
 
-![1](https://github.com/user-attachments/assets/884a4371-975b-44a4-8201-80afc1274671)
+![](https://github.com/user-attachments/assets/73b52317-f74e-4cbd-b827-25500588d6ac)
 
 ## 优化任务列表样式
 
@@ -1762,18 +1774,22 @@ Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 
 # 增加图片转换, 并适配图片懒加载
 
+> [!WARNING]
+> git 会给图片使用`camo.githubusercontent.com`代理服务, 当外链的图片体积过大会提示"Content length exceeded", 估计是代理服务不支持, 这时候会出现转换的 bug (2025.11.14已修好), 同时这时候在 issue 里预览图片是一定失败的, 不过转换后可以在博客正常显示.
+
 打开`Gmeek.py`, 定位字符串`Gmeek-html`
 
 在附近任意行增加代码:
 
 ```python
-        # 默认情况插入图片情况下的匹配规则<p> -> <a> -><img>
-        if '<p><a target="_blank" rel=' in post_body:
-            post_body = re.sub(r'<p>\s*<a[^>]*?href="([^"]+)"[^>]*?><img[^>]*?src="\1"[^>]*?></a>\s*</p>', lambda match: f'<div class="ImgLazyLoad-circle"></div>\n<img data-fancybox="gallery" img-src="{match.group(1)}">', post_body, flags=re.DOTALL)
-
-        # 通用插入图片情况下的匹配规则<a> -><img>
-        if '<a target="_blank" rel=' in post_body:
-            post_body = re.sub(r'<a[^>]*?href="([^"]+)"[^>]*?><img[^>]*?src="\1"[^>]*?></a>',lambda match: f'<div class="ImgLazyLoad-circle"></div>\n<img data-fancybox="gallery" img-src="{match.group(1)}">', post_body, flags=re.DOTALL)
+        # 处理默认情况下的图片匹配规则<p><a><img>
+        if 'data-canonical-src' in post_body:
+            post_body = re.sub(
+                r'<a[^>]*?href="[^"]*?"[^>]*?><img[^>]*?data-canonical-src="([^"]*?)"[^>]*?></a>',
+                lambda match: f'<div class="ImgLazyLoad-circle"></div>\n<img data-fancybox="gallery" img-src="{match.group(1)}">',
+                post_body,
+                flags=re.DOTALL
+            )
 ```
 
 - **使用演示**
@@ -1782,9 +1798,9 @@ Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 
 然后通过 Actions 转换后实际效果如下, html 里面 img 标签会增加 fancybox 所需的`data-fancybox="gallery"`属性.
 
-![](https://github.com/user-attachments/assets/f57b9f81-36b2-4484-835f-3105d54412a4)
+![](https://github.com/user-attachments/assets/e2ed0b88-719e-49b4-b8bf-90686e0e29c8)
 
-这样优化后可以在 Github issue 的 Preview 里面直接预览图片, 同时还能防备图床问题导致的图片丢失(`Gmeek-spoilertxt="Github, 稳!"`)
+这样优化后可以在 Github issue 的 Preview 里面直接预览图片, 太大的图片外链不行, 上面有说到.
 
 唯一缺点就是当 issues 删除后, 图片也会跟着消失, 无法再被外部引用, 所以删除仓库以及 issues 的时候一定要确保图片先备份哦~
 
@@ -1883,9 +1899,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ## 更改发布时间
 
-如需修改发布时间, 可以在 issues 文章最后一行添加如下代码, 里面的时间是采用时间戳的形式, 可以用这个网站👉[Link](https://tool.lu/timestamp) 转换.
+如需修改发布时间, 可以在 issues 文章最后一行添加如下代码, 里面的时间是采用时间戳的形式, 可以用这个👉[网站](https://tool.lu/timestamp) 转换.
 
+```html
 <!-- ##{"timestamp":1490764800}## -->
+```
 
 # Issues Label 备份
 
