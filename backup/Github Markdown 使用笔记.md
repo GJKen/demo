@@ -137,3 +137,10 @@ Markdown 支持直接插入 HTML 代码, 但某些平台可能会限制这一功
 
 > [!TIP]
 > 根据不同的解析器或平台（如 Github）, 还可能支持额外的功能或语法.详见[Github Markdown语法官方文档](https://docs.github.com/zh/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
+
+## 展开
+<details><summary>点击展开</summary>
+
+测试内容
+
+</details>
