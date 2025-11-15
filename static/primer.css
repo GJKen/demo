@@ -4,7 +4,7 @@
  *
  * Released under MIT license.
  */
-/* 23:30 */
+/* 1116 2:48 */
 :root {
 	--h00-size-mobile: 2.5rem;
 	--h0-size-mobile: 2rem;
@@ -27572,8 +27572,6 @@ a.branch-name .octicon {
     display: block;
     max-width: 100%;
     box-sizing: content-box;
-    /* 防止布局抖动 */
-    backface-visibility: hidden;
 }
 
 /* .markdown-body img:hover {
