@@ -23,7 +23,7 @@
 
 ## 博客调试
 
-**为了方便调试代码, 创建了一个名为 demo 的仓库, 调试过程只会用 demo 演示, 确定后再同步代码到线上模式.
+**为了方便调试代码, 创建了一个名为 demo 的仓库, 调试过程只会用 demo 演示, 确定后再同步代码到线上模式.**
 
 **demo模式:** https://gjken.github.io/demo
 
@@ -60,7 +60,7 @@
 
 - 效果图:
 
-![1](https://github.com/user-attachments/assets/a10a731d-60e0-4916-a65a-d1f2c094c3cd)
+![](https://github.com/user-attachments/assets/297cd65b-95cb-4931-8846-53f777923e51)
 
 可以用空白字符的方式, 隐藏`subTitle`这个必须字段, 无需使用 js 隐藏.
 
@@ -141,9 +141,9 @@ markdown 输入:
 > 修改-当滚动页面使`#functionBtn`按钮不可见时, 使其悬浮在顶部.
 > 修改-文章目录增加顶部和底部跳转按钮.
 
-图示:
+- 图示:
 
-![1](https://github.com/user-attachments/assets/0908287f-3bca-4e11-a6a0-c4919bae120f)
+![](https://github.com/user-attachments/assets/7b02e4e8-7502-44e8-a48c-2a45bb0d5c2f)
 
 ## Fancybox.js - 图片浏览器
 
@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 通过 Actions 转换后实际效果如下, html 的 img 标签会增加 fancybox 所需的`data-fancybox='gallery'`属性.
 
-![1](https://github.com/user-attachments/assets/1bca7934-827b-4375-9a79-9582200cde63)
+![](https://github.com/user-attachments/assets/372c5d55-5aae-4f2e-a900-7f93d94e21bd)
 
 ## 图片懒加载
 
@@ -1027,7 +1027,7 @@ html {
 
 - 效果图:
 
-![1](https://github.com/user-attachments/assets/c7579ba1-bad8-4caa-acd8-790def5ad56c)
+![](https://github.com/user-attachments/assets/7ee3a3f5-0074-4bf0-9e22-4be7fccd69e5)
 
 ## 文章一键复制代码按钮样式
 
@@ -1148,7 +1148,7 @@ a {
 
 - 效果图:
 
-![1](https://github.com/user-attachments/assets/004a8bcb-712a-4a1c-943d-49f1a6779b62)
+![](https://github.com/user-attachments/assets/f921eaa2-cfc3-4c3a-bb96-3d58a519a7dc)
 
 # 通过 Gmeek 仓库美化博客
 
@@ -1158,13 +1158,13 @@ a {
 
 仓库地址👉 https://github.com/Meekdai/Gmeek
 
-![1](https://github.com/user-attachments/assets/77c9c42c-3f00-49bd-a492-6fe298391239)
+![](https://github.com/user-attachments/assets/363f7bc7-34e0-4089-ab15-0a05e82a5a1c)
 
 fork 之后, 转到搭建博客的 github 源码,
 
 打开`.github/workflows/Gmeek.yml`文件, 修改构建博客仓库的地址为你自己的仓库地址
 
-![1](https://github.com/user-attachments/assets/06cd12c2-5166-4598-a4f6-cbc55563f7d7)
+![](https://github.com/user-attachments/assets/206e274c-860f-4292-b710-bf904688cc86)
 
 打开`config.json`文件, 把`GMEEK_VERSION`的修改值为👉`main`
 
@@ -1192,13 +1192,13 @@ fork 之后, 转到搭建博客的 github 源码,
 
 下图文字直接修改即可, 不同语言的按需修改.
 
-![1](https://github.com/user-attachments/assets/3534d8e2-7a5c-4084-9f86-eade92cc050f)
+![](https://github.com/user-attachments/assets/32be66c5-d8f2-4476-a46c-074f49162868)
 
 ## 修改默认 primer.css 链接
 
 打开`Gmeek.py`
 
-![1](https://github.com/user-attachments/assets/1b93636b-a4af-45fc-a97a-af84b0d37f3e)
+![](https://github.com/user-attachments/assets/539ccdbe-68e4-4d14-b293-171a4b524bef)
 
 这里我直接写改成我存放的链接, 并使用 tag 控制版本.
 
@@ -1216,9 +1216,11 @@ fork 之后, 转到搭建博客的 github 源码,
 > 动画(已引用的地方:`#header`打字机光标, `body``#content``functionBtn``.tagTitle``.title-left a``.subnav-search`向上渐显动画).
 > 分离图标的`#functionBtn`样式.
 
+<details><summary>CSS Code</summary>
+
 ```CSS
-:root{--functionBtnFlex-bgColor:#ffffff61;}
-[data-color-mode=light][data-light-theme=dark],[data-color-mode=light][data-light-theme=dark]::selection,[data-color-mode=dark][data-dark-theme=dark],[data-color-mode=dark][data-dark-theme=dark]::selection{--functionBtnFlex-bgColor:#ffffff00;}
+:root{--functionBtnFlex-bgColor:#ffffff61;--tooglebtn-bgColor:#c0e4ff9c}
+[data-color-mode=light][data-light-theme=dark],[data-color-mode=light][data-light-theme=dark]::selection,[data-color-mode=dark][data-dark-theme=dark],[data-color-mode=dark][data-dark-theme=dark]::selection{--functionBtnFlex-bgColor:#ffffff00;--tooglebtn-bgColor:#7dc2ff7a}
 
 @keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes fadeIn{0%{opacity:0}100%{opacity:1}}
 
@@ -1244,14 +1246,16 @@ fork 之后, 转到搭建博客的 github 源码,
 
 #functionBtn{display:flex;justify-content:center;margin:20px 0;gap:20px;transition: transform 0.3s ease-in-out;}
 #functionBtn a{padding:14px 16px;}
-#functionBtn.Btn-flex{position:fixed;margin:0;padding:20px 0;top:-100px;left:0;width:100%;min-width:500px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;}
+#functionBtn.Btn-flex{position:fixed;margin:0;padding:8px 0;top:-64px;left:0;width:100%;min-width:500px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;animation:fadeIn.2s ease-in 0s forwards;transition:top 0.3s ease-in-out}
 
 body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animation:slide-fade-in 0.8s ease;animation:slide-fade-in 0.8s ease}
 ```
 
+</details>
+
 2. **定位`#header`, 修改样式.**
 
-> 使用类名区分首页和文章页.
+> 去除下划线, 优化布局.
 
 ```Diff
 +#header .homepage-header{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:24px;}
@@ -1292,8 +1296,8 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
 5. **分离 header 文字以及图标**
 
 > 需要把`.title-right`这个类名全部重命名为`#functionBtn`
-> 增加搜索页按钮
-> 增加文章目录按钮
+> 增加搜索页按钮.
+> 增加文章目录按钮.
 
 <details><summary>修改前</summary>
 
@@ -1370,7 +1374,18 @@ document.getElementById('ArticleTOC').setAttribute('d','M1 2.75A.75.75 0 0 1 1.7
 document.getElementById('pathSearch').setAttribute('d','M15.7 13.3l-3.81-3.83A5.93 5.93 0 0 0 13 6c0-3.31-2.69-6-6-6S1 2.69 1 6s2.69 6 6 6c1.3 0 2.48-.41 3.47-1.11l3.83 3.81c.19.2.45.3.7.3.25 0 .52-.09.7-.3a.996.996 0 0 0 0-1.41v.01zM7 10.7c-2.59 0-4.7-2.11-4.7-4.7 0-2.59 2.11-4.7 4.7-4.7 2.59 0 4.7 2.11 4.7 4.7 0 2.59-2.11 4.7-4.7 4.7z');
 ```
 
-6. **添加自定义 JS 代码.**
+6. **#toogleBtn 按钮样式**
+
+> 点击展开&关闭悬浮导航.
+
+```CSS
+#toogleBtn{position:fixed;top:51px;right:6%;display:none;}
+#toogleBtn.active,#toogleBtn path{display:flex;padding:6px 7px;fill:var(--title-right-svgColor);cursor:pointer;transition:transform 0.3s ease-in-out;background:var(--tooglebtn-bgColor)}
+#toogleBtn.active:hover svg path{fill:var(--title-right-svgHovercolor);}
+#functionBtn div:first-of-type{display:flex;gap:20px}
+```
+
+7. **添加自定义 JS 代码.**
 
 > 添加打字效果.
 > 添加滚动切换显示顶部按钮导航.
@@ -1378,7 +1393,8 @@ document.getElementById('pathSearch').setAttribute('d','M15.7 13.3l-3.81-3.83A5.
 定位`<script>`标签, 在里面增加 JS 代码:
 
 > [!NOTE]
-> `document.addEventListener('DOMContentLoaded', () => {`这个监听不止可写当前功能, 还可写其它功能的代码进去.
+> `document.addEventListener('DOMContentLoaded', () => {`
+这段监听函数还可另增加额外的功能.
 > 实际应用场景我把这块的代码都压缩合并了.
 
 <details><summary>JavaScript</summary>
@@ -1402,33 +1418,29 @@ const writeTimer = setInterval(() => {
 postTitle.classList.add('no-blink');
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 创建检查按钮, 插入到指定id #functionBtn 的后面
-    const checkBtn = document.createElement('div');
-    checkBtn.id = 'checkBtn';
-    const functionBtn = document.getElementById('functionBtn');
-    functionBtn.insertAdjacentElement('afterend', checkBtn);
+	// 创建检查按钮, 插入到指定id #functionBtn 的后面
+	const checkBtn = document.createElement('div');
+	checkBtn.id = 'checkBtn';
+	const toogleBtn = document.getElementById('toogleBtn');
+	const functionBtn = document.getElementById('functionBtn');
+	functionBtn.insertAdjacentElement('afterend', checkBtn);
 
-    // 用 IntersectionObserver 观察 checkBtn 这个div的可见性
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            const isIntersecting = entry.isIntersecting;
-            functionBtn.classList.toggle('Btn-flex', !isIntersecting);
-            functionBtn.style.top = isIntersecting ? '0' : '-100px';
-        });
-    }, { rootMargin: '300px 0px 0px 0px', threshold: 0 });
-    observer.observe(checkBtn);
+	// 用 IntersectionObserver 观察 checkBtn 这个div的可见性
+	const observer = new IntersectionObserver(entries => {
+		entries.forEach(entry => {
+			const isIntersecting = entry.isIntersecting;
+			toogleBtn.classList.toggle('active', !isIntersecting);
+			functionBtn.classList.toggle('Btn-flex', !isIntersecting);
+			functionBtn.classList.toggle('btn-fadeout', !isIntersecting);
+		});
+	}, { rootMargin: '300px 0px 0px 0px', threshold: 0 });
+	observer.observe(checkBtn);
 
-    let startY = 0;
-
-    // 通用滚动处理函数
-    const handleScroll = deltaY => {
-        functionBtn.style.top = deltaY > 0 ? '-100px' : '0';
-    };
-
-// 监听触摸和滚轮事件
-document.addEventListener('touchstart', e => startY = e.touches[0].clientY);
-document.addEventListener('touchmove', e => handleScroll(e.touches[0].clientY - startY));
-document.addEventListener('wheel', e => handleScroll(e.deltaY));
+	// 为 toogleBtn 添加点击事件修改悬浮样式
+	toogleBtn.addEventListener('click', () => {
+		functionBtn.style.top = functionBtn.style.top === '0px' ? '-64px' : '0';
+		toogleBtn.style.transform = toogleBtn.style.transform === 'rotate(180deg)' ? 'rotate(0deg)' : 'rotate(180deg)';
+	});
 });
 ```
 
@@ -1439,7 +1451,7 @@ document.addEventListener('wheel', e => handleScroll(e.deltaY));
 > [!Important]
 > plist 这个模板文件里增加的代码可以应用到博客首页.
 
-1. **增加样式.**
+1. **增加样式**
 
 ```CSS
 .title-left{display:flex;flex-direction:column;align-items:center;gap:20px;}
@@ -1447,13 +1459,13 @@ document.addEventListener('wheel', e => handleScroll(e.deltaY));
 
 2. **定位样式`.title-left`, 直接删除相关的所有样式**
 
-3. **定位`.avatar:hover`, 修改样式.**
+3. **定位`.avatar:hover`, 修改样式**
 
 ```CSS
 .avatar:hover{transform:scale(1.5) rotate(720deg);box-shadow:0 0 10px #2dfaffbd;}
 ```
 
-4. **分离#header的文字以及图标.**
+4. **分离#header的文字以及图标**
 
 <details><summary>修改前</summary>
 
@@ -1668,7 +1680,7 @@ document.addEventListener('wheel', e => handleScroll(e.deltaY));
 
 - 效果图:
 
-![1](https://github.com/user-attachments/assets/884a4371-975b-44a4-8201-80afc1274671)
+![](https://github.com/user-attachments/assets/73b52317-f74e-4cbd-b827-25500588d6ac)
 
 ## 优化任务列表样式
 
@@ -1774,18 +1786,22 @@ Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 
 # 增加图片转换, 并适配图片懒加载
 
+> [!WARNING]
+> git 会给图片使用`camo.githubusercontent.com`代理服务, 当外链的图片体积过大会提示'Content length exceeded', 估计是代理服务不支持, 这时候会出现转换的 bug (2025.11.14已修好), 同时这时候在 issue 里预览图片是一定失败的, 不过转换后可以在博客正常显示.
+
 打开`Gmeek.py`, 定位字符串`Gmeek-html`
 
 在附近任意行增加代码:
 
 ```python
-        # 默认情况插入图片情况下的匹配规则<p> -> <a> -><img>
-        if '<p><a target='_blank' rel=' in post_body:
-            post_body = re.sub(r'<p>\s*<a[^>]*?href='([^']+)'[^>]*?><img[^>]*?src='\1'[^>]*?></a>\s*</p>', lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>', post_body, flags=re.DOTALL)
-
-        # 通用插入图片情况下的匹配规则<a> -><img>
-        if '<a target='_blank' rel=' in post_body:
-            post_body = re.sub(r'<a[^>]*?href='([^']+)'[^>]*?><img[^>]*?src='\1'[^>]*?></a>',lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>', post_body, flags=re.DOTALL)
+        # 处理默认情况下的图片匹配规则<p><a><img>
+        if 'data-canonical-src' in post_body:
+            post_body = re.sub(
+                r'<a[^>]*?href='[^']*?'[^>]*?><img[^>]*?data-canonical-src='([^']*?)'[^>]*?></a>',
+                lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>',
+                post_body,
+                flags=re.DOTALL
+            )
 ```
 
 - **使用演示**
@@ -1794,9 +1810,9 @@ Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 
 然后通过 Actions 转换后实际效果如下, html 里面 img 标签会增加 fancybox 所需的`data-fancybox='gallery'`属性.
 
-![](https://github.com/user-attachments/assets/f57b9f81-36b2-4484-835f-3105d54412a4)
+![](https://github.com/user-attachments/assets/e2ed0b88-719e-49b4-b8bf-90686e0e29c8)
 
-这样优化后可以在 Github issue 的 Preview 里面直接预览图片, 同时还能防备图床问题导致的图片丢失(`Gmeek-spoilertxt='Github, 稳!'`)
+这样优化后可以在 Github issue 的 Preview 里面直接预览图片, 太大的图片外链不行, 上面有说到.
 
 唯一缺点就是当 issues 删除后, 图片也会跟着消失, 无法再被外部引用, 所以删除仓库以及 issues 的时候一定要确保图片先备份哦~
 
@@ -1895,9 +1911,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ## 更改发布时间
 
-如需修改发布时间, 可以在 issues 文章最后一行添加如下代码, 里面的时间是采用时间戳的形式, 可以用这个网站👉[Link](https://tool.lu/timestamp) 转换.
+如需修改发布时间, 可以在 issues 文章最后一行添加如下代码, 里面的时间是采用时间戳的形式, 可以用这个👉[网站](https://tool.lu/timestamp) 转换.
 
+```html
 <!-- ##{'timestamp':1490764800}## -->
+```
 
 # Issues Label 备份
 
@@ -1939,7 +1957,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ## 博客调试
 
-**为了方便调试代码, 创建了一个名为 demo 的仓库, 调试过程只会用 demo 演示, 确定后再同步代码到线上模式.
+**为了方便调试代码, 创建了一个名为 demo 的仓库, 调试过程只会用 demo 演示, 确定后再同步代码到线上模式.**
 
 **demo模式:** https://gjken.github.io/demo
 
@@ -1976,7 +1994,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 - 效果图:
 
-![1](https://github.com/user-attachments/assets/a10a731d-60e0-4916-a65a-d1f2c094c3cd)
+![](https://github.com/user-attachments/assets/297cd65b-95cb-4931-8846-53f777923e51)
 
 可以用空白字符的方式, 隐藏`subTitle`这个必须字段, 无需使用 js 隐藏.
 
@@ -2057,9 +2075,9 @@ markdown 输入:
 > 修改-当滚动页面使`#functionBtn`按钮不可见时, 使其悬浮在顶部.
 > 修改-文章目录增加顶部和底部跳转按钮.
 
-图示:
+- 图示:
 
-![1](https://github.com/user-attachments/assets/0908287f-3bca-4e11-a6a0-c4919bae120f)
+![](https://github.com/user-attachments/assets/7b02e4e8-7502-44e8-a48c-2a45bb0d5c2f)
 
 ## Fancybox.js - 图片浏览器
 
@@ -2119,7 +2137,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 通过 Actions 转换后实际效果如下, html 的 img 标签会增加 fancybox 所需的`data-fancybox='gallery'`属性.
 
-![1](https://github.com/user-attachments/assets/1bca7934-827b-4375-9a79-9582200cde63)
+![](https://github.com/user-attachments/assets/372c5d55-5aae-4f2e-a900-7f93d94e21bd)
 
 ## 图片懒加载
 
@@ -2943,7 +2961,7 @@ html {
 
 - 效果图:
 
-![1](https://github.com/user-attachments/assets/c7579ba1-bad8-4caa-acd8-790def5ad56c)
+![](https://github.com/user-attachments/assets/7ee3a3f5-0074-4bf0-9e22-4be7fccd69e5)
 
 ## 文章一键复制代码按钮样式
 
@@ -3064,7 +3082,7 @@ a {
 
 - 效果图:
 
-![1](https://github.com/user-attachments/assets/004a8bcb-712a-4a1c-943d-49f1a6779b62)
+![](https://github.com/user-attachments/assets/f921eaa2-cfc3-4c3a-bb96-3d58a519a7dc)
 
 # 通过 Gmeek 仓库美化博客
 
@@ -3074,13 +3092,13 @@ a {
 
 仓库地址👉 https://github.com/Meekdai/Gmeek
 
-![1](https://github.com/user-attachments/assets/77c9c42c-3f00-49bd-a492-6fe298391239)
+![](https://github.com/user-attachments/assets/363f7bc7-34e0-4089-ab15-0a05e82a5a1c)
 
 fork 之后, 转到搭建博客的 github 源码,
 
 打开`.github/workflows/Gmeek.yml`文件, 修改构建博客仓库的地址为你自己的仓库地址
 
-![1](https://github.com/user-attachments/assets/06cd12c2-5166-4598-a4f6-cbc55563f7d7)
+![](https://github.com/user-attachments/assets/206e274c-860f-4292-b710-bf904688cc86)
 
 打开`config.json`文件, 把`GMEEK_VERSION`的修改值为👉`main`
 
@@ -3108,13 +3126,13 @@ fork 之后, 转到搭建博客的 github 源码,
 
 下图文字直接修改即可, 不同语言的按需修改.
 
-![1](https://github.com/user-attachments/assets/3534d8e2-7a5c-4084-9f86-eade92cc050f)
+![](https://github.com/user-attachments/assets/32be66c5-d8f2-4476-a46c-074f49162868)
 
 ## 修改默认 primer.css 链接
 
 打开`Gmeek.py`
 
-![1](https://github.com/user-attachments/assets/1b93636b-a4af-45fc-a97a-af84b0d37f3e)
+![](https://github.com/user-attachments/assets/539ccdbe-68e4-4d14-b293-171a4b524bef)
 
 这里我直接写改成我存放的链接, 并使用 tag 控制版本.
 
@@ -3132,9 +3150,11 @@ fork 之后, 转到搭建博客的 github 源码,
 > 动画(已引用的地方:`#header`打字机光标, `body``#content``functionBtn``.tagTitle``.title-left a``.subnav-search`向上渐显动画).
 > 分离图标的`#functionBtn`样式.
 
+<details><summary>CSS Code</summary>
+
 ```CSS
-:root{--functionBtnFlex-bgColor:#ffffff61;}
-[data-color-mode=light][data-light-theme=dark],[data-color-mode=light][data-light-theme=dark]::selection,[data-color-mode=dark][data-dark-theme=dark],[data-color-mode=dark][data-dark-theme=dark]::selection{--functionBtnFlex-bgColor:#ffffff00;}
+:root{--functionBtnFlex-bgColor:#ffffff61;--tooglebtn-bgColor:#c0e4ff9c}
+[data-color-mode=light][data-light-theme=dark],[data-color-mode=light][data-light-theme=dark]::selection,[data-color-mode=dark][data-dark-theme=dark],[data-color-mode=dark][data-dark-theme=dark]::selection{--functionBtnFlex-bgColor:#ffffff00;--tooglebtn-bgColor:#7dc2ff7a}
 
 @keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes fadeIn{0%{opacity:0}100%{opacity:1}}
 
@@ -3160,14 +3180,16 @@ fork 之后, 转到搭建博客的 github 源码,
 
 #functionBtn{display:flex;justify-content:center;margin:20px 0;gap:20px;transition: transform 0.3s ease-in-out;}
 #functionBtn a{padding:14px 16px;}
-#functionBtn.Btn-flex{position:fixed;margin:0;padding:20px 0;top:-100px;left:0;width:100%;min-width:500px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;}
+#functionBtn.Btn-flex{position:fixed;margin:0;padding:8px 0;top:-64px;left:0;width:100%;min-width:500px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;animation:fadeIn.2s ease-in 0s forwards;transition:top 0.3s ease-in-out}
 
 body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animation:slide-fade-in 0.8s ease;animation:slide-fade-in 0.8s ease}
 ```
 
+</details>
+
 2. **定位`#header`, 修改样式.**
 
-> 使用类名区分首页和文章页.
+> 去除下划线, 优化布局.
 
 ```Diff
 +#header .homepage-header{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:24px;}
@@ -3208,8 +3230,8 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
 5. **分离 header 文字以及图标**
 
 > 需要把`.title-right`这个类名全部重命名为`#functionBtn`
-> 增加搜索页按钮
-> 增加文章目录按钮
+> 增加搜索页按钮.
+> 增加文章目录按钮.
 
 <details><summary>修改前</summary>
 
@@ -3286,7 +3308,18 @@ document.getElementById('ArticleTOC').setAttribute('d','M1 2.75A.75.75 0 0 1 1.7
 document.getElementById('pathSearch').setAttribute('d','M15.7 13.3l-3.81-3.83A5.93 5.93 0 0 0 13 6c0-3.31-2.69-6-6-6S1 2.69 1 6s2.69 6 6 6c1.3 0 2.48-.41 3.47-1.11l3.83 3.81c.19.2.45.3.7.3.25 0 .52-.09.7-.3a.996.996 0 0 0 0-1.41v.01zM7 10.7c-2.59 0-4.7-2.11-4.7-4.7 0-2.59 2.11-4.7 4.7-4.7 2.59 0 4.7 2.11 4.7 4.7 0 2.59-2.11 4.7-4.7 4.7z');
 ```
 
-6. **添加自定义 JS 代码.**
+6. **#toogleBtn 按钮样式**
+
+> 点击展开&关闭悬浮导航.
+
+```CSS
+#toogleBtn{position:fixed;top:51px;right:6%;display:none;}
+#toogleBtn.active,#toogleBtn path{display:flex;padding:6px 7px;fill:var(--title-right-svgColor);cursor:pointer;transition:transform 0.3s ease-in-out;background:var(--tooglebtn-bgColor)}
+#toogleBtn.active:hover svg path{fill:var(--title-right-svgHovercolor);}
+#functionBtn div:first-of-type{display:flex;gap:20px}
+```
+
+7. **添加自定义 JS 代码.**
 
 > 添加打字效果.
 > 添加滚动切换显示顶部按钮导航.
@@ -3294,7 +3327,8 @@ document.getElementById('pathSearch').setAttribute('d','M15.7 13.3l-3.81-3.83A5.
 定位`<script>`标签, 在里面增加 JS 代码:
 
 > [!NOTE]
-> `document.addEventListener('DOMContentLoaded', () => {`这个监听不止可写当前功能, 还可写其它功能的代码进去.
+> `document.addEventListener('DOMContentLoaded', () => {`
+这段监听函数还可另增加额外的功能.
 > 实际应用场景我把这块的代码都压缩合并了.
 
 <details><summary>JavaScript</summary>
@@ -3318,33 +3352,29 @@ const writeTimer = setInterval(() => {
 postTitle.classList.add('no-blink');
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 创建检查按钮, 插入到指定id #functionBtn 的后面
-    const checkBtn = document.createElement('div');
-    checkBtn.id = 'checkBtn';
-    const functionBtn = document.getElementById('functionBtn');
-    functionBtn.insertAdjacentElement('afterend', checkBtn);
+	// 创建检查按钮, 插入到指定id #functionBtn 的后面
+	const checkBtn = document.createElement('div');
+	checkBtn.id = 'checkBtn';
+	const toogleBtn = document.getElementById('toogleBtn');
+	const functionBtn = document.getElementById('functionBtn');
+	functionBtn.insertAdjacentElement('afterend', checkBtn);
 
-    // 用 IntersectionObserver 观察 checkBtn 这个div的可见性
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            const isIntersecting = entry.isIntersecting;
-            functionBtn.classList.toggle('Btn-flex', !isIntersecting);
-            functionBtn.style.top = isIntersecting ? '0' : '-100px';
-        });
-    }, { rootMargin: '300px 0px 0px 0px', threshold: 0 });
-    observer.observe(checkBtn);
+	// 用 IntersectionObserver 观察 checkBtn 这个div的可见性
+	const observer = new IntersectionObserver(entries => {
+		entries.forEach(entry => {
+			const isIntersecting = entry.isIntersecting;
+			toogleBtn.classList.toggle('active', !isIntersecting);
+			functionBtn.classList.toggle('Btn-flex', !isIntersecting);
+			functionBtn.classList.toggle('btn-fadeout', !isIntersecting);
+		});
+	}, { rootMargin: '300px 0px 0px 0px', threshold: 0 });
+	observer.observe(checkBtn);
 
-    let startY = 0;
-
-    // 通用滚动处理函数
-    const handleScroll = deltaY => {
-        functionBtn.style.top = deltaY > 0 ? '-100px' : '0';
-    };
-
-// 监听触摸和滚轮事件
-document.addEventListener('touchstart', e => startY = e.touches[0].clientY);
-document.addEventListener('touchmove', e => handleScroll(e.touches[0].clientY - startY));
-document.addEventListener('wheel', e => handleScroll(e.deltaY));
+	// 为 toogleBtn 添加点击事件修改悬浮样式
+	toogleBtn.addEventListener('click', () => {
+		functionBtn.style.top = functionBtn.style.top === '0px' ? '-64px' : '0';
+		toogleBtn.style.transform = toogleBtn.style.transform === 'rotate(180deg)' ? 'rotate(0deg)' : 'rotate(180deg)';
+	});
 });
 ```
 
@@ -3355,7 +3385,7 @@ document.addEventListener('wheel', e => handleScroll(e.deltaY));
 > [!Important]
 > plist 这个模板文件里增加的代码可以应用到博客首页.
 
-1. **增加样式.**
+1. **增加样式**
 
 ```CSS
 .title-left{display:flex;flex-direction:column;align-items:center;gap:20px;}
@@ -3363,13 +3393,13 @@ document.addEventListener('wheel', e => handleScroll(e.deltaY));
 
 2. **定位样式`.title-left`, 直接删除相关的所有样式**
 
-3. **定位`.avatar:hover`, 修改样式.**
+3. **定位`.avatar:hover`, 修改样式**
 
 ```CSS
 .avatar:hover{transform:scale(1.5) rotate(720deg);box-shadow:0 0 10px #2dfaffbd;}
 ```
 
-4. **分离#header的文字以及图标.**
+4. **分离#header的文字以及图标**
 
 <details><summary>修改前</summary>
 
@@ -3584,7 +3614,7 @@ document.addEventListener('wheel', e => handleScroll(e.deltaY));
 
 - 效果图:
 
-![1](https://github.com/user-attachments/assets/884a4371-975b-44a4-8201-80afc1274671)
+![](https://github.com/user-attachments/assets/73b52317-f74e-4cbd-b827-25500588d6ac)
 
 ## 优化任务列表样式
 
@@ -3690,18 +3720,22 @@ Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 
 # 增加图片转换, 并适配图片懒加载
 
+> [!WARNING]
+> git 会给图片使用`camo.githubusercontent.com`代理服务, 当外链的图片体积过大会提示'Content length exceeded', 估计是代理服务不支持, 这时候会出现转换的 bug (2025.11.14已修好), 同时这时候在 issue 里预览图片是一定失败的, 不过转换后可以在博客正常显示.
+
 打开`Gmeek.py`, 定位字符串`Gmeek-html`
 
 在附近任意行增加代码:
 
 ```python
-        # 默认情况插入图片情况下的匹配规则<p> -> <a> -><img>
-        if '<p><a target='_blank' rel=' in post_body:
-            post_body = re.sub(r'<p>\s*<a[^>]*?href='([^']+)'[^>]*?><img[^>]*?src='\1'[^>]*?></a>\s*</p>', lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>', post_body, flags=re.DOTALL)
-
-        # 通用插入图片情况下的匹配规则<a> -><img>
-        if '<a target='_blank' rel=' in post_body:
-            post_body = re.sub(r'<a[^>]*?href='([^']+)'[^>]*?><img[^>]*?src='\1'[^>]*?></a>',lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>', post_body, flags=re.DOTALL)
+        # 处理默认情况下的图片匹配规则<p><a><img>
+        if 'data-canonical-src' in post_body:
+            post_body = re.sub(
+                r'<a[^>]*?href='[^']*?'[^>]*?><img[^>]*?data-canonical-src='([^']*?)'[^>]*?></a>',
+                lambda match: f'<div class='ImgLazyLoad-circle'></div>\n<img data-fancybox='gallery' img-src='{match.group(1)}'>',
+                post_body,
+                flags=re.DOTALL
+            )
 ```
 
 - **使用演示**
@@ -3710,9 +3744,9 @@ Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 
 然后通过 Actions 转换后实际效果如下, html 里面 img 标签会增加 fancybox 所需的`data-fancybox='gallery'`属性.
 
-![](https://github.com/user-attachments/assets/f57b9f81-36b2-4484-835f-3105d54412a4)
+![](https://github.com/user-attachments/assets/e2ed0b88-719e-49b4-b8bf-90686e0e29c8)
 
-这样优化后可以在 Github issue 的 Preview 里面直接预览图片, 同时还能防备图床问题导致的图片丢失(`Gmeek-spoilertxt='Github, 稳!'`)
+这样优化后可以在 Github issue 的 Preview 里面直接预览图片, 太大的图片外链不行, 上面有说到.
 
 唯一缺点就是当 issues 删除后, 图片也会跟着消失, 无法再被外部引用, 所以删除仓库以及 issues 的时候一定要确保图片先备份哦~
 
@@ -3811,9 +3845,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ## 更改发布时间
 
-如需修改发布时间, 可以在 issues 文章最后一行添加如下代码, 里面的时间是采用时间戳的形式, 可以用这个网站👉[Link](https://tool.lu/timestamp) 转换.
+如需修改发布时间, 可以在 issues 文章最后一行添加如下代码, 里面的时间是采用时间戳的形式, 可以用这个👉[网站](https://tool.lu/timestamp) 转换.
 
+```html
 <!-- ##{'timestamp':1490764800}## -->
+```
 
 # Issues Label 备份
 
@@ -3942,7 +3978,7 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
 <div class="markdown-alert markdown-alert-warning"><p class="markdown-alert-title"><svg class="octicon octicon-alert mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Warning</p><p>利用 Github Page 搭建的网站内容是完全公开的, 请注意不要上传自己的隐私!!!</p>
 </div>
 <h2>博客调试</h2>
-<p>**为了方便调试代码, 创建了一个名为 demo 的仓库, 调试过程只会用 demo 演示, 确定后再同步代码到线上模式.</p>
+<p><strong>为了方便调试代码, 创建了一个名为 demo 的仓库, 调试过程只会用 demo 演示, 确定后再同步代码到线上模式.</strong></p>
 <p><strong>demo模式:</strong> <a href="https://gjken.github.io/demo" rel="nofollow">https://gjken.github.io/demo</a></p>
 <p><strong>线上模式:</strong> <a href="https://gjken.github.io" rel="nofollow">https://gjken.github.io</a></p>
 <p><strong>线上模式的仓库用 tag 区分代码版本, release 可有可无, 主要是用来说明版本改动(<span class="spoilerText">懒得写</span>)</strong></p>
@@ -3964,8 +4000,8 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
 <ul>
 <li>效果图:</li>
 </ul>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/a10a731d-60e0-4916-a65a-d1f2c094c3cd">
+<p><div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/297cd65b-95cb-4931-8846-53f777923e51"></p>
 <p>可以用空白字符的方式, 隐藏<code class="notranslate">subTitle</code>这个必须字段, 无需使用 js 隐藏.</p>
 <h1>记录功能块代码</h1>
 <p>代码摘抄自网络, 有删改, 都存放在仓库, 使用 jsdelivr CDN 加速.</p>
@@ -4015,9 +4051,11 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
 <p>修改-当滚动页面使<code class="notranslate">#functionBtn</code>按钮不可见时, 使其悬浮在顶部.<br>
 修改-文章目录增加顶部和底部跳转按钮.</p>
 </blockquote>
-<p>图示:</p>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/0908287f-3bca-4e11-a6a0-c4919bae120f">
+<ul>
+<li>图示:</li>
+</ul>
+<p><div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/7b02e4e8-7502-44e8-a48c-2a45bb0d5c2f"></p>
 <h2>Fancybox.js - 图片浏览器</h2>
 <blockquote>
 <p>Fancybox <a href="https://www.fancyapps.com" rel="nofollow">官网</a></p>
@@ -4058,8 +4096,8 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
 <p>在 markdown 插入图片:</p>
 <div class="highlight highlight-text-html-basic"><pre class="notranslate">`Gmeek-imgbox="https://i0.img2ipfs.com/ipfs/QmNiH2pdrA9Hb61EXgYbKtEssBAGemEjTQRBZbgutUCNx2"`</pre></div>
 <p>通过 Actions 转换后实际效果如下, html 的 img 标签会增加 fancybox 所需的<code class="notranslate">data-fancybox="gallery"</code>属性.</p>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/1bca7934-827b-4375-9a79-9582200cde63">
+<p><div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/372c5d55-5aae-4f2e-a900-7f93d94e21bd"></p>
 <h2>图片懒加载</h2>
 <blockquote>
 <p>来源: <a href="https://github.com/liyifanniubi/liyifanniubi.github.io">Github</a></p>
@@ -4687,8 +4725,8 @@ img 标签增加<code class="notranslate">display: block;</code>, 防止 Actions
 <ul>
 <li>效果图:</li>
 </ul>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/c7579ba1-bad8-4caa-acd8-790def5ad56c">
+<p><div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/7ee3a3f5-0074-4bf0-9e22-4be7fccd69e5"></p>
 <h2>文章一键复制代码按钮样式</h2>
 <div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>给按钮增加 hover 动画, 使其显示&amp;隐藏一键复制按钮.<br>
 直接增加下面代码.</p>
@@ -4776,18 +4814,18 @@ img 标签增加<code class="notranslate">display: block;</code>, 防止 Actions
 <ul>
 <li>效果图:</li>
 </ul>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/004a8bcb-712a-4a1c-943d-49f1a6779b62">
+<p><div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/f921eaa2-cfc3-4c3a-bb96-3d58a519a7dc"></p>
 <h1>通过 Gmeek 仓库美化博客</h1>
 <p>为什么这样做? <span class="spoilerText">自娱自乐.~~</span></p>
 <h2>Fork Gmeek 仓库</h2>
 <p>仓库地址👉 <a href="https://github.com/Meekdai/Gmeek">https://github.com/Meekdai/Gmeek</a></p>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/77c9c42c-3f00-49bd-a492-6fe298391239">
+<p><div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/363f7bc7-34e0-4089-ab15-0a05e82a5a1c"></p>
 <p>fork 之后, 转到搭建博客的 github 源码,</p>
 <p>打开<code class="notranslate">.github/workflows/Gmeek.yml</code>文件, 修改构建博客仓库的地址为你自己的仓库地址</p>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/06cd12c2-5166-4598-a4f6-cbc55563f7d7">
+<p><div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/206e274c-860f-4292-b710-bf904688cc86"></p>
 <p>打开<code class="notranslate">config.json</code>文件, 把<code class="notranslate">GMEEK_VERSION</code>的修改值为👉<code class="notranslate">main</code></p>
 <div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>如果值是<code class="notranslate">last</code>的话, Actions 会失败, 因为默认值<code class="notranslate">last</code>是靠模板仓库的 tag 来构建的, 改成 main 就不会构建失败.<br>
 <del>创建新的 tag 也可以, 但是挺麻烦.</del></p>
@@ -4800,12 +4838,12 @@ img 标签增加<code class="notranslate">display: block;</code>, 防止 Actions
 <h2>修改网站下方的文字</h2>
 <p>打开<code class="notranslate">Gmeek.py</code></p>
 <p>下图文字直接修改即可, 不同语言的按需修改.</p>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/3534d8e2-7a5c-4084-9f86-eade92cc050f">
+<p><div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/32be66c5-d8f2-4476-a46c-074f49162868"></p>
 <h2>修改默认 primer.css 链接</h2>
 <p>打开<code class="notranslate">Gmeek.py</code></p>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/1b93636b-a4af-45fc-a97a-af84b0d37f3e">
+<p><div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/539ccdbe-68e4-4d14-b293-171a4b524bef"></p>
 <p>这里我直接写改成我存放的链接, 并使用 tag 控制版本.</p>
 <h2>修改模板文件记录</h2>
 <h3>base.html 文件</h3>
@@ -4820,8 +4858,9 @@ img 标签增加<code class="notranslate">display: block;</code>, 防止 Actions
 动画(已引用的地方:<code class="notranslate">#header</code>打字机光标, <code class="notranslate">body``#content``functionBtn``.tagTitle``.title-left a``.subnav-search</code>向上渐显动画).<br>
 分离图标的<code class="notranslate">#functionBtn</code>样式.</p>
 </blockquote>
-<div class="highlight highlight-source-css"><pre class="notranslate"><span class="pl-kos">:</span><span class="pl-c1">root</span>{<span class="pl-s1">--functionBtnFlex-bgColor</span><span class="pl-kos">:</span><span class="pl-pds"><span class="pl-kos">#</span>ffffff61</span>;}
-[<span class="pl-c1">data-color-mode</span><span class="pl-c1">=</span><span class="pl-s">light</span>][<span class="pl-c1">data-light-theme</span><span class="pl-c1">=</span><span class="pl-s">dark</span>]<span class="pl-kos">,</span>[<span class="pl-c1">data-color-mode</span><span class="pl-c1">=</span><span class="pl-s">light</span>][<span class="pl-c1">data-light-theme</span><span class="pl-c1">=</span><span class="pl-s">dark</span>]::<span class="pl-c1">selection</span><span class="pl-kos">,</span>[<span class="pl-c1">data-color-mode</span><span class="pl-c1">=</span><span class="pl-s">dark</span>][<span class="pl-c1">data-dark-theme</span><span class="pl-c1">=</span><span class="pl-s">dark</span>]<span class="pl-kos">,</span>[<span class="pl-c1">data-color-mode</span><span class="pl-c1">=</span><span class="pl-s">dark</span>][<span class="pl-c1">data-dark-theme</span><span class="pl-c1">=</span><span class="pl-s">dark</span>]::<span class="pl-c1">selection</span>{<span class="pl-s1">--functionBtnFlex-bgColor</span><span class="pl-kos">:</span><span class="pl-pds"><span class="pl-kos">#</span>ffffff00</span>;}
+<details><summary>CSS Code</summary>
+<div class="highlight highlight-source-css"><pre class="notranslate"><span class="pl-kos">:</span><span class="pl-c1">root</span>{<span class="pl-s1">--functionBtnFlex-bgColor</span><span class="pl-kos">:</span><span class="pl-pds"><span class="pl-kos">#</span>ffffff61</span>;<span class="pl-s1">--tooglebtn-bgColor</span><span class="pl-kos">:</span><span class="pl-pds"><span class="pl-kos">#</span>c0e4ff9c</span>}
+[<span class="pl-c1">data-color-mode</span><span class="pl-c1">=</span><span class="pl-s">light</span>][<span class="pl-c1">data-light-theme</span><span class="pl-c1">=</span><span class="pl-s">dark</span>]<span class="pl-kos">,</span>[<span class="pl-c1">data-color-mode</span><span class="pl-c1">=</span><span class="pl-s">light</span>][<span class="pl-c1">data-light-theme</span><span class="pl-c1">=</span><span class="pl-s">dark</span>]::<span class="pl-c1">selection</span><span class="pl-kos">,</span>[<span class="pl-c1">data-color-mode</span><span class="pl-c1">=</span><span class="pl-s">dark</span>][<span class="pl-c1">data-dark-theme</span><span class="pl-c1">=</span><span class="pl-s">dark</span>]<span class="pl-kos">,</span>[<span class="pl-c1">data-color-mode</span><span class="pl-c1">=</span><span class="pl-s">dark</span>][<span class="pl-c1">data-dark-theme</span><span class="pl-c1">=</span><span class="pl-s">dark</span>]::<span class="pl-c1">selection</span>{<span class="pl-s1">--functionBtnFlex-bgColor</span><span class="pl-kos">:</span><span class="pl-pds"><span class="pl-kos">#</span>ffffff00</span>;<span class="pl-s1">--tooglebtn-bgColor</span><span class="pl-kos">:</span><span class="pl-pds"><span class="pl-kos">#</span>7dc2ff7a</span>}
 
 <span class="pl-k">@keyframes</span> fadeIn{<span class="pl-c1">0<span class="pl-smi">%</span></span>{<span class="pl-c1">opacity</span><span class="pl-kos">:</span><span class="pl-c1">0</span>}<span class="pl-c1">100<span class="pl-smi">%</span></span>{<span class="pl-c1">opacity</span><span class="pl-kos">:</span><span class="pl-c1">1</span>}}<span class="pl-k">@-webkit-keyframes</span> fadeIn{<span class="pl-c1">0<span class="pl-smi">%</span></span>{<span class="pl-c1">opacity</span><span class="pl-kos">:</span><span class="pl-c1">0</span>}<span class="pl-c1">100<span class="pl-smi">%</span></span>{<span class="pl-c1">opacity</span><span class="pl-kos">:</span><span class="pl-c1">1</span>}}
 
@@ -4847,14 +4886,15 @@ img 标签增加<code class="notranslate">display: block;</code>, 防止 Actions
 
 <span class="pl-kos">#</span><span class="pl-c1">functionBtn</span>{<span class="pl-c1">display</span><span class="pl-kos">:</span>flex;<span class="pl-c1">justify-content</span><span class="pl-kos">:</span>center;<span class="pl-c1">margin</span><span class="pl-kos">:</span><span class="pl-c1">20<span class="pl-smi">px</span></span> <span class="pl-c1">0</span>;<span class="pl-c1">gap</span><span class="pl-kos">:</span><span class="pl-c1">20<span class="pl-smi">px</span></span>;<span class="pl-c1">transition</span><span class="pl-kos">:</span> transform <span class="pl-c1">0.3<span class="pl-smi">s</span></span> ease-in-out;}
 <span class="pl-kos">#</span><span class="pl-c1">functionBtn</span> <span class="pl-ent">a</span>{<span class="pl-c1">padding</span><span class="pl-kos">:</span><span class="pl-c1">14<span class="pl-smi">px</span></span> <span class="pl-c1">16<span class="pl-smi">px</span></span>;}
-<span class="pl-kos">#</span><span class="pl-c1">functionBtn</span>.<span class="pl-c1">Btn-flex</span>{<span class="pl-c1">position</span><span class="pl-kos">:</span>fixed;<span class="pl-c1">margin</span><span class="pl-kos">:</span><span class="pl-c1">0</span>;<span class="pl-c1">padding</span><span class="pl-kos">:</span><span class="pl-c1">20<span class="pl-smi">px</span></span> <span class="pl-c1">0</span>;<span class="pl-c1">top</span><span class="pl-kos">:</span><span class="pl-c1">-100<span class="pl-smi">px</span></span>;<span class="pl-c1">left</span><span class="pl-kos">:</span><span class="pl-c1">0</span>;<span class="pl-c1">width</span><span class="pl-kos">:</span><span class="pl-c1">100<span class="pl-smi">%</span></span>;<span class="pl-c1">min-width</span><span class="pl-kos">:</span><span class="pl-c1">500<span class="pl-smi">px</span></span>;<span class="pl-c1">background-color</span><span class="pl-kos">:</span><span class="pl-en">var</span>(<span class="pl-s1">--functionBtnFlex-bgColor</span>);<span class="pl-c1">backdrop-filter</span><span class="pl-kos">:</span><span class="pl-en">blur</span>(<span class="pl-c1">30<span class="pl-smi">px</span></span>);<span class="pl-c1">box-shadow</span><span class="pl-kos">:</span><span class="pl-pds"><span class="pl-kos">#</span>00000078</span> <span class="pl-c1">0</span> <span class="pl-c1">9<span class="pl-smi">px</span></span> <span class="pl-c1">18<span class="pl-smi">px</span></span> <span class="pl-c1">-15<span class="pl-smi">px</span></span>;<span class="pl-c1">z-index</span><span class="pl-kos">:</span><span class="pl-c1">100</span>;}
+<span class="pl-kos">#</span><span class="pl-c1">functionBtn</span>.<span class="pl-c1">Btn-flex</span>{<span class="pl-c1">position</span><span class="pl-kos">:</span>fixed;<span class="pl-c1">margin</span><span class="pl-kos">:</span><span class="pl-c1">0</span>;<span class="pl-c1">padding</span><span class="pl-kos">:</span><span class="pl-c1">8<span class="pl-smi">px</span></span> <span class="pl-c1">0</span>;<span class="pl-c1">top</span><span class="pl-kos">:</span><span class="pl-c1">-64<span class="pl-smi">px</span></span>;<span class="pl-c1">left</span><span class="pl-kos">:</span><span class="pl-c1">0</span>;<span class="pl-c1">width</span><span class="pl-kos">:</span><span class="pl-c1">100<span class="pl-smi">%</span></span>;<span class="pl-c1">min-width</span><span class="pl-kos">:</span><span class="pl-c1">500<span class="pl-smi">px</span></span>;<span class="pl-c1">background-color</span><span class="pl-kos">:</span><span class="pl-en">var</span>(<span class="pl-s1">--functionBtnFlex-bgColor</span>);<span class="pl-c1">backdrop-filter</span><span class="pl-kos">:</span><span class="pl-en">blur</span>(<span class="pl-c1">30<span class="pl-smi">px</span></span>);<span class="pl-c1">box-shadow</span><span class="pl-kos">:</span><span class="pl-pds"><span class="pl-kos">#</span>00000078</span> <span class="pl-c1">0</span> <span class="pl-c1">9<span class="pl-smi">px</span></span> <span class="pl-c1">18<span class="pl-smi">px</span></span> <span class="pl-c1">-15<span class="pl-smi">px</span></span>;<span class="pl-c1">z-index</span><span class="pl-kos">:</span><span class="pl-c1">100</span>;<span class="pl-c1">animation</span><span class="pl-kos">:</span>fadeIn.2s ease-in <span class="pl-c1">0<span class="pl-smi">s</span></span> forwards;<span class="pl-c1">transition</span><span class="pl-kos">:</span>top <span class="pl-c1">0.3<span class="pl-smi">s</span></span> ease-in-out}
 
 <span class="pl-ent">body</span><span class="pl-kos">,</span><span class="pl-kos">#</span><span class="pl-c1">content</span><span class="pl-kos">,</span><span class="pl-kos">#</span><span class="pl-c1">functionBtn</span><span class="pl-kos">,</span>.<span class="pl-c1">tagTitle</span><span class="pl-kos">,</span>.<span class="pl-c1">title-left</span> <span class="pl-ent">a</span><span class="pl-kos">,</span>.<span class="pl-c1">subnav-search</span>{<span class="pl-c1">-webkit-animation</span><span class="pl-kos">:</span>slide-fade-in <span class="pl-c1">0.8<span class="pl-smi">s</span></span> ease;<span class="pl-c1">animation</span><span class="pl-kos">:</span>slide-fade-in <span class="pl-c1">0.8<span class="pl-smi">s</span></span> ease}</pre></div>
+</details>
 <ol start="2">
 <li><strong>定位<code class="notranslate">#header</code>, 修改样式.</strong></li>
 </ol>
 <blockquote>
-<p>使用类名区分首页和文章页.</p>
+<p>去除下划线, 优化布局.</p>
 </blockquote>
 <div class="highlight highlight-source-diff"><pre class="notranslate"><span class="pl-mi1"><span class="pl-mi1">+</span>#header .homepage-header{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:24px;}</span>
 👆
@@ -4889,8 +4929,8 @@ after 是光标, blink 是光标动画.</p>
 </ol>
 <blockquote>
 <p>需要把<code class="notranslate">.title-right</code>这个类名全部重命名为<code class="notranslate">#functionBtn</code><br>
-增加搜索页按钮<br>
-增加文章目录按钮</p>
+增加搜索页按钮.<br>
+增加文章目录按钮.</p>
 </blockquote>
 <details><summary>修改前</summary>
 <div class="highlight highlight-text-html-basic"><pre class="notranslate">{% block header %}
@@ -4956,6 +4996,16 @@ after 是光标, blink 是光标动画.</p>
 
 <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">getElementById</span><span class="pl-kos">(</span><span class="pl-s">"pathSearch"</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">setAttribute</span><span class="pl-kos">(</span><span class="pl-s">"d"</span><span class="pl-kos">,</span><span class="pl-s">"M15.7 13.3l-3.81-3.83A5.93 5.93 0 0 0 13 6c0-3.31-2.69-6-6-6S1 2.69 1 6s2.69 6 6 6c1.3 0 2.48-.41 3.47-1.11l3.83 3.81c.19.2.45.3.7.3.25 0 .52-.09.7-.3a.996.996 0 0 0 0-1.41v.01zM7 10.7c-2.59 0-4.7-2.11-4.7-4.7 0-2.59 2.11-4.7 4.7-4.7 2.59 0 4.7 2.11 4.7 4.7 0 2.59-2.11 4.7-4.7 4.7z"</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
 <ol start="6">
+<li><strong>#toogleBtn 按钮样式</strong></li>
+</ol>
+<blockquote>
+<p>点击展开&amp;关闭悬浮导航.</p>
+</blockquote>
+<div class="highlight highlight-source-css"><pre class="notranslate"><span class="pl-kos">#</span><span class="pl-c1">toogleBtn</span>{<span class="pl-c1">position</span><span class="pl-kos">:</span>fixed;<span class="pl-c1">top</span><span class="pl-kos">:</span><span class="pl-c1">51<span class="pl-smi">px</span></span>;<span class="pl-c1">right</span><span class="pl-kos">:</span><span class="pl-c1">6<span class="pl-smi">%</span></span>;<span class="pl-c1">display</span><span class="pl-kos">:</span>none;}
+<span class="pl-kos">#</span><span class="pl-c1">toogleBtn</span>.<span class="pl-c1">active</span><span class="pl-kos">,</span><span class="pl-kos">#</span><span class="pl-c1">toogleBtn</span> <span class="pl-ent">path</span>{<span class="pl-c1">display</span><span class="pl-kos">:</span>flex;<span class="pl-c1">padding</span><span class="pl-kos">:</span><span class="pl-c1">6<span class="pl-smi">px</span></span> <span class="pl-c1">7<span class="pl-smi">px</span></span>;<span class="pl-c1">fill</span><span class="pl-kos">:</span><span class="pl-en">var</span>(<span class="pl-s1">--title-right-svgColor</span>);<span class="pl-c1">cursor</span><span class="pl-kos">:</span>pointer;<span class="pl-c1">transition</span><span class="pl-kos">:</span>transform <span class="pl-c1">0.3<span class="pl-smi">s</span></span> ease-in-out;<span class="pl-c1">background</span><span class="pl-kos">:</span><span class="pl-en">var</span>(<span class="pl-s1">--tooglebtn-bgColor</span>)}
+<span class="pl-kos">#</span><span class="pl-c1">toogleBtn</span>.<span class="pl-c1">active</span><span class="pl-kos">:</span><span class="pl-c1">hover</span> <span class="pl-ent">svg</span> <span class="pl-ent">path</span>{<span class="pl-c1">fill</span><span class="pl-kos">:</span><span class="pl-en">var</span>(<span class="pl-s1">--title-right-svgHovercolor</span>);}
+<span class="pl-kos">#</span><span class="pl-c1">functionBtn</span> <span class="pl-ent">div</span><span class="pl-kos">:</span><span class="pl-c1">first-of-type</span>{<span class="pl-c1">display</span><span class="pl-kos">:</span>flex;<span class="pl-c1">gap</span><span class="pl-kos">:</span><span class="pl-c1">20<span class="pl-smi">px</span></span>}</pre></div>
+<ol start="7">
 <li><strong>添加自定义 JS 代码.</strong></li>
 </ol>
 <blockquote>
@@ -4963,7 +5013,8 @@ after 是光标, blink 是光标动画.</p>
 添加滚动切换显示顶部按钮导航.</p>
 </blockquote>
 <p>定位<code class="notranslate">&lt;script&gt;</code>标签, 在里面增加 JS 代码:</p>
-<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p><code class="notranslate">document.addEventListener("DOMContentLoaded", () =&gt; {</code>这个监听不止可写当前功能, 还可写其它功能的代码进去.<br>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p><code class="notranslate">document.addEventListener('DOMContentLoaded', () =&gt; {</code><br>
+这段监听函数还可另增加额外的功能.<br>
 实际应用场景我把这块的代码都压缩合并了.</p>
 </div>
 <details><summary>JavaScript</summary>
@@ -4984,41 +5035,37 @@ after 是光标, blink 是光标动画.</p>
 
 <span class="pl-s1">postTitle</span><span class="pl-kos">.</span><span class="pl-c1">classList</span><span class="pl-kos">.</span><span class="pl-en">add</span><span class="pl-kos">(</span><span class="pl-s">'no-blink'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 
-<span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'DOMContentLoaded'</span><span class="pl-kos">,</span> <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
-    <span class="pl-c">// 创建检查按钮, 插入到指定id #functionBtn 的后面</span>
-    <span class="pl-k">const</span> <span class="pl-s1">checkBtn</span> <span class="pl-c1">=</span> <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">createElement</span><span class="pl-kos">(</span><span class="pl-s">'div'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-    <span class="pl-s1">checkBtn</span><span class="pl-kos">.</span><span class="pl-c1">id</span> <span class="pl-c1">=</span> <span class="pl-s">'checkBtn'</span><span class="pl-kos">;</span>
-    <span class="pl-k">const</span> <span class="pl-s1">functionBtn</span> <span class="pl-c1">=</span> <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">getElementById</span><span class="pl-kos">(</span><span class="pl-s">'functionBtn'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-    <span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-en">insertAdjacentElement</span><span class="pl-kos">(</span><span class="pl-s">'afterend'</span><span class="pl-kos">,</span> <span class="pl-s1">checkBtn</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">"DOMContentLoaded"</span><span class="pl-kos">,</span> <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+	<span class="pl-c">// 创建检查按钮, 插入到指定id #functionBtn 的后面</span>
+	<span class="pl-k">const</span> <span class="pl-s1">checkBtn</span> <span class="pl-c1">=</span> <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">createElement</span><span class="pl-kos">(</span><span class="pl-s">'div'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+	<span class="pl-s1">checkBtn</span><span class="pl-kos">.</span><span class="pl-c1">id</span> <span class="pl-c1">=</span> <span class="pl-s">'checkBtn'</span><span class="pl-kos">;</span>
+	<span class="pl-k">const</span> <span class="pl-s1">toogleBtn</span> <span class="pl-c1">=</span> <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">getElementById</span><span class="pl-kos">(</span><span class="pl-s">'toogleBtn'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+	<span class="pl-k">const</span> <span class="pl-s1">functionBtn</span> <span class="pl-c1">=</span> <span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">getElementById</span><span class="pl-kos">(</span><span class="pl-s">'functionBtn'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+	<span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-en">insertAdjacentElement</span><span class="pl-kos">(</span><span class="pl-s">'afterend'</span><span class="pl-kos">,</span> <span class="pl-s1">checkBtn</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 
-    <span class="pl-c">// 用 IntersectionObserver 观察 checkBtn 这个div的可见性</span>
-    <span class="pl-k">const</span> <span class="pl-s1">observer</span> <span class="pl-c1">=</span> <span class="pl-k">new</span> <span class="pl-v">IntersectionObserver</span><span class="pl-kos">(</span><span class="pl-s1">entries</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
-        <span class="pl-s1">entries</span><span class="pl-kos">.</span><span class="pl-en">forEach</span><span class="pl-kos">(</span><span class="pl-s1">entry</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
-            <span class="pl-k">const</span> <span class="pl-s1">isIntersecting</span> <span class="pl-c1">=</span> <span class="pl-s1">entry</span><span class="pl-kos">.</span><span class="pl-c1">isIntersecting</span><span class="pl-kos">;</span>
-            <span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-c1">classList</span><span class="pl-kos">.</span><span class="pl-en">toggle</span><span class="pl-kos">(</span><span class="pl-s">'Btn-flex'</span><span class="pl-kos">,</span> <span class="pl-c1">!</span><span class="pl-s1">isIntersecting</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-            <span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-c1">style</span><span class="pl-kos">.</span><span class="pl-c1">top</span> <span class="pl-c1">=</span> <span class="pl-s1">isIntersecting</span> ? <span class="pl-s">'0'</span> : <span class="pl-s">'-100px'</span><span class="pl-kos">;</span>
-        <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-    <span class="pl-kos">}</span><span class="pl-kos">,</span> <span class="pl-kos">{</span> <span class="pl-c1">rootMargin</span>: <span class="pl-s">'300px 0px 0px 0px'</span><span class="pl-kos">,</span> <span class="pl-c1">threshold</span>: <span class="pl-c1">0</span> <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-    <span class="pl-s1">observer</span><span class="pl-kos">.</span><span class="pl-en">observe</span><span class="pl-kos">(</span><span class="pl-s1">checkBtn</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+	<span class="pl-c">// 用 IntersectionObserver 观察 checkBtn 这个div的可见性</span>
+	<span class="pl-k">const</span> <span class="pl-s1">observer</span> <span class="pl-c1">=</span> <span class="pl-k">new</span> <span class="pl-v">IntersectionObserver</span><span class="pl-kos">(</span><span class="pl-s1">entries</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+		<span class="pl-s1">entries</span><span class="pl-kos">.</span><span class="pl-en">forEach</span><span class="pl-kos">(</span><span class="pl-s1">entry</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+			<span class="pl-k">const</span> <span class="pl-s1">isIntersecting</span> <span class="pl-c1">=</span> <span class="pl-s1">entry</span><span class="pl-kos">.</span><span class="pl-c1">isIntersecting</span><span class="pl-kos">;</span>
+			<span class="pl-s1">toogleBtn</span><span class="pl-kos">.</span><span class="pl-c1">classList</span><span class="pl-kos">.</span><span class="pl-en">toggle</span><span class="pl-kos">(</span><span class="pl-s">'active'</span><span class="pl-kos">,</span> <span class="pl-c1">!</span><span class="pl-s1">isIntersecting</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+			<span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-c1">classList</span><span class="pl-kos">.</span><span class="pl-en">toggle</span><span class="pl-kos">(</span><span class="pl-s">'Btn-flex'</span><span class="pl-kos">,</span> <span class="pl-c1">!</span><span class="pl-s1">isIntersecting</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+			<span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-c1">classList</span><span class="pl-kos">.</span><span class="pl-en">toggle</span><span class="pl-kos">(</span><span class="pl-s">'btn-fadeout'</span><span class="pl-kos">,</span> <span class="pl-c1">!</span><span class="pl-s1">isIntersecting</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+		<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+	<span class="pl-kos">}</span><span class="pl-kos">,</span> <span class="pl-kos">{</span> <span class="pl-c1">rootMargin</span>: <span class="pl-s">'300px 0px 0px 0px'</span><span class="pl-kos">,</span> <span class="pl-c1">threshold</span>: <span class="pl-c1">0</span> <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+	<span class="pl-s1">observer</span><span class="pl-kos">.</span><span class="pl-en">observe</span><span class="pl-kos">(</span><span class="pl-s1">checkBtn</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 
-    <span class="pl-k">let</span> <span class="pl-s1">startY</span> <span class="pl-c1">=</span> <span class="pl-c1">0</span><span class="pl-kos">;</span>
-
-    <span class="pl-c">// 通用滚动处理函数</span>
-    <span class="pl-k">const</span> <span class="pl-en">handleScroll</span> <span class="pl-c1">=</span> <span class="pl-s1">deltaY</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
-        <span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-c1">style</span><span class="pl-kos">.</span><span class="pl-c1">top</span> <span class="pl-c1">=</span> <span class="pl-s1">deltaY</span> <span class="pl-c1">&gt;</span> <span class="pl-c1">0</span> ? <span class="pl-s">'-100px'</span> : <span class="pl-s">'0'</span><span class="pl-kos">;</span>
-    <span class="pl-kos">}</span><span class="pl-kos">;</span>
-
-<span class="pl-c">// 监听触摸和滚轮事件</span>
-<span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'touchstart'</span><span class="pl-kos">,</span> <span class="pl-s1">e</span> <span class="pl-c1">=&gt;</span> <span class="pl-s1">startY</span> <span class="pl-c1">=</span> <span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-c1">touches</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span><span class="pl-kos">.</span><span class="pl-c1">clientY</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-<span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'touchmove'</span><span class="pl-kos">,</span> <span class="pl-s1">e</span> <span class="pl-c1">=&gt;</span> <span class="pl-en">handleScroll</span><span class="pl-kos">(</span><span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-c1">touches</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span><span class="pl-kos">.</span><span class="pl-c1">clientY</span> <span class="pl-c1">-</span> <span class="pl-s1">startY</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
-<span class="pl-smi">document</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'wheel'</span><span class="pl-kos">,</span> <span class="pl-s1">e</span> <span class="pl-c1">=&gt;</span> <span class="pl-en">handleScroll</span><span class="pl-kos">(</span><span class="pl-s1">e</span><span class="pl-kos">.</span><span class="pl-c1">deltaY</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+	<span class="pl-c">// 为 toogleBtn 添加点击事件修改悬浮样式</span>
+	<span class="pl-s1">toogleBtn</span><span class="pl-kos">.</span><span class="pl-en">addEventListener</span><span class="pl-kos">(</span><span class="pl-s">'click'</span><span class="pl-kos">,</span> <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+		<span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-c1">style</span><span class="pl-kos">.</span><span class="pl-c1">top</span> <span class="pl-c1">=</span> <span class="pl-s1">functionBtn</span><span class="pl-kos">.</span><span class="pl-c1">style</span><span class="pl-kos">.</span><span class="pl-c1">top</span> <span class="pl-c1">===</span> <span class="pl-s">'0px'</span> ? <span class="pl-s">'-64px'</span> : <span class="pl-s">'0'</span><span class="pl-kos">;</span>
+		<span class="pl-s1">toogleBtn</span><span class="pl-kos">.</span><span class="pl-c1">style</span><span class="pl-kos">.</span><span class="pl-c1">transform</span> <span class="pl-c1">=</span> <span class="pl-s1">toogleBtn</span><span class="pl-kos">.</span><span class="pl-c1">style</span><span class="pl-kos">.</span><span class="pl-c1">transform</span> <span class="pl-c1">===</span> <span class="pl-s">'rotate(180deg)'</span> ? <span class="pl-s">'rotate(0deg)'</span> : <span class="pl-s">'rotate(180deg)'</span><span class="pl-kos">;</span>
+	<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
 </details>
 <h3>plist.html 文件</h3>
 <div class="markdown-alert markdown-alert-important"><p class="markdown-alert-title"><svg class="octicon octicon-report mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Important</p><p>plist 这个模板文件里增加的代码可以应用到博客首页.</p>
 </div>
 <ol>
-<li><strong>增加样式.</strong></li>
+<li><strong>增加样式</strong></li>
 </ol>
 <div class="highlight highlight-source-css"><pre class="notranslate">.<span class="pl-c1">title-left</span>{<span class="pl-c1">display</span><span class="pl-kos">:</span>flex;<span class="pl-c1">flex-direction</span><span class="pl-kos">:</span>column;<span class="pl-c1">align-items</span><span class="pl-kos">:</span>center;<span class="pl-c1">gap</span><span class="pl-kos">:</span><span class="pl-c1">20<span class="pl-smi">px</span></span>;}</pre></div>
 <ol start="2">
@@ -5026,12 +5073,12 @@ after 是光标, blink 是光标动画.</p>
 <p><strong>定位样式<code class="notranslate">.title-left</code>, 直接删除相关的所有样式</strong></p>
 </li>
 <li>
-<p><strong>定位<code class="notranslate">.avatar:hover</code>, 修改样式.</strong></p>
+<p><strong>定位<code class="notranslate">.avatar:hover</code>, 修改样式</strong></p>
 </li>
 </ol>
 <div class="highlight highlight-source-css"><pre class="notranslate">.<span class="pl-c1">avatar</span><span class="pl-kos">:</span><span class="pl-c1">hover</span>{<span class="pl-c1">transform</span><span class="pl-kos">:</span><span class="pl-en">scale</span>(<span class="pl-c1">1.5</span>) <span class="pl-en">rotate</span>(<span class="pl-c1">720<span class="pl-smi">deg</span></span>);<span class="pl-c1">box-shadow</span><span class="pl-kos">:</span><span class="pl-c1">0</span> <span class="pl-c1">0</span> <span class="pl-c1">10<span class="pl-smi">px</span></span> <span class="pl-pds"><span class="pl-kos">#</span>2dfaffbd</span>;}</pre></div>
 <ol start="4">
-<li><strong>分离#header的文字以及图标.</strong></li>
+<li><strong>分离#header的文字以及图标</strong></li>
 </ol>
 <details><summary>修改前</summary>
 <div class="highlight highlight-text-html-basic"><pre class="notranslate">{% block header %}
@@ -5218,8 +5265,8 @@ after 是光标, blink 是光标动画.</p>
 <ul>
 <li>效果图:</li>
 </ul>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/884a4371-975b-44a4-8201-80afc1274671">
+<p><div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/73b52317-f74e-4cbd-b827-25500588d6ac"></p>
 <h2>优化任务列表样式</h2>
 <p>具体问题看<a href="https://github.com/Meekdai/Gmeek/issues/202" data-hovercard-type="issue" data-hovercard-url="/Meekdai/Gmeek/issues/202/hovercard">#202</a></p>
 <p>打开<code class="notranslate">Gmeek.py</code>, 定位<code class="notranslate">postBase=self.blogBase.copy()</code>, 在它的下面增加如下代码:</p>
@@ -5292,23 +5339,26 @@ after 是光标, blink 是光标动画.</p>
 <p>这种情况下, 如果在 html 中含有行内代码块标签并且内容含有 Gmeek-html, 会导致转换文章内容时出现显示错误,</p>
 <p>更改后缩小了匹配范围, 可直接用行内代码块👉<code class="notranslate">Gmeek-html</code>让其在文章内正常显示.</p>
 <h1>增加图片转换, 并适配图片懒加载</h1>
+<div class="markdown-alert markdown-alert-warning"><p class="markdown-alert-title"><svg class="octicon octicon-alert mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Warning</p><p>git 会给图片使用<code class="notranslate">camo.githubusercontent.com</code>代理服务, 当外链的图片体积过大会提示"Content length exceeded", 估计是代理服务不支持, 这时候会出现转换的 bug (2025.11.14已修好), 同时这时候在 issue 里预览图片是一定失败的, 不过转换后可以在博客正常显示.</p>
+</div>
 <p>打开<code class="notranslate">Gmeek.py</code>, 定位字符串<code class="notranslate">Gmeek-html</code></p>
 <p>在附近任意行增加代码:</p>
-<div class="highlight highlight-source-python"><pre class="notranslate">        <span class="pl-c"># 默认情况插入图片情况下的匹配规则&lt;p&gt; -&gt; &lt;a&gt; -&gt;&lt;img&gt;</span>
-        <span class="pl-k">if</span> <span class="pl-s">'&lt;p&gt;&lt;a target="_blank" rel='</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>:
-            <span class="pl-s1">post_body</span> <span class="pl-c1">=</span> <span class="pl-s1">re</span>.<span class="pl-c1">sub</span>(<span class="pl-s">r'&lt;p&gt;\s*&lt;a[^&gt;]*?href="([^"]+)"[^&gt;]*?&gt;&lt;img[^&gt;]*?src="\1"[^&gt;]*?&gt;&lt;/a&gt;\s*&lt;/p&gt;'</span>, <span class="pl-k">lambda</span> <span class="pl-s1">match</span>: <span class="pl-s">f'&lt;div class="ImgLazyLoad-circle"&gt;&lt;/div&gt;<span class="pl-cce">\n</span>&lt;img data-fancybox="gallery" img-src="<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">match</span>.<span class="pl-c1">group</span>(<span class="pl-c1">1</span>)<span class="pl-kos">}</span></span>"&gt;'</span>, <span class="pl-s1">post_body</span>, <span class="pl-s1">flags</span><span class="pl-c1">=</span><span class="pl-s1">re</span>.<span class="pl-c1">DOTALL</span>)
-
-        <span class="pl-c"># 通用插入图片情况下的匹配规则&lt;a&gt; -&gt;&lt;img&gt;</span>
-        <span class="pl-k">if</span> <span class="pl-s">'&lt;a target="_blank" rel='</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>:
-            <span class="pl-s1">post_body</span> <span class="pl-c1">=</span> <span class="pl-s1">re</span>.<span class="pl-c1">sub</span>(<span class="pl-s">r'&lt;a[^&gt;]*?href="([^"]+)"[^&gt;]*?&gt;&lt;img[^&gt;]*?src="\1"[^&gt;]*?&gt;&lt;/a&gt;'</span>,<span class="pl-k">lambda</span> <span class="pl-s1">match</span>: <span class="pl-s">f'&lt;div class="ImgLazyLoad-circle"&gt;&lt;/div&gt;<span class="pl-cce">\n</span>&lt;img data-fancybox="gallery" img-src="<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">match</span>.<span class="pl-c1">group</span>(<span class="pl-c1">1</span>)<span class="pl-kos">}</span></span>"&gt;'</span>, <span class="pl-s1">post_body</span>, <span class="pl-s1">flags</span><span class="pl-c1">=</span><span class="pl-s1">re</span>.<span class="pl-c1">DOTALL</span>)</pre></div>
+<div class="highlight highlight-source-python"><pre class="notranslate">        <span class="pl-c"># 处理默认情况下的图片匹配规则&lt;p&gt;&lt;a&gt;&lt;img&gt;</span>
+        <span class="pl-k">if</span> <span class="pl-s">'data-canonical-src'</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>:
+            <span class="pl-s1">post_body</span> <span class="pl-c1">=</span> <span class="pl-s1">re</span>.<span class="pl-c1">sub</span>(
+                <span class="pl-s">r'&lt;a[^&gt;]*?href="[^"]*?"[^&gt;]*?&gt;&lt;img[^&gt;]*?data-canonical-src="([^"]*?)"[^&gt;]*?&gt;&lt;/a&gt;'</span>,
+                <span class="pl-k">lambda</span> <span class="pl-s1">match</span>: <span class="pl-s">f'&lt;div class="ImgLazyLoad-circle"&gt;&lt;/div&gt;<span class="pl-cce">\n</span>&lt;img data-fancybox="gallery" img-src="<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">match</span>.<span class="pl-c1">group</span>(<span class="pl-c1">1</span>)<span class="pl-kos">}</span></span>"&gt;'</span>,
+                <span class="pl-s1">post_body</span>,
+                <span class="pl-s1">flags</span><span class="pl-c1">=</span><span class="pl-s1">re</span>.<span class="pl-c1">DOTALL</span>
+            )</pre></div>
 <ul>
 <li><strong>使用演示</strong></li>
 </ul>
 <p>在 GitHub markdown 里上传图片, 粘贴&amp;拖拽都行,</p>
 <p>然后通过 Actions 转换后实际效果如下, html 里面 img 标签会增加 fancybox 所需的<code class="notranslate">data-fancybox="gallery"</code>属性.</p>
-<div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/f57b9f81-36b2-4484-835f-3105d54412a4">
-<p>这样优化后可以在 Github issue 的 Preview 里面直接预览图片, 同时还能防备图床问题导致的图片丢失(<span class="spoilerText">Github, 稳!</span>)</p>
+<p><div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/e2ed0b88-719e-49b4-b8bf-90686e0e29c8"></p>
+<p>这样优化后可以在 Github issue 的 Preview 里面直接预览图片, 太大的图片外链不行, 上面有说到.</p>
 <p>唯一缺点就是当 issues 删除后, 图片也会跟着消失, 无法再被外部引用, 所以删除仓库以及 issues 的时候一定要确保图片先备份哦~</p>
 <h1>添加 Gmeek-spoilertxt - 文字防剧透模糊效果</h1>
 <p><strong>默认模糊效果, 反复点击可反复显示或隐藏.</strong></p>
@@ -5377,8 +5427,8 @@ after 是光标, blink 是光标动画.</p>
     <span class="pl-ent">"MoveBottom"</span>:<span class="pl-s"><span class="pl-pds">"</span>M7.47 10.78a.749.749 0 0 0 1.06 0l3.75-3.75a.749.749 0 1 0-1.06-1.06L8.75 8.439V1.75a.75.75 0 0 0-1.5 0v6.689L4.78 5.97a.749.749 0 1 0-1.06 1.06l3.75 3.75ZM3.75 13a.75.75 0 0 0 0 1.5h8.5a.75.75 0 0 0 0-1.5h-8.5Z<span class="pl-pds">"</span></span></pre></div>
 <h1>issues相关</h1>
 <h2>更改发布时间</h2>
-<p>如需修改发布时间, 可以在 issues 文章最后一行添加如下代码, 里面的时间是采用时间戳的形式, 可以用这个网站👉<a href="https://tool.lu/timestamp" rel="nofollow">Link</a> 转换.</p>
-
+<p>如需修改发布时间, 可以在 issues 文章最后一行添加如下代码, 里面的时间是采用时间戳的形式, 可以用这个👉<a href="https://tool.lu/timestamp" rel="nofollow">网站</a> 转换.</p>
+<div class="highlight highlight-text-html-basic"><pre class="notranslate"><span class="pl-c">&lt;!-- ##{"timestamp":1490764800}## --&gt;</span></pre></div>
 <h1>Issues Label 备份</h1>
 <markdown-accessiblity-table><table role="table">
 <thead>
@@ -5393,91 +5443,91 @@ after 是光标, blink 是光标动画.</p>
 <td>翻墙</td>
 <td>#cb7b58</td>
 <td><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/5b22d400cf6be06c7095b5e83d88845eb74c56179c49a9bbb13bc16595445b50/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d25453725424625424225453525413225393926636f6c6f723d636237623538"></td>
+<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=%E7%BF%BB%E5%A2%99&amp;color=cb7b58"></td>
 </tr>
 <tr>
 <td>软件</td>
 <td>#5da167</td>
 <td><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/45e1bd3c9b27b00106675c353f1da9d329aff11005695131388636900bd3150e/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d25453825424425414625453425424225423626636f6c6f723d356461313637"></td>
+<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=%E8%BD%AF%E4%BB%B6&amp;color=5da167"></td>
 </tr>
 <tr>
 <td>网站</td>
 <td>#7057ff</td>
 <td><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/125d2d30fcd6c8b3ffe8a9f1ccc9e07a1e7e7884400b9bb761672b769e98d5a9/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d25453725424425393125453725414225393926636f6c6f723d323138313535"></td>
+<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=%E7%BD%91%E7%AB%99&amp;color=218155"></td>
 </tr>
 <tr>
 <td>日常</td>
 <td>#008672</td>
 <td><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/af57dcc0ecffe6c938715334387ff9fd620b812a3772329f3db43512ce4b859c/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d25453625393725413525453525423825423826636f6c6f723d303038363732"></td>
+<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=%E6%97%A5%E5%B8%B8&amp;color=008672"></td>
 </tr>
 <tr>
 <td>教程</td>
 <td>#0075ca</td>
 <td><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/8d84d328d80e57e250ad6497bbc0484384ffb2b199f97705d8c710acad1979fb/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d25453625393525393925453725413825384226636f6c6f723d303037356361"></td>
+<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=%E6%95%99%E7%A8%8B&amp;color=0075ca"></td>
 </tr>
 <tr>
 <td>图片处理</td>
 <td>#4c6cc5</td>
 <td><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/2bc475936c4711819132010b51e01556a7657475d2c3e61f6848669ddc7b098a/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d25453525394225424525453725383925383725453525413425383425453725393025383626636f6c6f723d346336636335"></td>
+<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86&amp;color=4c6cc5"></td>
 </tr>
 <tr>
 <td>Anime</td>
 <td>#E77AB1</td>
 <td><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/574ec5d64fcc34b61120ec8187cd1773ba537a0f089890bd62bcc120d58a4d2c/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d416e696d6526636f6c6f723d453737414231"></td>
+<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=Anime&amp;color=E77AB1"></td>
 </tr>
 <tr>
 <td>Win</td>
 <td>#5AB3F3</td>
 <td><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/dbf525c4b8e75601f05dd97069ba715b5d6f4c290651ddaacc95a30a38d6ab2b/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d57696e26636f6c6f723d354142334633"></td>
+<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=Win&amp;color=5AB3F3"></td>
 </tr>
 <tr>
 <td>VPS</td>
 <td>#5319e7</td>
 <td><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/7fb5d29c046f5c15f2420b10fe2e75ebf57b3118011f6c6fbc974797169fb643/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d56505326636f6c6f723d353331396537"></td>
+<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=VPS&amp;color=5319e7"></td>
 </tr>
 <tr>
 <td>JS</td>
 <td>#AD3152</td>
 <td><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/c3aefc26f2141b889fe5d9001d9a37df02e78b52181d2dde703dd2345f83270d/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d4a5326636f6c6f723d414433313532"></td>
+<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=JS&amp;color=AD3152"></td>
 </tr>
 <tr>
 <td>CSS</td>
 <td>#218155</td>
 <td><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/1e5c07a0bccd63cd1405a92388c2600606c2e2a8ca2186d80c9abe0306096b75/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d43535326636f6c6f723d323138313535"></td>
+<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=CSS&amp;color=218155"></td>
 </tr>
 <tr>
 <td>Github</td>
 <td>#333333</td>
 <td><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/5d40965995c915b75dc0d8f451ebe4d693edc2f9ac8815477b2cbba36960e610/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d47697468756226636f6c6f723d333333333333"></td>
+<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=Github&amp;color=333333"></td>
 </tr>
 <tr>
 <td>CDN</td>
 <td>#cb222c</td>
 <td><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/598d6d08a60fc2b922ab3965e4a289cd25c81aec2ff19b5da2b6c6db002b80fb/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d43444e26636f6c6f723d636232323263"></td>
+<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=CDN&amp;color=cb222c"></td>
 </tr>
 <tr>
 <td>Bug</td>
 <td>#D73A4A</td>
 <td><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/786a11786dc12cef439b6f784763c18f1ebd562668a57a5fda2d643985072972/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d42756726636f6c6f723d443733413441"></td>
+<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=Bug&amp;color=D73A4A"></td>
 </tr>
 <tr>
 <td>Game</td>
 <td>#BC49AB</td>
 <td><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/7a5af5255643b8e79f92e15e6da32675bcfe49553fc613294351e04530d9d23b/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d266d6573736167653d42756726636f6c6f723d424334394142"></td>
+<img data-fancybox="gallery" img-src="https://img.shields.io/static/v1?label=&amp;message=Bug&amp;color=BC49AB"></td>
 </tr>
 </tbody>
 </table></markdown-accessiblity-table>

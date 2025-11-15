@@ -13750,18 +13750,6 @@ a.btn-primary:focus-visible {
 	user-select: none;
 }
 
-/* 图片模糊渐显样式 */
-[data-fancybox="gallery"] {
-	opacity: 0;
-	filter: blur(20px);
-	transition: opacity 0.5s ease, filter 0.5s ease;
-}
-
-.ImgLoaded {
-	opacity: 1;
-	filter: blur(0);
-}
-
 .TableObject {
 	display: table
 }
@@ -27551,20 +27539,50 @@ a.branch-name .octicon {
 	-webkit-clip-path: inset(0);
 }
 
-.markdown-body img {
-	display: block;
-	max-width: 100%;
-	box-sizing: content-box;
-	transition: transform 0.3s ease, -webkit-transform 0.3s ease, clip-path 0.3s ease, -webkit-clip-path 0.3s ease;
+/* 图片模糊渐显样式 */
+[data-fancybox="gallery"] {
+	opacity: 0;
+	filter: blur(20px);
+	transition: all 0.5s ease;
+	transform: scale(1);
+	/* 确保动画流畅 */
+	will-change: transform, opacity, filter;
 }
 
-.markdown-body img:hover {
+.ImgLoaded {
+	opacity: 1;
+	filter: blur(0);
+}
+
+/* 鼠标悬停动画效果 */
+[data-fancybox="gallery"]:hover {
+	transform: scale(1.01);
+	transition: transform 0.3s ease;
+	position: relative;
+	z-index: 1;
+}
+
+/* 确保悬停时其他过渡效果保持 */
+.ImgLoaded:hover {
+	opacity: 1;
+	filter: blur(0);
+}
+
+.markdown-body img {
+    display: block;
+    max-width: 100%;
+    box-sizing: content-box;
+    /* 防止布局抖动 */
+    backface-visibility: hidden;
+}
+
+/* .markdown-body img:hover {
 	transform: scale(1.01);
 	-webkit-transform: scale(1.01);
 	clip-path: inset(-4%);
 	-webkit-clip-path: inset(-4%);
 	cursor: zoom-in;
-}
+} */
 
 .markdown-body img[align=right] {
 	padding-left: 20px
