@@ -20,6 +20,110 @@ function ToBottom() {
 }
 	//////////////// 页面顶部和底部跳转函数 end ////////////////
 
+	//////////////// 创建toc目录html结构 start ////////////////
+function createTOC() {
+	const tocElement = document.createElement('div');
+	tocElement.className = 'toc';
+
+	// 创建 toc-btn 按钮容器并添加到 toc 元素中
+	const tocBtn = document.createElement('div');
+	tocBtn.className = 'toc-btn';
+	tocElement.appendChild(tocBtn);
+
+	// 创建 toc-title 容器并添加到 toc 元素中
+	tocTitle = document.createElement('div');
+	tocTitle.className = 'toc-title';
+	tocElement.appendChild(tocTitle);
+
+	// 将目录 <div> 插入到 <body> 中
+	document.body.appendChild(tocElement);
+
+	// 向 toc-btn 中添加内容
+	tocBtn.innerHTML = `
+	<div onclick="ToTop();">
+		<a title="跳转顶部">
+		  <svg class="octicon" width="16" height="16">
+			<path id="ToTopBtn" fill-rule="evenodd" 
+			  d="M3 2.25a.75.75 0 0 1 .75-.75h8.5a.75.75 0 0 1 0 1.5h-8.5A.75.75 0 0 1 3 2.25Zm5.53 2.97 3.75 3.75a.749.749 0 1 1-1.06 1.06L8.75 7.561v6.689a.75.75 0 0 1-1.5 0V7.561L4.78 10.03a.749.749 0 1 1-1.06-1.06l3.75-3.75a.749.749 0 0 1 1.06 0Z">
+			</path>
+		  </svg>
+		</a>
+	</div>
+	<div onclick="ToBottom();">
+		<a title="跳转底部">
+		  <svg class="octicon" width="16" height="16">
+			<path id="ToBottom" fill-rule="evenodd"
+			  d="M7.47 10.78a.749.749 0 0 0 1.06 0l3.75-3.75a.749.749 0 1 0-1.06-1.06L8.75 8.439V1.75a.75.75 0 0 0-1.5 0v6.689L4.78 5.97a.749.749 0 1 0-1.06 1.06l3.75 3.75ZM3.75 13a.75.75 0 0 0 0 1.5h8.5a.75.75 0 0 0 0-1.5h-8.5Z">
+			</path>
+		  </svg>
+		</a>
+	</div>
+	`;
+	// 获取文章标题并设置排版
+	// const headings = document.querySelectorAll('.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4, .markdown-body h5, .markdown-body h6');
+	// headings.forEach(heading => {
+	// 	if (!heading.id) {
+	// 		heading.id = heading.textContent.trim().replace(/\s+/g, '-').toLowerCase();
+	// 	}
+	// 	const link = document.createElement('a');
+	// 	link.href = `#${heading.id}`;
+	// 	link.textContent = heading.textContent;
+	// 	link.className = `toc-link toc-${heading.tagName.toLowerCase()}`;
+	// 	if (heading.tagName !== 'H1') {
+	// 		const level = parseInt(heading.tagName.charAt(1));
+	// 		link.style.marginLeft = `${(level - 1) * 10}px`;
+	// 	}
+	// 	link.addEventListener('click', function(e) {
+	// 		// 添加点击事件, 平滑滚动到对应的标题位置
+	// 		e.preventDefault();
+	// 		document.getElementById(heading.id).scrollIntoView();
+	// 	});
+	// 	// 将链接添加到 toc-title 容器中
+	// 	tocTitle.appendChild(link);
+	// });
+	// 用于生成唯一id的计数器
+	let idCounter = 0;
+	
+	// 获取文章标题并设置排版
+	const headings = document.querySelectorAll('.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4, .markdown-body h5, .markdown-body h6');
+	headings.forEach(heading => {
+	    // 如果标题没有id，则创建一个唯一的id
+	    if (!heading.id) {
+	        let baseId = heading.textContent.trim().replace(/\s+/g, '-').toLowerCase();
+	        // 生成唯一id，如果baseId已存在，则增加一个计数器后缀
+	        let uniqueId = baseId;
+	        while (document.getElementById(uniqueId)) {
+	            idCounter++; // 计数器自增
+	            uniqueId = `${baseId}-${idCounter}`;
+	        }
+	        heading.id = uniqueId;
+	    }
+	
+	    // 创建链接
+	    const link = document.createElement('a');
+	    link.href = `#${heading.id}`;
+	    link.textContent = heading.textContent;
+	    link.className = `toc-link toc-${heading.tagName.toLowerCase()}`;
+	
+	    // 为非H1标题设置缩进
+	    if (heading.tagName !== 'H1') {
+	        const level = parseInt(heading.tagName.charAt(1));
+	        link.style.marginLeft = `${(level - 1) * 10}px`;
+	    }
+	
+	    // 添加点击事件, 平滑滚动到对应的标题位置
+	    link.addEventListener('click', function(e) {
+	        e.preventDefault();
+	        document.getElementById(heading.id).scrollIntoView();
+	    });
+	
+	    // 将链接添加到 toc-title 容器中
+	    tocTitle.appendChild(link);
+	});
+
+}
+	//////////////// 创建toc目录html结构 end ////////////////
+
 function toggleTOC() {
 	const tocElement = document.querySelector('.toc');
 	const tocIcon = document.querySelector('.ArticleTOC');
