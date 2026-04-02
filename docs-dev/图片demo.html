@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.css" />
+	</head>
+	<body>
+		<p>
+			<a href="https://lipsum.app/id/3/1600x1200" data-fancybox="gallery">
+				<img src="https://lipsum.app/id/3/200x150" width="200" height="150" alt="Sample image #3" />
+			</a>
+
+			<img data-fancybox="gallery"
+				src="https://github.com/user-attachments/assets/0c54f714-4b52-4c95-9aa4-820397216d07" class="ImgLoaded">
+			<img data-fancybox="gallery" href="https://lipsum.app/id/3/1600x1200"
+				src="https://github.com/user-attachments/assets/0c54f714-4b52-4c95-9aa4-820397216d07" class="ImgLoaded">
+		</p>
+		<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.umd.js"></script>
+		<!-- <script src="https://testingcf.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script> -->
+		<script>
+			Fancybox.bind("[data-fancybox]", {
+				Carousel: {
+					Thumbs: {
+						showOnStart: true,
+					},
+					Zoomable: {
+						Panzoom: {
+							clickAction: "iterateZoom",
+							maxScale: 2,
+						},
+					},
+				},
+			});
+			const postTitle = document.querySelector(".postTitle"),
+				textContent = postTitle.textContent;
+			postTitle.textContent = "";
+			let idx = 0;
+			const writeTimer = setInterval(() => {
+				postTitle.textContent = textContent.slice(0, idx++), idx > textContent.length && (clearInterval(
+					writeTimer), postTitle.classList.remove("no-blink"))
+			}, 80);
+			postTitle.classList.add("no-blink");
+			const spoilers = document.querySelectorAll(".spoilerText");
+			spoilers.length && spoilers.forEach(t => t.onclick = (() => t.classList.toggle("clear"))), document.addEventListener(
+				"DOMContentLoaded", () => {
+					const t = document.createElement("div");
+					t.id = "checkBtn";
+					const e = document.getElementById("toogleBtn"),
+						n = document.getElementById("functionBtn");
+					n.insertAdjacentElement("afterend", t), new IntersectionObserver(t => {
+						t.forEach(t => {
+							e.classList.toggle("active", !t.isIntersecting), n.classList.toggle("Btn-flex", !
+								t.isIntersecting)
+						})
+					}, {
+						rootMargin: "300px 0px 0px 0px",
+						threshold: 0
+					}).observe(t), e.addEventListener("click", () => {
+						n.style.top = "0px" === n.style.top ? "-64px" : "0", e.style.transform = "rotate(180deg)" ===
+							e.style.transform ? "rotate(0deg)" : "rotate(180deg)"
+					})
+				});
+		</script>
+
+		<!-- <script src='https://gjken.github.io/demo/ArticleJs.js'></script> -->
+		<!-- <script src='https://fastly.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js'></script> -->
+	</body>
+</html>

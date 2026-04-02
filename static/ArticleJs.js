@@ -137,10 +137,6 @@ function toggleTOC() {
 }
 //////////////// 文章目录代码块 part1 end ////////////////
 document.addEventListener('DOMContentLoaded', () => {
-	// 检测 URL 是否含锚点并跳转到对应 ID
-	const hash = window.location.hash.substring(1);
-	const target = hash && document.getElementById(hash);
-	if (target) target.scrollIntoView();
 	//////////////// 懒加载图片 start ////////////////
 	const ob = new IntersectionObserver((entries) => {
 		entries.forEach(entry => {
@@ -180,9 +176,21 @@ document.addEventListener('DOMContentLoaded', () => {
 	//////////////// 引入fancybox所需的css文件以及所需的绑定函数 start ////////////////
 	document.head.appendChild(Object.assign(document.createElement('link'), {
 		rel: 'stylesheet',
-		href: 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css'
+		href: 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.css'
 	}));
-	Fancybox.bind('[data-fancybox="gallery"]', {});
+	Fancybox.bind("[data-fancybox]", {
+	  Carousel: {
+		Thumbs: {
+			showOnStart: true,
+		},
+		Zoomable: {
+		  Panzoom: {
+			clickAction: "iterateZoom",
+			maxScale: 2,
+		  },
+		},
+	  },
+	});
 	//////////////// 引入fancybox所需的css文件以及所需的绑定函数 end ////////////////
 
 	//////////////// 等待body动画结束再增加live2d的js start ////////////////
