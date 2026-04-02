@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Demo</title><link>https://GJKen.github.io/demo</link><description> </description><copyright>Demo</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp</url><title>avatar</title><link>https://GJKen.github.io/demo</link></image><lastBuildDate>Thu, 02 Apr 2026 10:51:33 +0000</lastBuildDate><managingEditor>Demo</managingEditor><ttl>60</ttl><webMaster>Demo</webMaster><item><title>Windows 端 Claude 首次启动无法连接 Anthropic 服务解决方案</title><link>https://GJKen.github.io/demo/post/10.html</link><description># 问题现象
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Demo</title><link>https://GJKen.github.io/demo</link><description> </description><copyright>Demo</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp</url><title>avatar</title><link>https://GJKen.github.io/demo</link></image><lastBuildDate>Thu, 02 Apr 2026 10:54:20 +0000</lastBuildDate><managingEditor>Demo</managingEditor><ttl>60</ttl><webMaster>Demo</webMaster><item><title>Windows 端 Claude 首次启动无法连接 Anthropic 服务解决方案</title><link>https://GJKen.github.io/demo/post/10.html</link><description># 问题现象
 
-在 Windows 终端 / 命令行中输入 `claude` 命令后, 出现以下错误提示, 无法正常使用 Claude 服务: 
+&gt; [!NOTE]
+&gt; Claude 首次启动的引导流程会检测所在国家地区, 不符合会导致 API 连接拦截.
 
 ```
 Unable to connect to Anthropic services
@@ -9,8 +10,7 @@ Failed to connect to api.anthropic.com: ECONNREFUSED
 Please check your internet connection and network settings.
 Note: Claude Code might not be available in your country. Check supported countries at https://anthropic.com/supported-countries
 ```
-&gt; [!NOTE]
-&gt; Claude 首次启动的引导流程会检测所在国家地区, 不符合会导致 API 连接拦截.
+
 
 # 解决方案(跳过引导流程)
 
@@ -19,7 +19,7 @@ Note: Claude Code might not be available in your country. Check supported countr
 
 文件路径一般是 `C:\Users\[你的用户名]\.claude.json`.
 
-找到后对它进行编辑, 在里面任意新增一行 `hasCompletedOnboarding: true`, 同时 json 文件注意补写逗号即可.
+找到后对它进行编辑, 在里面任意新增一行 `'hasCompletedOnboarding': true`, 同时 json 文件注意补写逗号即可.
 
 保存配置文件后, 重新打开终端, 输入 `claude` 看看是否成功.。</description><guid isPermaLink="true">https://GJKen.github.io/demo/post/10.html</guid><pubDate>Thu, 02 Apr 2026 10:31:58 +0000</pubDate></item><item><title>Github Markdown 使用笔记</title><link>https://GJKen.github.io/demo/post/9.html</link><description>&gt; [!NOTE]
 &gt; Markdown 是一种轻量级标记语言, 它允许人们使用易读易写的纯文本格式编写文档, 然后转换成结构化的 HTML 代码. Markdown 语法简单, 但功能强大, 广泛应用于博客、笔记、文档编写等方面.  
