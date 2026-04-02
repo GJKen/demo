@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Demo</title><link>https://GJKen.github.io/demo</link><description> </description><copyright>Demo</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp</url><title>avatar</title><link>https://GJKen.github.io/demo</link></image><lastBuildDate>Thu, 02 Apr 2026 10:39:21 +0000</lastBuildDate><managingEditor>Demo</managingEditor><ttl>60</ttl><webMaster>Demo</webMaster><item><title>Windows 端 Claude 首次启动无法连接 Anthropic 服务解决方案</title><link>https://GJKen.github.io/demo/post/10.html</link><description>Windows 端 Claude 连接问题解决方案
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Demo</title><link>https://GJKen.github.io/demo</link><description> </description><copyright>Demo</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp</url><title>avatar</title><link>https://GJKen.github.io/demo</link></image><lastBuildDate>Thu, 02 Apr 2026 10:50:23 +0000</lastBuildDate><managingEditor>Demo</managingEditor><ttl>60</ttl><webMaster>Demo</webMaster><item><title>Windows 端 Claude 首次启动无法连接 Anthropic 服务解决方案</title><link>https://GJKen.github.io/demo/post/10.html</link><description>Windows 端 Claude 连接问题解决方案
 
 # 问题现象
 
@@ -12,14 +12,14 @@ Please check your internet connection and network settings.
 Note: Claude Code might not be available in your country. Check supported countries at https://anthropic.com/supported-countries
 ```
 &gt; [!NOTE]
-&gt; Claude 首次启动的引导流程会检测所在国家地区, 不符合会导致 API 连接拦截
+&gt; Claude 首次启动的引导流程会检测所在国家地区, 不符合会导致 API 连接拦截.
 
 # 解决方案(跳过引导流程)
 
 &gt; [!NOTE]
 &gt; 通过修改 Claude 配置文件 `.claude.json`, 新增 `hasCompletedOnboarding: true` 配置项, 直接跳过首次启动引导, 即可解决连接问题. 
 
-文件路径一般是 `C:\Users\[你的用户名]\.claude.json`
+文件路径一般是 `C:\Users\[你的用户名]\.claude.json`.
 
 找到后对它进行编辑, 在里面任意新增一行 `hasCompletedOnboarding: true`, 同时 json 文件注意补写逗号即可.
 
