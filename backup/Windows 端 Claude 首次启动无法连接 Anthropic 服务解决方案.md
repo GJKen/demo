@@ -1,5 +1,3 @@
-Windows 端 Claude 连接问题解决方案
-
 # 问题现象
 
 在 Windows 终端 / 命令行中输入 `claude` 命令后, 出现以下错误提示, 无法正常使用 Claude 服务: 
