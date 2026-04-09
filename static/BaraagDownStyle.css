@@ -1,33 +1,97 @@
-.batch-bar {
+/* ===== 圆形切换按钮 ===== */
+.batch-toggle {
 	position: fixed;
 	bottom: 20px;
 	left: 50%;
 	transform: translateX(-50%);
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
 	background: rgba(30,30,40,0.95);
 	backdrop-filter: blur(12px);
-	border-radius: 40px;
-	padding: 8px 20px;
-	display: flex;
-	gap: 12px;
-	z-index: 10001;
+	border: 1px solid rgba(255,255,255,0.15);
 	box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+	cursor: pointer;
+	z-index: 10003;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+	color: white;
+	font-size: 20px;
+}
+.batch-toggle:hover {
+	background: rgba(59,130,246,0.9);
+	transform: translateX(-50%) scale(1.1);
+}
+
+/* ===== 整体面板容器 ===== */
+.batch-panel {
+	position: fixed;
+	bottom: 20px;
+	left: 50%;
+	transform: translateX(-50%) translateY(20px);
+	opacity: 0;
+	visibility: hidden;
+	transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+	background: rgba(30,30,40,0.95);
+	backdrop-filter: blur(12px);
+	border-radius: 16px;
+	padding: 0;
+	z-index: 10001;
+	box-shadow: 0 4px 24px rgba(0,0,0,0.4);
 	border: 1px solid rgba(255,255,255,0.1);
 	font-family: system-ui, sans-serif;
-	pointer-events: none;
+	color: white;
+	font-size: 13px;
+	max-height: 80vh;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	min-width: 380px;
+	max-width: 420px;
+}
+.batch-panel.expanded {
+	opacity: 1;
+	visibility: visible;
+	transform: translateX(-50%) translateY(0);
+}
+
+/* 面板展开时，切换按钮移到右下角 */
+.batch-panel.expanded ~ .batch-toggle,
+.batch-toggle.shifted {
+	left: auto;
+	right: 20px;
+	transform: none;
+	bottom: 20px;
+}
+.batch-toggle.shifted:hover {
+	transform: scale(1.1);
+}
+
+/* ===== 工具栏区域 ===== */
+.batch-bar {
+	display: flex;
+	gap: 10px;
+	padding: 10px 16px;
+	flex-wrap: wrap;
+	align-items: center;
+	border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 .batch-bar button {
 	pointer-events: auto;
-	background: rgba(255,255,255,0.15);
+	background: rgba(255,255,255,0.12);
 	border: none;
 	color: white;
-	padding: 8px 16px;
-	border-radius: 30px;
+	padding: 7px 14px;
+	border-radius: 20px;
 	cursor: pointer;
 	font-size: 13px;
 	transition: all 0.2s;
+	white-space: nowrap;
 }
 .batch-bar button:hover:not(:disabled) {
-	background: rgba(255,255,255,0.3);
+	background: rgba(255,255,255,0.25);
 }
 .batch-bar .btn-primary {
 	background: #3b82f6;
@@ -35,10 +99,156 @@
 .batch-bar .btn-primary:hover:not(:disabled) {
 	background: #2563eb;
 }
-.batch-bar .btn-primary:disabled {
-	opacity: 0.5;
+.batch-bar .btn-primary:disabled,
+.batch-bar button:disabled {
+	opacity: 0.4;
 	cursor: not-allowed;
 }
+
+/* ===== 下载任务区域（融入面板） ===== */
+.dl-section {
+	display: none;
+	flex-direction: column;
+	border-top: 1px solid rgba(255,255,255,0.08);
+}
+.dl-section.active {
+	display: flex;
+}
+
+.dl-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 8px;
+	padding: 10px 16px 0;
+}
+.dl-title {
+	font-weight: bold;
+	font-size: 13px;
+}
+.dl-count {
+	color: #aaa;
+	font-size: 12px;
+}
+.dl-abort-btn {
+	background: rgba(255,255,255,0.15);
+	border: none;
+	color: white;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	cursor: pointer;
+	font-size: 12px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+}
+.dl-abort-btn:hover { background: #f44336; }
+
+.progress-bar {
+	width: calc(100% - 32px);
+	height: 4px;
+	background: rgba(255,255,255,0.15);
+	border-radius: 2px;
+	margin: 8px 16px;
+	overflow: hidden;
+}
+.progress-fill {
+	width: 0%;
+	height: 100%;
+	background: #3b82f6;
+	border-radius: 2px;
+	transition: width 0.3s;
+}
+
+.dl-list-toggle {
+	cursor: pointer;
+	color: #aaa;
+	font-size: 12px;
+	padding: 4px 16px;
+	user-select: none;
+}
+.dl-list-toggle:hover {
+	color: #fff;
+}
+.dl-list-arrow {
+	display: inline-block;
+	width: 14px;
+	transition: transform 0.2s;
+}
+.dl-list {
+	max-height: 180px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	scrollbar-width: thin;
+	scrollbar-color: rgba(255,255,255,0.2) transparent;
+	padding: 0 16px;
+}
+.dl-list::-webkit-scrollbar {
+	width: 4px;
+}
+.dl-list::-webkit-scrollbar-thumb {
+	background: rgba(255,255,255,0.2);
+	border-radius: 2px;
+}
+.dl-item {
+	padding: 3px 0;
+	font-size: 12px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.dl-item a {
+	color: #60a5fa;
+	text-decoration: none;
+}
+.dl-item a:hover {
+	text-decoration: underline;
+}
+.dl-item-loading { color: #fbbf24; }
+.dl-item-loading a { color: #fbbf24; }
+.dl-item-success { color: #4ade80; }
+.dl-item-success a { color: #4ade80; }
+.dl-item-failed { color: #f87171; }
+.dl-item-failed a { color: #f87171; }
+.dl-item-skipped { color: #fb923c; }
+.dl-item-skipped a { color: #fb923c; }
+
+.dl-actions {
+	display: none;
+	flex-direction: column;
+	gap: 8px;
+	padding: 10px 16px;
+	border-top: 1px solid rgba(255,255,255,0.08);
+}
+.dl-failed-url {
+	font-size: 11px;
+	color: #f87171;
+	word-break: break-all;
+}
+.dl-failed-url a {
+	color: #60a5fa;
+	text-decoration: underline;
+}
+.dl-btn-row {
+	display: flex;
+	gap: 8px;
+	justify-content: center;
+}
+.dl-btn-row button {
+	padding: 6px 14px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 12px;
+	color: white;
+}
+.btn-retry { background: #4caf50; }
+.btn-skip { background: #ff9800; }
+.btn-abort { background: #f44336; }
+
+/* ===== 复选框 ===== */
 .select-checkbox {
 	position: absolute;
 	top: 8px;
@@ -76,6 +286,8 @@ a.media-gallery__item-thumbnail:hover .select-checkbox,
 	outline-offset: -1px;
 	border-radius: 4px;
 }
+
+/* ===== 单个下载按钮 ===== */
 .single-dl-btn {
 	position: absolute;
 	bottom: 6px;
@@ -107,159 +319,11 @@ a.media-gallery__item-thumbnail:hover .single-dl-btn {
 .single-dl-btn:hover {
 	background: rgba(0,0,0,0.85);
 }
-.dl-panel {
-	position: fixed;
-	bottom: 90px;
-	left: 50%;
-	transform: translateX(-50%);
-	width: 360px;
-	max-height: 60vh;
-	background: rgba(0,0,0,0.92);
-	border-radius: 12px;
-	padding: 16px 20px;
-	z-index: 10002;
-	backdrop-filter: blur(12px);
-	font-family: system-ui, sans-serif;
-	color: white;
-	font-size: 13px;
-	display: flex;
-	flex-direction: column;
-	box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-	border: 1px solid rgba(255,255,255,0.1);
-}
-.dl-header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom: 8px;
-}
-.dl-title {
-	font-weight: bold;
-}
-.dl-count {
-	color: #aaa;
-	font-size: 12px;
-}
-.dl-list-toggle {
-	cursor: pointer;
-	color: #aaa;
-	font-size: 12px;
-	margin: 8px 0 4px;
-	user-select: none;
-}
-.dl-list-toggle:hover {
-	color: #fff;
-}
-.dl-list-arrow {
-	display: inline-block;
-	width: 14px;
-}
-.dl-list {
-	max-height: 200px;
-	overflow-y: auto;
-	overflow-x: hidden;
-	scrollbar-width: thin;
-	scrollbar-color: rgba(255,255,255,0.2) transparent;
-}
-.dl-list::-webkit-scrollbar {
-	width: 4px;
-}
-.dl-list::-webkit-scrollbar-thumb {
-	background: rgba(255,255,255,0.2);
-	border-radius: 2px;
-}
-.dl-item {
-	padding: 3px 0;
-	font-size: 12px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-.dl-item a {
-	color: #60a5fa;
-	text-decoration: none;
-}
-.dl-item a:hover {
-	text-decoration: underline;
-}
-.dl-item-loading {
-	color: #fbbf24;
-}
-.dl-item-loading a {
-	color: #fbbf24;
-}
-.dl-item-success {
-	color: #4ade80;
-}
-.dl-item-success a {
-	color: #4ade80;
-}
-.dl-item-failed {
-	color: #f87171;
-}
-.dl-item-failed a {
-	color: #f87171;
-}
-.dl-item-skipped {
-	color: #fb923c;
-}
-.dl-item-skipped a {
-	color: #fb923c;
-}
-.dl-actions {
-	display: none;
-	flex-direction: column;
-	gap: 8px;
-	margin-top: 10px;
-	padding-top: 10px;
-	border-top: 1px solid rgba(255,255,255,0.15);
-}
-.dl-failed-url {
-	font-size: 11px;
-	color: #f87171;
-	word-break: break-all;
-}
-.dl-failed-url a {
-	color: #60a5fa;
-	text-decoration: underline;
-}
-.dl-btn-row {
-	display: flex;
-	gap: 8px;
-	justify-content: center;
-}
-.dl-btn-row button {
-	padding: 6px 14px;
-	border: none;
-	border-radius: 4px;
-	cursor: pointer;
-	font-size: 12px;
-	color: white;
-}
-.btn-retry { background: #4caf50; }
-.btn-skip { background: #ff9800; }
-.btn-abort { background: #f44336; }
-.progress-bar {
-	width: 100%;
-	height: 6px;
-	background: rgba(255,255,255,0.2);
-	border-radius: 3px;
-	margin: 12px 0 8px;
-	overflow: hidden;
-}
-.progress-fill {
-	width: 0%;
-	height: 100%;
-	background: #3b82f6;
-	border-radius: 3px;
-}
-.progress-text {
-	font-size: 12px;
-	color: #aaa;
-}
+
+/* ===== Toast ===== */
 .toast-msg {
 	position: fixed;
-	bottom: 20px;
+	bottom: 80px;
 	right: 20px;
 	background: rgba(0,0,0,0.85);
 	color: white;
