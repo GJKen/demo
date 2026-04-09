@@ -1,0 +1,158 @@
+.batch-bar {
+	position: fixed;
+	bottom: 20px;
+	left: 50%;
+	transform: translateX(-50%);
+	background: rgba(30,30,40,0.95);
+	backdrop-filter: blur(12px);
+	border-radius: 40px;
+	padding: 8px 20px;
+	display: flex;
+	gap: 12px;
+	z-index: 10001;
+	box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+	border: 1px solid rgba(255,255,255,0.1);
+	font-family: system-ui, sans-serif;
+	pointer-events: none;
+}
+.batch-bar button {
+	pointer-events: auto;
+	background: rgba(255,255,255,0.15);
+	border: none;
+	color: white;
+	padding: 8px 16px;
+	border-radius: 30px;
+	cursor: pointer;
+	font-size: 13px;
+	transition: all 0.2s;
+}
+.batch-bar button:hover:not(:disabled) {
+	background: rgba(255,255,255,0.3);
+}
+.batch-bar .btn-primary {
+	background: #3b82f6;
+}
+.batch-bar .btn-primary:hover:not(:disabled) {
+	background: #2563eb;
+}
+.batch-bar .btn-primary:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+.select-checkbox {
+	position: absolute;
+	top: 8px;
+	left: 8px;
+	width: 22px;
+	height: 22px;
+	background: rgba(0,0,0,0.6);
+	border-radius: 6px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+	cursor: pointer;
+	backdrop-filter: blur(4px);
+	border: 1px solid rgba(255,255,255,0.3);
+	opacity: 0;
+	pointer-events: none;
+}
+a.media-gallery__item-thumbnail:hover .select-checkbox,
+.media-gallery__item-thumbnail.selected .select-checkbox {
+	opacity: 1;
+	pointer-events: auto;
+}
+.select-checkbox.selected {
+	background: #3b82f6;
+	border-color: #3b82f6;
+}
+.select-checkbox svg {
+	width: 14px;
+	height: 14px;
+	fill: white;
+}
+.media-gallery__item-thumbnail.selected {
+	outline: 3px solid #3b82f6;
+	outline-offset: -1px;
+	border-radius: 4px;
+}
+.single-dl-btn {
+	position: absolute;
+	bottom: 6px;
+	right: 6px;
+	width: 30px;
+	height: 30px;
+	background: rgba(0,0,0,0.55);
+	border: none;
+	border-radius: 6px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 999;
+	backdrop-filter: blur(4px);
+	opacity: 0;
+	transition: opacity 0.2s;
+	pointer-events: none;
+}
+a.media-gallery__item-thumbnail:hover .single-dl-btn {
+	opacity: 1;
+	pointer-events: auto;
+}
+.single-dl-btn svg {
+	width: 14px;
+	height: 14px;
+	fill: white;
+}
+.single-dl-btn:hover {
+	background: rgba(0,0,0,0.85);
+}
+.download-progress {
+	position: fixed;
+	bottom: 90px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 350px;
+	background: rgba(0,0,0,0.9);
+	border-radius: 12px;
+	padding: 16px 20px;
+	z-index: 10002;
+	backdrop-filter: blur(12px);
+	font-family: system-ui, sans-serif;
+	color: white;
+	font-size: 13px;
+	text-align: center;
+}
+.progress-bar {
+	width: 100%;
+	height: 6px;
+	background: rgba(255,255,255,0.2);
+	border-radius: 3px;
+	margin: 12px 0 8px;
+	overflow: hidden;
+}
+.progress-fill {
+	width: 0%;
+	height: 100%;
+	background: #3b82f6;
+	border-radius: 3px;
+}
+.progress-text {
+	font-size: 12px;
+	color: #aaa;
+}
+.toast-msg {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	background: rgba(0,0,0,0.85);
+	color: white;
+	padding: 10px 18px;
+	border-radius: 8px;
+	font-size: 13px;
+	z-index: 10000;
+	backdrop-filter: blur(8px);
+}
+.toast-msg.success { background: #22c55e; }
+.toast-msg.error { background: #ef4444; }
+.toast-msg.info { background: #3b82f6; }
