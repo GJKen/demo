@@ -75,7 +75,7 @@
 	gap: 10px;
 	padding: 10px 16px;
 	align-items: center;
-	border-bottom: 1px solid rgba(255,255,255,0.08);
+	border-top: 1px solid rgba(255,255,255,0.08);
 }
 .batch-bar button {
 	pointer-events: auto;
@@ -104,11 +104,12 @@
 	cursor: not-allowed;
 }
 
-/* ===== 下载任务区域（融入面板） ===== */
+/* ===== 下载任务区域（融入面板，排在按钮上方） ===== */
 .dl-section {
 	display: none;
 	flex-direction: column;
-	border-top: 1px solid rgba(255,255,255,0.08);
+	order: -1;
+	border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 .dl-section.active {
 	display: flex;
