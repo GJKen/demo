@@ -79,7 +79,7 @@ a.media-gallery__item-thumbnail:hover .select-checkbox,
 .single-dl-btn {
 	position: absolute;
 	bottom: 6px;
-	right: 6px;
+	left: 6px;
 	width: 30px;
 	height: 30px;
 	background: rgba(0,0,0,0.55);
@@ -272,4 +272,3 @@ a.media-gallery__item-thumbnail:hover .single-dl-btn {
 .toast-msg.success { background: #22c55e; }
 .toast-msg.error { background: #ef4444; }
 .toast-msg.info { background: #3b82f6; }
-
