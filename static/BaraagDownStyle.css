@@ -72,12 +72,10 @@
 /* ===== 工具栏区域 ===== */
 .batch-bar {
 	display: flex;
-	gap: 10px;
+	gap: 6px;
 	padding: 10px 16px;
 	align-items: center;
 	border-top: 1px solid rgba(255,255,255,0.08);
-	flex-wrap: wrap;
-	justify-content: center;
 }
 
 /* 并发控制 */
@@ -118,10 +116,10 @@
 	background: rgba(255,255,255,0.12);
 	border: none;
 	color: white;
-	padding: 7px 14px;
+	padding: 6px 10px;
 	border-radius: 20px;
 	cursor: pointer;
-	font-size: 13px;
+	font-size: 12px;
 	transition: all 0.2s;
 	white-space: nowrap;
 }
