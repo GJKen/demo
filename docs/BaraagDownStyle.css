@@ -76,6 +76,42 @@
 	padding: 10px 16px;
 	align-items: center;
 	border-top: 1px solid rgba(255,255,255,0.08);
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+/* 并发控制 */
+.concurrency-control {
+	display: flex;
+	align-items: center;
+	gap: 0;
+	background: rgba(255,255,255,0.08);
+	border-radius: 20px;
+	overflow: hidden;
+}
+.concurrency-control .btn-conc {
+	background: none;
+	border: none;
+	color: white;
+	width: 28px;
+	height: 28px;
+	cursor: pointer;
+	font-size: 16px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: background 0.15s;
+}
+.concurrency-control .btn-conc:hover {
+	background: rgba(255,255,255,0.15);
+}
+.concurrency-control .conc-value {
+	min-width: 18px;
+	text-align: center;
+	font-size: 13px;
+	color: white;
+	font-weight: bold;
+	user-select: none;
 }
 .batch-bar button {
 	pointer-events: auto;
