@@ -50,7 +50,11 @@ textarea.inp{display:block;width:100%;height:80px;font-size:11.5px;resize:vertic
 .btn-secondary:hover{background:var(--bg4);border-color:var(--border2)}
 .btn-sm{padding:5px 10px}
 
-.status-bar{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:8px 12px;font-size:12px;display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.status-bar{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:8px 12px;font-size:12px;display:flex;align-items:center;gap:8px;margin-bottom:14px;transition:border-color 0.3s,background 0.3s,box-shadow 0.3s}
+@keyframes statusPulse{0%{transform:scale(1);opacity:1}50%{transform:scale(1.8);opacity:0.4}100%{transform:scale(1);opacity:1}}
+@keyframes statusFlash{0%{box-shadow:0 0 0 0 transparent}30%{box-shadow:0 0 12px 2px var(--flash-color)}100%{box-shadow:0 0 0 0 transparent}}
+.status-bar.flash .status-dot{animation:statusPulse 0.6s ease}
+.status-bar.flash{animation:statusFlash 0.6s ease}
 .status-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 .status-bar.info .status-dot{background:var(--accent)}
 .status-bar.success .status-dot{background:var(--green)}
@@ -69,6 +73,8 @@ textarea.inp{display:block;width:100%;height:80px;font-size:11.5px;resize:vertic
 .tag-sg{background:rgba(63,185,80,0.15);color:#3fb950;border:1px solid rgba(63,185,80,0.3)}
 .tag-jp{background:rgba(188,140,255,0.15);color:#bc8cff;border:1px solid rgba(188,140,255,0.3)}
 .tag-us{background:rgba(210,153,34,0.15);color:#d29922;border:1px solid rgba(210,153,34,0.3)}
+.tag-eu{background:rgba(88,166,255,0.15);color:#58a6ff;border:1px solid rgba(88,166,255,0.3)}
+.tag-kr{background:rgba(63,185,80,0.15);color:#3fb950;border:1px solid rgba(63,185,80,0.3)}
 .tag-other{background:var(--bg3);color:var(--text3);border:1px solid var(--border)}
 
 /* Group Config Panel */
@@ -211,6 +217,7 @@ textarea.inp{display:block;width:100%;height:80px;font-size:11.5px;resize:vertic
         <div class="panel-title">📄 生成配置</div>
       </div>
       <div class="output-toolbar">
+        <button class="btn btn-primary btn-sm" id="generateBtn">⚡ 生成配置</button>
         <button class="btn btn-copy btn-sm" id="copyBtn">📋 复制</button>
         <button class="btn btn-dl btn-sm" id="dlBtn">💾 下载</button>
         <button class="btn btn-clear btn-sm" id="clearBtn">🗑 清空</button>
@@ -242,15 +249,25 @@ textarea.inp{display:block;width:100%;height:80px;font-size:11.5px;resize:vertic
 </div>
 
 <script>
-const FIXED_HEADER = `mixed-port: 7890
-allow-lan: false
+const FIXED_HEADER = `mode: rule
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7895
+allow-lan: true
+ipv6: false
 bind-address: '*'
-mode: rule
 log-level: info
 external-controller: '127.0.0.1:9090'
 unified-delay: true
 tcp-concurrent: true
-ipv6: false
+# 认证配置
+skip-auth-prefixes:
+  - 192.168.1.0/24
+  - 192.168.31.0/24
+  - 192.168.100.0/24
+  - 127.0.0.1/8
 dns:
     enable: true
     ipv6: false
@@ -259,11 +276,22 @@ dns:
     enhanced-mode: fake-ip
     fake-ip-range: 198.18.0.1/16
     use-hosts: true
-    default-nameserver: [223.5.5.5, 119.29.29.29]
+    default-nameserver:
+      - 119.29.29.29
+      - 180.184.1.1
+      - 223.5.5.5
     proxy-server-nameserver: ['https://dns.alidns.com/dns-query', 'https://doh.pub/dns-query']
-    nameserver: [223.5.5.5, 119.29.29.29]
+    nameserver: [119.29.29.29,223.5.5.5]
     fallback: ['https://cloudflare-dns.com/dns-query', 'https://dns.cloudflare.com/dns-query', 'https://dns.alidns.com/dns-query', 'https://doh.pub/dns-query']
-    fallback-filter: { geoip: true, geoip-code: CN, geosite: [gfw] }`;
+    fallback-filter: { geoip: true, geoip-code: CN, geosite: [gfw] }
+    fake-ip-filter:
+      - geosite:cn
+      - geosite:Private
+      - +.miwifi.com
+      - +.docker.io
+      - +.market.xiaomi.com
+      - +.push.apple.com
+`;
 
 const RULE_PROVIDERS = `rule-providers:
   private:
@@ -381,15 +409,15 @@ const RULE_PROVIDERS = `rule-providers:
     type: http`;
 
 const RULES = `rules:
+  - RULE-SET,private,DIRECT
+  - RULE-SET,adobe,Adobe
   - RULE-SET,pic_hub,PicHub
   - RULE-SET,steam,🚀手动选择
-  - RULE-SET,adobe,Adobe
+  - RULE-SET,google,Google
   - RULE-SET,claude,AIGC
   - RULE-SET,ai_GC,AIGC
   - RULE-SET,pikpakdomain,PikPak
-  - RULE-SET,private,DIRECT
   - RULE-SET,telegram,Telegram
-  - RULE-SET,google,Google
   - RULE-SET,geolocation-!cn,🚀手动选择
   - RULE-SET,cn_domain,DIRECT
   - RULE-SET,cn_ip,DIRECT
@@ -410,34 +438,58 @@ const DEFAULT_GROUPS = [
   { name: "🇹🇼台湾 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇹🇼", proxies: [], canSelect: false, isCountry: true },
   { name: "🇸🇬新加坡 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇸🇬", proxies: [], canSelect: false, isCountry: true },
   { name: "🇯🇵日本 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇯🇵", proxies: [], canSelect: false, isCountry: true },
-  { name: "🇺🇸美国 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇺🇸", proxies: [], canSelect: false, isCountry: true }
+  { name: "🇺🇸美国 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇺🇸", proxies: [], canSelect: false, isCountry: true },
+  { name: "🇪🇺欧洲 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇪🇺", proxies: [], canSelect: false, isCountry: true },
+  { name: "🇰🇷韩国 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇰🇷", proxies: [], canSelect: false, isCountry: true }
 ];
 
 const COUNTRY_RULES = [
-  { name: "🇭🇰香港 Auto", keywords: ['香港','🇭🇰','HK','HongKong','hongkong'], tag: 'HK', cls: 'tag-hk' },
-  { name: "🇹🇼台湾 Auto", keywords: ['台湾','🇹🇼','TW','Taiwan','taiwan'], tag: 'TW', cls: 'tag-tw' },
+  { name: "🇭🇰香港 Auto", keywords: ['香港','🇭🇰','HK','HKG','HongKong','hongkong'], tag: 'HK', cls: 'tag-hk' },
+  { name: "🇹🇼台湾 Auto", keywords: ['台湾','🇹🇼','TW','KHH','Taiwan','taiwan'], tag: 'TW', cls: 'tag-tw' },
   { name: "🇸🇬新加坡 Auto", keywords: ['新加坡','🇸🇬','SG','Singapore','singapore'], tag: 'SG', cls: 'tag-sg' },
   { name: "🇯🇵日本 Auto", keywords: ['日本','🇯🇵','JP','Japan','Tokyo','东京','japan'], tag: 'JP', cls: 'tag-jp' },
-  { name: "🇺🇸美国 Auto", keywords: ['美国','🇺🇸','US','USA','America','圣何塞','洛杉矶','凤凰城','San Jose','Los Angeles'], tag: 'US', cls: 'tag-us' }
+  { name: "🇺🇸美国 Auto", keywords: ['美国','🇺🇸','US','USA','America','圣何塞','洛杉矶','凤凰城','San Jose','Los Angeles','SJC','JFK','LAX','ORD','ATL','DFW','SFO','MIA','SEA','IAD'], tag: 'US', cls: 'tag-us' },
+  { name: "🇪🇺欧洲 Auto", keywords: ['奥地利','比利时','保加利亚','克罗地亚','塞尔维亚','捷克','丹麦','爱沙尼亚','芬兰','法国','德国','希腊','匈牙利','爱尔兰','意大利','拉脱维亚','立陶宛','卢森堡','马耳他','荷兰','波兰','葡萄牙','罗马尼亚','斯洛伐克','斯洛文尼亚','西班牙','瑞典','英国','🇦🇹','🇧🇪','🇧🇬','🇭🇷','🇷🇸','🇨🇿','🇩🇰','🇪🇪','🇫🇮','🇫🇷','🇩🇪','🇬🇷','🇭🇺','🇮🇪','🇮🇹','🇱🇻','🇱🇹','🇱🇺','🇲🇹','🇳🇱','🇵🇱','🇵🇹','🇷🇴','🇸🇰','🇸🇮','🇪🇸','🇸🇪','🇬🇧','CDG','FRA','AMS','MAD','BCN','FCO','MUC','BRU'], tag: 'EU', cls: 'tag-eu' },
+  { name: "🇰🇷韩国 Auto", keywords: ['韩国','🇰🇷','韓国','首尔','南朝鲜','KR','KOR','Korea','South','Seoul'], tag: 'KR', cls: 'tag-kr' }
 ];
 
 const SPECIAL_KW = ['剩余流量','距离下次重置','套餐到期','流量：','重置剩余','到期'];
 
 // 统一的 emoji 剥离正则
-const STRIP_EMOJI = /[🚀♻️🛑🐟🤖📦✈️📱🔍🇭🇰🇹🇼🇸🇬🇯🇵🇺🇸]/g;
+const STRIP_EMOJI = /[🚀♻️🛑🐟🤖📦✈️📱🔍🇭🇰🇹🇼🇸🇬🇯🇵🇺🇸🇪🇺🇰🇷]/g;
 
 let parsedNodeNames = [], parsedProxies = [];
 let selectedGroups = {};
 let dropdownOpen = {};
+let activeCountryGroups = new Set();
 
 // 初始化 statGroups 和 groupCount badge
 document.getElementById('statGroups').textContent = DEFAULT_GROUPS.length;
 document.getElementById('groupCount').textContent = DEFAULT_GROUPS.length + ' 组';
 
-DEFAULT_GROUPS.forEach(g => { if (g.canSelect) selectedGroups[g.name] = getSelectableGroups(g.name); });
+DEFAULT_GROUPS.forEach(g => { if (g.canSelect) selectedGroups[g.name] = []; });
 
 function getSelectableGroups(name) {
-  return DEFAULT_GROUPS.filter(g => g.name !== name && g.type === "url-test").map(g => g.name);
+  return DEFAULT_GROUPS.filter(g =>
+    g.name !== name && g.type === "url-test" && (!g.isCountry || activeCountryGroups.has(g.name))
+  ).map(g => g.name);
+}
+
+function refreshActiveCountryGroups() {
+  activeCountryGroups.clear();
+  if (parsedNodeNames.length) {
+    const { countryMap } = classifyNodes(parsedNodeNames);
+    COUNTRY_RULES.forEach(r => {
+      if (countryMap[r.name] && countryMap[r.name].length > 0) activeCountryGroups.add(r.name);
+    });
+  }
+  // 更新每个 canSelect 组的可选列表，并自动选中所有活跃的 url-test 组
+  DEFAULT_GROUPS.forEach(g => {
+    if (!g.canSelect) return;
+    const selectable = getSelectableGroups(g.name);
+    // 移除不再可选的组，添加新出现的可选组
+    selectedGroups[g.name] = selectable;
+  });
 }
 
 function getNodeCountry(name) {
@@ -474,7 +526,10 @@ function generateConfig() {
   const { normal, countryMap } = classifyNodes(parsedNodeNames);
   const groupNames = DEFAULT_GROUPS.map(g => g.name);
 
-  const groupsSection = "proxy-groups:\n" + DEFAULT_GROUPS.map(group => {
+  const groupsSection = "proxy-groups:\n" + DEFAULT_GROUPS.filter(group => {
+      if (!group.isCountry) return true;
+      return (countryMap[group.name] || []).filter(p => !groupNames.includes(p)).length > 0;
+    }).map(group => {
     let list = [];
     if (group.name === "♻️自动选择") {
       list = buildSelectList(group.name, [...normal]);
@@ -495,10 +550,32 @@ function generateConfig() {
       : `    - { name: ${group.name}, type: ${group.type}, proxies: ${ps} }`;
   }).join('\n');
 
-  return `${FIXED_HEADER}\n\n${proxiesSection}\n\n${groupsSection}\n\n${RULE_PROVIDERS}\n\n${RULES}`;
+  return `${FIXED_HEADER}\n${proxiesSection}\n\n${groupsSection}\n\n${RULE_PROVIDERS}\n\n${RULES}`;
 }
 
 function syntaxHighlight(text) {
+  // 将 proxies 段原样输出，其余部分做语法高亮
+  const proxiesStart = text.indexOf('\nproxies:\n');
+  const proxiesEnd = text.indexOf('\nproxy-groups:\n');
+
+  if (proxiesStart === -1 || proxiesEnd === -1 || proxiesEnd <= proxiesStart) {
+    return highlightSection(text);
+  }
+
+  const before = text.substring(0, proxiesStart + 1);
+  const proxies = text.substring(proxiesStart + 1, proxiesEnd);
+  const after = text.substring(proxiesEnd + 1);
+
+  // proxies 段：第一行 "proxies:" 需要高亮，节点行只高亮 "- " 前缀
+  const firstNl = proxies.indexOf('\n');
+  const proxiesHeader = firstNl === -1 ? proxies : proxies.substring(0, firstNl);
+  const proxiesBody = firstNl === -1 ? '' : proxies.substring(firstNl);
+  const proxiesBodyEsc = proxiesBody.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/^(\s*)(- )/gm, '$1<span class="highlight-dash">- </span>');
+  return highlightSection(before) + highlightSection(proxiesHeader) + proxiesBodyEsc + highlightSection(after);
+}
+
+function highlightSection(text) {
   return text.split('\n').map(line => {
     const esc = line.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     if (esc.trim().startsWith('#')) return `<span class="highlight-comment">${esc}</span>`;
@@ -506,14 +583,38 @@ function syntaxHighlight(text) {
       const colon = esc.indexOf(':');
       const key = esc.substring(0, colon);
       const val = esc.substring(colon + 1);
-      const styledVal = val.replace(/('.*?')/g, '<span class="highlight-string">$1</span>')
+      // proxies: [ 和 url: 后面的内容不高亮
+      const noHighlight = key.trim() === 'proxies' || key.trim() === 'url';
+      const styledVal = noHighlight ? val : val.replace(/('.*?')/g, '<span class="highlight-string">$1</span>')
                           .replace(/\b(\d+)\b/g, '<span class="highlight-number">$1</span>');
       return `<span class="highlight-key">${key}</span><span style="color:var(--text3)">:</span>${styledVal}`;
     }
     if (esc.trim().startsWith('-')) {
       const rest = esc.substring(esc.indexOf('-') + 1);
-      const styledRest = rest.replace(/('.*?')/g, '<span class="highlight-string">$1</span>')
-                             .replace(/\b(\d+)\b/g, '<span class="highlight-number">$1</span>');
+      // proxies: [ 和 url: 后面的内容不高亮，先剥离这两个 key 的值
+      const styledRest = rest.replace(/(proxies:\s*\[[\s\S]*?\])/g, '$1')
+                             .replace(/(url:\s*'[^']*')/g, '$1')
+                             .replace(/('.*?')/g, (m, p1, offset) => {
+                               // 检查是否在 proxies:[] 或 url:'' 内部，是则不高亮
+                               const before = rest.substring(0, offset);
+                               const proxiesIdx = before.lastIndexOf('proxies:');
+                               const urlIdx = before.lastIndexOf('url:');
+                               const bracketOpen = before.lastIndexOf('[');
+                               const bracketClose = before.lastIndexOf(']');
+                               if (proxiesIdx !== -1 && bracketOpen > proxiesIdx && (bracketClose === -1 || bracketOpen > bracketClose)) return m;
+                               if (urlIdx !== -1 && offset > urlIdx) return m;
+                               return `<span class="highlight-string">${p1}</span>`;
+                             })
+                             .replace(/\b(\d+)\b/g, (m, p1, offset) => {
+                               const before = rest.substring(0, offset);
+                               const proxiesIdx = before.lastIndexOf('proxies:');
+                               const urlIdx = before.lastIndexOf('url:');
+                               const bracketOpen = before.lastIndexOf('[');
+                               const bracketClose = before.lastIndexOf(']');
+                               if (proxiesIdx !== -1 && bracketOpen > proxiesIdx && (bracketClose === -1 || bracketOpen > bracketClose)) return m;
+                               if (urlIdx !== -1 && offset > urlIdx) return m;
+                               return `<span class="highlight-number">${p1}</span>`;
+                             });
       return `<span class="highlight-dash">${esc.substring(0, esc.indexOf('-') + 1)}</span>${styledRest}`;
     }
     return `<span>${esc}</span>`;
@@ -615,22 +716,65 @@ window.updateSel = function(group, val, checked) {
   if (!selectedGroups[group]) selectedGroups[group] = [];
   if (checked) { if (!selectedGroups[group].includes(val)) selectedGroups[group].push(val); }
   else selectedGroups[group] = selectedGroups[group].filter(g => g !== val);
-  renderGroupConfig();
-  updateOutput();
+  refreshGroupBadges();
 };
 window.toggleAll = function(group) {
   const selectable = getSelectableGroups(group);
   const current = selectedGroups[group] || [];
   const allSel = selectable.length > 0 && selectable.every(g => current.includes(g));
   selectedGroups[group] = allSel ? [] : [...selectable];
-  renderGroupConfig();
-  updateOutput();
+  refreshGroupCheckboxes(group);
+  refreshGroupBadges();
 };
+
+function refreshGroupCheckboxes(group) {
+  const gid = DEFAULT_GROUPS.findIndex(g => g.name === group);
+  if (gid < 0) return;
+  const selectable = getSelectableGroups(group);
+  const current = selectedGroups[group] || [];
+  const allSel = selectable.length > 0 && selectable.every(g => current.includes(g));
+  const saEl = document.getElementById('sa_' + gid);
+  if (saEl) saEl.checked = allSel;
+  selectable.forEach((g, i) => {
+    const el = document.getElementById('c_' + gid + '_' + i);
+    if (el) el.checked = current.includes(g);
+  });
+}
+
+function refreshGroupBadges() {
+  DEFAULT_GROUPS.forEach((group, gid) => {
+    if (!group.canSelect) return;
+    const current = selectedGroups[group.name] || [];
+    const header = document.querySelectorAll('.group-item')[gid]?.querySelector('.group-header');
+    if (!header) return;
+    let badge = header.querySelector('.badge');
+    if (current.length > 0) {
+      if (badge) {
+        badge.textContent = '+' + current.length;
+      } else {
+        badge = document.createElement('span');
+        badge.className = 'badge';
+        badge.style.cssText = 'margin-left:auto;margin-right:6px;font-size:10px;color:var(--text4)';
+        badge.textContent = '+' + current.length;
+        const typeBadge = header.querySelector('.group-type-badge');
+        if (typeBadge) header.insertBefore(badge, typeBadge);
+      }
+    } else if (badge) {
+      badge.remove();
+    }
+  });
+}
 
 function setStatus(msg, type='info') {
   const el = document.getElementById('status');
   el.className = `status-bar ${type}`;
   el.innerHTML = `<div class="status-dot"></div><span>${msg}</span>`;
+  // 触发闪烁动画
+  const flashColor = type === 'success' ? 'rgba(63,185,80,0.4)' : type === 'error' ? 'rgba(248,81,73,0.4)' : 'rgba(88,166,255,0.4)';
+  el.style.setProperty('--flash-color', flashColor);
+  el.classList.remove('flash');
+  void el.offsetWidth; // 强制重排以重新触发动画
+  el.classList.add('flash');
 }
 
 function parseSubscription(content) {
@@ -639,7 +783,9 @@ function parseSubscription(content) {
   const start = m.index + m[0].length;
   const gm = content.match(/proxy-groups:\s*\n/);
   const end = gm ? gm.index : content.length;
-  const section = content.substring(start, end);
+  let section = content.substring(start, end);
+  // 清理末尾可能残留的 proxy-groups: 或其他非节点内容
+  section = section.replace(/\s*proxy-groups:.*$/i, '').trim();
   const proxies = [], names = [];
   const lines = section.split('\n');
   let cur = '', brace = 0, inP = false;
@@ -668,11 +814,13 @@ function processContent(content) {
   try {
     const { nodeNames, proxies } = parseSubscription(content);
     parsedNodeNames = nodeNames; parsedProxies = proxies;
+    refreshActiveCountryGroups();
     setStatus(`解析成功 — 找到 ${nodeNames.length} 个节点`, 'success');
     renderNodeList(); renderGroupConfig(); updateOutput();
   } catch(e) {
     setStatus(e.message, 'error');
     parsedNodeNames = []; parsedProxies = [];
+    activeCountryGroups.clear();
     renderNodeList(); updateOutput();
   }
 }
@@ -744,7 +892,15 @@ document.addEventListener('keydown', e => {
 });
 
 renderGroupConfig();
-updateOutput();
+
+document.getElementById('generateBtn').addEventListener('click', () => {
+  if (!parsedProxies.length) {
+    setStatus('请先输入订阅链接或粘贴内容', 'error');
+    return;
+  }
+  updateOutput();
+  setStatus('配置已生成', 'success');
+});
 </script>
 </body>
 </html>
