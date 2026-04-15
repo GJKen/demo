@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenClash订阅附加规则器</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d1117;--bg2:#161b22;--bg3:#21262d;--bg4:#30363d;
+  --border:#30363d;--border2:#484f58;
+  --text:#e6edf3;--text2:#8b949e;--text3:#a9a9a9;--text4:#47fcd4;
+  --accent:#58a6ff;--accent2:#1f6feb;--accent-bg:rgba(88,166,255,0.1);
+  --green:#3fb950;--green-bg:rgba(63,185,80,0.1);
+  --orange:#d29922;--orange-bg:rgba(210,153,34,0.12);
+  --red:#f85149;--red-bg:rgba(248,81,73,0.1);
+  --purple:#bc8cff;--purple-bg:rgba(188,140,255,0.1);
+  --radius:8px;--radius-lg:12px;
+}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans SC',sans-serif;font-size:14px;min-height:100vh}
+.app{display:grid;grid-template-rows:auto 1fr;height:100vh;max-width:100%;overflow:hidden}
+.topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;gap:20px;height:56px;flex-shrink:0}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-text{font-weight:600;font-size:15px;letter-spacing:-0.3px}
+.logo-ver{font-size:11px;color:var(--text3);font-family:'IBM Plex Mono',monospace}
+.main{display:grid;grid-template-columns:minmax(250px,25%) minmax(300px,1fr) minmax(280px,30%);overflow:hidden;height:100%}
+.panel{display:flex;flex-direction:column;overflow:hidden;border-right:1px solid var(--border)}
+.panel:last-child{border-right:none}
+.panel-header{padding:0 18px;height:42px;border-bottom:1px solid var(--border);background:var(--bg2);flex-shrink:0;display:flex;align-items:center;justify-content:space-between}
+.panel-title{font-weight:500;color:var(--text2);text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:8px}
+.badge{background:var(--bg3);border:1px solid var(--border);color:var(--text2);font-size:11px;padding:1px 7px;border-radius:20px;font-family:'IBM Plex Mono',monospace}
+.badge.green{background:var(--green-bg);border-color:rgba(63,185,80,0.3);color:var(--green)}
+.panel-body{flex:1;overflow-y:auto;padding:14px}
+.panel-body::-webkit-scrollbar{width:4px}
+.panel-body::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
+
+/* Input Panel */
+.input-section{margin-bottom:16px}
+.input-label{font-size:14px;font-weight:500;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px}
+.input-row{display:flex;gap:8px}
+.inp{flex:1;background:var(--bg3);border:1px solid var(--border);color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:12px;padding:8px 12px;border-radius:var(--radius);outline:none;transition:border-color 0.15s}
+.inp:focus{border-color:var(--accent)}
+.inp::placeholder{color:var(--text3)}
+textarea.inp{display:block;width:100%;height:80px;font-size:11.5px;resize:vertical;margin:0}
+.btn{padding:8px 14px;border-radius:var(--radius);border:none;cursor:pointer;font-size:12px;font-weight:500;font-family:'Noto Sans SC',sans-serif;transition:all 0.15s;white-space:nowrap}
+.btn-primary{background:var(--accent2);color:#fff}
+.btn-primary:hover{background:#388bfd}
+.btn-secondary{background:var(--bg3);color:var(--text);border:1px solid var(--border)}
+.btn-secondary:hover{background:var(--bg4);border-color:var(--border2)}
+.btn-sm{padding:5px 10px}
+
+.status-bar{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:8px 12px;font-size:12px;display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.status-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.status-bar.info .status-dot{background:var(--accent)}
+.status-bar.success .status-dot{background:var(--green)}
+.status-bar.error .status-dot{background:var(--red)}
+.status-bar.success{border-color:rgba(63,185,80,0.3);background:var(--green-bg)}
+.status-bar.error{border-color:rgba(248,81,73,0.3);background:var(--red-bg)}
+
+/* Node List */
+.node-item{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:var(--radius);margin-bottom:3px;background:var(--bg2);border:1px solid var(--border);transition:border-color 0.1s}
+.node-item:hover{border-color:#6cacff}
+.node-flag{font-size:13px;flex-shrink:0;width:20px;text-align:center}
+.node-name{font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--text);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.node-tag{font-size:10px;padding:1px 5px;border-radius:4px;flex-shrink:0;font-family:'IBM Plex Mono',monospace}
+.tag-hk{background:rgba(255,179,128,0.15);color:#ffb380;border:1px solid rgba(255,179,128,0.3)}
+.tag-tw{background:rgba(88,166,255,0.15);color:#58a6ff;border:1px solid rgba(88,166,255,0.3)}
+.tag-sg{background:rgba(63,185,80,0.15);color:#3fb950;border:1px solid rgba(63,185,80,0.3)}
+.tag-jp{background:rgba(188,140,255,0.15);color:#bc8cff;border:1px solid rgba(188,140,255,0.3)}
+.tag-us{background:rgba(210,153,34,0.15);color:#d29922;border:1px solid rgba(210,153,34,0.3)}
+.tag-other{background:var(--bg3);color:var(--text3);border:1px solid var(--border)}
+
+/* Group Config Panel */
+.group-item{margin-bottom:8px;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;background:var(--bg2)}
+.group-header{padding:10px 14px;cursor:pointer;display:flex;align-items:center;gap:6px;user-select:none;transition:background 0.1s}
+.group-header:hover{background:var(--bg3)}
+.group-icon{font-size:14px;width:20px;text-align:center;flex-shrink:0}
+.group-name{flex:1;font-weight:500}
+.group-type-badge{font-size:10px;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:4px;flex-shrink:0}
+.type-select{background:var(--accent-bg);color:var(--accent);border:1px solid rgba(88,166,255,0.3)}
+.type-urltest{background:var(--green-bg);color:var(--green);border:1px solid rgba(63,185,80,0.3)}
+.type-country{background:var(--purple-bg);color:var(--purple);border:1px solid rgba(188,140,255,0.3)}
+.chevron{width:16px;height:16px;color:var(--text3);transition:transform 0.2s;flex-shrink:0}
+.chevron.open{transform:rotate(90deg)}
+.group-content{border-top:1px solid var(--border)}
+.group-content-inner{padding:10px 14px}
+.proxy-option{display:flex;align-items:center;gap:10px;padding:5px 8px;border-radius:6px;cursor:pointer;transition:background 0.1s}
+.proxy-option:hover{background:var(--bg3)}
+.proxy-option input[type=checkbox]{accent-color:var(--accent);width:14px;height:14px;cursor:pointer}
+.proxy-option label{font-size:12px;cursor:pointer;color:var(--text2);flex:1}
+.proxy-option label:hover{color:var(--text)}
+.select-all-row{padding:6px 8px 8px;border-bottom:1px solid var(--border);margin-bottom:4px;display:flex;align-items:center;gap:10px}
+.select-all-row label{font-size:11px;font-weight:500;color:var(--text2);cursor:pointer;text-transform:uppercase;letter-spacing:0.5px}
+.group-info{padding:8px 14px 10px;font-size:11px;color:var(--text3);display:flex;align-items:center;gap:6px}
+.info-icon{opacity:0.6}
+
+/* Output Panel */
+.output-toolbar{padding:10px 14px;border-bottom:1px solid var(--border);background:var(--bg2);display:flex;align-items:center;gap:8px;flex-shrink:0}
+.output-code{flex:1;overflow:auto;padding:14px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;line-height:1.6;color:#e6edf3;white-space:pre;tab-size:2}
+.output-code::-webkit-scrollbar{width:4px;height:4px}
+.output-code::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
+
+.divider{height:1px;background:var(--border);margin:12px 0}
+
+.btn-copy{background:var(--bg3);color:var(--text);border:1px solid var(--border)}
+.btn-copy:hover{background:var(--bg4)}
+.btn-dl{background:var(--green-bg);color:var(--green);border:1px solid rgba(63,185,80,0.3)}
+.btn-dl:hover{background:rgba(63,185,80,0.2)}
+.btn-clear{background:var(--red-bg);color:var(--red);border:1px solid rgba(248,81,73,0.3)}
+.btn-clear:hover{background:rgba(248,81,73,0.2)}
+
+/* Overlays — shared header/title/code styles */
+.fs-header{padding:12px 20px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.fs-title{font-size:13px;color:var(--text2);font-weight:500}
+.fs-code{flex:1;overflow:auto;font-family:'IBM Plex Mono',monospace;line-height:1.6;white-space:pre}
+.fs-code::-webkit-scrollbar{width:4px;height:4px}
+.fs-code::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
+
+/* Fullscreen Overlay */
+.fs-overlay{display:none;position:fixed;inset:0;z-index:9999;background:var(--bg);flex-direction:column}
+.fs-overlay.active{display:flex}
+.fs-overlay .fs-code{padding:20px;font-size:12px;color:#e6edf3;tab-size:2}
+
+/* Center Modal */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.6);align-items:center;justify-content:center}
+.modal-overlay.active{display:flex}
+.modal-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);width:90%;max-width:600px;max-height:80vh;display:flex;flex-direction:column;overflow:hidden}
+.modal-box .fs-code{padding:10px;font-size:12px}
+
+.stats-row{display:flex;gap:8px;margin-bottom:12px}
+.stat-card{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:8px 10px;text-align:center}
+.stat-num{font-size:18px;font-weight:600;font-family:'IBM Plex Mono',monospace;color:var(--text)}
+.stat-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;margin-top:2px}
+
+.highlight-key{color:#79c0ff}
+.highlight-string{color:#a8d8a8}
+.highlight-number{color:#f0883e}
+.highlight-comment{color:#6e7681}
+.highlight-bracket{color:#e6edf3}
+.highlight-dash{color:#ffa657}
+
+/* Mobile Responsive */
+@media(max-width:900px){
+  .main{grid-template-columns:1fr 1fr;grid-template-rows:auto auto;height:auto}
+  .panel:nth-child(3){border-top:1px solid var(--border);grid-column:1 / -1;width:100%}
+}
+@media(max-width:600px){
+  .main{grid-template-columns:1fr;grid-template-rows:auto auto auto;height:auto;overflow:visible}
+  .panel{border-right:none;border-bottom:1px solid var(--border);width:100%;flex:none}
+  .panel-body{overflow:visible;height:auto}
+  .app{height:auto;overflow:visible}
+  .output-code{height:250px;overflow:auto}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="logo">
+      <div class="logo-text">OpenClash订阅附加规则器</div>
+    </div>
+    <span class="logo-ver">v2.0</span>
+  </div>
+  <div class="main">
+    <!-- Panel 1: Input + Node List -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">📡 订阅源</div>
+        <span id="nodeCount" class="badge">0 节点</span>
+      </div>
+      <div class="panel-body">
+        <div class="input-section">
+          <div class="input-label">订阅链接</div>
+          <div class="input-row" style="gap:6px">
+            <input class="inp" type="text" id="urlInput" placeholder="https://sub.example.com/api?token=xxx">
+            <button class="btn btn-primary btn-sm" id="fetchBtn">获取</button>
+          </div>
+        </div>
+        <div class="input-section">
+          <div class="input-label">手动粘贴 YAML 内容</div>
+          <textarea class="inp" id="manualInput" placeholder="直接粘贴 Clash 订阅内容..."></textarea>
+          <button class="btn btn-secondary btn-sm" style="margin-top:6px;width:100%" id="useManualBtn">使用此内容</button>
+        </div>
+        <div id="status" class="status-bar info">
+          <div class="status-dot"></div>
+          <span>等待输入订阅链接或粘贴内容</span>
+        </div>
+        <div id="statsRow" class="stats-row" style="display:none">
+          <div class="stat-card"><div class="stat-num" id="statTotal">0</div><div class="stat-label">总节点</div></div>
+          <div class="stat-card"><div class="stat-num" id="statCountries">0</div><div class="stat-label">国家</div></div>
+          <div class="stat-card"><div class="stat-num" id="statGroups">0</div><div class="stat-label">代理组</div></div>
+        </div>
+        <div class="divider" style="margin:8px 0"></div>
+        <button class="btn btn-secondary btn-sm" style="width:100%;display:none" id="viewNodesBtn">📋 查看节点列表</button>
+      </div>
+    </div>
+
+    <!-- Panel 2: Group Config -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">🎯 代理组配置</div>
+        <span id="groupCount" class="badge">0 组</span>
+      </div>
+      <div class="panel-body" id="groupConfigArea"></div>
+    </div>
+
+    <!-- Panel 3: Output -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">📄 生成配置</div>
+      </div>
+      <div class="output-toolbar">
+        <button class="btn btn-copy btn-sm" id="copyBtn">📋 复制</button>
+        <button class="btn btn-dl btn-sm" id="dlBtn">💾 下载</button>
+        <button class="btn btn-clear btn-sm" id="clearBtn">🗑 清空</button>
+        <button class="btn btn-secondary btn-sm" id="fullscreenBtn" style="margin-left:auto">⛶ 全屏</button>
+      </div>
+      <div id="outputCode" class="output-code"><span style="color:var(--text3);font-style:italic">等待处理...</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Fullscreen Overlay -->
+<div class="fs-overlay" id="fsOverlay">
+  <div class="fs-header">
+    <span class="fs-title">📄 生成配置 — 全屏查看</span>
+    <button class="btn btn-secondary btn-sm" id="fsCloseBtn">✕ 关闭</button>
+  </div>
+  <div class="fs-code" id="fsCode"></div>
+</div>
+
+<!-- Node List Modal -->
+<div class="modal-overlay" id="nodeOverlay">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="fs-header">
+      <span class="fs-title">📋 节点列表</span>
+      <button class="btn btn-secondary btn-sm" id="nodeCloseBtn">✕ 关闭</button>
+    </div>
+    <div class="fs-code" id="nodeListOverlay"></div>
+  </div>
+</div>
+
+<script>
+const FIXED_HEADER = `mixed-port: 7890
+allow-lan: false
+bind-address: '*'
+mode: rule
+log-level: info
+external-controller: '127.0.0.1:9090'
+unified-delay: true
+tcp-concurrent: true
+ipv6: false
+dns:
+    enable: true
+    ipv6: false
+    follow-rule: false
+    respect-rules: true
+    enhanced-mode: fake-ip
+    fake-ip-range: 198.18.0.1/16
+    use-hosts: true
+    default-nameserver: [223.5.5.5, 119.29.29.29]
+    proxy-server-nameserver: ['https://dns.alidns.com/dns-query', 'https://doh.pub/dns-query']
+    nameserver: [223.5.5.5, 119.29.29.29]
+    fallback: ['https://cloudflare-dns.com/dns-query', 'https://dns.cloudflare.com/dns-query', 'https://dns.alidns.com/dns-query', 'https://doh.pub/dns-query']
+    fallback-filter: { geoip: true, geoip-code: CN, geosite: [gfw] }`;
+
+const RULE_PROVIDERS = `rule-providers:
+  private:
+    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/private.yaml
+    path: ./ruleset/Private_local.yaml
+    behavior: domain
+    interval: 86400
+    format: yaml
+    type: http
+  cn_domain:
+    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/cn.yaml
+    path: ./ruleset/cn_domain_local.yaml
+    behavior: domain
+    interval: 86400
+    type: http
+  ai_GC:
+    url: https://fastly.jsdelivr.net/gh/GJKen/clash-Rules@master/Rules/AIGC.yaml
+    path: ./ruleset/AIGC_local.yaml
+    behavior: classical
+    interval: 86400
+    type: http
+  pikpakdomain:
+    url: https://fastly.jsdelivr.net/gh/GJKen/clash-Rules@master/Rules/PikPak.yaml
+    path: ./ruleset/PikPak_local.yaml
+    behavior: classical
+    interval: 86400
+    type: http
+  pic_hub:
+    url: https://fastly.jsdelivr.net/gh/GJKen/clash-Rules@master/Rules/PicHub.yaml
+    path: ./ruleset/PicHub_local.yaml
+    behavior: classical
+    interval: 86400
+    type: http
+  google:
+    url: https://fastly.jsdelivr.net/gh/GJKen/clash-Rules@master/Rules/Google.yaml
+    path: ./ruleset/Google_local.yaml
+    behavior: classical
+    interval: 86400
+    format: yaml
+    type: http
+  adobe:
+    url: https://fastly.jsdelivr.net/gh/GJKen/clash-Rules@master/Rules/Adobe.yaml
+    path: ./ruleset/Adobe_local.yaml
+    behavior: classical
+    interval: 86400
+    type: http
+  telegram_domain:
+    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/telegram.yaml
+    path: ./ruleset/telegram_domain_local.yaml
+    behavior: domain
+    interval: 86400
+    format: yaml
+    type: http
+  applications:
+    url: https://fastly.jsdelivr.net/gh/GJKen/clash-Rules@master/Rules/applications.yaml
+    path: ./ruleset/Applications_local.yaml
+    behavior: classical
+    interval: 86400
+    type: http
+  geolocation-!cn:
+    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/geolocation-!cn.yaml
+    path: ./ruleset/geolocation-!cn.yaml
+    behavior: domain
+    interval: 86400
+    format: yaml
+    type: http
+  cn_ip:
+    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/cn.yaml
+    path: ./ruleset/cn_ip_local.yaml
+    behavior: ipcidr
+    interval: 86400
+    format: yaml
+    type: http
+  telegram_ip:
+    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/telegram.yaml
+    path: ./ruleset/telegram_ip_local.yaml
+    behavior: ipcidr
+    interval: 86400
+    format: yaml
+    type: http
+  bing:
+    url: https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Bing/Bing.yaml
+    path: ./ruleset/bing_local.yaml
+    behavior: classical
+    interval: 86400
+    format: yaml
+    type: http
+  copilot:
+    url: https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Copilot/Copilot.yaml
+    path: ./ruleset/copilot_local.yaml
+    behavior: classical
+    interval: 86400
+    format: yaml
+    type: http
+  claude:
+    url: https://fastly.jsdelivr.net/gh/GJKen/clash-Rules@master/Rules/Claude.yaml
+    path: ./ruleset/claude_local.yaml
+    behavior: classical
+    interval: 86400
+    format: yaml
+    type: http
+  bard:
+    url: https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/BardAI/BardAI.yaml
+    path: ./ruleset/bard_local.yaml
+    behavior: classical
+    interval: 86400
+    format: yaml
+    type: http
+  openai:
+    url: https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/OpenAI/OpenAI.yaml
+    path: ./ruleset/openai_local.yaml
+    behavior: classical
+    interval: 86400
+    format: yaml
+    type: http
+  steam:
+    url: https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Steam/Steam.yaml
+    path: ./ruleset/steam_local.yaml
+    behavior: classical
+    interval: 86400
+    format: yaml
+    type: http`;
+
+const RULES = `rules:
+  - RULE-SET,pic_hub,PicHub
+  - RULE-SET,steam,🚀手动选择
+  - RULE-SET,adobe,Adobe
+  - RULE-SET,claude,AIGC
+  - RULE-SET,ai_GC,AIGC
+  - RULE-SET,pikpakdomain,PikPak
+  - RULE-SET,private,DIRECT
+  - RULE-SET,telegram_domain,Telegram
+  - RULE-SET,telegram_ip,Telegram
+  - RULE-SET,google,Google
+  - RULE-SET,geolocation-!cn,🚀手动选择
+  - RULE-SET,cn_domain,DIRECT
+  - RULE-SET,cn_ip,DIRECT
+  - MATCH,🐟漏网之鱼`;
+
+const DEFAULT_GROUPS = [
+  { name: "🚀手动选择", type: "select", icon: "🚀", proxies: [], canSelect: true },
+  { name: "♻️自动选择", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "♻️", proxies: [], canSelect: false },
+  { name: "AIGC", type: "select", icon: "🤖", proxies: ["DIRECT"], canSelect: true },
+  { name: "PikPak", type: "select", icon: "📦", proxies: ["DIRECT"], canSelect: true },
+  { name: "PicHub", type: "select", icon: "", proxies: ["DIRECT"], canSelect: true },
+  { name: "Telegram", type: "select", icon: "✈️", proxies: ["DIRECT"], canSelect: true },
+  { name: "Google", type: "select", icon: "🔍", proxies: ["DIRECT"], canSelect: true },
+  { name: "🛑ADblock", type: "select", icon: "🛑", proxies: ["REJECT","DIRECT"], canSelect: false },
+  { name: "Adobe", type: "select", icon: "", proxies: ["REJECT","DIRECT"], canSelect: false },
+  { name: "🐟漏网之鱼", type: "select", icon: "🐟", proxies: ["DIRECT"], canSelect: true },
+  { name: "🇭🇰香港 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇭🇰", proxies: [], canSelect: false, isCountry: true },
+  { name: "🇹🇼台湾 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇹🇼", proxies: [], canSelect: false, isCountry: true },
+  { name: "🇸🇬新加坡 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇸🇬", proxies: [], canSelect: false, isCountry: true },
+  { name: "🇯🇵日本 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇯🇵", proxies: [], canSelect: false, isCountry: true },
+  { name: "🇺🇸美国 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇺🇸", proxies: [], canSelect: false, isCountry: true }
+];
+
+const COUNTRY_RULES = [
+  { name: "🇭🇰香港 Auto", keywords: ['香港','🇭🇰','HK','HongKong','hongkong'], tag: 'HK', cls: 'tag-hk' },
+  { name: "🇹🇼台湾 Auto", keywords: ['台湾','🇹🇼','TW','Taiwan','taiwan'], tag: 'TW', cls: 'tag-tw' },
+  { name: "🇸🇬新加坡 Auto", keywords: ['新加坡','🇸🇬','SG','Singapore','singapore'], tag: 'SG', cls: 'tag-sg' },
+  { name: "🇯🇵日本 Auto", keywords: ['日本','🇯🇵','JP','Japan','Tokyo','东京','japan'], tag: 'JP', cls: 'tag-jp' },
+  { name: "🇺🇸美国 Auto", keywords: ['美国','🇺🇸','US','USA','America','圣何塞','洛杉矶','凤凰城','San Jose','Los Angeles'], tag: 'US', cls: 'tag-us' }
+];
+
+const SPECIAL_KW = ['剩余流量','距离下次重置','套餐到期','流量：','重置剩余','到期'];
+
+// 统一的 emoji 剥离正则
+const STRIP_EMOJI = /[🚀♻️🛑🐟🤖📦✈️📱🔍🇭🇰🇹🇼🇸🇬🇯🇵🇺🇸]/g;
+
+let parsedNodeNames = [], parsedProxies = [];
+let selectedGroups = {};
+let dropdownOpen = {};
+
+// 初始化 statGroups 和 groupCount badge
+document.getElementById('statGroups').textContent = DEFAULT_GROUPS.length;
+document.getElementById('groupCount').textContent = DEFAULT_GROUPS.length + ' 组';
+
+DEFAULT_GROUPS.forEach(g => { if (g.canSelect) selectedGroups[g.name] = getSelectableGroups(g.name); });
+
+function getSelectableGroups(name) {
+  return DEFAULT_GROUPS.filter(g => g.name !== name && g.type === "url-test").map(g => g.name);
+}
+
+function getNodeCountry(name) {
+  for (const r of COUNTRY_RULES) {
+    if (r.keywords.some(k => name.includes(k))) return r;
+  }
+  return null;
+}
+
+function classifyNodes(nodes) {
+  const normal = nodes.filter(n => !SPECIAL_KW.some(k => n.includes(k)));
+  const countryMap = {};
+  COUNTRY_RULES.forEach(r => { countryMap[r.name] = []; });
+  normal.forEach(n => {
+    const r = getNodeCountry(n);
+    if (r) countryMap[r.name].push(n);
+  });
+  return { normal, countryMap };
+}
+
+// 抽取公共的"节点+代理组"列表构建逻辑
+function buildSelectList(groupName, base) {
+  const groupNames = DEFAULT_GROUPS.map(g => g.name);
+  return [...base, ...(selectedGroups[groupName] || []).filter(g => groupNames.includes(g) && g !== groupName)];
+}
+
+function generateConfig() {
+  if (!parsedProxies.length) {
+    return FIXED_HEADER + "\n\nproxies: []\n\nproxy-groups:\n" +
+      DEFAULT_GROUPS.map(g => `    - { name: ${g.name}, type: ${g.type}${g.url?`, url: ${g.url}`:''}, proxies: ['DIRECT'] }`).join('\n') +
+      "\n\n" + RULE_PROVIDERS + "\n\n" + RULES;
+  }
+  const proxiesSection = "proxies:\n" + parsedProxies.join('\n');
+  const { normal, countryMap } = classifyNodes(parsedNodeNames);
+  const groupNames = DEFAULT_GROUPS.map(g => g.name);
+
+  const groupsSection = "proxy-groups:\n" + DEFAULT_GROUPS.map(group => {
+    let list = [];
+    if (group.name === "♻️自动选择") {
+      list = buildSelectList(group.name, [...normal]);
+    } else if (group.name === "🚀手动选择") {
+      list = buildSelectList(group.name, [...normal, 'DIRECT']);
+    } else if (group.isCountry) {
+      list = (countryMap[group.name] || []).filter(p => !groupNames.includes(p));
+    } else if (["AIGC","PikPak","PicHub","Telegram","Google","🐟漏网之鱼"].includes(group.name)) {
+      list = buildSelectList(group.name, [...normal, 'DIRECT']);
+    } else if (group.name === "Adobe" || group.name === "🛑ADblock") {
+      list = ["REJECT","DIRECT"];
+    }
+    list = [...new Set(list)];
+    if (!list.length) list = ['DIRECT'];
+    const ps = "[" + list.map(p => (p.match(/[\s|—？🚀♻️倍流媒体\u4e00-\u9fa5]/) ? `'${p}'` : p)).join(', ') + "]";
+    return group.type === "url-test"
+      ? `    - { name: ${group.name}, type: ${group.type}, url: ${group.url}, proxies: ${ps} }`
+      : `    - { name: ${group.name}, type: ${group.type}, proxies: ${ps} }`;
+  }).join('\n');
+
+  return `${FIXED_HEADER}\n\n${proxiesSection}\n\n${groupsSection}\n\n${RULE_PROVIDERS}\n\n${RULES}`;
+}
+
+function syntaxHighlight(text) {
+  return text.split('\n').map(line => {
+    const esc = line.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    if (esc.trim().startsWith('#')) return `<span class="highlight-comment">${esc}</span>`;
+    if (esc.match(/^[a-zA-Z_\u4e00-\u9fa5🇭🇰🇹🇼🇸🇬🇯🇵🇺🇸🚀♻️🛑🐟][^:]*:/)) {
+      const colon = esc.indexOf(':');
+      const key = esc.substring(0, colon);
+      const val = esc.substring(colon + 1);
+      const styledVal = val.replace(/('.*?')/g, '<span class="highlight-string">$1</span>')
+                          .replace(/\b(\d+)\b/g, '<span class="highlight-number">$1</span>');
+      return `<span class="highlight-key">${key}</span><span style="color:var(--text3)">:</span>${styledVal}`;
+    }
+    if (esc.trim().startsWith('-')) {
+      const rest = esc.substring(esc.indexOf('-') + 1);
+      const styledRest = rest.replace(/('.*?')/g, '<span class="highlight-string">$1</span>')
+                             .replace(/\b(\d+)\b/g, '<span class="highlight-number">$1</span>');
+      return `<span class="highlight-dash">${esc.substring(0, esc.indexOf('-') + 1)}</span>${styledRest}`;
+    }
+    return `<span>${esc}</span>`;
+  }).join('\n');
+}
+
+function updateOutput() {
+  document.getElementById('outputCode').innerHTML = syntaxHighlight(generateConfig());
+}
+
+function renderNodeList() {
+  const btn = document.getElementById('viewNodesBtn');
+  if (!parsedNodeNames.length) {
+    btn.style.display = 'none';
+    return;
+  }
+  btn.style.display = 'block';
+  const { normal, countryMap } = classifyNodes(parsedNodeNames);
+  const activeCodes = COUNTRY_RULES.filter(r => countryMap[r.name].length > 0).map(r => r.tag);
+
+  const html = parsedNodeNames.map(name => {
+    const r = getNodeCountry(name);
+    const isSpecial = SPECIAL_KW.some(k => name.includes(k));
+    const tagHtml = r
+      ? `<span class="node-tag ${r.cls}">${r.tag}</span>`
+      : isSpecial
+        ? `<span class="node-tag tag-other">INFO</span>`
+        : `<span class="node-tag tag-other">—</span>`;
+    const safeName = name.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return `<div class="node-item"><span class="node-flag">🔗</span><span class="node-name" title="${safeName}">${safeName}</span>${tagHtml}</div>`;
+  }).join('');
+  document.getElementById('nodeListOverlay').innerHTML = html;
+
+  document.getElementById('statTotal').textContent = parsedNodeNames.length;
+  document.getElementById('statCountries').textContent = activeCodes.length;
+  document.getElementById('nodeCount').textContent = parsedNodeNames.length + ' 节点';
+  document.getElementById('nodeCount').className = 'badge green';
+  document.getElementById('statsRow').style.display = 'flex';
+}
+
+function renderGroupConfig() {
+  const container = document.getElementById('groupConfigArea');
+  container.innerHTML = DEFAULT_GROUPS.map((group, gid) => {
+    const typeCls = group.isCountry ? 'type-country' : (group.type === 'url-test' ? 'type-urltest' : 'type-select');
+    const typeLabel = group.isCountry ? 'country' : group.type;
+    const displayName = group.name.replace(STRIP_EMOJI, '').trim();
+
+    if (group.canSelect) {
+      const isOpen = dropdownOpen[group.name] || false;
+      const selectable = getSelectableGroups(group.name);
+      const current = selectedGroups[group.name] || [];
+      const allSel = selectable.length > 0 && selectable.every(g => current.includes(g));
+      const selCount = current.length;
+      const countBadge = selCount > 0 ? `<span class="badge" style="margin-left:auto;margin-right:6px;font-size:10px;color:var(--text4)">+${selCount}</span>` : '';
+
+      return `<div class="group-item">
+        <div class="group-header" onclick="toggleDD('${group.name.replace(/'/g,"\\'")}')">
+          <span class="group-icon">${group.icon}</span>
+          <span class="group-name">${displayName}</span>
+          ${countBadge}
+          <span class="group-type-badge ${typeCls}">${typeLabel}</span>
+          <svg class="chevron ${isOpen?'open':''}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+        ${isOpen ? `<div class="group-content">
+          <div class="group-content-inner">
+            <div class="select-all-row">
+              <input type="checkbox" id="sa_${gid}" ${allSel?'checked':''} onchange="toggleAll('${group.name.replace(/'/g,"\\'")}')">
+              <label for="sa_${gid}">全选所有代理组</label>
+            </div>
+            ${selectable.map((g,i) => `
+              <div class="proxy-option">
+                <input type="checkbox" id="c_${gid}_${i}"
+                  value="${g}" ${current.includes(g)?'checked':''} onchange="updateSel('${group.name.replace(/'/g,"\\'")}','${g.replace(/'/g,"\\'")}',this.checked)">
+                <label for="c_${gid}_${i}">${g}</label>
+              </div>`).join('')}
+            ${!selectable.length ? '<div style="color:var(--text3);font-size:11px;padding:4px 0">暂无可选代理组</div>' : ''}
+          </div>
+        </div>` : ''}
+      </div>`;
+    } else {
+      const infoText = group.isCountry ? '自动匹配节点' : (group.type==='url-test' ? '仅包含节点' : '固定配置');
+      return `<div class="group-item">
+        <div class="group-header" style="cursor:default">
+          <span class="group-icon">${group.icon}</span>
+          <span class="group-name">${displayName}</span>
+          <span class="group-type-badge ${typeCls}" style="margin-left:auto">${typeLabel}</span>
+        </div>
+        <div class="group-info"><span class="info-icon">ℹ</span>${infoText}</div>
+      </div>`;
+    }
+  }).join('');
+}
+
+window.toggleDD = function(name) {
+  dropdownOpen[name] = !dropdownOpen[name];
+  renderGroupConfig();
+};
+window.updateSel = function(group, val, checked) {
+  if (!selectedGroups[group]) selectedGroups[group] = [];
+  if (checked) { if (!selectedGroups[group].includes(val)) selectedGroups[group].push(val); }
+  else selectedGroups[group] = selectedGroups[group].filter(g => g !== val);
+  renderGroupConfig();
+  updateOutput();
+};
+window.toggleAll = function(group) {
+  const selectable = getSelectableGroups(group);
+  const current = selectedGroups[group] || [];
+  const allSel = selectable.length > 0 && selectable.every(g => current.includes(g));
+  selectedGroups[group] = allSel ? [] : [...selectable];
+  renderGroupConfig();
+  updateOutput();
+};
+
+function setStatus(msg, type='info') {
+  const el = document.getElementById('status');
+  el.className = `status-bar ${type}`;
+  el.innerHTML = `<div class="status-dot"></div><span>${msg}</span>`;
+}
+
+function parseSubscription(content) {
+  const m = content.match(/proxies:\s*\n/);
+  if (!m) throw new Error('未找到 proxies 字段');
+  const start = m.index + m[0].length;
+  const gm = content.match(/proxy-groups:\s*\n/);
+  const end = gm ? gm.index : content.length;
+  const section = content.substring(start, end);
+  const proxies = [], names = [];
+  const lines = section.split('\n');
+  let cur = '', brace = 0, inP = false;
+  for (const line of lines) {
+    if (line.match(/^\s*-\s*\{/)) {
+      if (inP && cur) { push(cur, proxies, names); }
+      cur = line.trim(); brace = (line.match(/\{/g)||[]).length - (line.match(/\}/g)||[]).length; inP = true;
+    } else if (inP) {
+      cur += ' ' + line.trim();
+      brace += (line.match(/\{/g)||[]).length - (line.match(/\}/g)||[]).length;
+      if (brace === 0) { push(cur, proxies, names); cur = ''; inP = false; }
+    }
+  }
+  if (inP && cur) push(cur, proxies, names);
+  if (!names.length) throw new Error('未找到任何节点');
+  return { nodeNames: names, proxies: proxies.map(p => '    ' + (p.startsWith('-') ? p : '- ' + p)) };
+}
+
+function push(proxy, proxies, names) {
+  proxies.push(proxy);
+  const m = proxy.match(/name:\s*['"]?([^,'"}]+)['"]?/);
+  if (m) names.push(m[1].trim().replace(/^['"]|['"]$/g,''));
+}
+
+function processContent(content) {
+  try {
+    const { nodeNames, proxies } = parseSubscription(content);
+    parsedNodeNames = nodeNames; parsedProxies = proxies;
+    setStatus(`解析成功 — 找到 ${nodeNames.length} 个节点`, 'success');
+    renderNodeList(); renderGroupConfig(); updateOutput();
+  } catch(e) {
+    setStatus(e.message, 'error');
+    parsedNodeNames = []; parsedProxies = [];
+    renderNodeList(); updateOutput();
+  }
+}
+
+async function fetchFromUrl(url) {
+  setStatus('正在获取订阅内容...', 'info');
+  const proxyUrls = [
+    `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+    `https://corsproxy.io/?url=${encodeURIComponent(url)}`
+  ];
+  for (const p of proxyUrls) {
+    try {
+      const ctrl = new AbortController();
+      const tid = setTimeout(() => ctrl.abort(), 15000);
+      const res = await fetch(p, { signal: ctrl.signal });
+      clearTimeout(tid);
+      if (res.ok) { processContent(await res.text()); return; }
+    } catch(e) {}
+  }
+  setStatus('获取失败，请手动粘贴内容', 'error');
+}
+
+// 事件绑定
+document.getElementById('fetchBtn').addEventListener('click', () => {
+  const url = document.getElementById('urlInput').value.trim();
+  if (!url) { setStatus('请输入订阅链接', 'error'); return; }
+  fetchFromUrl(url);
+});
+document.getElementById('useManualBtn').addEventListener('click', () => {
+  const c = document.getElementById('manualInput').value.trim();
+  if (!c) { setStatus('请粘贴订阅内容', 'error'); return; }
+  processContent(c);
+});
+document.getElementById('copyBtn').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(generateConfig()); setStatus('已复制到剪贴板', 'success'); }
+  catch(e) { setStatus('复制失败', 'error'); }
+});
+document.getElementById('dlBtn').addEventListener('click', () => {
+  const b = new Blob([generateConfig()], { type: 'text/yaml' });
+  const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(b), download: 'config.yaml' });
+  a.click(); URL.revokeObjectURL(a.href);
+  setStatus('配置文件已下载', 'success');
+});
+document.getElementById('clearBtn').addEventListener('click', () => {
+  parsedNodeNames = []; parsedProxies = [];
+  document.getElementById('outputCode').innerHTML = '<span style="color:var(--text3);font-style:italic">等待处理...</span>';
+  renderNodeList(); setStatus('已清空', 'info');
+});
+document.getElementById('fullscreenBtn').addEventListener('click', () => {
+  document.getElementById('fsCode').innerHTML = document.getElementById('outputCode').innerHTML;
+  document.getElementById('fsOverlay').classList.add('active');
+});
+
+// overlay 开关逻辑统一封装
+function bindToggle(openId, closeId, overlayId) {
+  document.getElementById(openId).addEventListener('click', () =>
+    document.getElementById(overlayId).classList.add('active'));
+  document.getElementById(closeId).addEventListener('click', () =>
+    document.getElementById(overlayId).classList.remove('active'));
+}
+bindToggle('fullscreenBtn', 'fsCloseBtn', 'fsOverlay');
+bindToggle('viewNodesBtn', 'nodeCloseBtn', 'nodeOverlay');
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.getElementById('fsOverlay').classList.remove('active');
+    document.getElementById('nodeOverlay').classList.remove('active');
+  }
+});
+
+renderGroupConfig();
+updateOutput();
+</script>
+</body>
+</html>
