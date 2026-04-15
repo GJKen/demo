@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Demo</title><link>https://GJKen.github.io/demo</link><description> </description><copyright>Demo</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp</url><title>avatar</title><link>https://GJKen.github.io/demo</link></image><lastBuildDate>Wed, 15 Apr 2026 11:27:08 +0000</lastBuildDate><managingEditor>Demo</managingEditor><ttl>60</ttl><webMaster>Demo</webMaster><item><title>OpenClash 使用记录</title><link>https://GJKen.github.io/demo/post/11.html</link><description># 前言
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Demo</title><link>https://GJKen.github.io/demo</link><description> </description><copyright>Demo</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp</url><title>avatar</title><link>https://GJKen.github.io/demo</link></image><lastBuildDate>Wed, 15 Apr 2026 14:06:59 +0000</lastBuildDate><managingEditor>Demo</managingEditor><ttl>60</ttl><webMaster>Demo</webMaster><item><title>OpenClash 使用记录</title><link>https://GJKen.github.io/demo/post/11.html</link><description># 前言
 OoenClash 是一个运行在 OpenWrt 上的 Mihomo(Clash) 客户端, 兼容 Shadowsocks(R)、Vmess、Trojan、Snell 等协议, 根据灵活的规则配置实现策略代理
 
 官网 [Github](https://github.com/vernesong/OpenClash)
@@ -11,7 +11,11 @@ OoenClash 是一个运行在 OpenWrt 上的 Mihomo(Clash) 客户端, 兼容 Shad
 | GeoIP MMDB | Oenclash自带(Alecthw-lite-Version(全部国家且仅写入 iso_code 和 geoname_id))
 | GeoIP Dat | Oenclash自带 fastly
 | GeoSite | Oenclash自带 fastly
-| Geo ASN | Oenclash自带 fastly。</description><guid isPermaLink="true">https://GJKen.github.io/demo/post/11.html</guid><pubDate>Wed, 15 Apr 2026 11:26:39 +0000</pubDate></item><item><title>Windows 端 Claude Code 首次启动无法连接 Anthropic 服务解决方案</title><link>https://GJKen.github.io/demo/post/10.html</link><description># 问题现象
+| Geo ASN | Oenclash自带 fastly
+
+# Yaml 配置相关
+配置摘抄自 [Github](https://github.com/HenryChiao/MIHOMO_YAMLS/blob/main/THEYAMLS/General_Config/666OS/MihomoPro_Config.yaml)
+。</description><guid isPermaLink="true">https://GJKen.github.io/demo/post/11.html</guid><pubDate>Wed, 15 Apr 2026 11:26:39 +0000</pubDate></item><item><title>Windows 端 Claude Code 首次启动无法连接 Anthropic 服务解决方案</title><link>https://GJKen.github.io/demo/post/10.html</link><description># 问题现象
 
 &gt; [!NOTE]
 &gt; Claude Code 首次启动的引导流程会检测所在国家地区, 不符合会导致 API 连接拦截.

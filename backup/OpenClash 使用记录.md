@@ -11,3 +11,6 @@ OoenClash 是一个运行在 OpenWrt 上的 Mihomo(Clash) 客户端, 兼容 Shad
 | GeoIP Dat | Oenclash自带 fastly
 | GeoSite | Oenclash自带 fastly
 | Geo ASN | Oenclash自带 fastly
+
+# Yaml 配置相关
+配置摘抄自 [Github](https://github.com/HenryChiao/MIHOMO_YAMLS/blob/main/THEYAMLS/General_Config/666OS/MihomoPro_Config.yaml)
