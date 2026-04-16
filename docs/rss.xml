@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Demo</title><link>https://GJKen.github.io/demo</link><description> </description><copyright>Demo</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp</url><title>avatar</title><link>https://GJKen.github.io/demo</link></image><lastBuildDate>Thu, 16 Apr 2026 08:03:23 +0000</lastBuildDate><managingEditor>Demo</managingEditor><ttl>60</ttl><webMaster>Demo</webMaster><item><title>OpenClash 使用记录</title><link>https://GJKen.github.io/demo/post/11.html</link><description># 前言
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Demo</title><link>https://GJKen.github.io/demo</link><description> </description><copyright>Demo</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp</url><title>avatar</title><link>https://GJKen.github.io/demo</link></image><lastBuildDate>Thu, 16 Apr 2026 08:04:27 +0000</lastBuildDate><managingEditor>Demo</managingEditor><ttl>60</ttl><webMaster>Demo</webMaster><item><title>OpenClash 使用记录</title><link>https://GJKen.github.io/demo/post/11.html</link><description># 前言
 OoenClash 是一个运行在 OpenWrt 上的 Mihomo(Clash) 客户端, 兼容 Shadowsocks(R)、Vmess、Trojan、Snell 等协议, 根据灵活的规则配置实现策略代理
 
 官网 [Github](https://github.com/vernesong/OpenClash)
@@ -14,10 +14,10 @@ OoenClash 是一个运行在 OpenWrt 上的 Mihomo(Clash) 客户端, 兼容 Shad
 | Geo ASN | Oenclash自带 fastly
 
 # Yaml 配置相关
-配置摘抄自 [Github](https://github.com/HenryChiao/MIHOMO_YAMLS/blob/main/THEYAMLS/General_Config/666OS/MihomoPro_Config.yaml)
 
 ## Clash 节点自动生成分流规则
-AI 写的功能, 自用
+AI 写的功能, 自用, 部分配置摘抄自 [Github](https://github.com/HenryChiao/MIHOMO_YAMLS/blob/main/THEYAMLS/General_Config/666OS/MihomoPro_Config.yaml)
+
 在线地址 [link](https://gjken.github.io/demo/%E8%AE%A2%E9%98%85%E8%BD%AC%E6%8D%A2.html)
 
 ### 功能简介
