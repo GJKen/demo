@@ -15,9 +15,11 @@ OoenClash 是一个运行在 OpenWrt 上的 Mihomo(Clash) 客户端, 兼容 Shad
 # Yaml 配置相关
 
 ## Clash 节点自动生成分流规则
-AI 写的功能, 自用, 部分配置摘抄自 [Github](https://github.com/HenryChiao/MIHOMO_YAMLS/blob/main/THEYAMLS/General_Config/666OS/MihomoPro_Config.yaml)
+AI 写的功能, 自用,
 
-在线地址 [link](https://gjken.github.io/demo/%E8%AE%A2%E9%98%85%E8%BD%AC%E6%8D%A2.html)
+部分配置摘抄自 [Github](https://github.com/HenryChiao/MIHOMO_YAMLS/blob/main/THEYAMLS/General_Config/666OS/MihomoPro_Config.yaml)
+
+在线使用地址 [link](https://gjken.github.io/demo/%E8%AE%A2%E9%98%85%E8%BD%AC%E6%8D%A2.html)
 
 ### 功能简介
 
