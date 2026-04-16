@@ -26,7 +26,18 @@ OoenClash 是一个运行在 OpenWrt 上的 Mihomo(Clash) 客户端, 兼容 Shad
 
 # Yaml 配置相关
 配置摘抄自 [Github](https://github.com/HenryChiao/MIHOMO_YAMLS/blob/main/THEYAMLS/General_Config/666OS/MihomoPro_Config.yaml)
-。">
+
+## Clash 节点自动生成分流规则
+AI 写的功能, 自用
+在线地址 [link](https://gjken.github.io/demo/%E8%AE%A2%E9%98%85%E8%BD%AC%E6%8D%A2.html)
+
+### 功能简介
+
+<details><summary>点击展开</summary>
+
+## 概述
+
+纯前端工具页面，用于将机场订阅节点提取出来，套上预设的分流规则和代理组模板，生成一份可直接导入 OpenClash 的完整 Clash 配置文件。">
 <meta property="og:title" content="OpenClash 使用记录">
 <meta property="og:description" content="# 前言
 OoenClash 是一个运行在 OpenWrt 上的 Mihomo(Clash) 客户端, 兼容 Shadowsocks(R)、Vmess、Trojan、Snell 等协议, 根据灵活的规则配置实现策略代理
@@ -44,7 +55,18 @@ OoenClash 是一个运行在 OpenWrt 上的 Mihomo(Clash) 客户端, 兼容 Shad
 
 # Yaml 配置相关
 配置摘抄自 [Github](https://github.com/HenryChiao/MIHOMO_YAMLS/blob/main/THEYAMLS/General_Config/666OS/MihomoPro_Config.yaml)
-。">
+
+## Clash 节点自动生成分流规则
+AI 写的功能, 自用
+在线地址 [link](https://gjken.github.io/demo/%E8%AE%A2%E9%98%85%E8%BD%AC%E6%8D%A2.html)
+
+### 功能简介
+
+<details><summary>点击展开</summary>
+
+## 概述
+
+纯前端工具页面，用于将机场订阅节点提取出来，套上预设的分流规则和代理组模板，生成一份可直接导入 OpenClash 的完整 Clash 配置文件。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://GJKen.github.io/demo/post/11.html">
 <meta property="og:image" content="https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp">
@@ -160,7 +182,352 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
 </tbody>
 </table></markdown-accessiblity-table>
 <h1>Yaml 配置相关</h1>
-<p>配置摘抄自 <a href="https://github.com/HenryChiao/MIHOMO_YAMLS/blob/main/THEYAMLS/General_Config/666OS/MihomoPro_Config.yaml">Github</a></p></div>
+<p>配置摘抄自 <a href="https://github.com/HenryChiao/MIHOMO_YAMLS/blob/main/THEYAMLS/General_Config/666OS/MihomoPro_Config.yaml">Github</a></p>
+<h2>Clash 节点自动生成分流规则</h2>
+<p>AI 写的功能, 自用<br>
+在线地址 <a href="https://gjken.github.io/demo/%E8%AE%A2%E9%98%85%E8%BD%AC%E6%8D%A2.html" rel="nofollow">link</a></p>
+<h3>功能简介</h3>
+<details><summary>点击展开</summary>
+<h2>概述</h2>
+<p>纯前端工具页面，用于将机场订阅节点提取出来，套上预设的分流规则和代理组模板，生成一份可直接导入 OpenClash 的完整 Clash 配置文件。</p>
+<hr>
+<h2>一、订阅输入（左面板）</h2>
+<h3>1.1 远程获取</h3>
+<ul>
+<li>输入订阅链接，点击"获取"</li>
+<li>内置 5 个 CORS 代理（gjken workers、allorigins、corsproxy、codetabs、cors-anywhere）依次尝试</li>
+<li>每个代理 15 秒超时，自动切换下一个</li>
+</ul>
+<h3>1.2 手动粘贴</h3>
+<ul>
+<li>直接在文本框粘贴订阅内容，点击"使用此内容"</li>
+</ul>
+<h3>1.3 格式自动识别</h3>
+<p>支持三种输入格式，自动判断：</p>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>格式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Clash YAML</td>
+<td>标准 Clash 订阅，解析 <code class="notranslate">proxies:</code> 段</td>
+</tr>
+<tr>
+<td>URI 链接</td>
+<td><code class="notranslate">hysteria2://</code> 和 <code class="notranslate">vless://</code> 协议，逐行解析</td>
+</tr>
+<tr>
+<td>Base64 编码</td>
+<td>自动检测并解码后再按上述两种格式处理</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<h3>1.4 节点分类</h3>
+<ul>
+<li>按关键词自动归类到 7 个国家/地区：</li>
+</ul>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>标签</th>
+<th>地区</th>
+<th>匹配关键词示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HK</td>
+<td>香港</td>
+<td>香港、🇭🇰、HK、HKG、HongKong</td>
+</tr>
+<tr>
+<td>TW</td>
+<td>台湾</td>
+<td>台湾、🇹🇼、TW、KHH、Taiwan</td>
+</tr>
+<tr>
+<td>SG</td>
+<td>新加坡</td>
+<td>新加坡、🇸🇬、SG、Singapore</td>
+</tr>
+<tr>
+<td>JP</td>
+<td>日本</td>
+<td>日本、🇯🇵、JP、Tokyo、东京</td>
+</tr>
+<tr>
+<td>US</td>
+<td>美国</td>
+<td>美国、🇺🇸、US、LAX、SJC 等</td>
+</tr>
+<tr>
+<td>EU</td>
+<td>欧洲</td>
+<td>法国、德国、英国、🇫🇷、FRA、AMS 等</td>
+</tr>
+<tr>
+<td>KR</td>
+<td>韩国</td>
+<td>韩国、🇰🇷、Seoul、KOR</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<ul>
+<li>自动过滤信息节点（包含"剩余流量""套餐到期"等关键词的条目）</li>
+</ul>
+<h3>1.5 统计展示</h3>
+<p>解析成功后显示：</p>
+<ul>
+<li>总节点数</li>
+<li>覆盖国家数</li>
+<li>代理组数量</li>
+<li>可弹窗查看完整节点列表（带国家标签着色）</li>
+</ul>
+<hr>
+<h2>二、代理组配置（中间面板）</h2>
+<h3>2.1 预设代理组（17 个）</h3>
+<h4>功能组</h4>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>组名</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🚀手动选择</td>
+<td>select</td>
+<td>包含所有节点 + DIRECT，可附加子组</td>
+</tr>
+<tr>
+<td>♻️自动选择</td>
+<td>url-test</td>
+<td>全部节点自动测速</td>
+</tr>
+<tr>
+<td>AIGC</td>
+<td>select</td>
+<td>AI 服务（Claude、OpenAI、Bard 等）</td>
+</tr>
+<tr>
+<td>PikPak</td>
+<td>select</td>
+<td>PikPak 网盘</td>
+</tr>
+<tr>
+<td>PicHub</td>
+<td>select</td>
+<td>图片站</td>
+</tr>
+<tr>
+<td>Telegram</td>
+<td>select</td>
+<td>Telegram 相关</td>
+</tr>
+<tr>
+<td>Google</td>
+<td>select</td>
+<td>Google 服务</td>
+</tr>
+<tr>
+<td>🛑ADblock</td>
+<td>select</td>
+<td>固定 REJECT / DIRECT</td>
+</tr>
+<tr>
+<td>Adobe</td>
+<td>select</td>
+<td>固定 REJECT / DIRECT</td>
+</tr>
+<tr>
+<td>🐟漏网之鱼</td>
+<td>select</td>
+<td>兜底规则</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<h4>国家自动测速组</h4>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>组名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🇭🇰香港 Auto</td>
+<td>仅含匹配到的香港节点，url-test</td>
+</tr>
+<tr>
+<td>🇹🇼台湾 Auto</td>
+<td>同上，台湾节点</td>
+</tr>
+<tr>
+<td>🇸🇬新加坡 Auto</td>
+<td>同上，新加坡节点</td>
+</tr>
+<tr>
+<td>🇯🇵日本 Auto</td>
+<td>同上，日本节点</td>
+</tr>
+<tr>
+<td>🇺🇸美国 Auto</td>
+<td>同上，美国节点</td>
+</tr>
+<tr>
+<td>🇪🇺欧洲 Auto</td>
+<td>同上，欧洲节点</td>
+</tr>
+<tr>
+<td>🇰🇷韩国 Auto</td>
+<td>同上，韩国节点</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<blockquote>
+<p>国家组仅在实际存在对应节点时才会出现在配置中。</p>
+</blockquote>
+<h3>2.2 子组附加</h3>
+<ul>
+<li>对 <code class="notranslate">canSelect</code> 类型的组（手动选择、AIGC、Google 等），可展开勾选要附加的 url-test 子组</li>
+<li>支持全选/取消全选</li>
+<li>解析节点后默认自动全选所有匹配到节点的国家组</li>
+</ul>
+<hr>
+<h2>三、配置输出（右面板）</h2>
+<h3>3.1 生成内容</h3>
+<p>点击"生成配置"后，拼接完整的 Clash YAML，包含四个部分：</p>
+<ol>
+<li><strong>基础设置</strong> — 端口（7890-7895）、DNS（fake-ip 模式、国内外分流）、认证跳过等</li>
+<li><strong>proxies</strong> — 从订阅解析出的全部节点</li>
+<li><strong>proxy-groups</strong> — 根据用户勾选动态生成</li>
+<li><strong>rule-providers + rules</strong> — 内置分流规则</li>
+</ol>
+<h3>3.2 内置规则集</h3>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>规则集</th>
+<th>指向代理组</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>private</td>
+<td>DIRECT</td>
+<td>MetaCubeX</td>
+</tr>
+<tr>
+<td>cn_domain / cn_ip</td>
+<td>DIRECT</td>
+<td>MetaCubeX</td>
+</tr>
+<tr>
+<td>adobe</td>
+<td>Adobe</td>
+<td>GJKen</td>
+</tr>
+<tr>
+<td>pic_hub</td>
+<td>PicHub</td>
+<td>GJKen</td>
+</tr>
+<tr>
+<td>steam</td>
+<td>🚀手动选择</td>
+<td>blackmatrix7</td>
+</tr>
+<tr>
+<td>google</td>
+<td>Google</td>
+<td>GJKen</td>
+</tr>
+<tr>
+<td>claude</td>
+<td>AIGC</td>
+<td>GJKen</td>
+</tr>
+<tr>
+<td>ai_GC</td>
+<td>AIGC</td>
+<td>GJKen</td>
+</tr>
+<tr>
+<td>openai / bard / bing / copilot</td>
+<td>AIGC</td>
+<td>blackmatrix7</td>
+</tr>
+<tr>
+<td>pikpakdomain</td>
+<td>PikPak</td>
+<td>GJKen</td>
+</tr>
+<tr>
+<td>telegram</td>
+<td>Telegram</td>
+<td>GJKen</td>
+</tr>
+<tr>
+<td>geolocation-!cn</td>
+<td>🚀手动选择</td>
+<td>MetaCubeX</td>
+</tr>
+<tr>
+<td>MATCH（兜底）</td>
+<td>🐟漏网之鱼</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<h3>3.3 操作按钮</h3>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>按钮</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⚡ 生成配置</td>
+<td>根据当前节点和勾选生成 YAML</td>
+</tr>
+<tr>
+<td>📋 复制</td>
+<td>复制到剪贴板</td>
+</tr>
+<tr>
+<td>💾 下载</td>
+<td>下载为 <code class="notranslate">config.yaml</code></td>
+</tr>
+<tr>
+<td>🗑 清空</td>
+<td>重置所有状态</td>
+</tr>
+<tr>
+<td>⛶ 全屏</td>
+<td>全屏查看生成的配置（带语法高亮）</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<hr>
+<h2>四、技术细节</h2>
+<ul>
+<li>纯前端，无后端依赖，单 HTML 文件即可运行</li>
+<li>YAML 语法高亮使用 highlight.js（vs2015 主题）</li>
+<li>脏检查机制避免重复渲染</li>
+<li>响应式布局：三栏 → 两栏 → 单栏（900px / 600px 断点）</li>
+<li>ESC 键关闭所有弹层</li>
+</ul>
+</details></div>
 <div style="font-size:small;margin-top:8px;float:right;">🥰转载请注明,谢谢!🥰</div>
 
 <button class="btn btn-block" type="button" id="cmButton">评论</button>
