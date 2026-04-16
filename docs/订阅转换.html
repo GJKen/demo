@@ -5,19 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OpenClash订阅附加规则器</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{box-sizing:border-box;margin:0;}
+*::-webkit-scrollbar{width:8px;height:8px}
+*::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+*::-webkit-scrollbar-thumb:hover{background:var(--text2);cursor:pointer}
 :root{
   --bg:#0d1117;--bg2:#161b22;--bg3:#21262d;--bg4:#30363d;
-  --border:#30363d;--border2:#484f58;
+  --border:#30363d;--border2:#515862;
   --text:#e6edf3;--text2:#8b949e;--text3:#a9a9a9;--text4:#47fcd4;
   --accent:#58a6ff;--accent2:#1f6feb;--accent-bg:rgba(88,166,255,0.1);
   --green:#3fb950;--green-bg:rgba(63,185,80,0.1);
-  --orange:#d29922;--orange-bg:rgba(210,153,34,0.12);
   --red:#f85149;--red-bg:rgba(248,81,73,0.1);
   --purple:#bc8cff;--purple-bg:rgba(188,140,255,0.1);
   --radius:8px;--radius-lg:12px;
 }
+
+/* ============================================================
+   布局骨架
+   ============================================================ */
 body{background:var(--bg);color:var(--text);font-family:'Noto Sans SC',sans-serif;font-size:14px;min-height:100vh}
 .app{display:grid;grid-template-rows:auto 1fr;height:100vh;max-width:100%;overflow:hidden}
 .topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;gap:20px;height:56px;flex-shrink:0}
@@ -27,15 +35,31 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans SC',sans-seri
 .main{display:grid;grid-template-columns:minmax(250px,25%) minmax(300px,1fr) minmax(280px,30%);overflow:hidden;height:100%}
 .panel{display:flex;flex-direction:column;overflow:hidden;border-right:1px solid var(--border)}
 .panel:last-child{border-right:none}
-.panel-header{padding:0 18px;height:42px;border-bottom:1px solid var(--border);background:var(--bg2);flex-shrink:0;display:flex;align-items:center;justify-content:space-between}
-.panel-title{font-weight:500;color:var(--text2);text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:8px}
-.badge{background:var(--bg3);border:1px solid var(--border);color:var(--text2);font-size:11px;padding:1px 7px;border-radius:20px;font-family:'IBM Plex Mono',monospace}
-.badge.green{background:var(--green-bg);border-color:rgba(63,185,80,0.3);color:var(--green)}
-.panel-body{flex:1;overflow-y:auto;padding:14px}
-.panel-body::-webkit-scrollbar{width:4px}
-.panel-body::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
 
-/* Input Panel */
+/* ============================================================
+   [复用基类 1] 顶栏 — .panel-header 与 .fs-header 共用
+   原来两段声明有 7 条完全相同的规则, 现在合并到 .bar-header, 
+   各自只保留真正不同的部分。
+   ============================================================ */
+.bar-header{padding:0 18px;height:42px;border-bottom:1px solid var(--border);background:var(--bg2);flex-shrink:0;display:flex;align-items:center;justify-content:space-between;}
+/* panel-header 无差异, 直接复用 */
+.panel-header{composes:bar-header}
+/* fs-header 覆盖差异：更大内边距、高度自适应 */
+.fs-header{padding:12px 20px;height:auto;}
+
+.panel-title{font-weight:500;color:var(--text2);text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:8px}
+
+.chip{font-size:11px;padding:1px 7px;border-radius:20px;font-family:'IBM Plex Mono',monospace;background:var(--chip-bg);border:1px solid var(--chip-border);color:var(--chip-color);}
+/* .badge 复用 chip, 同时保留原来的通用灰色默认值 */
+.badge{--chip-bg:var(--bg3);--chip-border:var(--border);--chip-color:var(--text2);}
+.badge,.chip{font-size:11px;padding:1px 7px;border-radius:20px;font-family:'IBM Plex Mono',monospace;background:var(--chip-bg,var(--bg3));border:1px solid var(--chip-border,var(--border));color:var(--chip-color,var(--text2))}
+.badge.green{--chip-bg:var(--green-bg);--chip-border:rgba(63,185,80,0.3);--chip-color:var(--green)}
+
+.panel-body{flex:1;overflow-y:auto;padding:14px}
+
+/* ============================================================
+   输入面板
+   ============================================================ */
 .input-section{margin-bottom:16px}
 .input-label{font-size:14px;font-weight:500;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px}
 .input-row{display:flex;gap:8px}
@@ -43,6 +67,10 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans SC',sans-seri
 .inp:focus{border-color:var(--accent)}
 .inp::placeholder{color:var(--text3)}
 textarea.inp{display:block;width:100%;height:80px;font-size:11.5px;resize:vertical;margin:0}
+
+/* ============================================================
+   按钮基础
+   ============================================================ */
 .btn{padding:8px 14px;border-radius:var(--radius);border:none;cursor:pointer;font-size:12px;font-weight:500;font-family:'Noto Sans SC',sans-serif;transition:all 0.15s;white-space:nowrap}
 .btn-primary{background:var(--accent2);color:#fff}
 .btn-primary:hover{background:#388bfd}
@@ -50,7 +78,24 @@ textarea.inp{display:block;width:100%;height:80px;font-size:11.5px;resize:vertic
 .btn-secondary:hover{background:var(--bg4);border-color:var(--border2)}
 .btn-sm{padding:5px 10px}
 
-.status-bar{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:8px 12px;font-size:12px;display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.btn-semantic{background:var(--btn-bg);color:var(--btn-color);border:1px solid var(--btn-border);}
+.btn-copy{--btn-bg:var(--bg3);--btn-color:var(--text);--btn-border:var(--border);}
+.btn-copy:hover{background:var(--bg4)}
+.btn-dl{--btn-bg:var(--green-bg);--btn-color:var(--green);--btn-border:rgba(63,185,80,0.3);}
+.btn-dl:hover{--btn-bg:rgba(63,185,80,0.2)}
+.btn-clear{--btn-bg:var(--red-bg);--btn-color:var(--red);--btn-border:rgba(248,81,73,0.3);}
+.btn-clear:hover{--btn-bg:rgba(248,81,73,0.2)}
+/* 让三个语义按钮继承基类 */
+.btn-copy,.btn-dl,.btn-clear{background:var(--btn-bg);color:var(--btn-color);border:1px solid var(--btn-border)}
+
+/* ============================================================
+   状态栏
+   ============================================================ */
+.status-bar{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:8px 12px;font-size:12px;display:flex;align-items:center;gap:8px;margin-bottom:14px;transition:border-color 0.3s,background 0.3s,box-shadow 0.3s}
+@keyframes statusPulse{0%{transform:scale(1);opacity:1}50%{transform:scale(1.8);opacity:0.4}100%{transform:scale(1);opacity:1}}
+@keyframes statusFlash{0%{box-shadow:0 0 0 0 transparent}30%{box-shadow:0 0 12px 2px var(--flash-color)}100%{box-shadow:0 0 0 0 transparent}}
+.status-bar.flash .status-dot{animation:statusPulse 0.6s ease}
+.status-bar.flash{animation:statusFlash 0.6s ease}
 .status-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 .status-bar.info .status-dot{background:var(--accent)}
 .status-bar.success .status-dot{background:var(--green)}
@@ -58,29 +103,38 @@ textarea.inp{display:block;width:100%;height:80px;font-size:11.5px;resize:vertic
 .status-bar.success{border-color:rgba(63,185,80,0.3);background:var(--green-bg)}
 .status-bar.error{border-color:rgba(248,81,73,0.3);background:var(--red-bg)}
 
-/* Node List */
+/* ============================================================
+   节点列表
+   ============================================================ */
 .node-item{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:var(--radius);margin-bottom:3px;background:var(--bg2);border:1px solid var(--border);transition:border-color 0.1s}
 .node-item:hover{border-color:#6cacff}
 .node-flag{font-size:13px;flex-shrink:0;width:20px;text-align:center}
 .node-name{font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--text);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.node-tag{font-size:10px;padding:1px 5px;border-radius:4px;flex-shrink:0;font-family:'IBM Plex Mono',monospace}
-.tag-hk{background:rgba(255,179,128,0.15);color:#ffb380;border:1px solid rgba(255,179,128,0.3)}
-.tag-tw{background:rgba(88,166,255,0.15);color:#58a6ff;border:1px solid rgba(88,166,255,0.3)}
-.tag-sg{background:rgba(63,185,80,0.15);color:#3fb950;border:1px solid rgba(63,185,80,0.3)}
-.tag-jp{background:rgba(188,140,255,0.15);color:#bc8cff;border:1px solid rgba(188,140,255,0.3)}
-.tag-us{background:rgba(210,153,34,0.15);color:#d29922;border:1px solid rgba(210,153,34,0.3)}
-.tag-other{background:var(--bg3);color:var(--text3);border:1px solid var(--border)}
 
-/* Group Config Panel */
+/* node-tag 复用 chip 变量体系 */
+.node-tag{font-size:10px;padding:1px 5px;border-radius:4px;flex-shrink:0;font-family:'IBM Plex Mono',monospace;background:var(--chip-bg);border:1px solid var(--chip-border);color:var(--chip-color)}
+.tag-hk{--chip-bg:rgba(255,179,128,0.15);--chip-border:rgba(255,179,128,0.3);--chip-color:#ffb380}
+.tag-tw,.tag-eu{--chip-bg:rgba(88,166,255,0.15);--chip-border:rgba(88,166,255,0.3);--chip-color:#58a6ff}
+.tag-sg,.tag-kr{--chip-bg:rgba(63,185,80,0.15);--chip-border:rgba(63,185,80,0.3);--chip-color:#3fb950}
+.tag-jp{--chip-bg:rgba(188,140,255,0.15);--chip-border:rgba(188,140,255,0.3);--chip-color:#bc8cff}
+.tag-us{--chip-bg:rgba(210,153,34,0.15);--chip-border:rgba(210,153,34,0.3);--chip-color:#d29922}
+.tag-other{--chip-bg:var(--bg3);--chip-border:var(--border);--chip-color:var(--text3)}
+
+/* ============================================================
+   代理组配置面板
+   ============================================================ */
 .group-item{margin-bottom:8px;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;background:var(--bg2)}
 .group-header{padding:10px 14px;cursor:pointer;display:flex;align-items:center;gap:6px;user-select:none;transition:background 0.1s}
 .group-header:hover{background:var(--bg3)}
 .group-icon{font-size:14px;width:20px;text-align:center;flex-shrink:0}
 .group-name{flex:1;font-weight:500}
-.group-type-badge{font-size:10px;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:4px;flex-shrink:0}
-.type-select{background:var(--accent-bg);color:var(--accent);border:1px solid rgba(88,166,255,0.3)}
-.type-urltest{background:var(--green-bg);color:var(--green);border:1px solid rgba(63,185,80,0.3)}
-.type-country{background:var(--purple-bg);color:var(--purple);border:1px solid rgba(188,140,255,0.3)}
+
+/* group-type-badge 复用 chip 变量 */
+.group-type-badge{font-size:10px;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:4px;flex-shrink:0;background:var(--chip-bg);color:var(--chip-color);border:1px solid var(--chip-border)}
+.type-select{--chip-bg:var(--accent-bg);--chip-color:var(--accent);--chip-border:rgba(88,166,255,0.3)}
+.type-urltest{--chip-bg:var(--green-bg);--chip-color:var(--green);--chip-border:rgba(63,185,80,0.3)}
+.type-country{--chip-bg:var(--purple-bg);--chip-color:var(--purple);--chip-border:rgba(188,140,255,0.3)}
+
 .chevron{width:16px;height:16px;color:var(--text3);transition:transform 0.2s;flex-shrink:0}
 .chevron.open{transform:rotate(90deg)}
 .group-content{border-top:1px solid var(--border)}
@@ -95,52 +149,53 @@ textarea.inp{display:block;width:100%;height:80px;font-size:11.5px;resize:vertic
 .group-info{padding:8px 14px 10px;font-size:11px;color:var(--text3);display:flex;align-items:center;gap:6px}
 .info-icon{opacity:0.6}
 
-/* Output Panel */
+/* ============================================================
+   代码面板
+   .output-code 与 .fs-code 字体、行高、padding、overflow 完全相同, 
+   提取到 .code-pane, 各自只保留真正不同的部分。
+   ============================================================ */
+.code-pane{overflow:auto;padding:14px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;line-height:1.6;background:transparent;}
+.code-pane>code{display:block;white-space:pre;tab-size:2}
+/* output-code 额外占满剩余高度 */
+.output-code{flex:1}
+/* fs-code 无额外差异, 直接复用 .code-pane 即可 */
+
+/* ============================================================
+   输出面板工具栏
+   ============================================================ */
 .output-toolbar{padding:10px 14px;border-bottom:1px solid var(--border);background:var(--bg2);display:flex;align-items:center;gap:8px;flex-shrink:0}
-.output-code{flex:1;overflow:auto;padding:14px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;line-height:1.6;color:#e6edf3;white-space:pre;tab-size:2}
-.output-code::-webkit-scrollbar{width:4px;height:4px}
-.output-code::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
 
-.divider{height:1px;background:var(--border);margin:12px 0}
-
-.btn-copy{background:var(--bg3);color:var(--text);border:1px solid var(--border)}
-.btn-copy:hover{background:var(--bg4)}
-.btn-dl{background:var(--green-bg);color:var(--green);border:1px solid rgba(63,185,80,0.3)}
-.btn-dl:hover{background:rgba(63,185,80,0.2)}
-.btn-clear{background:var(--red-bg);color:var(--red);border:1px solid rgba(248,81,73,0.3)}
-.btn-clear:hover{background:rgba(248,81,73,0.2)}
-
-/* Overlays — shared header/title/code styles */
-.fs-header{padding:12px 20px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.fs-title{font-size:13px;color:var(--text2);font-weight:500}
-.fs-code{flex:1;overflow:auto;font-family:'IBM Plex Mono',monospace;line-height:1.6;white-space:pre}
-.fs-code::-webkit-scrollbar{width:4px;height:4px}
-.fs-code::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
-
-/* Fullscreen Overlay */
-.fs-overlay{display:none;position:fixed;inset:0;z-index:9999;background:var(--bg);flex-direction:column}
-.fs-overlay.active{display:flex}
-.fs-overlay .fs-code{padding:20px;font-size:12px;color:#e6edf3;tab-size:2}
-
-/* Center Modal */
-.modal-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.6);align-items:center;justify-content:center}
-.modal-overlay.active{display:flex}
-.modal-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);width:90%;max-width:600px;max-height:80vh;display:flex;flex-direction:column;overflow:hidden}
-.modal-box .fs-code{padding:10px;font-size:12px}
-
+/* ============================================================
+   统计卡片
+   ============================================================ */
 .stats-row{display:flex;gap:8px;margin-bottom:12px}
 .stat-card{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:8px 10px;text-align:center}
 .stat-num{font-size:18px;font-weight:600;font-family:'IBM Plex Mono',monospace;color:var(--text)}
 .stat-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;margin-top:2px}
 
-.highlight-key{color:#79c0ff}
-.highlight-string{color:#a8d8a8}
-.highlight-number{color:#f0883e}
-.highlight-comment{color:#6e7681}
-.highlight-bracket{color:#e6edf3}
-.highlight-dash{color:#ffa657}
+/* ============================================================
+   辅助
+   ============================================================ */
+.divider{height:1px;background:var(--border);margin:12px 0}
 
-/* Mobile Responsive */
+/* ============================================================
+   全屏弹层 & 中央弹窗
+   弹层标题栏复用 .bar-header(已在上方定义)
+   ============================================================ */
+.fs-overlay{display:none;position:fixed;inset:0;z-index:9999;background:var(--bg);flex-direction:column}
+.fs-overlay.active{display:flex}
+.modal-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.6);align-items:center;justify-content:center}
+.modal-overlay.active{display:flex}
+.modal-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);width:90%;max-width:600px;max-height:80vh;display:flex;flex-direction:column;overflow:hidden}
+
+/* ============================================================
+   highlight.js — 融入深色主题
+   ============================================================ */
+pre code.hljs{display:block;overflow:visible}
+
+/* ============================================================
+   响应式
+   ============================================================ */
 @media(max-width:900px){
   .main{grid-template-columns:1fr 1fr;grid-template-rows:auto auto;height:auto}
   .panel:nth-child(3){border-top:1px solid var(--border);grid-column:1 / -1;width:100%}
@@ -211,12 +266,13 @@ textarea.inp{display:block;width:100%;height:80px;font-size:11.5px;resize:vertic
         <div class="panel-title">📄 生成配置</div>
       </div>
       <div class="output-toolbar">
+        <button class="btn btn-primary btn-sm" id="generateBtn">⚡ 生成配置</button>
         <button class="btn btn-copy btn-sm" id="copyBtn">📋 复制</button>
         <button class="btn btn-dl btn-sm" id="dlBtn">💾 下载</button>
         <button class="btn btn-clear btn-sm" id="clearBtn">🗑 清空</button>
         <button class="btn btn-secondary btn-sm" id="fullscreenBtn" style="margin-left:auto">⛶ 全屏</button>
       </div>
-      <div id="outputCode" class="output-code"><span style="color:var(--text3);font-style:italic">等待处理...</span></div>
+      <pre class="output-code" style="margin:0"><code id="outputCode" class="language-yaml" style="color:var(--text3);font-style:italic">等待处理...</code></pre>
     </div>
   </div>
 </div>
@@ -227,7 +283,7 @@ textarea.inp{display:block;width:100%;height:80px;font-size:11.5px;resize:vertic
     <span class="fs-title">📄 生成配置 — 全屏查看</span>
     <button class="btn btn-secondary btn-sm" id="fsCloseBtn">✕ 关闭</button>
   </div>
-  <div class="fs-code" id="fsCode"></div>
+  <pre class="fs-code" style="margin:0"><code id="fsCode" class="language-yaml"></code></pre>
 </div>
 
 <!-- Node List Modal -->
@@ -242,15 +298,25 @@ textarea.inp{display:block;width:100%;height:80px;font-size:11.5px;resize:vertic
 </div>
 
 <script>
-const FIXED_HEADER = `mixed-port: 7890
-allow-lan: false
+const FIXED_HEADER = `mode: rule
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7895
+allow-lan: true
+ipv6: false
 bind-address: '*'
-mode: rule
 log-level: info
 external-controller: '127.0.0.1:9090'
 unified-delay: true
 tcp-concurrent: true
-ipv6: false
+# 认证配置
+skip-auth-prefixes:
+  - 192.168.1.0/24
+  - 192.168.31.0/24
+  - 192.168.100.0/24
+  - 127.0.0.1/8
 dns:
     enable: true
     ipv6: false
@@ -259,11 +325,22 @@ dns:
     enhanced-mode: fake-ip
     fake-ip-range: 198.18.0.1/16
     use-hosts: true
-    default-nameserver: [223.5.5.5, 119.29.29.29]
+    default-nameserver:
+      - 119.29.29.29
+      - 180.184.1.1
+      - 223.5.5.5
     proxy-server-nameserver: ['https://dns.alidns.com/dns-query', 'https://doh.pub/dns-query']
-    nameserver: [223.5.5.5, 119.29.29.29]
+    nameserver: [119.29.29.29,223.5.5.5]
     fallback: ['https://cloudflare-dns.com/dns-query', 'https://dns.cloudflare.com/dns-query', 'https://dns.alidns.com/dns-query', 'https://doh.pub/dns-query']
-    fallback-filter: { geoip: true, geoip-code: CN, geosite: [gfw] }`;
+    fallback-filter: { geoip: true, geoip-code: CN, geosite: [gfw] }
+    fake-ip-filter:
+      - geosite:cn
+      - geosite:Private
+      - +.miwifi.com
+      - +.docker.io
+      - +.market.xiaomi.com
+      - +.push.apple.com
+`;
 
 const RULE_PROVIDERS = `rule-providers:
   private:
@@ -381,15 +458,15 @@ const RULE_PROVIDERS = `rule-providers:
     type: http`;
 
 const RULES = `rules:
+  - RULE-SET,private,DIRECT
+  - RULE-SET,adobe,Adobe
   - RULE-SET,pic_hub,PicHub
   - RULE-SET,steam,🚀手动选择
-  - RULE-SET,adobe,Adobe
+  - RULE-SET,google,Google
   - RULE-SET,claude,AIGC
   - RULE-SET,ai_GC,AIGC
   - RULE-SET,pikpakdomain,PikPak
-  - RULE-SET,private,DIRECT
   - RULE-SET,telegram,Telegram
-  - RULE-SET,google,Google
   - RULE-SET,geolocation-!cn,🚀手动选择
   - RULE-SET,cn_domain,DIRECT
   - RULE-SET,cn_ip,DIRECT
@@ -410,34 +487,59 @@ const DEFAULT_GROUPS = [
   { name: "🇹🇼台湾 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇹🇼", proxies: [], canSelect: false, isCountry: true },
   { name: "🇸🇬新加坡 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇸🇬", proxies: [], canSelect: false, isCountry: true },
   { name: "🇯🇵日本 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇯🇵", proxies: [], canSelect: false, isCountry: true },
-  { name: "🇺🇸美国 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇺🇸", proxies: [], canSelect: false, isCountry: true }
+  { name: "🇺🇸美国 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇺🇸", proxies: [], canSelect: false, isCountry: true },
+  { name: "🇪🇺欧洲 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇪🇺", proxies: [], canSelect: false, isCountry: true },
+  { name: "🇰🇷韩国 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇰🇷", proxies: [], canSelect: false, isCountry: true }
 ];
 
 const COUNTRY_RULES = [
-  { name: "🇭🇰香港 Auto", keywords: ['香港','🇭🇰','HK','HongKong','hongkong'], tag: 'HK', cls: 'tag-hk' },
-  { name: "🇹🇼台湾 Auto", keywords: ['台湾','🇹🇼','TW','Taiwan','taiwan'], tag: 'TW', cls: 'tag-tw' },
+  { name: "🇭🇰香港 Auto", keywords: ['香港','🇭🇰','HK','HKG','HongKong','hongkong'], tag: 'HK', cls: 'tag-hk' },
+  { name: "🇹🇼台湾 Auto", keywords: ['台湾','🇹🇼','TW','KHH','Taiwan','taiwan'], tag: 'TW', cls: 'tag-tw' },
   { name: "🇸🇬新加坡 Auto", keywords: ['新加坡','🇸🇬','SG','Singapore','singapore'], tag: 'SG', cls: 'tag-sg' },
   { name: "🇯🇵日本 Auto", keywords: ['日本','🇯🇵','JP','Japan','Tokyo','东京','japan'], tag: 'JP', cls: 'tag-jp' },
-  { name: "🇺🇸美国 Auto", keywords: ['美国','🇺🇸','US','USA','America','圣何塞','洛杉矶','凤凰城','San Jose','Los Angeles'], tag: 'US', cls: 'tag-us' }
+  { name: "🇺🇸美国 Auto", keywords: ['美国','🇺🇸','US','USA','America','圣何塞','洛杉矶','凤凰城','San Jose','Los Angeles','SJC','JFK','LAX','ORD','ATL','DFW','SFO','MIA','SEA','IAD'], tag: 'US', cls: 'tag-us' },
+  { name: "🇪🇺欧洲 Auto", keywords: ['奥地利','比利时','保加利亚','克罗地亚','塞尔维亚','捷克','丹麦','爱沙尼亚','芬兰','法国','德国','希腊','匈牙利','爱尔兰','意大利','拉脱维亚','立陶宛','卢森堡','马耳他','荷兰','波兰','葡萄牙','罗马尼亚','斯洛伐克','斯洛文尼亚','西班牙','瑞典','英国','🇦🇹','🇧🇪','🇧🇬','🇭🇷','🇷🇸','🇨🇿','🇩🇰','🇪🇪','🇫🇮','🇫🇷','🇩🇪','🇬🇷','🇭🇺','🇮🇪','🇮🇹','🇱🇻','🇱🇹','🇱🇺','🇲🇹','🇳🇱','🇵🇱','🇵🇹','🇷🇴','🇸🇰','🇸🇮','🇪🇸','🇸🇪','🇬🇧','CDG','FRA','AMS','MAD','BCN','FCO','MUC','BRU'], tag: 'EU', cls: 'tag-eu' },
+  { name: "🇰🇷韩国 Auto", keywords: ['韩国','🇰🇷','韓国','首尔','南朝鲜','KR','KOR','Korea','South','Seoul'], tag: 'KR', cls: 'tag-kr' }
 ];
 
 const SPECIAL_KW = ['剩余流量','距离下次重置','套餐到期','流量：','重置剩余','到期'];
 
 // 统一的 emoji 剥离正则
-const STRIP_EMOJI = /[🚀♻️🛑🐟🤖📦✈️📱🔍🇭🇰🇹🇼🇸🇬🇯🇵🇺🇸]/g;
+const STRIP_EMOJI = /[🚀♻️🛑🐟🤖📦✈️📱🔍🇭🇰🇹🇼🇸🇬🇯🇵🇺🇸🇪🇺🇰🇷]/g;
 
 let parsedNodeNames = [], parsedProxies = [];
 let selectedGroups = {};
 let dropdownOpen = {};
+let activeCountryGroups = new Set();
+let _lastRenderedConfig = null;
 
 // 初始化 statGroups 和 groupCount badge
 document.getElementById('statGroups').textContent = DEFAULT_GROUPS.length;
 document.getElementById('groupCount').textContent = DEFAULT_GROUPS.length + ' 组';
 
-DEFAULT_GROUPS.forEach(g => { if (g.canSelect) selectedGroups[g.name] = getSelectableGroups(g.name); });
+DEFAULT_GROUPS.forEach(g => { if (g.canSelect) selectedGroups[g.name] = []; });
 
 function getSelectableGroups(name) {
-  return DEFAULT_GROUPS.filter(g => g.name !== name && g.type === "url-test").map(g => g.name);
+  return DEFAULT_GROUPS.filter(g =>
+    g.name !== name && g.type === "url-test" && (!g.isCountry || activeCountryGroups.has(g.name))
+  ).map(g => g.name);
+}
+
+function refreshActiveCountryGroups() {
+  activeCountryGroups.clear();
+  if (parsedNodeNames.length) {
+    const { countryMap } = classifyNodes(parsedNodeNames);
+    COUNTRY_RULES.forEach(r => {
+      if (countryMap[r.name] && countryMap[r.name].length > 0) activeCountryGroups.add(r.name);
+    });
+  }
+  // 更新每个 canSelect 组的可选列表, 并自动选中所有活跃的 url-test 组
+  DEFAULT_GROUPS.forEach(g => {
+    if (!g.canSelect) return;
+    const selectable = getSelectableGroups(g.name);
+    // 移除不再可选的组, 添加新出现的可选组
+    selectedGroups[g.name] = selectable;
+  });
 }
 
 function getNodeCountry(name) {
@@ -474,7 +576,10 @@ function generateConfig() {
   const { normal, countryMap } = classifyNodes(parsedNodeNames);
   const groupNames = DEFAULT_GROUPS.map(g => g.name);
 
-  const groupsSection = "proxy-groups:\n" + DEFAULT_GROUPS.map(group => {
+  const groupsSection = "proxy-groups:\n" + DEFAULT_GROUPS.filter(group => {
+      if (!group.isCountry) return true;
+      return (countryMap[group.name] || []).filter(p => !groupNames.includes(p)).length > 0;
+    }).map(group => {
     let list = [];
     if (group.name === "♻️自动选择") {
       list = buildSelectList(group.name, [...normal]);
@@ -495,33 +600,22 @@ function generateConfig() {
       : `    - { name: ${group.name}, type: ${group.type}, proxies: ${ps} }`;
   }).join('\n');
 
-  return `${FIXED_HEADER}\n\n${proxiesSection}\n\n${groupsSection}\n\n${RULE_PROVIDERS}\n\n${RULES}`;
-}
-
-function syntaxHighlight(text) {
-  return text.split('\n').map(line => {
-    const esc = line.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    if (esc.trim().startsWith('#')) return `<span class="highlight-comment">${esc}</span>`;
-    if (esc.match(/^[a-zA-Z_\u4e00-\u9fa5🇭🇰🇹🇼🇸🇬🇯🇵🇺🇸🚀♻️🛑🐟][^:]*:/)) {
-      const colon = esc.indexOf(':');
-      const key = esc.substring(0, colon);
-      const val = esc.substring(colon + 1);
-      const styledVal = val.replace(/('.*?')/g, '<span class="highlight-string">$1</span>')
-                          .replace(/\b(\d+)\b/g, '<span class="highlight-number">$1</span>');
-      return `<span class="highlight-key">${key}</span><span style="color:var(--text3)">:</span>${styledVal}`;
-    }
-    if (esc.trim().startsWith('-')) {
-      const rest = esc.substring(esc.indexOf('-') + 1);
-      const styledRest = rest.replace(/('.*?')/g, '<span class="highlight-string">$1</span>')
-                             .replace(/\b(\d+)\b/g, '<span class="highlight-number">$1</span>');
-      return `<span class="highlight-dash">${esc.substring(0, esc.indexOf('-') + 1)}</span>${styledRest}`;
-    }
-    return `<span>${esc}</span>`;
-  }).join('\n');
+  return `${FIXED_HEADER}\n${proxiesSection}\n\n${groupsSection}\n\n${RULE_PROVIDERS}\n\n${RULES}`;
 }
 
 function updateOutput() {
-  document.getElementById('outputCode').innerHTML = syntaxHighlight(generateConfig());
+  const raw = generateConfig();
+  // 脏检查：内容未变则跳过所有 DOM 操作
+  if (raw === _lastRenderedConfig) return;
+  _lastRenderedConfig = raw;
+
+  // 用 hljs.highlight 在离屏完成 tokenize, 再一次性写入 DOM
+  const result = hljs.highlight(raw, { language: 'yaml' });
+  const codeEl = document.getElementById('outputCode');
+  codeEl.style.cssText = '';
+  // 用 innerHTML 单次写入, 避免 removeAttribute + textContent + highlightElement 三次触发 reflow
+  codeEl.innerHTML = result.value;
+  codeEl.dataset.highlighted = 'yes';
 }
 
 function renderNodeList() {
@@ -615,22 +709,65 @@ window.updateSel = function(group, val, checked) {
   if (!selectedGroups[group]) selectedGroups[group] = [];
   if (checked) { if (!selectedGroups[group].includes(val)) selectedGroups[group].push(val); }
   else selectedGroups[group] = selectedGroups[group].filter(g => g !== val);
-  renderGroupConfig();
-  updateOutput();
+  refreshGroupBadges();
 };
 window.toggleAll = function(group) {
   const selectable = getSelectableGroups(group);
   const current = selectedGroups[group] || [];
   const allSel = selectable.length > 0 && selectable.every(g => current.includes(g));
   selectedGroups[group] = allSel ? [] : [...selectable];
-  renderGroupConfig();
-  updateOutput();
+  refreshGroupCheckboxes(group);
+  refreshGroupBadges();
 };
+
+function refreshGroupCheckboxes(group) {
+  const gid = DEFAULT_GROUPS.findIndex(g => g.name === group);
+  if (gid < 0) return;
+  const selectable = getSelectableGroups(group);
+  const current = selectedGroups[group] || [];
+  const allSel = selectable.length > 0 && selectable.every(g => current.includes(g));
+  const saEl = document.getElementById('sa_' + gid);
+  if (saEl) saEl.checked = allSel;
+  selectable.forEach((g, i) => {
+    const el = document.getElementById('c_' + gid + '_' + i);
+    if (el) el.checked = current.includes(g);
+  });
+}
+
+function refreshGroupBadges() {
+  DEFAULT_GROUPS.forEach((group, gid) => {
+    if (!group.canSelect) return;
+    const current = selectedGroups[group.name] || [];
+    const header = document.querySelectorAll('.group-item')[gid]?.querySelector('.group-header');
+    if (!header) return;
+    let badge = header.querySelector('.badge');
+    if (current.length > 0) {
+      if (badge) {
+        badge.textContent = '+' + current.length;
+      } else {
+        badge = document.createElement('span');
+        badge.className = 'badge';
+        badge.style.cssText = 'margin-left:auto;margin-right:6px;font-size:10px;color:var(--text4)';
+        badge.textContent = '+' + current.length;
+        const typeBadge = header.querySelector('.group-type-badge');
+        if (typeBadge) header.insertBefore(badge, typeBadge);
+      }
+    } else if (badge) {
+      badge.remove();
+    }
+  });
+}
 
 function setStatus(msg, type='info') {
   const el = document.getElementById('status');
   el.className = `status-bar ${type}`;
   el.innerHTML = `<div class="status-dot"></div><span>${msg}</span>`;
+  // 触发闪烁动画
+  const flashColor = type === 'success' ? 'rgba(63,185,80,0.4)' : type === 'error' ? 'rgba(248,81,73,0.4)' : 'rgba(88,166,255,0.4)';
+  el.style.setProperty('--flash-color', flashColor);
+  el.classList.remove('flash');
+  void el.offsetWidth; // 强制重排以重新触发动画
+  el.classList.add('flash');
 }
 
 function parseSubscription(content) {
@@ -639,7 +776,9 @@ function parseSubscription(content) {
   const start = m.index + m[0].length;
   const gm = content.match(/proxy-groups:\s*\n/);
   const end = gm ? gm.index : content.length;
-  const section = content.substring(start, end);
+  let section = content.substring(start, end);
+  // 清理末尾可能残留的 proxy-groups: 或其他非节点内容
+  section = section.replace(/\s*proxy-groups:.*$/i, '').trim();
   const proxies = [], names = [];
   const lines = section.split('\n');
   let cur = '', brace = 0, inP = false;
@@ -664,35 +803,271 @@ function push(proxy, proxies, names) {
   if (m) names.push(m[1].trim().replace(/^['"]|['"]$/g,''));
 }
 
+/**
+ * 解析 hysteria2:// URI 格式的节点
+ * hysteria2://password@server:port/?insecure=1&sni=xxx&mport=xxx#name
+ */
+function parseHysteria2Uri(uri) {
+  try {
+    // 格式: hysteria2://password@server:port/?params#name
+    const match = uri.match(/^hysteria2:\/\/([^@]+)@([^:]+):(\d+)\/?\?(.*)#(.*)$/);
+    if (!match) return null;
+
+    const password = match[1];
+    const server = match[2];
+    const port = parseInt(match[3]);
+    const params = match[4];
+    const name = decodeURIComponent(match[5]);
+
+    // 解析参数
+    const paramMap = {};
+    params.split('&').forEach(p => {
+      const [k, v] = p.split('=');
+      if (k && v) paramMap[k] = v;
+    });
+
+    const node = {
+      name: name,
+      server: server,
+      port: port,
+      type: 'hysteria2',
+      password: password,
+      udp: true,
+      'skip-cert-verify': paramMap.insecure === '1',
+      sni: paramMap.sni || ''
+    };
+
+    // 处理 mport (端口范围)
+    if (paramMap.mport) {
+      node.ports = paramMap.mport;
+      node.mport = paramMap.mport;
+    }
+
+    return node;
+  } catch (e) {
+    return null;
+  }
+}
+
+/**
+ * 解析 vless:// URI 格式的节点
+ * vless://uuid@server:port?type=xxx&security=reality&...#name
+ */
+function parseVlessUri(uri) {
+  try {
+    // 格式: vless://uuid@server:port?params#name
+    const match = uri.match(/^vless:\/\/([^@]+)@([^:]+):(\d+)\?(.*)#(.*)$/);
+    if (!match) return null;
+
+    const uuid = match[1];
+    const server = match[2];
+    const port = parseInt(match[3]);
+    const params = match[4];
+    const name = decodeURIComponent(match[5]);
+
+    // 解析参数
+    const paramMap = {};
+    params.split('&').forEach(p => {
+      const [k, v] = p.split('=');
+      if (k) paramMap[k] = v || '';
+    });
+
+    const node = {
+      name: name,
+      server: server,
+      port: port,
+      type: 'vless',
+      uuid: uuid,
+      udp: true,
+      tls: paramMap.security === 'tls' || paramMap.security === 'reality',
+      'skip-cert-verify': paramMap.insecure === '1' || false
+    };
+
+    // 处理 network/type
+    if (paramMap.type) {
+      node.network = paramMap.type;
+    }
+
+    // 处理 flow (xtls-rprx-vision)
+    if (paramMap.flow) {
+      node.flow = paramMap.flow;
+    }
+
+    // 处理 reality 参数
+    if (paramMap.security === 'reality') {
+      node['reality-opts'] = {
+        publicKey: paramMap.pbk || '',
+        shortId: paramMap.sid || ''
+      };
+      if (paramMap.sni) node.servername = paramMap.sni;
+      if (paramMap.fp) node.client_fingerprint = paramMap.fp;
+    } else if (paramMap.sni) {
+      node.sni = paramMap.sni;
+    }
+
+    // 处理 ws 参数
+    if (paramMap.type === 'ws' && paramMap.path) {
+      node.ws_opts = { path: paramMap.path };
+      if (paramMap.host) node.ws_opts.headers = { Host: paramMap.host };
+    }
+
+    return node;
+  } catch (e) {
+    return null;
+  }
+}
+
+/**
+ * 将节点对象转换为 Clash YAML 行格式
+ */
+function nodeToYamlLine(node) {
+  // 特殊处理: name 中包含特殊字符时需要用引号包裹
+  const needQuote = /[\s|—？🚀♻️倍流媒体\u4e00-\u9fa5:]/.test(node.name);
+  const nameStr = needQuote ? `'${node.name}'` : node.name;
+
+  // 构建属性列表
+  const props = [`name: ${nameStr}`, `server: ${node.server}`, `port: ${node.port}`, `type: ${node.type}`];
+
+  // hysteria2 特有字段
+  if (node.type === 'hysteria2') {
+    props.push(`password: ${node.password}`);
+    if (node.ports) props.push(`ports: ${node.ports}`);
+    if (node.mport) props.push(`mport: ${node.mport}`);
+  }
+
+  // vless 特有字段
+  if (node.type === 'vless') {
+    props.push(`uuid: ${node.uuid}`);
+    if (node.flow) props.push(`flow: ${node.flow}`);
+    if (node.network) props.push(`network: ${node.network}`);
+    if (node['reality-opts']) {
+      props.push(`reality-opts: { public-key: '${node['reality-opts'].publicKey}', short-id: '${node['reality-opts'].shortId}' }`);
+    }
+    if (node.ws_opts) {
+      const wsPath = node.ws_opts.path;
+      props.push(`ws-opts: { path: '${wsPath}' }`);
+    }
+    if (node.client_fingerprint) props.push(`client-fingerprint: ${node.client_fingerprint}`);
+    if (node.servername) props.push(`servername: ${node.servername}`);
+  }
+
+  // 公共字段
+  props.push(`udp: ${node.udp}`);
+  if (node['skip-cert-verify']) props.push(`skip-cert-verify: true`);
+  if (node.sni) props.push(`sni: ${node.sni}`);
+  if (node.tls) props.push(`tls: true`);
+
+  return `    - { ${props.join(', ')} }`;
+}
+
+/**
+ * 从 URI 链接列表解析节点
+ * 支持 hysteria2:// 和 vless:// 格式
+ */
+function parseUriLinks(content) {
+  const lines = content.split(/\r?\n/).filter(l => l.trim());
+  const proxies = [];
+  const names = [];
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+
+    if (trimmed.startsWith('hysteria2://')) {
+      const node = parseHysteria2Uri(trimmed);
+      if (node) {
+        proxies.push(nodeToYamlLine(node));
+        names.push(node.name);
+      }
+    } else if (trimmed.startsWith('vless://')) {
+      const node = parseVlessUri(trimmed);
+      if (node) {
+        proxies.push(nodeToYamlLine(node));
+        names.push(node.name);
+      }
+    }
+  }
+
+  return { nodeNames: names, proxies };
+}
+
 function processContent(content) {
   try {
-    const { nodeNames, proxies } = parseSubscription(content);
+    // 先检测是否是 base64 编码的内容
+    let text = content;
+    const trimmed = text.trim();
+    const isBase64 = !trimmed.includes('\n') && !trimmed.includes('proxies:') && /^[A-Za-z0-9+/=\s]+$/.test(trimmed);
+
+    if (isBase64) {
+      try {
+        const decoded = atob(trimmed.replace(/\s/g, ''));
+        text = decoded;
+      } catch(e) {}
+    }
+
+    // 检测解码后的内容是否包含 URI 格式的节点链接
+    const hasHysteria2 = text.includes('hysteria2://');
+    const hasVless = text.includes('vless://');
+
+    if (hasHysteria2 || hasVless) {
+      // 尝试解析 URI 格式的节点
+      const { nodeNames, proxies } = parseUriLinks(text);
+      if (nodeNames.length > 0) {
+        parsedNodeNames = nodeNames;
+        parsedProxies = proxies;
+        refreshActiveCountryGroups();
+        setStatus(`解析成功 — 找到 ${nodeNames.length} 个 URI 格式节点`, 'success');
+        renderNodeList();
+        renderGroupConfig();
+        updateOutput();
+        return;
+      }
+    }
+
+    // 尝试解析 Clash YAML 格式
+    const { nodeNames, proxies } = parseSubscription(text);
     parsedNodeNames = nodeNames; parsedProxies = proxies;
+    refreshActiveCountryGroups();
     setStatus(`解析成功 — 找到 ${nodeNames.length} 个节点`, 'success');
     renderNodeList(); renderGroupConfig(); updateOutput();
   } catch(e) {
     setStatus(e.message, 'error');
     parsedNodeNames = []; parsedProxies = [];
-    renderNodeList(); updateOutput();
+    activeCountryGroups.clear();
+    renderNodeList();
+    document.getElementById('outputCode').innerHTML = '<span style="color:var(--text3);font-style:italic">解析失败, 请检查订阅内容</span>';
   }
 }
 
 async function fetchFromUrl(url) {
-  setStatus('正在获取订阅内容...', 'info');
+  const proxyNames = ['gjken', 'allorigins', 'corsproxy', 'codetabs', 'cors-anywhere'];
   const proxyUrls = [
+    `https://cors001.gjken.workers.dev/?url=${encodeURIComponent(url)}`,
     `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-    `https://corsproxy.io/?url=${encodeURIComponent(url)}`
+    `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
+    `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+    `https://cors-anywhere.herokuapp.com/${url}`
   ];
-  for (const p of proxyUrls) {
+  const errors = [];
+  for (let i = 0; i < proxyUrls.length; i++) {
+    const proxyName = proxyNames[i];
+    setStatus(`正在获取订阅内容 (${i+1}/${proxyUrls.length})...`, 'info');
     try {
       const ctrl = new AbortController();
       const tid = setTimeout(() => ctrl.abort(), 15000);
-      const res = await fetch(p, { signal: ctrl.signal });
+      const res = await fetch(proxyUrls[i], { signal: ctrl.signal });
       clearTimeout(tid);
-      if (res.ok) { processContent(await res.text()); return; }
-    } catch(e) {}
+      if (res.ok) {
+        let text = await res.text();
+        processContent(text);
+        return;
+      } else {
+        errors.push(`${proxyName}: HTTP ${res.status}`);
+      }
+    } catch(e) {
+      errors.push(`${proxyName}: ${e.name === 'AbortError' ? '超时' : e.message}`);
+    }
   }
-  setStatus('获取失败，请手动粘贴内容', 'error');
+  setStatus('获取失败 — ' + errors.join(' | ') + ', 请手动粘贴内容', 'error');
 }
 
 // 事件绑定
@@ -707,22 +1082,31 @@ document.getElementById('useManualBtn').addEventListener('click', () => {
   processContent(c);
 });
 document.getElementById('copyBtn').addEventListener('click', async () => {
-  try { await navigator.clipboard.writeText(generateConfig()); setStatus('已复制到剪贴板', 'success'); }
+  try { await navigator.clipboard.writeText(_lastRenderedConfig || generateConfig()); setStatus('已复制到剪贴板', 'success'); }
   catch(e) { setStatus('复制失败', 'error'); }
 });
 document.getElementById('dlBtn').addEventListener('click', () => {
-  const b = new Blob([generateConfig()], { type: 'text/yaml' });
+  const b = new Blob([_lastRenderedConfig || generateConfig()], { type: 'text/yaml' });
   const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(b), download: 'config.yaml' });
   a.click(); URL.revokeObjectURL(a.href);
   setStatus('配置文件已下载', 'success');
 });
 document.getElementById('clearBtn').addEventListener('click', () => {
   parsedNodeNames = []; parsedProxies = [];
-  document.getElementById('outputCode').innerHTML = '<span style="color:var(--text3);font-style:italic">等待处理...</span>';
+  _lastRenderedConfig = null; // 清空缓存, 确保下次生成时强制重新高亮
+  const codeEl = document.getElementById('outputCode');
+  codeEl.removeAttribute('data-highlighted');
+  codeEl.className = 'language-yaml';
+  codeEl.innerHTML = '<span style="color:var(--text3);font-style:italic">等待处理...</span>';
   renderNodeList(); setStatus('已清空', 'info');
 });
 document.getElementById('fullscreenBtn').addEventListener('click', () => {
-  document.getElementById('fsCode').innerHTML = document.getElementById('outputCode').innerHTML;
+  // 直接复用已缓存的 raw 文本, 无需再次 generateConfig
+  const raw = _lastRenderedConfig || generateConfig();
+  const fsEl = document.getElementById('fsCode');
+  const result = hljs.highlight(raw, { language: 'yaml' });
+  fsEl.innerHTML = result.value;
+  fsEl.dataset.highlighted = 'yes';
   document.getElementById('fsOverlay').classList.add('active');
 });
 
@@ -733,7 +1117,9 @@ function bindToggle(openId, closeId, overlayId) {
   document.getElementById(closeId).addEventListener('click', () =>
     document.getElementById(overlayId).classList.remove('active'));
 }
-bindToggle('fullscreenBtn', 'fsCloseBtn', 'fsOverlay');
+// fullscreenBtn open is handled separately above (needs hljs re-highlight)
+document.getElementById('fsCloseBtn').addEventListener('click', () =>
+  document.getElementById('fsOverlay').classList.remove('active'));
 bindToggle('viewNodesBtn', 'nodeCloseBtn', 'nodeOverlay');
 
 document.addEventListener('keydown', e => {
@@ -744,7 +1130,15 @@ document.addEventListener('keydown', e => {
 });
 
 renderGroupConfig();
-updateOutput();
+
+document.getElementById('generateBtn').addEventListener('click', () => {
+  if (!parsedProxies.length) {
+    setStatus('请先输入订阅链接或粘贴内容', 'error');
+    return;
+  }
+  updateOutput();
+  setStatus('配置已生成', 'success');
+});
 </script>
 </body>
 </html>
