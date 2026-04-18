@@ -161,27 +161,25 @@ document.addEventListener('DOMContentLoaded', () => {
 			ready: (fancyboxRef) => {
 				const container = fancyboxRef.getContainer();
 
-				// 默认隐藏 middle 工具栏
 				const middle = container.querySelector(".f-carousel__toolbar__column.is-middle");
 				if (middle) {
 					middle.style.visibility = "hidden";
 					middle.style.opacity = "0";
 					middle.style.transition = "opacity 0.3s";
+					middle._manualVisible = false; // 记录手动状态
 				}
 
-				// 需要空闲隐藏的元素
 				const idleTargets = [
 					...container.querySelectorAll(".f-button.is-arrow"),
 					container.querySelector(".f-carousel__toolbar__column.is-right"),
 				].filter(Boolean);
 
-				// 初始化过渡样式
 				idleTargets.forEach(el => {
 					el.style.transition = "opacity 0.4s ease";
 					el.style.opacity = "1";
 				});
 
-				const IDLE_DELAY = 1000;
+				const IDLE_DELAY = 2000;
 				let idleTimer = null;
 
 				const setIdle = () => {
@@ -189,6 +187,11 @@ document.addEventListener('DOMContentLoaded', () => {
 						el.style.opacity = "0";
 						el.style.pointerEvents = "none";
 					});
+					// middle 只有手动显示状态下才需要空闲隐藏
+					if (middle && middle._manualVisible) {
+						middle.style.opacity = "0";
+						middle.style.pointerEvents = "none";
+					}
 				};
 
 				const setActive = () => {
@@ -196,17 +199,19 @@ document.addEventListener('DOMContentLoaded', () => {
 						el.style.opacity = "1";
 						el.style.pointerEvents = "auto";
 					});
+					// middle 只有手动显示状态下才跟随恢复
+					if (middle && middle._manualVisible) {
+						middle.style.opacity = "1";
+						middle.style.pointerEvents = "auto";
+					}
 					clearTimeout(idleTimer);
 					idleTimer = setTimeout(setIdle, IDLE_DELAY);
 				};
 
 				container.addEventListener("mousemove", setActive);
 				container.addEventListener("mouseenter", setActive);
-
-				// 初始启动计时
 				idleTimer = setTimeout(setIdle, IDLE_DELAY);
 
-				// 关闭时清理
 				fancyboxRef.on("destroy", () => {
 					clearTimeout(idleTimer);
 					container.removeEventListener("mousemove", setActive);
@@ -227,12 +232,25 @@ document.addEventListener('DOMContentLoaded', () => {
 					toggleMiddle: {
 						tpl: '<button class="f-button" title="显示/隐藏工具栏" id="toggle-middle-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg></button>',
 						click: () => {
-							const middle = Fancybox.getInstance().getContainer().querySelector(".f-carousel__toolbar__column.is-middle");
+							const c = Fancybox.getInstance().getContainer();
+							const middle = c.querySelector(".f-carousel__toolbar__column.is-middle");
 							if (!middle) return;
-							const isHidden = middle.style.visibility === "hidden";
-							middle.style.visibility = isHidden ? "visible" : "hidden";
-							middle.style.opacity = isHidden ? "1" : "0";
-							middle.style.transition = "opacity 0.3s";
+
+							middle._manualVisible = !middle._manualVisible;
+
+							if (middle._manualVisible) {
+								middle.style.visibility = "visible";
+								middle.style.opacity = "1";
+								middle.style.pointerEvents = "auto";
+								middle.style.transition = "opacity 0.3s";
+							} else {
+								middle.style.opacity = "0";
+								middle.style.pointerEvents = "none";
+								// 等过渡结束再设 visibility
+								setTimeout(() => {
+									if (!middle._manualVisible) middle.style.visibility = "hidden";
+								}, 300);
+							}
 						},
 					},
 					download2: {
