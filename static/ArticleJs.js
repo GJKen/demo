@@ -151,34 +151,34 @@ document.addEventListener('DOMContentLoaded', () => {
 	//////////////// 懒加载图片 end ////////////////
 
 	//////////////// 引入fancybox所需的css文件以及所需的绑定函数 start ////////////////
-// document.head.appendChild(Object.assign(document.createElement('link'), {
-// 	rel: 'stylesheet',
-// 	href: 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.css'
-// }));
-	// Fancybox.bind("[data-fancybox]", {
-	// 	Carousel: {
-	// 		Thumbs: {
-	// 			showOnStart: true,
-	// 		},
-	// 		Zoomable: {
-	// 			Panzoom: {
-	// 				clickAction: "iterateZoom",
-	// 				maxScale: 2,
-	// 			},
-	// 		},
-	// 	},
-	// });
-	const fancyboxScript = document.createElement('script');
-	fancyboxScript.src = "https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.umd.js";
-	fancyboxScript.onload = () => {
-		Fancybox.bind("[data-fancybox]", {
-			Carousel: {
-				Thumbs: { showOnStart: true },
-				Zoomable: { Panzoom: { clickAction: "iterateZoom", maxScale: 2 } },
+	document.head.appendChild(Object.assign(document.createElement('link'), {
+		rel: 'stylesheet',
+		href: 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.css'
+	}));
+	Fancybox.bind("[data-fancybox]", {
+		Carousel: {
+			Thumbs: {
+				showOnStart: true,
 			},
-		});
-	};
-	document.head.appendChild(fancyboxScript);
+			Zoomable: {
+				Panzoom: {
+					clickAction: "iterateZoom",
+					maxScale: 2,
+				},
+			},
+		},
+	});
+	// const fancyboxScript = document.createElement('script');
+	// fancyboxScript.src = "https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.umd.js";
+	// fancyboxScript.onload = () => {
+	// 	Fancybox.bind("[data-fancybox]", {
+	// 		Carousel: {
+	// 			Thumbs: { showOnStart: true },
+	// 			Zoomable: { Panzoom: { clickAction: "iterateZoom", maxScale: 2 } },
+	// 		},
+	// 	});
+	// };
+	// document.head.appendChild(fancyboxScript);
 	//////////////// 引入fancybox所需的css文件以及所需的绑定函数 end ////////////////
 
 	//////////////// 文章目录代码块 part2 start ////////////////
