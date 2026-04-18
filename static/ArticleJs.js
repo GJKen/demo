@@ -170,20 +170,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 	//////////////// 引入fancybox所需的css文件以及所需的绑定函数 end ////////////////
 
-	//////////////// 等待body动画结束再增加live2d的js start ////////////////
-	// 已失效
-	// document.body.addEventListener('animationend', (event) => {
-	// 	if (window.innerWidth >= 1250) {
-	// 		if (event.animationName === 'slide-fade-in') {
-	// 			var script = document.createElement('script');
-	// 			script.type = 'text/javascript';
-	// 			script.src = 'https://blog.liyifan.xyz/live2d/autoload.js';
-	// 			document.body.appendChild(script);
-	// 		}
-	// 	}
-	// }, { once: true });
-	//////////////// 等待body动画结束再增加live2d的js end ////////////////
-
 	//////////////// 文章目录代码块 part2 start ////////////////
 	createTOC();
 	//绑定按钮点击切换显示目录
