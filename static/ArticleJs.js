@@ -163,7 +163,36 @@ document.addEventListener('DOMContentLoaded', () => {
 			Zoomable: {
 				Panzoom: {
 					clickAction: "iterateZoom",
-					maxScale: 2,
+					maxScale: 5,
+				},
+			},
+			items: {
+				toggleMiddle: {
+					tpl: '<button class="f-button" title="显示/隐藏工具栏" id="toggle-middle-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg></button>',
+					click: () => {
+					const middle = document.querySelector(".f-carousel__toolbar__column.is-middle");
+					if (!middle) return;
+					const isHidden = middle.style.display === "none";
+					middle.style.display = isHidden ? "" : "none";
+					},
+				},
+				download1: {
+					tpl: '↓',
+					click: () => {
+						const src = Fancybox.getInstance()
+						.getSlide().src;
+						const a = document.createElement('a');
+						a.href = src;
+						a.download = src.split('/').pop();
+						a.click();
+					}
+				},
+			},
+			Toolbar: {
+				display: {
+					left: ["counter"],
+					middle: ["zoomIn", "zoomOut", "toggle1to1", "rotateCCW", "rotateCW", "flipX", "flipY", "reset",],
+					right: ["toggleMiddle", "download1", "fullscreen", "thumbs", "close"],
 				},
 			},
 		},
