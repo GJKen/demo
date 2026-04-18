@@ -14,19 +14,19 @@
 
 网页往下滑即可看到.
 
-![3](https://github.com/user-attachments/assets/0c54f714-4b52-4c95-9aa4-820397216d07)
+![1](https://github.com/user-attachments/assets/0c54f714-4b52-4c95-9aa4-820397216d07)
 
 ## 安装
 
 这里我选择自己使用的破解版 DLC 程序🤭.
 
-![1](https://github.com/user-attachments/assets/9b5e0421-f960-4f1c-aad5-73e11acfd8ac)
+![2](https://github.com/user-attachments/assets/9b5e0421-f960-4f1c-aad5-73e11acfd8ac)
 
 选择好之后点击 Install 就行, 我安装时的版本是`0.6.6`
 
 安装完成即可关闭它.
 
-![2](https://github.com/user-attachments/assets/299aa50e-bba9-45de-a3a1-3842cfd72ca8)
+![3](https://github.com/user-attachments/assets/299aa50e-bba9-45de-a3a1-3842cfd72ca8)
 
 ## 下载 desktopmate-custom-avatar-loader
 
