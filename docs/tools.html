@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>我的网页小工具</title>
+<style>
+  *{box-sizing:border-box;margin:0;}
+  *::-webkit-scrollbar{width:4px;height:8px}
+  *::-webkit-scrollbar-thumb{background:var(--scrollbar-border);border-radius:3px}
+  *::-webkit-scrollbar-thumb:hover{background:var(--text2);cursor:pointer}
+  :root {
+    --theme-bg:          #fff;
+    --scrollbar-border:  #c1c1c1;
+    --bg-canvas:         #ffffff;
+    --bg-subtle:         #f6f8fa;
+    --bg-inset:          #eaeef2;
+    --border:            #d0d7de;
+    --text-default:      #1f2328;
+    --text-muted:        #57606a;
+    --text-link:         #0969da;
+    --tag-active-bg:     #1f6feb;
+    --tag-active-fg:     #ffffff;
+    --clear-bg:          rgba(248,81,73,0.1);
+    --clear-border:      rgba(248,81,73,0.3);
+    --clear-text:        #cf222e;
+    --clear-hover:       #f5c6c8;
+    --header-title:      #1f2328;
+    --card-hover-border: #0969da;
+    --card-hover-shadow: rgba(9,105,218,0.12);
+    --filter-hover:      #d0d7de;
+    --card-bg:           #ffffff;
+    --card-border:       rgba(0,0,0,0.08);
+    --tag-bg:            #e5e5ea;
+    --tag-fg:            #3a3a3c;
+    --desc-color:        #000;
+    --header-bg:         rgba(242,242,247,0.92);
+    --header-border:     rgba(0,0,0,0.08);
+  }
+
+  [data-theme="dark"] {
+    --theme-bg:          #0d1117;
+    --scrollbar-border:  #8b949e;
+    --bg-canvas:         #0d1117;
+    --bg-subtle:         #050506;
+    --bg-inset:          #21262d;
+    --border:            #30363d;
+    --text-default:      #e6edf3;
+    --text-muted:        #ededed;
+    --text-link:         #58a6ff;
+    --tag-active-bg:     #1f6feb;
+    --tag-active-fg:     #ffffff;
+    --clear-bg:          rgba(248,81,73,0.1);
+    --clear-border:      rgba(248,81,73,0.3);
+    --clear-text:        #f85149;
+    --clear-hover:       #6e1c1c;
+    --header-title:      #f0f6fc;
+    --card-hover-border: #388bfd;
+    --card-hover-shadow: rgba(56,139,253,0.15);
+    --filter-hover:      #30363d;
+    --card-bg:           #161b22;
+    --card-border:       rgba(255,255,255,0.06);
+    --tag-bg:            #141414;
+    --tag-fg:            #ebebf5;
+    --desc-color:        #ebebf5;
+    --header-bg:         #161b22;
+    --header-border:     rgba(255,255,255,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Noto Sans SC", sans-serif;
+    background: var(--bg-canvas);
+    min-height: 100vh;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.2s;
+  }
+
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--header-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 16px 16px 0;
+    border-bottom: 0.5px solid var(--header-border);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--header-title);
+    letter-spacing: -0.3px;
+    margin-bottom: 12px;
+  }
+
+  .theme-toggle {
+    background: var(--theme-bg);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    padding: 6px 12px;
+    font-size: 18px;
+    cursor: pointer;
+    color: var(--text-default);
+    transition: all 0.2s;
+    margin-bottom: 8px;
+  }
+  .theme-toggle:hover {
+    background: var(--filter-hover);
+  }
+
+  .tag-scroll {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 12px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    width: 100%;
+  }
+  .tag-scroll::-webkit-scrollbar { display: none; }
+
+  .tag {
+    flex-shrink: 0;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    background: var(--tag-bg);
+    color: var(--tag-fg);
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+    min-height: 34px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+  }
+  .tag:hover { background: var(--filter-hover); }
+  .tag.active, .tag.all-active {
+    background: var(--tag-active-bg) !important;
+    color: var(--tag-active-fg) !important;
+  }
+
+  .btn-clear {
+    flex-shrink: 0;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid var(--clear-border);
+    background: var(--clear-bg);
+    color: var(--clear-text);
+    white-space: nowrap;
+    min-height: 34px;
+    display: none;
+    align-items: center;
+  }
+  .btn-clear.visible { display: flex; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border-radius: 14px;
+    border: 0.5px solid var(--card-border);
+    padding: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    min-height: 130px;
+    transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+  }
+  .card:active { transform: scale(0.97); }
+
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px var(--card-hover-shadow);
+    border-color: var(--card-hover-border);
+  }
+
+  .card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-default);
+    margin-bottom: 4px;
+    letter-spacing: -0.2px;
+  }
+
+  .card-desc {
+    font-size: 16px;
+    color: var(--desc-color);
+    line-height: 1.5;
+    max-height: 4.5em;      /* 约3行高度，超出可滚动 */
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .card-tags { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px; }
+  .card-tag {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 8px;
+    background: var(--tag-bg);
+    color: var(--tag-fg);
+    cursor: pointer;
+    border: none;
+    line-height: 1.4;
+    transition: background 0.12s, color 0.12s;
+  }
+  .card-tag:hover { background: var(--filter-hover);}
+  .card-tag.selected {
+    background: var(--tag-active-bg);
+    color: var(--tag-active-fg);
+  }
+
+  .empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px 0;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🛠 我的网页小工具</h1>
+  <button id="themeToggle" class="theme-toggle" aria-label="切换主题">🌙</button>
+  <div class="tag-scroll" id="tagBar"></div>
+</div>
+<div class="grid" id="grid"></div>
+
+<script>
+const tools = [
+  {
+    title: "URL 转换器",
+    desc: "将图片 URL 批量转成 Gmeek-imgbox 格式, 附带 <details><summary> 标签",
+    url: "./图片组Url转换.html",
+    tags: ["图片", "URL"]
+  },
+  {
+    title: "订阅转换",
+    desc: "将机场订阅节点提取出来，套上预设的分流规则和代理组模板，生成完整的 Clash 配置文件。",
+    url: "./订阅转换.html",
+    tags: ["订阅", "Clash", "OpenWRT"]
+  },
+];
+
+let selectedTags = new Set();
+const allTags = [...new Set(tools.flatMap(t => t.tags))];
+
+function escapeHtml(str) {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function render() {
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+  let shown = 0;
+
+  tools.forEach(t => {
+    const show = selectedTags.size === 0 || t.tags.some(tag => selectedTags.has(tag));
+    if (!show) return;
+    shown++;
+
+    const card = document.createElement("a");
+    card.className = "card";
+    card.href = t.url;
+
+    const tagsHtml = t.tags.map(tag =>
+      `<button class="card-tag${selectedTags.has(tag) ? ' selected' : ''}" data-tag="${tag}">${escapeHtml(tag)}</button>`
+    ).join("");
+
+    card.innerHTML = `
+      <div class="card-title">${escapeHtml(t.title)}</div>
+      <div class="card-desc">${escapeHtml(t.desc)}</div>
+      <div class="card-tags">${tagsHtml}</div>
+    `;
+
+    card.querySelectorAll(".card-tag").forEach(btn => {
+      btn.addEventListener("click", e => {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleTag(btn.dataset.tag);
+      });
+    });
+
+    grid.appendChild(card);
+  });
+
+  if (shown === 0) grid.innerHTML = '<div class="empty">没有匹配的工具</div>';
+  updateTagBar();
+}
+
+function buildTags() {
+  const bar = document.getElementById("tagBar");
+  bar.innerHTML = "";
+
+  const allBtn = document.createElement("button");
+  allBtn.className = "tag all-active";
+  allBtn.id = "tagAll";
+  allBtn.textContent = "全部";
+  allBtn.addEventListener("click", () => { selectedTags.clear(); render(); });
+  bar.appendChild(allBtn);
+
+  allTags.forEach(tag => {
+    const btn = document.createElement("button");
+    btn.className = "tag";
+    btn.dataset.tag = tag;
+    btn.textContent = tag;
+    btn.addEventListener("click", () => toggleTag(tag));
+    bar.appendChild(btn);
+  });
+
+  const clearBtn = document.createElement("button");
+  clearBtn.className = "btn-clear";
+  clearBtn.id = "clearBtn";
+  clearBtn.textContent = "✕ 清空";
+  clearBtn.addEventListener("click", () => { selectedTags.clear(); render(); });
+  bar.appendChild(clearBtn);
+}
+
+function toggleTag(tag) {
+  selectedTags.has(tag) ? selectedTags.delete(tag) : selectedTags.add(tag);
+  render();
+}
+
+function updateTagBar() {
+  const allSelected = selectedTags.size === 0 || allTags.every(t => selectedTags.has(t));
+  document.getElementById("tagAll").className = "tag" + (allSelected ? " all-active" : "");
+  document.querySelectorAll("#tagBar .tag[data-tag]").forEach(btn => {
+    btn.className = "tag" + (selectedTags.has(btn.dataset.tag) ? " active" : "");
+  });
+  const clearBtn = document.getElementById("clearBtn");
+  if (clearBtn) clearBtn.className = "btn-clear" + (selectedTags.size > 0 ? " visible" : "");
+}
+
+// 主题切换逻辑
+function initTheme() {
+  const stored = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  let theme = stored === 'dark' ? 'dark' : (stored === 'light' ? 'light' : (prefersDark ? 'dark' : 'light'));
+  setTheme(theme);
+}
+
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+  const toggleBtn = document.getElementById('themeToggle');
+  if (toggleBtn) {
+    toggleBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+    toggleBtn.setAttribute('aria-label', theme === 'dark' ? '切换到亮色模式' : '切换到暗色模式');
+  }
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme');
+  const newTheme = current === 'dark' ? 'light' : 'dark';
+  setTheme(newTheme);
+}
+
+buildTags();
+render();
+initTheme();
+document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+</script>
+</body>
+</html>

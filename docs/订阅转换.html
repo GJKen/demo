@@ -298,8 +298,7 @@ pre code.hljs{display:block;overflow:visible}
 </div>
 
 <script>
-const FIXED_HEADER = `mode: rule
-port: 7890
+const FIXED_HEADER = `port: 7890
 socks-port: 7891
 redir-port: 7892
 mixed-port: 7893
@@ -324,7 +323,8 @@ dns:
     respect-rules: true
     enhanced-mode: fake-ip
     fake-ip-range: 198.18.0.1/16
-    use-hosts: true
+    use-hosts: false
+    use-system-hosts: false
     default-nameserver:
       - 119.29.29.29
       - 180.184.1.1
@@ -334,8 +334,12 @@ dns:
     fallback: ['https://cloudflare-dns.com/dns-query', 'https://dns.cloudflare.com/dns-query', 'https://dns.alidns.com/dns-query', 'https://doh.pub/dns-query']
     fallback-filter: { geoip: true, geoip-code: CN, geosite: [gfw] }
     fake-ip-filter:
+      - +.lan
+      - +.local
       - geosite:cn
       - geosite:Private
+      - time.*.com
+      - ntp.*.com
       - +.miwifi.com
       - +.docker.io
       - +.market.xiaomi.com
