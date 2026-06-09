@@ -1,4 +1,4 @@
-﻿//////////////// 文章目录代码块 part1 start ////////////////
+//////////////// 文章目录代码块 part1 start ////////////////
 
 	//////////////// 插入css的函数 start ////////////////
 function loadResource(type, attributes) {
@@ -10,15 +10,13 @@ function loadResource(type, attributes) {
 }
 	//////////////// 插入css的函数 end ////////////////
 	//////////////// 页面顶部和底部跳转函数 start ////////////////
-let tocTitle; // 全局声明变量
-let activeTocLink = null;
-let tocHighlightTicking = false;
+let tocTitle // 全局声明变量
 function ToTop() {
-	window.scrollTo({ top: 0, behavior: 'smooth' });
-	tocTitle?.scrollTo({ top: 0, behavior: 'smooth' });
+	window.scrollTo({ top: 0 });
+	tocTitle.scrollTop = 0;  // 将 .toc-title 滚动到顶部
 }
 function ToBottom() {
-	window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+	window.scrollTo({ top: document.body.scrollHeight});
 }
 	//////////////// 页面顶部和底部跳转函数 end ////////////////
 
@@ -37,35 +35,35 @@ function createTOC() {
 	tocTitle.className = 'toc-title';
 	tocElement.appendChild(tocTitle);
 
-	// 将目录挂到 html 根节点，避免 body 的动画/宽度/padding 影响 fixed 定位
-	document.documentElement.appendChild(tocElement);
+	// 将目录 <div> 插入到 <body> 中
+	document.body.appendChild(tocElement);
 
 	// 向 toc-btn 中添加内容
-	const topBtn = document.createElement('button');
-	topBtn.type = 'button';
-	topBtn.title = '跳转顶部';
-	topBtn.setAttribute('aria-label', '跳转顶部');
-	topBtn.innerHTML = '<svg class="octicon" width="16" height="16"><path id="ToTopBtn" fill-rule="evenodd" d="M3 2.25a.75.75 0 0 1 .75-.75h8.5a.75.75 0 0 1 0 1.5h-8.5A.75.75 0 0 1 3 2.25Zm5.53 2.97 3.75 3.75a.749.749 0 1 1-1.06 1.06L8.75 7.561v6.689a.75.75 0 0 1-1.5 0V7.561L4.78 10.03a.749.749 0 1 1-1.06-1.06l3.75-3.75a.749.749 0 0 1 1.06 0Z"></path></svg>';
-	topBtn.addEventListener('click', ToTop);
-
-	const bottomBtn = document.createElement('button');
-	bottomBtn.type = 'button';
-	bottomBtn.title = '跳转底部';
-	bottomBtn.setAttribute('aria-label', '跳转底部');
-	bottomBtn.innerHTML = '<svg class="octicon" width="16" height="16"><path id="ToBottom" fill-rule="evenodd" d="M7.47 10.78a.749.749 0 0 0 1.06 0l3.75-3.75a.749.749 0 1 0-1.06-1.06L8.75 8.439V1.75a.75.75 0 0 0-1.5 0v6.689L4.78 5.97a.749.749 0 1 0-1.06 1.06l3.75 3.75ZM3.75 13a.75.75 0 0 0 0 1.5h8.5a.75.75 0 0 0 0-1.5h-8.5Z"></path></svg>';
-	bottomBtn.addEventListener('click', ToBottom);
-
-	tocBtn.append(topBtn, bottomBtn);
+	tocBtn.innerHTML = `
+	<div onclick="ToTop();">
+		<a title="跳转顶部">
+		  <svg class="octicon" width="16" height="16">
+			<path id="ToTopBtn" fill-rule="evenodd" 
+			  d="M3 2.25a.75.75 0 0 1 .75-.75h8.5a.75.75 0 0 1 0 1.5h-8.5A.75.75 0 0 1 3 2.25Zm5.53 2.97 3.75 3.75a.749.749 0 1 1-1.06 1.06L8.75 7.561v6.689a.75.75 0 0 1-1.5 0V7.561L4.78 10.03a.749.749 0 1 1-1.06-1.06l3.75-3.75a.749.749 0 0 1 1.06 0Z">
+			</path>
+		  </svg>
+		</a>
+	</div>
+	<div onclick="ToBottom();">
+		<a title="跳转底部">
+		  <svg class="octicon" width="16" height="16">
+			<path id="ToBottom" fill-rule="evenodd"
+			  d="M7.47 10.78a.749.749 0 0 0 1.06 0l3.75-3.75a.749.749 0 1 0-1.06-1.06L8.75 8.439V1.75a.75.75 0 0 0-1.5 0v6.689L4.78 5.97a.749.749 0 1 0-1.06 1.06l3.75 3.75ZM3.75 13a.75.75 0 0 0 0 1.5h8.5a.75.75 0 0 0 0-1.5h-8.5Z">
+			</path>
+		  </svg>
+		</a>
+	</div>
+	`;
 	// 用于生成唯一id的计数器
 	let idCounter = 0;
 	
 	// 获取文章标题并设置排版
 	const headings = document.querySelectorAll('.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4, .markdown-body h5, .markdown-body h6');
-	if (!headings.length) {
-		document.querySelector('.ArticleTOC')?.style.setProperty('display', 'none');
-		tocElement.remove();
-		return false;
-	}
 	headings.forEach(heading => {
 	    // 如果标题没有id，则创建一个唯一的id
 	    if (!heading.id) {
@@ -100,7 +98,6 @@ function createTOC() {
 	    // 将链接添加到 toc-title 容器中
 	    tocTitle.appendChild(link);
 	});
-	return true;
 }
 	//////////////// 创建toc目录html结构 end ////////////////
 
@@ -285,8 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	//////////////// 引入fancybox所需的css文件以及所需的绑定函数 end ////////////////
 
 	//////////////// 文章目录代码块 part2 start ////////////////
-	const hasTOC = createTOC();
-	if (!hasTOC) return;
+	createTOC();
 	//绑定按钮点击切换显示目录
 	const tocIcon = document.querySelector('.ArticleTOC');
 	if (tocIcon) {
@@ -311,8 +307,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		.toc {
 			position: fixed;
 			bottom: 13%;
-			right: 12px;
-			transform: translateX(calc(100% + 16px));
+			right: 0;
+			transform: translateX(50%);
 			display: flex;
 			flex-direction: column;
 			width: 250px;
@@ -343,7 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		.toc.show {
 			opacity: 1;
 			visibility: visible;
-			transform: translateX(0);
+			transform: translateY(0);
 		}
 		.toc .toc-title a {
 			display: block;
@@ -353,10 +349,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			font-size: 14px;
 			line-height: 1.5;
 			border-radius: 8px;
-			transition: background-color 0.2s ease, transform 0.2s ease;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
+			transition: background-color 0.2s ease;
 		}
 		.toc .toc-title a:hover {
 			background-color: #6be5ff99;
@@ -383,27 +376,27 @@ document.addEventListener('DOMContentLoaded', () => {
 			top: 0;
 			z-index: 999999;
 		}
-		.toc-btn button{
+		.toc-btn div{
 			display: flex;
 			justify-content: center;
-			align-items: center;
 			width:100%;
-			padding: 9px 11px;
-			border: 0;
-			background: transparent;
-			color: var(--title-right-svgColor);
 			box-shadow: 2px 4px 16px #7982a01f;
 			cursor: pointer;
 		}
-		.toc-btn button:active{box-shadow: inset -2px -2px 6px var(--header-btn-shadowColor),inset 2px 2px 6px var(--header-btn-shadowColor2);
+		.toc-btn div:active{box-shadow: inset -2px -2px 6px var(--header-btn-shadowColor),inset 2px 2px 6px var(--header-btn-shadowColor2);
 		}
-		.toc-btn button:hover{color:var(--title-right-svgHovercolor);
+		.toc-btn a{
+			color: var(--title-right-svgColor);
+			padding: 9px 11px;
+		}
+		.toc-btn div:hover a{color:var(--title-right-svgHovercolor);
 		}
 		/* 标题 */
 		.toc-title{
 			padding: 10px 10px 0;
 			max-height: calc(50vh - 59px);
 			overflow-y: auto;
+			overflow-y: scroll;
 		}
 		.toc-title::-webkit-scrollbar {
 			display: none;
@@ -412,19 +405,20 @@ document.addEventListener('DOMContentLoaded', () => {
 			scrollbar-width: none;
 		}
 		@media (max-width: 768px) {
+		}
+		@media (max-width: 768px) {
 			.toc {
-				left: 12px;
-				right: 12px;
-				bottom: 12px;
-				width: auto;
-				max-height: 45vh;
-				transform: translateY(calc(100% + 16px));
-			}
-			.toc.show {
-				transform: translateY(0);
+				width: 200px;
+				max-height: 40vh;
 			}
 			.toc-title{
 				padding: 5px 8px 0;
+			}
+			.back-to-top {
+				bottom: 2%;
+				width: 40px;
+				height: 40px;
+				font-size: 20px;
 			}
 		}
 		.toc-link.toc-active {
@@ -438,43 +432,25 @@ document.addEventListener('DOMContentLoaded', () => {
 		//////////////// 添加 CSS 样式 end ////////////////
 	
 	// 滚动切换高亮标题
-	const tocLinks = Array.from(document.querySelectorAll('.toc-link'));
-	const tocSections = tocLinks.map(link => document.getElementById(link.getAttribute('href').substring(1)));
-	const centerTocLinkInList = (link) => {
-		if (!tocTitle || !link) return;
-		const maxScrollTop = tocTitle.scrollHeight - tocTitle.clientHeight;
-		const targetScrollTop = link.offsetTop - (tocTitle.clientHeight - link.offsetHeight) / 2;
-		tocTitle.scrollTop = Math.max(0, Math.min(targetScrollTop, maxScrollTop));
-	};
 	const highlightTOC = () => {
+		const tocLinks = document.querySelectorAll('.toc-link');
 		const fromTop = window.scrollY + 10;
 		let currentHeading = null;
-		tocLinks.forEach((link, index) => {
-			const section = tocSections[index];
+		// 遍历目录链接，查找当前显示的标题
+		tocLinks.forEach(link => {
+			const section = document.getElementById(link.getAttribute('href').substring(1));
 			if (section && section.offsetTop <= fromTop) {
 				currentHeading = link;
 			}
 		});
-		if (currentHeading === activeTocLink) return;
-		activeTocLink?.classList.remove('toc-active');
+		// 清除所有高亮
+		tocLinks.forEach(link => link.classList.remove('toc-active'));
 		if (currentHeading) {
 			currentHeading.classList.add('toc-active');
-			if (document.querySelector('.toc.show')) {
-				centerTocLinkInList(currentHeading);
-			}
+			currentHeading.scrollIntoView({ block: 'center', inline: 'nearest' });
 		}
-		activeTocLink = currentHeading;
 	};
-	const requestHighlightTOC = () => {
-		if (tocHighlightTicking) return;
-		tocHighlightTicking = true;
-		requestAnimationFrame(() => {
-			highlightTOC();
-			tocHighlightTicking = false;
-		});
-	};
-	highlightTOC();
 	// 添加全局滚动监听
-	document.addEventListener('scroll', requestHighlightTOC, { passive: true });
+	document.addEventListener('scroll', highlightTOC);
 	//////////////// 文章目录代码块 part2 end ////////////////
 });
