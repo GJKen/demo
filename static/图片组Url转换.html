@@ -17,7 +17,7 @@
 <label>日期（可修改）：</label><br>
 <input id="date" type="text" placeholder="2026.04.18" style="width:150px; margin-bottom:8px;">
 <br>
-<label>每行一个 URL：</label><br>
+<label>每行一个 URL:</label><br>
 <textarea id="urls" placeholder="https://i.postimg.cc/abc/image.png&#10;https://i.postimg.cc/def/image.png"></textarea>
 <br>
 <button onclick="convert()">转换</button>
@@ -46,7 +46,7 @@ function convert() {
   const urls = document.getElementById('urls').value.trim().split('\n').filter(u => u.trim());
   if (!urls.length) { showMsg('请输入至少一个 URL', 'red'); return; }
 
-  const lines = urls.map(u => '`Gmeek-imgbox="' + u.trim() + '"`').join('\n');
+  const lines = urls.map(u => '`Gmeek-imgbox="' + u.trim() + '"`').join('\n\n');
   document.getElementById('output').textContent =
     `<details><summary>${date}</summary>\n\n${lines}\n\n</details>`;
 }
