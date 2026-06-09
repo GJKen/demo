@@ -162,6 +162,16 @@ The actual blog currently uses `issue`.
 - Avoid reading all of `docs\post\`, `static\`, or `backup\` unless necessary; they can be large/noisy generated or asset folders.
 - For quick article metadata, inspect `docs\postList.json` instead of generated post HTML.
 
+## 个人工作流提示
+
+- `D:\Study\html\demo` 是主要的本地修改仓库。所有代码和文件修改都优先在 `demo` 中进行。
+- 默认不要直接修改 `D:\Study\html\gjken.github.io`，除非用户明确要求。用户确认后，会自行把代码或文件从 `demo` 复制到 `gjken.github.io` 并推送更新。
+- `docs-dev` 是用户自己创建的测试代码目录。
+- `static` 是博客项目的资源目录。放在里面的文件可以通过发布后的 GitHub Pages 页面访问，方便测试外联文件。
+- `docs\post` 是博客生成文章的目录，内容很多。不要轻易读取，确实需要读取时先向用户确认。
+- `primer.css` 有 3 万多行代码。不要轻易读取，只在必要时查找具体选择器或小片段。
+- 对于简单文本修改，优先采用「一次定位、一次最小补丁、一次简短验证」的流程，避免为了小改动反复尝试大量命令。若 `apply_patch` 在 Windows/PowerShell 下出现管道或编码问题，优先使用已经验证可行的底层 `codex.exe --codex-run-as-apply-patch` 方式传入补丁。
+
 ## Potential Improvements
 
 - Add an `email` field to `gjken.github.io\config.json`, because the workflow reads `.email` for `git config user.email`.
