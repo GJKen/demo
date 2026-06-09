@@ -413,15 +413,15 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 		@media (max-width: 768px) {
 			.toc {
-				left: 12px;
+				left: auto;
 				right: 12px;
 				bottom: 12px;
-				width: auto;
+				width: min(200px, calc(100vw - 24px));
 				max-height: 45vh;
-				transform: translateY(calc(100% + 16px));
+				transform: translateX(calc(100% + 16px));
 			}
 			.toc.show {
-				transform: translateY(0);
+				transform: translateX(0);
 			}
 			.toc-title{
 				padding: 5px 8px 0;

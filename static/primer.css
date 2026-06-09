@@ -27380,6 +27380,10 @@ a.branch-name .octicon {
 	display: inline-block;
 }
 
+.markdown-body h2 {
+	max-width: 100%;
+}
+
 .markdown-body h2:hover {
 	background-size: 100% 2px;
 }

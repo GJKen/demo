@@ -165,6 +165,7 @@ The actual blog currently uses `issue`.
 ## 个人工作流提示
 
 - `D:\Study\html\demo` 是主要的本地修改仓库。所有代码和文件修改都优先在 `demo` 中进行。
+- 每次修改 `.js` 或 `.css` 文件之前，必须先向用户说明计划修改的位置、原因和大致改法，并等待用户明确确认后再执行修改。
 - 默认不要直接修改 `D:\Study\html\gjken.github.io`，除非用户明确要求。用户确认后，会自行把代码或文件从 `demo` 复制到 `gjken.github.io` 并推送更新。
 - `docs-dev` 是用户自己创建的测试代码目录。
 - `static` 是博客项目的资源目录。放在里面的文件可以通过发布后的 GitHub Pages 页面访问，方便测试外联文件。
