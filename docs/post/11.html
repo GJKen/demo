@@ -10,67 +10,9 @@
         let theme = localStorage.getItem("meek_theme") || "light";
         document.documentElement.setAttribute("data-color-mode", theme);
     </script>
-<meta name="description" content="# 前言
-OoenClash 是一个运行在 OpenWrt 上的 Mihomo(Clash) 客户端, 兼容 Shadowsocks(R)、Vmess、Trojan、Snell 等协议, 根据灵活的规则配置实现策略代理
-
-官网 [Github](https://github.com/vernesong/OpenClash)
-
-# Geo配置相关
-
-|文件名|来源|
-|-|-
-| GeoIP MMDB | Oenclash自带(Alecthw-lite-Version(全部国家且仅写入 iso_code 和 geoname_id))
-| GeoIP Dat | Oenclash自带 fastly
-| GeoSite | Oenclash自带 fastly
-| Geo ASN | Oenclash自带 fastly
-
-# Yaml 配置相关
-
-## Clash 节点自动生成分流规则
-AI 写的功能, 自用,
-
-部分配置摘抄自 [Github](https://github.com/HenryChiao/MIHOMO_YAMLS/blob/main/THEYAMLS/General_Config/666OS/MihomoPro_Config.yaml)
-
-在线使用地址 [link](https://gjken.github.io/demo/%E8%AE%A2%E9%98%85%E8%BD%AC%E6%8D%A2.html)
-
-### 功能简介
-
-<details><summary>点击展开</summary>
-
-## 概述
-
-纯前端工具页面，用于将机场订阅节点提取出来，套上预设的分流规则和代理组模板，生成一份可直接导入 OpenClash 的完整 Clash 配置文件。">
+<meta name="description" content="前言 OoenClash 是一个运行在 OpenWrt 上的 Mihomo(Clash) 客户端, 兼容 Shadowsocks(R)、Vmess、Trojan、Snell 等协议, 根据灵活的规则配置实现策略代理 官网 Github Geo配置相关 |文件名|来源| | | | GeoIP MMDB | Oenclash自带(Alecthw lite Version(全部国家且仅写入 iso code 和 geoname id)) | GeoIP Dat | Oenclash自带 fastly | GeoSite | Oenclash自带 fastly | Geo ASN | Oenclash自带 fastly Yaml 配置相关 Clash 节点自动生成分流规则 AI 写的功能, 自用, 部分配置摘抄自 Github 在线使用地址 link 功能简介 &lt;details &lt;summary 点击展开&lt;/summary 概述 纯前端工具页面，用于将机场订阅节点提取出来，套上预设的分流规则和代理组模板，生成一份可直接导入 OpenClash 的完整 Clash 配置文件。">
 <meta property="og:title" content="OpenClash 使用记录">
-<meta property="og:description" content="# 前言
-OoenClash 是一个运行在 OpenWrt 上的 Mihomo(Clash) 客户端, 兼容 Shadowsocks(R)、Vmess、Trojan、Snell 等协议, 根据灵活的规则配置实现策略代理
-
-官网 [Github](https://github.com/vernesong/OpenClash)
-
-# Geo配置相关
-
-|文件名|来源|
-|-|-
-| GeoIP MMDB | Oenclash自带(Alecthw-lite-Version(全部国家且仅写入 iso_code 和 geoname_id))
-| GeoIP Dat | Oenclash自带 fastly
-| GeoSite | Oenclash自带 fastly
-| Geo ASN | Oenclash自带 fastly
-
-# Yaml 配置相关
-
-## Clash 节点自动生成分流规则
-AI 写的功能, 自用,
-
-部分配置摘抄自 [Github](https://github.com/HenryChiao/MIHOMO_YAMLS/blob/main/THEYAMLS/General_Config/666OS/MihomoPro_Config.yaml)
-
-在线使用地址 [link](https://gjken.github.io/demo/%E8%AE%A2%E9%98%85%E8%BD%AC%E6%8D%A2.html)
-
-### 功能简介
-
-<details><summary>点击展开</summary>
-
-## 概述
-
-纯前端工具页面，用于将机场订阅节点提取出来，套上预设的分流规则和代理组模板，生成一份可直接导入 OpenClash 的完整 Clash 配置文件。">
+<meta property="og:description" content="前言 OoenClash 是一个运行在 OpenWrt 上的 Mihomo(Clash) 客户端, 兼容 Shadowsocks(R)、Vmess、Trojan、Snell 等协议, 根据灵活的规则配置实现策略代理 官网 Github Geo配置相关 |文件名|来源| | | | GeoIP MMDB | Oenclash自带(Alecthw lite Version(全部国家且仅写入 iso code 和 geoname id)) | GeoIP Dat | Oenclash自带 fastly | GeoSite | Oenclash自带 fastly | Geo ASN | Oenclash自带 fastly Yaml 配置相关 Clash 节点自动生成分流规则 AI 写的功能, 自用, 部分配置摘抄自 Github 在线使用地址 link 功能简介 &lt;details &lt;summary 点击展开&lt;/summary 概述 纯前端工具页面，用于将机场订阅节点提取出来，套上预设的分流规则和代理组模板，生成一份可直接导入 OpenClash 的完整 Clash 配置文件。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://GJKen.github.io/demo/post/11.html">
 <meta property="og:image" content="https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp">
@@ -104,10 +46,6 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
 #cmButton{height:48px;margin-top:48px;}
 #comments{margin-top:64px;}
 
-#toogleBtn{position:fixed;top:51px;right:6%;display:none;}
-#toogleBtn.active,#toogleBtn path{display:flex;padding:6px 7px;fill:var(--title-right-svgColor);cursor:pointer;transition:transform 0.3s ease-in-out;background:var(--tooglebtn-bgColor)}
-#toogleBtn.active:hover svg path{fill:var(--title-right-svgHovercolor);}
-#toogleBtn.btn-fadeout{opacity:0;}
 #functionBtn div:first-of-type{display:flex;gap:20px}
 
 .g-emoji{font-size:24px;}
@@ -150,9 +88,6 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
 		<svg class="octicon" width="16" height="16"><path id="ArticleTOC"></path></svg>
 	</a>
 </div>
-<a class="circle" id="toogleBtn">
-	<svg class="octicon" width="24" height="24"><path id="ArticleTOC" d="M5.22 8.22a.749.749 0 0 0 0 1.06l6.25 6.25a.749.749 0 0 0 1.06 0l6.25-6.25a.749.749 0 1 0-1.06-1.06L12 13.939 6.28 8.22a.749.749 0 0 0-1.06 0Z"></path></svg>
-</a>
 </div>
     <div id="content">
 <div class="markdown-body" id="postBody"><h1>前言</h1>

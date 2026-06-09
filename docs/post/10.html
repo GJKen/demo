@@ -10,53 +10,9 @@
         let theme = localStorage.getItem("meek_theme") || "light";
         document.documentElement.setAttribute("data-color-mode", theme);
     </script>
-<meta name="description" content="# 问题现象
-
-> [!NOTE]
-> Claude Code 首次启动的引导流程会检测所在国家地区, 不符合会导致 API 连接拦截.
-
-```
-Unable to connect to Anthropic services
-Failed to connect to api.anthropic.com: ECONNREFUSED
-Please check your internet connection and network settings.
-Note: Claude Code might not be available in your country. Check supported countries at https://anthropic.com/supported-countries
-```
-
-
-# 解决方案(跳过引导流程)
-
-> [!NOTE]
-> 通过修改 Claude Code 配置文件 `.claude.json`, 新增 `hasCompletedOnboarding: true` 配置项, 直接跳过首次启动引导, 即可解决连接问题. 
-
-文件路径一般是 `C:\Users\[你的用户名]\.claude.json`.
-
-找到后对它进行编辑, 在里面任意新增一行 `'hasCompletedOnboarding': true`, 同时 json 文件注意补写逗号即可.
-
-保存配置文件后, 重新打开终端, 输入 `claude` 看看是否成功.。">
+<meta name="description" content="问题现象 [!NOTE] Claude Code 首次启动的引导流程会检测所在国家地区, 不符合会导致 API 连接拦截. Unable to connect to Anthropic services Failed to connect to api.anthropic.com: ECONNREFUSED Pleas...">
 <meta property="og:title" content="Windows 端 Claude Code 首次启动无法连接 Anthropic 服务解决方案">
-<meta property="og:description" content="# 问题现象
-
-> [!NOTE]
-> Claude Code 首次启动的引导流程会检测所在国家地区, 不符合会导致 API 连接拦截.
-
-```
-Unable to connect to Anthropic services
-Failed to connect to api.anthropic.com: ECONNREFUSED
-Please check your internet connection and network settings.
-Note: Claude Code might not be available in your country. Check supported countries at https://anthropic.com/supported-countries
-```
-
-
-# 解决方案(跳过引导流程)
-
-> [!NOTE]
-> 通过修改 Claude Code 配置文件 `.claude.json`, 新增 `hasCompletedOnboarding: true` 配置项, 直接跳过首次启动引导, 即可解决连接问题. 
-
-文件路径一般是 `C:\Users\[你的用户名]\.claude.json`.
-
-找到后对它进行编辑, 在里面任意新增一行 `'hasCompletedOnboarding': true`, 同时 json 文件注意补写逗号即可.
-
-保存配置文件后, 重新打开终端, 输入 `claude` 看看是否成功.。">
+<meta property="og:description" content="问题现象 [!NOTE] Claude Code 首次启动的引导流程会检测所在国家地区, 不符合会导致 API 连接拦截. Unable to connect to Anthropic services Failed to connect to api.anthropic.com: ECONNREFUSED Pleas...">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://GJKen.github.io/demo/post/10.html">
 <meta property="og:image" content="https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp">
@@ -90,10 +46,6 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
 #cmButton{height:48px;margin-top:48px;}
 #comments{margin-top:64px;}
 
-#toogleBtn{position:fixed;top:51px;right:6%;display:none;}
-#toogleBtn.active,#toogleBtn path{display:flex;padding:6px 7px;fill:var(--title-right-svgColor);cursor:pointer;transition:transform 0.3s ease-in-out;background:var(--tooglebtn-bgColor)}
-#toogleBtn.active:hover svg path{fill:var(--title-right-svgHovercolor);}
-#toogleBtn.btn-fadeout{opacity:0;}
 #functionBtn div:first-of-type{display:flex;gap:20px}
 
 .g-emoji{font-size:24px;}
@@ -146,9 +98,6 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
 		<svg class="octicon" width="16" height="16"><path id="ArticleTOC"></path></svg>
 	</a>
 </div>
-<a class="circle" id="toogleBtn">
-	<svg class="octicon" width="24" height="24"><path id="ArticleTOC" d="M5.22 8.22a.749.749 0 0 0 0 1.06l6.25 6.25a.749.749 0 0 0 1.06 0l6.25-6.25a.749.749 0 1 0-1.06-1.06L12 13.939 6.28 8.22a.749.749 0 0 0-1.06 0Z"></path></svg>
-</a>
 </div>
     <div id="content">
 <div class="markdown-body" id="postBody"><h1>问题现象</h1>
