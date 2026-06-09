@@ -10,9 +10,9 @@
         let theme = localStorage.getItem("meek_theme") || "light";
         document.documentElement.setAttribute("data-color-mode", theme);
     </script>
-<meta name="description" content="覆盖">
+<meta name="description" content="&lt;details &lt;summary 覆盖&lt;/summary ... Gmeek spoilertxt=&#34;![https://github.com/user attachments/assets/e2ed0b88 719e 49b4 b8bf 90686e0e29c8]&#34; &lt;/details">
 <meta property="og:title" content="测试图片">
-<meta property="og:description" content="覆盖">
+<meta property="og:description" content="&lt;details &lt;summary 覆盖&lt;/summary ... Gmeek spoilertxt=&#34;![https://github.com/user attachments/assets/e2ed0b88 719e 49b4 b8bf 90686e0e29c8]&#34; &lt;/details">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://GJKen.github.io/demo/post/8.html">
 <meta property="og:image" content="https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp">
@@ -29,9 +29,9 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 #header{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:24px;}
 #functionBtn{display:flex;justify-content:center;margin:20px 0;gap:20px;}
 #functionBtn a{padding:14px 16px;}
-#functionBtn.Btn-flex{position:fixed;margin:0;padding:8px 0;top:-64px;left:0;width:100%;min-width:500px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;animation:fadeIn.2s ease-in 0s forwards;transition:top 0.3s ease-in-out}
+#functionBtn.Btn-flex{position:fixed;margin:0;padding:8px 0;top:0;left:0;width:100%;min-width:0px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;animation:fadeIn.2s ease-in 0s forwards;transition:top 0.3s ease-in-out}
 #footer{margin-top:64px;text-align:center;font-size:small;}
-body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animation:slide-fade-in 0.8s ease;animation:slide-fade-in 0.8s ease}
+#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animation:slide-fade-in 0.8s ease;animation:slide-fade-in 0.8s ease}
 .title-left img{animation:grow 0.5s cubic-bezier(0.23,1,0.32,1);-webkit-animation:grow 0.5s cubic-bezier(0.23,1,0.32,1);}
 </style>
 
@@ -50,7 +50,7 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
 
 .g-emoji{font-size:24px;}
 @media (max-width:600px) {
-    body {padding:8px;min-width:500px;}
+    body {padding: 8px;min-width: 0;width: 100%;overflow-x: hidden;}
     .postTitle{font-size:24px;}
 }
 
@@ -90,7 +90,10 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
 </div>
 </div>
     <div id="content">
-<div class="markdown-body" id="postBody"><p>覆盖</p></div>
+<div class="markdown-body" id="postBody"><details><summary>覆盖</summary>
+<p>...<br>
+<span class="spoilerText">![https://github.com/user-attachments/assets/e2ed0b88-719e-49b4-b8bf-90686e0e29c8]</span></p>
+</details></div>
 <div style="font-size:small;margin-top:8px;float:right;">🥰转载请注明,谢谢!🥰</div>
 
 <button class="btn btn-block" type="button" id="cmButton">评论</button>
@@ -146,7 +149,6 @@ if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
 </script>
 
 <script>
-// const postTitle=document.querySelector(".postTitle"),textContent=postTitle.textContent;postTitle.textContent="";let idx=0;const writeTimer=setInterval(()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContent.length&&(clearInterval(writeTimer),postTitle.classList.remove("no-blink"))},80);postTitle.classList.add("no-blink"),document.addEventListener("DOMContentLoaded",()=>{const t=document.createElement("div");t.id="checkBtn";const e=document.getElementById("functionBtn");e.insertAdjacentElement("afterend",t),new IntersectionObserver(t=>{t.forEach(t=>{const n=t.isIntersecting;e.classList.toggle("Btn-flex",!n)})},{rootMargin:"300px 0px 0px 0px",threshold:0}).observe(t)});
 const postTitle=document.querySelector(".postTitle"),textContent=postTitle.textContent;postTitle.textContent="";let idx=0;const writeTimer=setInterval(()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContent.length&&(clearInterval(writeTimer),postTitle.classList.remove("no-blink"))},80);postTitle.classList.add("no-blink"),document.addEventListener("DOMContentLoaded",()=>{const t=document.createElement("div");t.id="checkBtn";const e=document.getElementById("functionBtn");e.insertAdjacentElement("afterend",t),new IntersectionObserver(t=>{t.forEach(t=>{const n=t.isIntersecting;e.classList.toggle("Btn-flex",!n)})},{rootMargin:"300px 0px 0px 0px",threshold:0}).observe(t)}),"scrollRestoration"in history&&(history.scrollRestoration="manual"),window.addEventListener("beforeunload",()=>{window.scrollTo(0,0)}),window.addEventListener("load",()=>{window.scrollTo(0,0)});
 document.getElementById("pathHome").setAttribute("d",IconList["home"]);
 document.getElementById("ArticleTOC").setAttribute("d","M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z");
@@ -165,7 +167,7 @@ function openComments(){
     cmButton.appendChild(span);
 
     script=document.createElement("script");
-    // script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("src","https://utteranc.es/client.js");
     script.setAttribute("repo","GJKen/demo");
     script.setAttribute("issue-term","title");
     
