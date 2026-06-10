@@ -68,14 +68,15 @@
 
 <details><summary>点击展开</summary>
 
-`Gmeek-imgbox`首先匹配到关键字后转化标签.
+`Gmeek-imgbox`会首先匹配到关键字后转化标签.
 
 `Gmeek.py`匹配转换的代码如下:
 
 ```python
-        # 剧透
-        if '<code class="notranslate">Gmeek-spoilertxt' in post_body: 
-            post_body = re.sub(r'<code class="notranslate">Gmeek-spoilertxt="([^"]+)"</code>', lambda match: f'<span class="spoilerText">{match.group(1)}</span>', post_body, flags=re.DOTALL)
+        # 手动插入外链图片<p><code><img>
+        if '<code class="notranslate">Gmeek-imgbox' in post_body:
+            post_body = re.sub(r'<p>\s*<code class="notranslate">Gmeek-imgbox="([^"]+)"</code>\s*</p>', lambda match: f'<div class="ImgLazyLoad-circle"></div>\n<img data-fancybox="gallery" img-src="{match.group(1)}">', post_body, flags=re.DOTALL)
+            post_body = re.sub(r'<code class="notranslate">Gmeek-imgbox="([^"]+)"</code>', lambda match: f'<div class="ImgLazyLoad-circle"></div>\n<img data-fancybox="gallery" img-src="{match.group(1)}">', post_body, flags=re.DOTALL)
 ```
 
 markdown 输入:
@@ -91,8 +92,8 @@ markdown 输入:
 <img data-fancybox="gallery" img-src="https://example.com/image.jpg">
 
 <!--
-一个图片未加载时的占位 CSS 动画 DIV, 类名为 .ImgLazyLoad-circle, 这个类名的 CSS 动画我写在了 primer.css 里面.
-一个 img 标签, 包含 fancybox 所需的 data-fancybox="gallery" 值.
+1. 图片未加载时的占位 CSS 动画 DIV, 类名为 .ImgLazyLoad-circle, 这个类名的 CSS 动画我写在了 primer.css 里面.
+2. img 标签, 包含 fancybox 所需的 data-fancybox="gallery" 值.
 -->
 ```
 
@@ -116,9 +117,6 @@ markdown 输入:
 > 修改-适配切换博客主题颜色.
 > 修改-增加滚动页面同时滚动章节.
 > 修改-动画和样式.
-> 修改-滚动页面自动显示&隐藏返回顶部按钮.
-
-可以直接引用.
 
 ## 文章增加目录列表(集成到header)
 
@@ -141,27 +139,40 @@ markdown 输入:
 
 > 注意末尾的标点符号.
 
-我这里用的是`5.0`版本, cdn 加速链接.
+我这里用的是`6.1`版本, fastly 加速链接.
 
 ```json
-"script":"<script src='https://fastly.jsdelivr.net/gh/gjken/gjkdemo.github.io@main/static/ArticleJs.js'></script><script src='https://fastly.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js'></script>"
+"script":"<script src='https://fastly.jsdelivr.net/gh/gjken/gjkdemo.github.io@main/static/ArticleJs.js'></script><script src='https://fastly.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.umd.js'></script>"
 ```
 
 CSS写入到了👉[文章自定义 js 代码](#articlejs.js---文章自定义-js-代码)
 
 - 内容如下:
 
-意思是页面加载完成再加载 CSS, 同时增加 fancybox 必要的绑定函数.
+等等页面加载完成再加载 CSS, 同时增加 fancybox 必要的绑定函数.
+fancybox有多种参数可选, 具体看官方文档, 不多赘述.
 
 ```Javascript
 document.addEventListener('DOMContentLoaded', () => {
-    document.head.appendChild(
-        Object.assign(document.createElement('link'), {
-            rel: 'stylesheet',
-            href: 'https://fastly.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css'
-        })
-    );
-    Fancybox.bind('[data-fancybox="gallery"]', {});
+	document.head.appendChild(
+		Object.assign(document.createElement('link'), {
+			rel: 'stylesheet',
+			href: 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.css'
+		})
+	);
+	Fancybox.bind("[data-fancybox]", {
+		Carousel: {
+			Thumbs: {
+				showOnStart: false,
+			},
+			Zoomable: {
+				Panzoom: {
+					clickAction: "iterateZoom",
+					maxScale: 2,
+				},
+			},
+		},
+	});
 });
 ```
 
@@ -176,9 +187,18 @@ document.addEventListener('DOMContentLoaded', () => {
 然后在下面增加代码:
 
 ```python
-        # 手动插入外链图片
+        # 手动插入外链图片<p><code><img>
         if '<code class="notranslate">Gmeek-imgbox' in post_body:
             post_body = re.sub(r'<p>\s*<code class="notranslate">Gmeek-imgbox="([^"]+)"</code>\s*</p>', lambda match: f'<div class="ImgLazyLoad-circle"></div>\n<img data-fancybox="gallery" img-src="{match.group(1)}">', post_body, flags=re.DOTALL)
+
+	    # 处理默认情况下的图片匹配规则<p><a><img>
+        if 'data-canonical-src' in post_body:
+            post_body = re.sub(
+                r'<a[^>]*?href="[^"]*?"[^>]*?><img[^>]*?data-canonical-src="([^"]*?)"[^>]*?></a>',
+                lambda match: f'<div class="ImgLazyLoad-circle"></div>\n<img data-fancybox="gallery" img-src="{match.group(1)}">',
+                post_body,
+                flags=re.DOTALL
+            )
 ```
 
 - **使用演示**
@@ -466,12 +486,6 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
     background: #81b5daa1;
-}
-
-/* Firefox */
-html {
-    scrollbar-color: #97d3ffa1 transparent;
-    scrollbar-width: thin;
 }
 ```
 
@@ -815,13 +829,26 @@ html {
 `.markdown-body h2`
 
 > [!NOTE]
-> 删除 padding-bottom.
+> padding 增加左右间距.
 > 增加下划线动画.
 > 增加阴影样式.
 
 <details><summary>修改前</summary>
 
 ```CSS
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+	padding: .22em 0;
+	margin-top: 24px;
+	margin-bottom: 16px;
+	font-weight: var(--base-text-weight-semibold, 600);
+	line-height: 1.25
+}
+
 .markdown-body h2 {
     padding-bottom: .3em;
     font-size: 1.5em;
@@ -834,12 +861,24 @@ html {
 <details><summary>修改后</summary>
 
 ```CSS
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+	padding: .22em .44em;/* 增加左右间距 */
+	margin-top: 24px;
+	margin-bottom: 16px;
+	font-weight: var(--base-text-weight-semibold, 600);
+	line-height: 1.25
+}
+
 .markdown-body h2 {
     padding-bottom: .3em;
     font-size: 1.5em;
-	box-shadow: rgb(41, 150, 186) 0px 9px 18px -15px;/* 增加 */
+	box-shadow: 0px 9px 11px -11px rgb(41 150 186);/* 增加 */
 	display: inline-block;/* 增加 */
-	border-radius: 6px;/* 增加 */
 }
 ```
 
@@ -1138,6 +1177,32 @@ a {
 
 ![](https://github.com/user-attachments/assets/f921eaa2-cfc3-4c3a-bb96-3d58a519a7dc)
 
+## 文章 \<summary> 元素样式
+
+> [!NOTE]
+> 修改下标基线对齐位置.
+
+<details><summary>修改前</summary>
+
+```CSS
+.markdown-body table td>:last-child {
+	margin-bottom: 0
+}
+```
+
+</details>
+
+<details><summary>修改后</summary>
+
+```CSS
+.markdown-body table td>:last-child {
+	margin-bottom: 0;
+	vertical-align: sub
+}
+```
+
+</details>
+
 # 通过 Gmeek 仓库美化博客
 
 为什么这样做? `Gmeek-spoilertxt="自娱自乐.~~"`
@@ -1234,7 +1299,7 @@ fork 之后, 转到搭建博客的 github 源码,
 
 #functionBtn{display:flex;justify-content:center;margin:20px 0;gap:20px;transition: transform 0.3s ease-in-out;}
 #functionBtn a{padding:14px 16px;}
-#functionBtn.Btn-flex{position:fixed;margin:0;padding:8px 0;top:-64px;left:0;width:100%;min-width:500px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;animation:fadeIn.2s ease-in 0s forwards;transition:top 0.3s ease-in-out}
+#functionBtn.Btn-flex{position:fixed;margin:0;padding:8px 0;top:0;left:0;width:100%;min-width:0;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;animation:fadeIn.2s ease-in 0s forwards;transition:top 0.3s ease-in-out}
 
 body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animation:slide-fade-in 0.8s ease;animation:slide-fade-in 0.8s ease}
 ```
@@ -1277,9 +1342,15 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
 -#functionBtn .circle{padding: 14px 16px;margin-right:8px;}
 ```
 
-4. **body响应**
+4. **横向滚动条修复**
 
-定位`@media (max-width:600px) {`, 给 body 增加最小宽度500px: `min-width:500px;`
+定位`@media (max-width:600px) {`,
+```
+@media (max-width:600px) {
+    body {padding: 8px;min-width: 0;width: 100%;overflow-x: hidden;}
+    .postTitle{font-size:24px;}
+}
+```
 
 5. **分离 header 文字以及图标**
 
@@ -1377,12 +1448,13 @@ document.getElementById("pathSearch").setAttribute("d","M15.7 13.3l-3.81-3.83A5.
 
 > 添加打字效果.
 > 添加滚动切换显示顶部按钮导航.
+> 页面刷新强制回顶部.
 
 定位`<script>`标签, 在里面增加 JS 代码:
 
 > [!NOTE]
 > `document.addEventListener('DOMContentLoaded', () => {`
-这段监听函数还可另增加额外的功能.
+这段监听函数可供其它代码使用, 避免重复监听.
 > 实际应用场景我把这块的代码都压缩合并了.
 
 <details><summary>JavaScript</summary>
@@ -1409,7 +1481,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	// 创建检查按钮, 插入到指定id #functionBtn 的后面
 	const checkBtn = document.createElement('div');
 	checkBtn.id = 'checkBtn';
-	const toogleBtn = document.getElementById('toogleBtn');
 	const functionBtn = document.getElementById('functionBtn');
 	functionBtn.insertAdjacentElement('afterend', checkBtn);
 
@@ -1417,18 +1488,21 @@ document.addEventListener("DOMContentLoaded", () => {
 	const observer = new IntersectionObserver(entries => {
 		entries.forEach(entry => {
 			const isIntersecting = entry.isIntersecting;
-			toogleBtn.classList.toggle('active', !isIntersecting);
 			functionBtn.classList.toggle('Btn-flex', !isIntersecting);
-			functionBtn.classList.toggle('btn-fadeout', !isIntersecting);
 		});
 	}, { rootMargin: '300px 0px 0px 0px', threshold: 0 });
 	observer.observe(checkBtn);
+});
 
-	// 为 toogleBtn 添加点击事件修改悬浮样式
-	toogleBtn.addEventListener('click', () => {
-		functionBtn.style.top = functionBtn.style.top === '0px' ? '-64px' : '0';
-		toogleBtn.style.transform = toogleBtn.style.transform === 'rotate(180deg)' ? 'rotate(0deg)' : 'rotate(180deg)';
-	});
+// 页面刷新强制回顶部
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+window.addEventListener('beforeunload', () => {
+    window.scrollTo(0, 0);
+});
+window.addEventListener('load', () => {
+    window.scrollTo(0, 0);
 });
 ```
 
@@ -1782,14 +1856,16 @@ Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 在附近任意行增加代码:
 
 ```python
-        # 处理默认情况下的图片匹配规则<p><a><img>
-        if 'data-canonical-src' in post_body:
-            post_body = re.sub(
-                r'<a[^>]*?href="[^"]*?"[^>]*?><img[^>]*?data-canonical-src="([^"]*?)"[^>]*?></a>',
-                lambda match: f'<div class="ImgLazyLoad-circle"></div>\n<img data-fancybox="gallery" img-src="{match.group(1)}">',
-                post_body,
-                flags=re.DOTALL
-            )
+
+        # 处理默认情况下的图片匹配规则
+        # 匹配结构: <a href="..."><img data-canonical-src="..."></a>
+        # 将匹配到的图片标签转换为懒加载图片组件
+        post_body = re.sub(
+            r'<a[^>]*?href="[^"]*?"[^>]*?><img[^>]*?(?:data-canonical-src="([^"]*?)"|src="([^"]*?)")[^>]*?></a>',
+            lambda match: f'<div class="ImgLazyLoad-circle"></div>\n<img data-fancybox="gallery" img-src="{match.group(1) or match.group(2)}">',
+            post_body,
+            flags=re.DOTALL
+        )
 ```
 
 - **使用演示**
@@ -1814,13 +1890,13 @@ Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 
 ```python
         if '<code class="notranslate">Gmeek-spoilertxt' in post_body: 
-            post_body = re.sub(r'<code class="notranslate">Gmeek-spoilertxt="([^"]+)"</code>', lambda match: f'<span class="spoilerText">{match.group(1)}</span>', post_body, flags=re.DOTALL)
+            post_body = re.sub(r'<code class="notranslate">Gmeek-spoilertxt="([^"]+)"</code>', lambda match: f'<span class="spoilertxt">{match.group(1)}</span>', post_body, flags=re.DOTALL)
 ```
 
 2. **实际转化后的标签如下:**
 
 ```html
-<p>测试剧透 <span class="spoilerText">剧透内容</span></p>
+<p>测试剧透 <span class="spoilertxt">剧透内容</span></p>
 ```
 
 ## 打开 post.html
@@ -1828,33 +1904,35 @@ Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 1. **增加 CSS 样式:**
 
 ```CSS
-.spoilerText{filter:blur(5px);-webkit-filter:blur(5px);cursor:pointer;transition:filter .3s ease}
-.spoilerText.clear{filter: none;}
+.spoilertxt{filter:blur(3.5px);-webkit-filter:blur(3.5px);cursor:pointer;transition:filter .3s ease}
+.spoilertxt.clear{filter: none;}
 ```
 
 2. **定位`<script>`标签, 在里面增加 JS 代码:**
 
 > [!NOTE]
-> `document.addEventListener('DOMContentLoaded', () => {`这个监听可以写其它功能的代码进去, 不止剧透效果.
+> `document.addEventListener('DOMContentLoaded', () => {`这个监听写了其它功能的代码进去, 不止剧透效果的代码.
 
 <details><summary>Javascript Code</summary>
 
 ```Javascript
 document.addEventListener('DOMContentLoaded', () => {
-	const spoilers = document.querySelectorAll(".spoilerText");
+	const spoilers = document.querySelectorAll(".spoilertxt");
 	spoilers.length && spoilers.forEach(el => el.onclick = () => el.classList.toggle("clear"));
 });
 ```
 
 </details>
 
-3. **markdown 输入:**
+## 验证效果
+
+1. **markdown 写入下面内容:**
 
 ```
 测试剧透👉`Gmeek-spoilertxt="666666"`.
 ```
 
-4. **实际展示:**
+2. **实际展示:**
 
 测试剧透👉`Gmeek-spoilertxt="666666"`.
 
