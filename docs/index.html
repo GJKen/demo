@@ -203,8 +203,7 @@ var utterancesLoad=0;
 
 let themeSettings={
     "dark":["dark","moon","#00f0ff","dark-blue"],
-    "light":["light","sun","#ff5000","github-light"],
-    "auto":["auto","sync","","preferred-color-scheme"]
+    "light":["light","sun","#ff5000","github-light"]
 };
 function changeTheme(mode, icon, color, utheme){
     document.documentElement.setAttribute("data-color-mode",mode);
@@ -214,7 +213,7 @@ function changeTheme(mode, icon, color, utheme){
 }
 function modeSwitch(){
     let currentMode=document.documentElement.getAttribute('data-color-mode');
-    let newMode = currentMode === "light" ? "dark" :currentMode === "dark" ? "auto" :"light";
+    let newMode = currentMode === "light" ? "dark" : "light";
     localStorage.setItem("meek_theme", newMode);
     if(themeSettings[newMode]){
         changeTheme(...themeSettings[newMode]);
