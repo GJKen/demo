@@ -172,6 +172,7 @@ The actual blog currently uses `issue`.
 - `docs\post` 是博客生成文章的目录，内容很多。不要轻易读取，确实需要读取时先向用户确认。
 - `primer.css` 有 3 万多行代码。不要轻易读取，只在必要时查找具体选择器或小片段。
 - 对于简单文本修改，优先采用「一次定位、一次最小补丁、一次简短验证」的流程，避免为了小改动反复尝试大量命令。若 `apply_patch` 在 Windows/PowerShell 下出现管道或编码问题，优先使用已经验证可行的底层 `codex.exe --codex-run-as-apply-patch` 方式传入补丁。
+- `docs\` 目录下的所有 HTML 文件是 GitHub Actions 的生成产物，不要直接修改。AI 需要修改的是模板层代码（`templates\`、CSS、JS 等基础代码）。每次用户发布 git 后，Action 会重新生成文章，`docs\` 里的 CSS 和 JS 会被覆盖。
 
 ## Potential Improvements
 
