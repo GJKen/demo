@@ -39,10 +39,10 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 .postTitle{margin:0 auto;font-size:40px;font-weight:bold;}
 .postTitle::after{content:'|';animation:blink 1s infinite;font-family:fantasy;font-weight:normal;vertical-align:text-top;}
 .no-blink::after{animation:none;}
-.spoilerTxt,.spoilerimg{cursor:pointer;transition:filter .3s ease}
-.spoilerTxt{filter:blur(5px);-webkit-filter:blur(5px)}
+.spoilertxt,.spoilerimg{cursor:pointer;transition:filter .3s ease}
+.spoilertxt{filter:blur(5px);-webkit-filter:blur(5px)}
 .spoilerimg{filter:blur(10px);-webkit-filter:blur(10px)}
-.spoilerTxt.clear,.spoilerimg.clear{filter:none;}
+.spoilertxt.clear,.spoilerimg.clear{filter:none;}
 #postBody{border-bottom:1px solid var(--color-border-default);padding-bottom:36px;}
 #postBody hr{height:2px;}
 #cmButton{height:48px;margin-top:48px;}
@@ -127,7 +127,7 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 <h2>任务列表</h2>
 <p>任务列表是一组任务，每个任务都在单独的行上呈现，带有可点击的复选框。 您可以选中或取消选中复选框来将任务标记为完成或未完成。</p>
 <p><div class="ImgLazyLoad-circle"></div>
-<img data-fancybox="gallery" img-src="https://docs.github.com/assets/cb-64626/mw-1440/images/help/writing/task-list-rendered-simple.webp"></p>
+<img data-fancybox="gallery" img-src="https://camo.githubusercontent.com/de9d2bd9c6261716deea242ef5d067f9a6ae1209448d13792729b6badebebf7f/68747470733a2f2f646f63732e6769746875622e636f6d2f6173736574732f63622d36343632362f6d772d313434302f696d616765732f68656c702f77726974696e672f7461736b2d6c6973742d72656e64657265642d73696d706c652e77656270"></p>
 <pre class="notranslate"><code class="notranslate">- [x] #739
 - [ ] https://github.com/octo-org/octo-repo/issues/740
 - [ ] Add delight to the experience when all tasks are complete :tada:

@@ -39,10 +39,10 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 .postTitle{margin:0 auto;font-size:40px;font-weight:bold;}
 .postTitle::after{content:'|';animation:blink 1s infinite;font-family:fantasy;font-weight:normal;vertical-align:text-top;}
 .no-blink::after{animation:none;}
-.spoilerTxt,.spoilerimg{cursor:pointer;transition:filter .3s ease}
-.spoilerTxt{filter:blur(5px);-webkit-filter:blur(5px)}
+.spoilertxt,.spoilerimg{cursor:pointer;transition:filter .3s ease}
+.spoilertxt{filter:blur(5px);-webkit-filter:blur(5px)}
 .spoilerimg{filter:blur(10px);-webkit-filter:blur(10px)}
-.spoilerTxt.clear,.spoilerimg.clear{filter:none;}
+.spoilertxt.clear,.spoilerimg.clear{filter:none;}
 #postBody{border-bottom:1px solid var(--color-border-default);padding-bottom:36px;}
 #postBody hr{height:2px;}
 #cmButton{height:48px;margin-top:48px;}
@@ -97,10 +97,12 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 <p><span class="spoilerText">测试遮罩</span></p>
 <p>[遮罩测试]{.spoilertxt}</p>
 <p>这是可告人的文字spoilertxt: <code class="notranslate">一些不可告人的文字</code></p>
-<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/e2ed0b88-719e-49b4-b8bf-90686e0e29c8"><img src="https://github.com/user-attachments/assets/e2ed0b88-719e-49b4-b8bf-90686e0e29c8" alt="" style="max-width: 100%;"></a><br>
-<a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/e2ed0b88-719e-49b4-b8bf-90686e0e29c8"><img src="https://github.com/user-attachments/assets/e2ed0b88-719e-49b4-b8bf-90686e0e29c8" alt="" style="max-width: 100%;"></a><br>
+<p><div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/e2ed0b88-719e-49b4-b8bf-90686e0e29c8"><br>
 <div class="ImgLazyLoad-circle"></div>
-<img class="spoilerimg" data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/e2ed0b88-719e-49b4-b8bf-90686e0e29c8"></p>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/e2ed0b88-719e-49b4-b8bf-90686e0e29c8"><br>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/e2ed0b88-719e-49b4-b8bf-90686e0e29c8"></p>
 </details></div>
 <div style="font-size:small;margin-top:8px;float:right;">🥰转载请注明,谢谢!🥰</div>
 
