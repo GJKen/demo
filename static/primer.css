@@ -27568,7 +27568,7 @@ a.branch-name .octicon {
 /* 确保悬停时其他过渡效果保持 */
 .ImgLoaded:hover {
 	opacity: 1;
-	filter: blur(0);
+	/* filter: blur(0); */
 }
 
 .markdown-body img {
