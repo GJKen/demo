@@ -474,19 +474,19 @@ body {
 
 <details><summary>CSS Code</summary>
 
-```Diff
-+::-webkit-scrollbar {
-+    width: 8px;
-+    height: 8px;
-+}
-+
-+::-webkit-scrollbar-thumb {
-+    border-radius: 10px;
-+    background: #97d3ffa1;
-+}
-+::-webkit-scrollbar-thumb:hover {
-+    background: #81b5daa1;
-+}
+```CSS
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #97d3ffa1;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #81b5daa1;
+}
 ```
 
 </details>
