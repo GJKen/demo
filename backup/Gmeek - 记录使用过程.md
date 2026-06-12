@@ -111,25 +111,21 @@ markdown 输入:
 
 ## [ArticleToc.js](https://github.com/GJKen/gjken.github.io/blob/main/static/ArticleToc.js) - 文章增加目录列表+一键返回顶部按钮(v1.0)
 
-> 参考来源: [GitHub](https://github.com/cao-gift/cao-gift.github.io?tab=readme-ov-file)
-> 修改-创建`.toc`的位置为body里面.
-> 修改-批量给 a 标签创建的类名为: `toc-h1` `toc-h2` ... `toc-h6`
-> 修改-适配切换博客主题颜色.
+参考来源: [GitHub](https://github.com/cao-gift/cao-gift.github.io?tab=readme-ov-file)
+
+功能和 [v.1.0版本](https://github.com/GJKen/gjken.github.io/blob/main/static/ArticleToc.js) 有较大改进.
+
+> 修改-把目录按钮集成到了文章页头按钮里面控制显示隐藏.
+> 修改-当滚动页面使`#functionBtn`按钮不可见时, 使其悬浮在顶部.
+> 修改-文章目录增加顶部和底部跳转按钮.
+> 批量给 a 标签创建的类名为: toc-h1 toc-h2 ... toc-h6
+> 修改-适配博客切换主题颜色
 > 修改-滚动页面时高亮当前章节, 并自动滚动目录列表定位到当前章节.
 > 修改-动画和样式.
 
-## 文章增加目录列表(集成到header)
-
-这版把目录按钮集成到了文章的`#header`的按钮里面.
-
-功能和[v.1.0版本](#articletoc.js---文章增加目录列表+一键返回顶部按钮(v1.0))差不多一致(小改动), 同时打算把按钮统统放入`#functionBtn`标签里面, 代码也统一放入 ArticleJs.js 里面.
-
-> 修改-当滚动页面使`#functionBtn`按钮不可见时, 使其悬浮在顶部.
-> 修改-文章目录增加顶部和底部跳转按钮.
-
 - 图示:
 
-![](https://github.com/user-attachments/assets/7b02e4e8-7502-44e8-a48c-2a45bb0d5c2f)
+![](https://github.com/user-attachments/assets/87e1e408-ac60-4a1e-bce7-8fdf6b428a45)
 
 ## Fancybox.js - 图片浏览器
 
@@ -152,29 +148,141 @@ CSS写入到了👉[文章自定义 js 代码](#articlejs.js---文章自定义-j
 等页面加载完成再加载 CSS, 同时增加 fancybox 必要的绑定函数.
 fancybox有多种参数可选, 具体看官方文档, 不多赘述.
 
+<details><summary>Javascript Code</summary>
+
 ```Javascript
 document.addEventListener('DOMContentLoaded', () => {
-	document.head.appendChild(
-		Object.assign(document.createElement('link'), {
-			rel: 'stylesheet',
-			href: 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.css'
-		})
-	);
+	document.head.appendChild(Object.assign(document.createElement('link'), {
+		rel: 'stylesheet',
+		href: 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.css'
+	}));
+
 	Fancybox.bind("[data-fancybox]", {
-		Carousel: {
-			Thumbs: {
-				showOnStart: false,
-			},
-			Zoomable: {
-				Panzoom: {
-					clickAction: "iterateZoom",
-					maxScale: 2,
+			on: {
+				ready: (fancyboxRef) => {
+					const container = fancyboxRef.getContainer();
+
+					const middle = container.querySelector(".f-carousel__toolbar__column.is-middle");
+					if (middle) {
+						middle.style.visibility = "visible";
+						middle.style.opacity = "1";
+						middle.style.transition = "opacity 0.3s";
+						middle._manualVisible = true; // 记录手动状态
+					}
+
+					const idleTargets = [
+						...container.querySelectorAll(".f-button.is-arrow"),
+						container.querySelector(".f-carousel__toolbar__column.is-right"),
+					].filter(Boolean);
+
+					idleTargets.forEach(el => {
+						el.style.transition = "opacity 0.4s ease";
+						el.style.opacity = "1";
+					});
+
+					const IDLE_DELAY = 2000;
+					let idleTimer = null;
+
+					const setIdle = () => {
+						idleTargets.forEach(el => {
+							el.style.opacity = "0";
+							el.style.pointerEvents = "none";
+						});
+						// middle 只有手动显示状态下才需要空闲隐藏
+						if (middle && middle._manualVisible) {
+							middle.style.opacity = "0";
+							middle.style.pointerEvents = "none";
+						}
+					};
+
+					const setActive = () => {
+						idleTargets.forEach(el => {
+							el.style.opacity = "1";
+							el.style.pointerEvents = "auto";
+						});
+						// middle 只有手动显示状态下才跟随恢复
+						if (middle && middle._manualVisible) {
+							middle.style.opacity = "1";
+							middle.style.pointerEvents = "auto";
+						}
+						clearTimeout(idleTimer);
+						idleTimer = setTimeout(setIdle, IDLE_DELAY);
+					};
+
+					container.addEventListener("mousemove", setActive);
+					container.addEventListener("mouseenter", setActive);
+					idleTimer = setTimeout(setIdle, IDLE_DELAY);
+
+					fancyboxRef.on("destroy", () => {
+						clearTimeout(idleTimer);
+						container.removeEventListener("mousemove", setActive);
+						container.removeEventListener("mouseenter", setActive);
+					});
 				},
 			},
-		},
-	});
+			Carousel: {
+				Thumbs: { showOnStart: true },
+				Zoomable: {
+					Panzoom: {
+						clickAction: "iterateZoom",
+						maxScale: 5,
+					},
+				},
+				Toolbar: {
+					items: {
+						toggleMiddle: {
+							tpl: '<button class="f-button" title="显示/隐藏工具栏"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg></button>',
+							click: () => {
+								const c = Fancybox.getInstance().getContainer();
+								const middle = c.querySelector(".f-carousel__toolbar__column.is-middle");
+								if (!middle) return;
+
+								middle._manualVisible = !middle._manualVisible;
+
+								if (middle._manualVisible) {
+									middle.style.visibility = "visible";
+									middle.style.opacity = "1";
+									middle.style.pointerEvents = "auto";
+									middle.style.transition = "opacity 0.3s";
+								} else {
+									middle.style.opacity = "0";
+									middle.style.pointerEvents = "none";
+									// 等过渡结束再设 visibility
+									setTimeout(() => {
+										if (!middle._manualVisible) middle.style.visibility = "hidden";
+									}, 300);
+								}
+							},
+						},
+						download2: {
+							tpl: '<button data-carousel-download="" class="f-button" title="下载图片"><svg tabindex="-1" width="24" height="24" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2M7 11l5 5 5-5M12 4v12"></path></svg></button>',
+							click: () => {
+								const src = Fancybox.getInstance().getSlide().src;
+								fetch(src)
+									.then(r => r.blob())
+									.then(blob => {
+										const url = URL.createObjectURL(blob);
+										const a = document.createElement('a');
+										a.href = url;
+										a.download = src.split('/').pop().split('?')[0];
+										a.click();
+										URL.revokeObjectURL(url);
+									});
+							}
+						},
+					},
+					display: {
+						left: ["infobar"],
+						middle: ["zoomIn", "zoomOut", "toggle1to1", "rotateCCW", "rotateCW", "flipX", "flipY", "reset"],
+						right: ["toggleMiddle", "download2", "fullscreen", "thumbs", "close"],
+					}
+				},
+			},
+		});
 });
 ```
+
+</details>
 
 ### 增加自定义匹配 - Gmeek-imgbox
 
