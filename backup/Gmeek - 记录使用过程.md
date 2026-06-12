@@ -1180,13 +1180,13 @@ a {
 ## 文章 \<summary> 元素样式
 
 > [!NOTE]
-> 修改下标基线对齐位置.
+> 禁用双击出现选择文本框.
 
 <details><summary>修改前</summary>
 
 ```CSS
-.markdown-body table td>:last-child {
-	margin-bottom: 0
+summary {
+    user-select: none;
 }
 ```
 
@@ -1195,9 +1195,9 @@ a {
 <details><summary>修改后</summary>
 
 ```CSS
-.markdown-body table td>:last-child {
-	margin-bottom: 0;
-	vertical-align: sub
+summary {
+    user-select: none;
+	display: list-item
 }
 ```
 
@@ -1846,7 +1846,9 @@ Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 
 更改后缩小了匹配范围, 可直接用行内代码块👉`Gmeek-html`让其在文章内正常显示.
 
-# 增加图片转换, 并适配图片懒加载
+# 图片优化相关
+
+## 增加图片转换, 并适配图片懒加载
 
 > [!WARNING]
 > git 会给图片使用`camo.githubusercontent.com`代理服务, 当外链的图片体积过大会提示"Content length exceeded", 估计是代理服务不支持, 这时候会出现转换的 bug (2025.11.14已修好), 同时这时候在 issue 里预览图片是一定失败的, 不过转换后可以在博客正常显示.
@@ -1878,7 +1880,51 @@ Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 
 这样优化后可以在 Github issue 的 Preview 里面直接预览图片, 太大的图片外链不行, 上面有说到.
 
-唯一缺点就是当 issues 删除后, 图片也会跟着消失, 无法再被外部引用, 所以删除仓库以及 issues 的时候一定要确保图片先备份哦~
+> [!IMPORTANT]
+> 唯一缺点就是当 issues 删除后, 图片也会跟着删除.
+> 所以删除仓库以及 issues 的时候一定要确保图片先备份哦~
+
+## 给图片增加 spoilerimg (防剧透效果)
+
+> 基于上面的思路, 给图片增加模糊效果实现防剧透.
+
+1. 打开`Gmeek.py`, 定位字符串`Gmeek-html`
+
+在处理默认情况下的图片匹配规则上面增加代码, 因为脚本是顺序匹配替换,
+
+所以必须在它上方添加:
+
+```python
+        # 图片防剧透
+        # 匹配结构:<a href="URL" alt="{spoilerimg}" ...></a>
+        # 将匹配到的图片标签转换为懒加载图片组件+spoilerimg类, 点击后移除模糊效果
+        if 'data-canonical-src' in post_body or 'src=' in post_body:
+            post_body = re.sub(
+                r'<a[^>]*?href="[^"]*?"[^>]*?><img(?=[^>]*?alt="\{spoilerimg\}")[^>]*?(?:data-canonical-src="([^"]*?)"|src="([^"]*?)")[^>]*?></a>',lambda match: f'<div class="ImgLazyLoad-circle"></div>\n<img class="spoilerimg" data-fancybox="gallery" img-src="{match.group(1) or match.group(2)}">',
+                post_body,flags=re.DOTALL)
+```
+
+2. 打开 post.html
+
+增加css:
+
+> 实际应用起来和 `spoilertxt` 的css有重复, 部分代码可覆写在一起.
+
+```CSS
+.spoilerimg{cursor:pointer;transition:filter .3s ease}
+.spoilerimg{filter:blur(10px);-webkit-filter:blur(10px)}
+.spoilerimg.clear{filter:none;}
+```
+
+- **使用演示**
+
+在 GitHub markdown 里的用法:
+
+`![{spoilerimg}](https://github.com/user-attachments/assets/bacd3a16-d74d-4175-bd09-2eba9afd39bb)`
+
+- **实际效果**
+
+![](https://github.com/user-attachments/assets/bacd3a16-d74d-4175-bd09-2eba9afd39bb)
 
 # 添加 Gmeek-spoilertxt - 文字防剧透模糊效果
 

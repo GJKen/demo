@@ -988,17 +988,17 @@ img 标签增加<code class="notranslate">display: block;</code>, 防止 Actions
 <p><div class="ImgLazyLoad-circle"></div>
 <img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/f921eaa2-cfc3-4c3a-bb96-3d58a519a7dc"></p>
 <h2>文章 &lt;summary&gt; 元素样式</h2>
-<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg data-component="Octicon" class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>修改下标基线对齐位置.</p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg data-component="Octicon" class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>禁用双击出现选择文本框.</p>
 </div>
 <details><summary>修改前</summary>
-<div class="highlight highlight-source-css"><pre class="notranslate">.<span class="pl-c1">markdown-body</span> <span class="pl-ent">table</span> <span class="pl-ent">td</span><span class="pl-c1">&gt;</span><span class="pl-kos">:</span><span class="pl-c1">last-child</span> {
-	<span class="pl-c1">margin-bottom</span><span class="pl-kos">:</span> <span class="pl-c1">0</span>
+<div class="highlight highlight-source-css"><pre class="notranslate"><span class="pl-ent">summary</span> {
+    <span class="pl-c1">user-select</span><span class="pl-kos">:</span> none;
 }</pre></div>
 </details>
 <details><summary>修改后</summary>
-<div class="highlight highlight-source-css"><pre class="notranslate">.<span class="pl-c1">markdown-body</span> <span class="pl-ent">table</span> <span class="pl-ent">td</span><span class="pl-c1">&gt;</span><span class="pl-kos">:</span><span class="pl-c1">last-child</span> {
-	<span class="pl-c1">margin-bottom</span><span class="pl-kos">:</span> <span class="pl-c1">0</span>;
-	<span class="pl-c1">vertical-align</span><span class="pl-kos">:</span> sub
+<div class="highlight highlight-source-css"><pre class="notranslate"><span class="pl-ent">summary</span> {
+    <span class="pl-c1">user-select</span><span class="pl-kos">:</span> none;
+	<span class="pl-c1">display</span><span class="pl-kos">:</span> list-item
 }</pre></div>
 </details>
 <h1>通过 Gmeek 仓库美化博客</h1>
@@ -1531,7 +1531,8 @@ after 是光标, blink 是光标动画.</p>
 <p>原先匹配的内容为:<code class="notranslate">&lt;code class="notranslate"&gt;Gmeek-html(.*?)&lt;/code&gt;</code>,</p>
 <p>这种情况下, 如果在 html 中含有行内代码块标签并且内容含有 Gmeek-html, 会导致转换文章内容时出现显示错误,</p>
 <p>更改后缩小了匹配范围, 可直接用行内代码块👉<code class="notranslate">Gmeek-html</code>让其在文章内正常显示.</p>
-<h1>增加图片转换, 并适配图片懒加载</h1>
+<h1>图片优化相关</h1>
+<h2>增加图片转换, 并适配图片懒加载</h2>
 <div class="markdown-alert markdown-alert-warning"><p class="markdown-alert-title"><svg data-component="Octicon" class="octicon octicon-alert mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Warning</p><p>git 会给图片使用<code class="notranslate">camo.githubusercontent.com</code>代理服务, 当外链的图片体积过大会提示"Content length exceeded", 估计是代理服务不支持, 这时候会出现转换的 bug (2025.11.14已修好), 同时这时候在 issue 里预览图片是一定失败的, 不过转换后可以在博客正常显示.</p>
 </div>
 <p>打开<code class="notranslate">Gmeek.py</code>, 定位字符串<code class="notranslate">Gmeek-html</code></p>
@@ -1553,7 +1554,45 @@ after 是光标, blink 是光标动画.</p>
 <p><div class="ImgLazyLoad-circle"></div>
 <img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/e2ed0b88-719e-49b4-b8bf-90686e0e29c8"></p>
 <p>这样优化后可以在 Github issue 的 Preview 里面直接预览图片, 太大的图片外链不行, 上面有说到.</p>
-<p>唯一缺点就是当 issues 删除后, 图片也会跟着消失, 无法再被外部引用, 所以删除仓库以及 issues 的时候一定要确保图片先备份哦~</p>
+<div class="markdown-alert markdown-alert-important"><p class="markdown-alert-title"><svg data-component="Octicon" class="octicon octicon-report mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Important</p><p>唯一缺点就是当 issues 删除后, 图片也会跟着删除.<br>
+所以删除仓库以及 issues 的时候一定要确保图片先备份哦~</p>
+</div>
+<h2>给图片增加 spoilerimg (防剧透效果)</h2>
+<blockquote>
+<p>基于上面的思路, 给图片增加模糊效果实现防剧透.</p>
+</blockquote>
+<ol>
+<li>打开<code class="notranslate">Gmeek.py</code>, 定位字符串<code class="notranslate">Gmeek-html</code></li>
+</ol>
+<p>在处理默认情况下的图片匹配规则上面增加代码, 因为脚本是顺序匹配替换,</p>
+<p>所以必须在它上方添加:</p>
+<div class="highlight highlight-source-python"><pre class="notranslate">        <span class="pl-c"># 图片防剧透</span>
+        <span class="pl-c"># 匹配结构:&lt;a href="URL" alt="{spoilerimg}" ...&gt;&lt;/a&gt;</span>
+        <span class="pl-c"># 将匹配到的图片标签转换为懒加载图片组件+spoilerimg类, 点击后移除模糊效果</span>
+        <span class="pl-k">if</span> <span class="pl-s">'data-canonical-src'</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span> <span class="pl-c1">or</span> <span class="pl-s">'src='</span> <span class="pl-c1">in</span> <span class="pl-s1">post_body</span>:
+            <span class="pl-s1">post_body</span> <span class="pl-c1">=</span> <span class="pl-s1">re</span>.<span class="pl-c1">sub</span>(
+                <span class="pl-s">r'&lt;a[^&gt;]*?href="[^"]*?"[^&gt;]*?&gt;&lt;img(?=[^&gt;]*?alt="\{spoilerimg\}")[^&gt;]*?(?:data-canonical-src="([^"]*?)"|src="([^"]*?)")[^&gt;]*?&gt;&lt;/a&gt;'</span>,<span class="pl-k">lambda</span> <span class="pl-s1">match</span>: <span class="pl-s">f'&lt;div class="ImgLazyLoad-circle"&gt;&lt;/div&gt;<span class="pl-cce">\n</span>&lt;img class="spoilerimg" data-fancybox="gallery" img-src="<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">match</span>.<span class="pl-c1">group</span>(<span class="pl-c1">1</span>) <span class="pl-c1">or</span> <span class="pl-s1">match</span>.<span class="pl-c1">group</span>(<span class="pl-c1">2</span>)<span class="pl-kos">}</span></span>"&gt;'</span>,
+                <span class="pl-s1">post_body</span>,<span class="pl-s1">flags</span><span class="pl-c1">=</span><span class="pl-s1">re</span>.<span class="pl-c1">DOTALL</span>)</pre></div>
+<ol start="2">
+<li>打开 post.html</li>
+</ol>
+<p>增加css:</p>
+<blockquote>
+<p>实际应用起来和 <code class="notranslate">spoilertxt</code> 的css有重复, 部分代码可覆写在一起.</p>
+</blockquote>
+<div class="highlight highlight-source-css"><pre class="notranslate">.<span class="pl-c1">spoilerimg</span>{<span class="pl-c1">cursor</span><span class="pl-kos">:</span>pointer;<span class="pl-c1">transition</span><span class="pl-kos">:</span>filter <span class="pl-c1">.3<span class="pl-smi">s</span></span> ease}
+.<span class="pl-c1">spoilerimg</span>{<span class="pl-c1">filter</span><span class="pl-kos">:</span><span class="pl-en">blur</span>(<span class="pl-c1">10<span class="pl-smi">px</span></span>);<span class="pl-c1">-webkit-filter</span><span class="pl-kos">:</span><span class="pl-en">blur</span>(<span class="pl-c1">10<span class="pl-smi">px</span></span>)}
+.<span class="pl-c1">spoilerimg</span>.<span class="pl-c1">clear</span>{<span class="pl-c1">filter</span><span class="pl-kos">:</span>none;}</pre></div>
+<ul>
+<li><strong>使用演示</strong></li>
+</ul>
+<p>在 GitHub markdown 里的用法:</p>
+<p><code class="notranslate">![{spoilerimg}](https://github.com/user-attachments/assets/bacd3a16-d74d-4175-bd09-2eba9afd39bb)</code></p>
+<ul>
+<li><strong>实际效果</strong></li>
+</ul>
+<p><div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/bacd3a16-d74d-4175-bd09-2eba9afd39bb"></p>
 <h1>添加 Gmeek-spoilertxt - 文字防剧透模糊效果</h1>
 <p><strong>默认模糊效果, 反复点击可反复显示或隐藏.</strong></p>
 <h2>打开 Gmeek.py</h2>
