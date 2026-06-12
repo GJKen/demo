@@ -112,6 +112,7 @@ markdown 输入:
 ## [ArticleToc.js](https://github.com/GJKen/gjken.github.io/blob/main/static/ArticleToc.js) - 文章增加目录列表+一键返回顶部按钮(v1.0)
 
 > 参考来源: [GitHub](https://github.com/cao-gift/cao-gift.github.io?tab=readme-ov-file)
+> 修改-创建`.toc`的位置为body里面.
 > 修改-批量给 a 标签创建的类名为: `toc-h1` `toc-h2` ... `toc-h6`
 > 修改-适配切换博客主题颜色.
 > 修改-滚动页面时高亮当前章节, 并自动滚动目录列表定位到当前章节.
