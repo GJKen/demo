@@ -4162,6 +4162,7 @@ section {
 }
 
 summary {
+    user-select: none;
 	display: list-item
 }
 

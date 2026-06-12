@@ -103,7 +103,7 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 </div>
     <div id="content">
 <div class="markdown-body" id="postBody"><h1>前言</h1>
-<p>Github 地址: <a href="https://github.com/FFmpeg/FFmpeg">https://github.com/FFmpeg/FFmpeg</a></p>
+<p>Github 地址: <a rel="noopener noreferrer" target="_blank" href="https://github.com/FFmpeg/FFmpeg">https://github.com/FFmpeg/FFmpeg</a></p>
 <div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg data-component="Octicon" class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>cmd 命令行使用如果没有写输出路径的话默认输出在:<code class="notranslate">C:\Users\Administrator</code></p>
 </div>
 <h1>视频转格式</h1>
@@ -146,7 +146,7 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 <blockquote>
 <p>-vcodec 设定视频编解码器, 未设定时则使用与输入流相同的编解码器</p>
 </blockquote>
-<p>当然了, 如果 ffmpeg 当时编译时, 添加了外部的 x265 或者 x264, 那也可以用外部的编码器来编码.(不知道什么是x265, 可以 <a href="https://www.google.com/search?q=%E4%BB%80%E4%B9%88%E6%98%AFx265" rel="nofollow">Google</a> 一下, 简单的说, 就是它不包含在 ffmpeg 的源码里, 是独立的一个开源代码, 用于编码 HEVC, ffmpeg 编码时可以调用它. 当然, ffmpeg 也有自己的编码器)</p>
+<p>当然了, 如果 ffmpeg 当时编译时, 添加了外部的 x265 或者 x264, 那也可以用外部的编码器来编码.(不知道什么是x265, 可以 <a target="_blank" href="https://www.google.com/search?q=%E4%BB%80%E4%B9%88%E6%98%AFx265" rel="nofollow noopener noreferrer">Google</a> 一下, 简单的说, 就是它不包含在 ffmpeg 的源码里, 是独立的一个开源代码, 用于编码 HEVC, ffmpeg 编码时可以调用它. 当然, ffmpeg 也有自己的编码器)</p>
 <pre class="notranslate"><code class="notranslate">ffmpeg -i [File] -c:v libx265 [File2]
 </code></pre>
 <pre class="notranslate"><code class="notranslate">ffmpeg -i [File] -c:v libx264 [File2]
