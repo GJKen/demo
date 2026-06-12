@@ -1177,7 +1177,7 @@ summary {
 
 </details>
 
-# 通过 Gmeek 仓库美化博客
+# 通过 Gmeek 仓库定制博客
 
 为什么这样做? `Gmeek-spoilertxt="自娱自乐.~~"`
 
@@ -1802,7 +1802,7 @@ GitHub 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 > 如果在文章中含有代码块标签并且内容为 Gmeek-html, Action 那边会进行转换导致显示错误, 详情看[#201](https://github.com/Meekdai/Gmeek/issues/201)
 > `gmeek-html`换成小写就不会被匹配到.
 
-# 优化 Gmeek-html, 标签转换匹配
+## 优化 Gmeek-html 标签转换匹配, 缩小匹配范围
 
 打开`Gmeek.py`, 定位字符串`gmeek-html`
 
@@ -1819,6 +1819,11 @@ GitHub 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 这种情况下, 如果在 html 中含有行内代码块标签并且内容含有 Gmeek-html, 会导致转换文章内容时出现显示错误,
 
 更改后缩小了匹配范围, 可直接用行内代码块👉`Gmeek-html`让其在文章内正常显示.
+
+# 文章内超链接默认新标签打开
+
+> 个人还是喜欢新标签打开超链接.
+> 相关改动请看👉[GJKen/Gmeek@19569ab](https://github.com/GJKen/Gmeek/commit/19569ab79bdfccde8138181a24a0855168d6a8f3)
 
 # 图片优化相关
 
