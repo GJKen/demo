@@ -10,9 +10,9 @@
         let theme = localStorage.getItem("meek_theme") || "light";
         document.documentElement.setAttribute("data-color-mode", theme);
     </script>
-<meta name="description" content="&lt;details &lt;summary 覆盖&lt;/summary Gmeek spoilertxt=&#34;![https://github.com/user attachments/assets/e2ed0b88 719e 49b4 b8bf 90686e0e29c8]&#34; Gmeek spoilertxt=&#34;测试遮罩&#34; &lt;/de...">
+<meta name="description" content="&lt;details &lt;summary 覆盖&lt;/summary Gmeek spoilertxt=&#34;![https://github.com/user attachments/assets/e2ed0b88 719e 49b4 b8bf 90686e0e29c8]&#34; Gmeek spoilertxt=&#34;测试遮罩&#34; [遮罩测...">
 <meta property="og:title" content="测试图片">
-<meta property="og:description" content="&lt;details &lt;summary 覆盖&lt;/summary Gmeek spoilertxt=&#34;![https://github.com/user attachments/assets/e2ed0b88 719e 49b4 b8bf 90686e0e29c8]&#34; Gmeek spoilertxt=&#34;测试遮罩&#34; &lt;/de...">
+<meta property="og:description" content="&lt;details &lt;summary 覆盖&lt;/summary Gmeek spoilertxt=&#34;![https://github.com/user attachments/assets/e2ed0b88 719e 49b4 b8bf 90686e0e29c8]&#34; Gmeek spoilertxt=&#34;测试遮罩&#34; [遮罩测...">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://GJKen.github.io/demo/post/8.html">
 <meta property="og:image" content="https://s2.loli.net/2024/11/13/DNHrdGTfphzQOok.webp">
@@ -39,19 +39,10 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 .postTitle{margin:0 auto;font-size:40px;font-weight:bold;}
 .postTitle::after{content:'|';animation:blink 1s infinite;font-family:fantasy;font-weight:normal;vertical-align:text-top;}
 .no-blink::after{animation:none;}
-/* .spoilerText{filter:blur(5px);-webkit-filter:blur(5px);cursor:pointer;transition:filter .3s ease}
-.spoilerText.clear{filter:none;} */
-
-.spoilerText {
-	filter: blur(5px);
-	-webkit-filter: blur(5px);
-	cursor: pointer;
-	transition: filter .3s ease;
-	display: inline-block;
-	padding: 0 .15em;
-	margin: 0 -.15em;
-}
-.spoilerText.clear{filter:none;}
+.spoilerText,.spolierimg{cursor:pointer;transition:filter .3s ease}
+.spoilerText{filter:blur(5px);-webkit-filter:blur(5px)}
+.spolierimg{filter:blur(20px);-webkit-filter:blur(20px)}
+.spoilerText.clear,.spolierimg.clear{filter:none;}
 #postBody{border-bottom:1px solid var(--color-border-default);padding-bottom:36px;}
 #postBody hr{height:2px;}
 #cmButton{height:48px;margin-top:48px;}
@@ -104,6 +95,14 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 <div class="markdown-body" id="postBody"><details><summary>覆盖</summary>
 <p><span class="spoilerText">![https://github.com/user-attachments/assets/e2ed0b88-719e-49b4-b8bf-90686e0e29c8]</span></p>
 <p><span class="spoilerText">测试遮罩</span></p>
+<p>[遮罩测试]{.spoilertxt}</p>
+<p>这是可告人的文字spoilertxt: <code class="notranslate">一些不可告人的文字</code></p>
+<p><div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/e2ed0b88-719e-49b4-b8bf-90686e0e29c8"><br>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/e2ed0b88-719e-49b4-b8bf-90686e0e29c8"><br>
+<div class="ImgLazyLoad-circle"></div>
+<img data-fancybox="gallery" img-src="https://github.com/user-attachments/assets/e2ed0b88-719e-49b4-b8bf-90686e0e29c8"></p>
 </details></div>
 <div style="font-size:small;margin-top:8px;float:right;">🥰转载请注明,谢谢!🥰</div>
 
@@ -134,8 +133,7 @@ var utterancesLoad=0;
 
 let themeSettings={
     "dark":["dark","moon","#00f0ff","dark-blue"],
-    "light":["light","sun","#ff5000","github-light"],
-    "auto":["auto","sync","","preferred-color-scheme"]
+    "light":["light","sun","#ff5000","github-light"]
 };
 function changeTheme(mode, icon, color, utheme){
     document.documentElement.setAttribute("data-color-mode",mode);
@@ -145,7 +143,7 @@ function changeTheme(mode, icon, color, utheme){
 }
 function modeSwitch(){
     let currentMode=document.documentElement.getAttribute('data-color-mode');
-    let newMode = currentMode === "light" ? "dark" :currentMode === "dark" ? "auto" :"light";
+    let newMode = currentMode === "light" ? "dark" : "light";
     localStorage.setItem("meek_theme", newMode);
     if(themeSettings[newMode]){
         changeTheme(...themeSettings[newMode]);
@@ -160,7 +158,7 @@ if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
 </script>
 
 <script>
-const postTitle=document.querySelector(".postTitle"),textContent=postTitle.textContent;postTitle.textContent="";let idx=0;const writeTimer=setInterval(()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContent.length&&(clearInterval(writeTimer),postTitle.classList.remove("no-blink"))},80);postTitle.classList.add("no-blink"),document.addEventListener("DOMContentLoaded",()=>{const t=document.querySelectorAll(".spoilerText");t.length&&t.forEach(t=>t.onclick=(()=>t.classList.toggle("clear")));const e=document.createElement("div");e.id="checkBtn";const n=document.getElementById("functionBtn");n.insertAdjacentElement("afterend",e),new IntersectionObserver(t=>{t.forEach(t=>{const e=t.isIntersecting;n.classList.toggle("Btn-flex",!e)})},{rootMargin:"300px 0px 0px 0px",threshold:0}).observe(e)}),"scrollRestoration"in history&&(history.scrollRestoration="manual"),window.addEventListener("beforeunload",()=>{window.scrollTo(0,0)}),window.addEventListener("load",()=>{window.scrollTo(0,0)});
+const postTitle=document.querySelector(".postTitle"),textContent=postTitle.textContent;postTitle.textContent="";let idx=0;const writeTimer=setInterval(()=>{postTitle.textContent=textContent.slice(0,idx++),idx>textContent.length&&(clearInterval(writeTimer),postTitle.classList.remove("no-blink"))},80);postTitle.classList.add("no-blink"),document.addEventListener("DOMContentLoaded",()=>{const t=document.querySelectorAll(".spoilerText");t.length&&t.forEach(t=>t.onclick=(()=>t.classList.toggle("clear")));const s=document.querySelectorAll(".spolierimg");s.length&&s.forEach(s=>s.onclick=(()=>s.classList.toggle("clear")));const e=document.createElement("div");e.id="checkBtn";const n=document.getElementById("functionBtn");n.insertAdjacentElement("afterend",e),new IntersectionObserver(t=>{t.forEach(t=>{const e=t.isIntersecting;n.classList.toggle("Btn-flex",!e)})},{rootMargin:"300px 0px 0px 0px",threshold:0}).observe(e)}),"scrollRestoration"in history&&(history.scrollRestoration="manual"),window.addEventListener("beforeunload",()=>{window.scrollTo(0,0)}),window.addEventListener("load",()=>{window.scrollTo(0,0)});
 document.getElementById("pathHome").setAttribute("d",IconList["home"]);
 document.getElementById("ArticleTOC").setAttribute("d","M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z");
 document.getElementById("pathSearch").setAttribute("d","M15.7 13.3l-3.81-3.83A5.93 5.93 0 0 0 13 6c0-3.31-2.69-6-6-6S1 2.69 1 6s2.69 6 6 6c1.3 0 2.48-.41 3.47-1.11l3.83 3.81c.19.2.45.3.7.3.25 0 .52-.09.7-.3a.996.996 0 0 0 0-1.41v.01zM7 10.7c-2.59 0-4.7-2.11-4.7-4.7 0-2.59 2.11-4.7 4.7-4.7 2.59 0 4.7 2.11 4.7 4.7 0 2.59-2.11 4.7-4.7 4.7z");
@@ -183,8 +181,7 @@ function openComments(){
     script.setAttribute("issue-term","title");
     
     if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
-    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
-    else{script.setAttribute("theme","preferred-color-scheme");}
+    else{script.setAttribute("theme","github-light");}
     
     script.setAttribute("crossorigin","anonymous");
     script.setAttribute("async","");
