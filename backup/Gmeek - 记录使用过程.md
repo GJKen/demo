@@ -1,4 +1,4 @@
-[Gmeek](https://github.com/Meekdai/Gmeek) 博客完全依托 Github, 提供域名, 无需服务器, 比起传统的服务器建站更方便快捷.
+[Gmeek](https://github.com/Meekdai/Gmeek) 博客完全依托 GitHub, 提供域名, 无需服务器, 比起传统的服务器建站更方便快捷.
 
 # 搭建博客
 
@@ -7,7 +7,7 @@
 **这里主要记录一些 js 和 CSS 的修改.记录的修改不一定准确, `Gmeek-spoilertxt="因为改动的地方太多了🥴"`.**
 
 > [!WARNING]
-> 利用 Github Page 搭建的网站内容是完全公开的, 请注意不要上传自己的隐私!!!
+> 利用 GitHub Pages 搭建的网站内容是完全公开的, 请注意不要上传自己的隐私!!!
 
 ## 博客调试
 
@@ -54,11 +54,11 @@
 
 # 记录功能块代码
 
-代码摘抄自网络, 有删改, 都存放在仓库, 使用 jsdelivr CDN 加速.
+> 代码摘抄自网络, 有删改, 都存放在仓库, 使用 jsdelivr CDN 加速.
 
 ## [ArticleJs.js](https://github.com/GJKen/gjken.github.io/blob/main/static/ArticleJs.js) - 文章自定义 js 代码
 
-### 图片图片浏览器+图片懒加载整合
+### 图片浏览器+图片懒加载整合
 
 [图片浏览器的代码](#fancybox.js---图片浏览器)
 
@@ -111,11 +111,10 @@ markdown 输入:
 
 ## [ArticleToc.js](https://github.com/GJKen/gjken.github.io/blob/main/static/ArticleToc.js) - 文章增加目录列表+一键返回顶部按钮(v1.0)
 
-> 摘抄来源: [Github](https://github.com/cao-gift/cao-gift.github.io?tab=readme-ov-file)
-> 修改-创建`.toc`的位置为body里面.
+> 参考来源: [GitHub](https://github.com/cao-gift/cao-gift.github.io?tab=readme-ov-file)
 > 修改-批量给 a 标签创建的类名为: `toc-h1` `toc-h2` ... `toc-h6`
 > 修改-适配切换博客主题颜色.
-> 修改-增加滚动页面同时滚动章节.
+> 修改-滚动页面时高亮当前章节, 并自动滚动目录列表定位到当前章节.
 > 修改-动画和样式.
 
 ## 文章增加目录列表(集成到header)
@@ -149,7 +148,7 @@ CSS写入到了👉[文章自定义 js 代码](#articlejs.js---文章自定义-j
 
 - 内容如下:
 
-等等页面加载完成再加载 CSS, 同时增加 fancybox 必要的绑定函数.
+等页面加载完成再加载 CSS, 同时增加 fancybox 必要的绑定函数.
 fancybox有多种参数可选, 具体看官方文档, 不多赘述.
 
 ```Javascript
@@ -215,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ## 图片懒加载
 
-> 来源: [Github](https://github.com/liyifanniubi/liyifanniubi.github.io)
+> 来源: [GitHub](https://github.com/liyifanniubi/liyifanniubi.github.io)
 
 代码内容合并到👉[文章自定义 js 代码](#articlejs.js---文章自定义-js-代码)
 
@@ -231,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				const img = entry.target;
 				const imgContainer = img.previousElementSibling;
 				const handleError = (isError = false) => {
-					if (imgContainer && imgContainer.classList.contains('ImgLazyLoad')) {
+					if (imgContainer && imgContainer.classList.contains('ImgLazyLoad-circle')) {
 						imgContainer.style.display = 'none';
 					}
 					if (isError) {
@@ -241,8 +240,8 @@ document.addEventListener('DOMContentLoaded', () => {
 						img.parentNode.insertBefore(errorContainer, img.nextSibling);
 						img.style.display = 'none';
 					} else {
-						img.classList.remove('ImgLazyLoad');
-						img.classList.add('ImgLoaded');
+						img.classList.remove('ImgLazyLoad-circle');
+						img.classList.add('ImgLazyLoad-circle');
 					}
 				};
 
@@ -338,7 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ## [GmeekVercount_uv.js](https://github.com/GJKen/gjken.github.io/blob/main/static/GmeekVercount_uv.min.js) - 网站增加访客计数器
 
-> Vercount [Github](https://github.com/EvanNotFound/vercount)
+> Vercount [GitHub](https://github.com/EvanNotFound/vercount)
 > pv 修改成 uv 计数.
 
 建议放入`allHead`里全站添加 js.
@@ -616,31 +615,6 @@ body {
 
 .btn-invisible:active .btn-invisible.zeroclipboard-is-active {
 	box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor) inset, -7px -7px 12px 0 var(--header-btn-shadowColor2) inset;
-}
-```
-
-</details>
-
-## 修改文章主页, 文章的列表样式
-
-> [!NOTE]
-> 还未想好要怎么改, 先占位.
-
-<details><summary>修改前</summary>
-
-```CSS
-.border {
-	border: var(--borderWidth-thin, 1px) solid var(--borderColor-default, var(--color-border-default)) !important
-}
-```
-
-</details>
-
-<details><summary>修改后</summary>
-
-```CSS
-.border {
-	border: var(--borderWidth-thin, 1px) solid var(--borderColor-default, var(--color-border-default)) !important
 }
 ```
 
@@ -1213,7 +1187,7 @@ summary {
 
 ![](https://github.com/user-attachments/assets/363f7bc7-34e0-4089-ab15-0a05e82a5a1c)
 
-fork 之后, 转到搭建博客的 github 源码,
+fork 之后, 转到搭建博客的 GitHub 源码,
 
 打开`.github/workflows/Gmeek.yml`文件, 修改构建博客仓库的地址为你自己的仓库地址
 
@@ -1721,7 +1695,7 @@ window.addEventListener('load', () => {
 定位`.subnav-search {`, 删除了margin.
 
 ```Diff
-+.subnav-search {position: relative;s}
++.subnav-search {position: relative;}
 👆
 -.subnav-search {position: relative;margin-left: 12px}
 ```
@@ -1820,7 +1794,7 @@ window.addEventListener('load', () => {
 
 # Gmeek-html
 
-Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 issues 插入的图片也会自动转换为 Github 的地址, 为了文章的多样性, 在 Gmeek 的 v2.19 版本中添加了支持 html 标签的功能.
+GitHub 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 issues 插入的图片也会自动转换为 GitHub 的地址, 为了文章的多样性, 在 Gmeek 的 v2.19 版本中添加了支持 html 标签的功能.
 
 > Gmeek 的默认功能, 可使用这个匹配规则转换不同的 html 效果, 详看 👉 [Gmeek进阶](https://blog.meekdai.com/post/%E3%80%90Gmeek-jin-jie-%E3%80%91-wen-zhang-cha-ru-html-biao-qian.html)
 
@@ -1890,9 +1864,7 @@ Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 
 1. **打开`Gmeek.py`, 定位字符串`Gmeek-html`**
 
-在处理默认情况下的图片匹配规则上面增加代码, 因为脚本是顺序匹配替换,
-
-所以必须在它上方添加:
+在 `处理默认情况下的图片匹配规则` 上面增加代码, 因为脚本是顺序匹配替换, 所以必须在它上方添加代码.
 
 ```python
         # 图片防剧透
@@ -2044,10 +2016,10 @@ document.addEventListener('DOMContentLoaded', () => {
 | VPS | #5319e7 | ![](https://img.shields.io/static/v1?label=&message=VPS&color=5319e7)
 | JS | #AD3152 | ![](https://img.shields.io/static/v1?label=&message=JS&color=AD3152)
 | CSS | #218155 | ![](https://img.shields.io/static/v1?label=&message=CSS&color=218155)
-| Github | #333333 | ![](https://img.shields.io/static/v1?label=&message=Github&color=333333)
+| GitHub | #333333 | ![](https://img.shields.io/static/v1?label=&message=GitHub&color=333333)
 | CDN | #cb222c | ![](https://img.shields.io/static/v1?label=&message=CDN&color=cb222c)
 | Bug | #D73A4A | ![](https://img.shields.io/static/v1?label=&message=Bug&color=D73A4A)
-| Game | #BC49AB | ![](https://img.shields.io/static/v1?label=&message=Bug&color=BC49AB)
+| Game | #BC49AB | ![](https://img.shields.io/static/v1?label=&message=Game&color=BC49AB)
 
 # Readme.md
 
