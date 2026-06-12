@@ -361,6 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
 下面是修改笔记, 不一定实际使用.
 
 > 已知bug: 给body增加`backdrop-filter: blur(30px);`样式时, 会出现页面异常, 待后续修复.
+> 使用了 AI 帮我删除所有auto主题相关的代码(`Gmeek-spoilertxt="AI真是太好用了😋😋😋"`), 详看👉[base.html,post.html‎](https://github.com/GJKen/Gmeek/commit/0d173cd8dd157cf7ddc5405d0566aeccbfc48e94) + [primer.css](https://github.com/GJKen/demo/commit/40999e3174ea7ca11f76779a0bde69b7c9271e6d)
 
 ## \<html> 标签样式
 
