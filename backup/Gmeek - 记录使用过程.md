@@ -1888,7 +1888,7 @@ Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
 
 > 基于上面的思路, 给图片增加模糊效果实现防剧透.
 
-1. 打开`Gmeek.py`, 定位字符串`Gmeek-html`
+1. **打开`Gmeek.py`, 定位字符串`Gmeek-html`**
 
 在处理默认情况下的图片匹配规则上面增加代码, 因为脚本是顺序匹配替换,
 
@@ -1904,7 +1904,7 @@ Github 由于安全考虑, 是不允许使用 iframe 等标签的, 而且在 iss
                 post_body,flags=re.DOTALL)
 ```
 
-2. 打开 post.html
+2. **打开 post.html**
 
 增加css:
 

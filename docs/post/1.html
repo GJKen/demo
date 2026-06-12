@@ -1562,7 +1562,7 @@ after 是光标, blink 是光标动画.</p>
 <p>基于上面的思路, 给图片增加模糊效果实现防剧透.</p>
 </blockquote>
 <ol>
-<li>打开<code class="notranslate">Gmeek.py</code>, 定位字符串<code class="notranslate">Gmeek-html</code></li>
+<li><strong>打开<code class="notranslate">Gmeek.py</code>, 定位字符串<code class="notranslate">Gmeek-html</code></strong></li>
 </ol>
 <p>在处理默认情况下的图片匹配规则上面增加代码, 因为脚本是顺序匹配替换,</p>
 <p>所以必须在它上方添加:</p>
@@ -1574,7 +1574,7 @@ after 是光标, blink 是光标动画.</p>
                 <span class="pl-s">r'&lt;a[^&gt;]*?href="[^"]*?"[^&gt;]*?&gt;&lt;img(?=[^&gt;]*?alt="\{spoilerimg\}")[^&gt;]*?(?:data-canonical-src="([^"]*?)"|src="([^"]*?)")[^&gt;]*?&gt;&lt;/a&gt;'</span>,<span class="pl-k">lambda</span> <span class="pl-s1">match</span>: <span class="pl-s">f'&lt;div class="ImgLazyLoad-circle"&gt;&lt;/div&gt;<span class="pl-cce">\n</span>&lt;img class="spoilerimg" data-fancybox="gallery" img-src="<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">match</span>.<span class="pl-c1">group</span>(<span class="pl-c1">1</span>) <span class="pl-c1">or</span> <span class="pl-s1">match</span>.<span class="pl-c1">group</span>(<span class="pl-c1">2</span>)<span class="pl-kos">}</span></span>"&gt;'</span>,
                 <span class="pl-s1">post_body</span>,<span class="pl-s1">flags</span><span class="pl-c1">=</span><span class="pl-s1">re</span>.<span class="pl-c1">DOTALL</span>)</pre></div>
 <ol start="2">
-<li>打开 post.html</li>
+<li><strong>打开 post.html</strong></li>
 </ol>
 <p>增加css:</p>
 <blockquote>
