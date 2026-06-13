@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		rel: 'stylesheet',
 		href: 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.css'
 	}));
-	
+
 	Fancybox.bind("[data-fancybox]", {
 		on: {
 			ready: (fancyboxRef) => {
