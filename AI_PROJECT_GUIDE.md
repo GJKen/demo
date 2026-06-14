@@ -162,6 +162,11 @@ The actual blog currently uses `issue`.
 - Avoid reading all of `docs\post\`, `static\`, or `backup\` unless necessary; they can be large/noisy generated or asset folders.
 - For quick article metadata, inspect `docs\postList.json` instead of generated post HTML.
 
+## 主题生成任务
+
+- 如果要根据 awesome-design-md 的 `DESIGN.md` 生成博客主题 CSS(如 `exercise_claude.css`、`exercise_airbnb.css`），
+  先读 `AI_THEME_GUIDE.md`，里面是完整的可重复操作手册(素材路径、输出约定、必须覆盖的清单、硬性约束)。
+
 ## 个人工作流提示
 
 - `D:\Study\html\demo` 是主要的本地修改仓库。所有代码和文件修改都优先在 `demo` 中进行。
