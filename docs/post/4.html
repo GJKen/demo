@@ -146,13 +146,12 @@ var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 
 var utterancesLoad=0;
 
 let themeSettings={
-    "dark":["dark","moon","#00f0ff","dark-blue"],
-    "light":["light","sun","#ff5000","github-light"]
+    "dark":["dark","moon","dark-blue"],
+    "light":["light","sun","github-light"]
 };
-function changeTheme(mode, icon, color, utheme){
+function changeTheme(mode, icon, utheme){
     document.documentElement.setAttribute("data-color-mode",mode);
     document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
-    document.getElementById("themeSwitch").parentNode.style.color=color;
     if(utterancesLoad==1){utterancesTheme(utheme);}
 }
 function modeSwitch(){
