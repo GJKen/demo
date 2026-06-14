@@ -1,53 +1,53 @@
-# AI Project Guide: Gmeek + gjken.github.io
+# AI 项目指南：Gmeek + gjken.github.io
 
-This note is for AI assistants or future maintainers who need to understand the two related folders quickly.
+本说明面向需要快速理解这两个相关文件夹的 AI 助手或后续维护者。
 
-## Folder Roles
+## 文件夹角色
 
 ### `D:\Study\html\Gmeek`
 
-This folder is the blog generator/template source.
+这个文件夹是博客生成器/模板源码。
 
-It contains:
+它包含：
 
-- `Gmeek.py`: the core Python static-site generator.
-- `templates\`: Jinja2 HTML templates for index, post, tag/search, footer, and base layout.
-- `requirements.txt`: Python dependencies required by the generator.
-- `.github\workflows\static.yml`: a simple GitHub Pages deploy workflow for static content only.
+- `Gmeek.py`：核心的 Python 静态站点生成器。
+- `templates\`：用于首页、文章、标签/搜索、页脚和基础布局的 Jinja2 HTML 模板。
+- `requirements.txt`：生成器所需的 Python 依赖。
+- `.github\workflows\static.yml`：一个仅部署静态内容的简单 GitHub Pages 部署工作流。
 
-This folder is not the actual blog content repository. It does not currently include `config.json`, so running `Gmeek.py` directly from here will fail unless a blog repository's config and content are copied in first.
+这个文件夹不是实际的博客内容仓库。它目前不包含 `config.json`，因此除非先把某个博客仓库的配置和内容复制进来，否则直接在此运行 `Gmeek.py` 会失败。
 
 ### `D:\Study\html\gjken.github.io`
 
-This folder is the actual blog repository.
+这个文件夹是实际的博客仓库。
 
-It contains:
+它包含：
 
-- `config.json`: the real blog configuration.
-- `.github\workflows\Gmeek.yml`: the workflow that clones `gjken/Gmeek`, runs `Gmeek.py`, commits generated files, and deploys GitHub Pages.
-- `blogBase.json`: generated/cache metadata used for incremental builds.
-- `docs\`: generated static site output for GitHub Pages.
-- `docs\post\`: generated article HTML files.
-- `docs\postList.json`: generated article index used by tag/search page.
-- `backup\`: generated markdown backups of issue bodies.
-- `static\`: custom static assets copied into the generated site.
+- `config.json`：真正的博客配置。
+- `.github\workflows\Gmeek.yml`：负责克隆 `gjken/Gmeek`、运行 `Gmeek.py`、提交生成文件并部署 GitHub Pages 的工作流。
+- `blogBase.json`：用于增量构建的生成/缓存元数据。
+- `docs\`：用于 GitHub Pages 的生成静态站点输出。
+- `docs\post\`：生成的文章 HTML 文件。
+- `docs\postList.json`：供标签/搜索页使用的生成文章索引。
+- `backup\`：issue 正文的生成 markdown 备份。
+- `static\`：复制进生成站点的自定义静态资源。
 
-The blog content source is GitHub Issues in the `gjken.github.io` repository.
+博客内容源是 `gjken.github.io` 仓库中的 GitHub Issues。
 
-## How They Work Together
+## 二者如何协同
 
-The workflow is:
+工作流程如下：
 
-1. A blog article is created or edited as a GitHub Issue in `gjken.github.io`.
-2. `.github\workflows\Gmeek.yml` is triggered by `issues` events, manual dispatch, or schedule.
-3. The workflow clones the generator from `https://github.com/gjken/Gmeek.git` into `/opt/Gmeek`.
-4. The workflow copies the blog repository files into `/opt/Gmeek`.
-5. `Gmeek.py` reads `config.json`, pulls GitHub Issues through the GitHub API, and generates static files.
-6. Generated files are copied back into `gjken.github.io`.
-7. The workflow commits updated generated files.
-8. GitHub Pages deploys the `docs/` directory.
+1. 在 `gjken.github.io` 中以 GitHub Issue 的形式创建或编辑一篇博客文章。
+2. `.github\workflows\Gmeek.yml` 由 `issues` 事件、手动触发或定时计划触发。
+3. 工作流从 `https://github.com/gjken/Gmeek.git` 克隆生成器到 `/opt/Gmeek`。
+4. 工作流把博客仓库文件复制进 `/opt/Gmeek`。
+5. `Gmeek.py` 读取 `config.json`，通过 GitHub API 拉取 GitHub Issues，并生成静态文件。
+6. 生成的文件被复制回 `gjken.github.io`。
+7. 工作流提交更新后的生成文件。
+8. GitHub Pages 部署 `docs/` 目录。
 
-In short:
+简而言之：
 
 ```text
 gjken.github.io Issues
@@ -58,85 +58,85 @@ gjken.github.io Issues
   -> deploy docs/ to GitHub Pages
 ```
 
-## Important Files
+## 重要文件
 
-### Generator Side: `Gmeek`
+### 生成器侧：`Gmeek`
 
 - `Gmeek.py`
-  - Reads `config.json`.
-  - Fetches repository labels and issues.
-  - Converts issue markdown to HTML using GitHub's Markdown API.
-  - Generates post pages, index pages, tag/search page, RSS, `blogBase.json`, and `postList.json`.
+  - 读取 `config.json`。
+  - 拉取仓库的标签和 issues。
+  - 使用 GitHub 的 Markdown API 把 issue 的 markdown 转成 HTML。
+  - 生成文章页、首页、标签/搜索页、RSS、`blogBase.json` 和 `postList.json`。
 
 - `templates\base.html`
-  - Shared HTML shell.
-  - Loads Primer CSS, favicon, custom head injection, theme script, footer, and shared scripts.
+  - 共享的 HTML 外壳。
+  - 加载 Primer CSS、favicon、自定义 head 注入、主题脚本、页脚和共享脚本。
 
 - `templates\plist.html`
-  - Home/index page template.
-  - Renders article list, labels, comment count, dates, RSS, custom links, and theme button.
+  - 首页/索引页模板。
+  - 渲染文章列表、标签、评论数、日期、RSS、自定义链接和主题按钮。
 
 - `templates\post.html`
-  - Article page template.
-  - Renders post HTML, utterances comments, code-copy UI, source issue link, and theme controls.
+  - 文章页模板。
+  - 渲染文章 HTML、utterances 评论、代码复制 UI、源 issue 链接和主题控件。
 
 - `templates\tag.html`
-  - Tag/search page template.
-  - Loads `postList.json` in the browser and performs client-side filtering/search.
+  - 标签/搜索页模板。
+  - 在浏览器中加载 `postList.json` 并执行客户端筛选/搜索。
 
-### Blog Side: `gjken.github.io`
+### 博客侧：`gjken.github.io`
 
 - `config.json`
-  - Main blog config.
-  - Current notable settings:
-    - `title`: `GJKen`
-    - `displayTitle`: `GJKen`
-    - `i18n`: `CN`
-    - `urlMode`: `issue`
-    - `GMEEK_VERSION`: `main`
-  - Because `urlMode` is `issue`, generated post URLs are stable numeric URLs such as `post/15.html`.
+  - 主博客配置。
+  - 当前值得注意的设置：
+    - `title`：`GJKen`
+    - `displayTitle`：`GJKen`
+    - `i18n`：`CN`
+    - `urlMode`：`issue`
+    - `GMEEK_VERSION`：`main`
+  - 由于 `urlMode` 为 `issue`，生成的文章 URL 是稳定的数字 URL，例如 `post/15.html`。
 
 - `.github\workflows\Gmeek.yml`
-  - The real build/deploy workflow.
-  - It runs on:
+  - 真正的构建/部署工作流。
+  - 它在以下情况下运行：
     - `workflow_dispatch`
     - issue opened/edited
-    - weekly schedule
-  - It clones `gjken/Gmeek`, installs dependencies, runs `Gmeek.py`, commits generated output, and deploys `docs/`.
+    - 每周定时计划
+  - 它克隆 `gjken/Gmeek`、安装依赖、运行 `Gmeek.py`、提交生成产物并部署 `docs/`。
 
 - `docs\postList.json`
-  - Generated article index for the tag/search page.
-  - Useful for quickly checking article count, titles, labels, dates, and generated URLs.
+  - 供标签/搜索页使用的生成文章索引。
+  - 适合快速查看文章数量、标题、标签、日期和生成的 URL。
 
 - `blogBase.json`
-  - Generated metadata/cache.
-  - Used by `Gmeek.py` for incremental single-issue rebuilds.
+  - 生成的元数据/缓存。
+  - 被 `Gmeek.py` 用于单 issue 增量重建。
 
-## Current Known State
+## 当前已知状态
 
-As last inspected:
+截至上次检查：
 
-- `gjken.github.io` has 14 generated posts.
-- Generated post URLs use issue numbers, for example `post/15.html`.
-- There is no single-page article configured in `singeListJson`.
-- Labels include categories such as `教程`, `网站`, `CDN`, `Github`, `软件`, `Game`, `Anime`, `日常`, `VPS`, `Win`, `图片处理`, `翻墙`, `3D`, `JS`, `CSS`, and `Bug`.
+- `gjken.github.io` 有 14 篇生成的文章。
+- 生成的文章 URL 使用 issue 编号，例如 `post/15.html`。
+- `singeListJson` 中未配置单页文章。
+- 标签包含的分类有：`教程`、`网站`、`CDN`、`Github`、`软件`、`Game`、`Anime`、`日常`、`VPS`、`Win`、`图片处理`、`翻墙`、`3D`、`JS`、`CSS` 和 `Bug`。
 
-## Useful Implementation Details
+## 实用实现细节
 
-### Issue Requirements
+### Issue 要求
 
-An issue must have at least one label to become a generated page.
+一个 issue 必须至少有一个标签才会成为生成页面。
 
-The first label has special meaning:
+第一个标签具有特殊含义：
 
-- If the first label is listed in `singlePage`, the issue becomes a root-level page such as `about.html`.
-- Otherwise it becomes a normal blog post under `docs\post\`.
+- 如果第一个标签在 `singlePage` 中列出，该 issue 会成为根级页面，例如 `about.html`。
+- 否则它会成为 `docs\post\` 下的普通博客文章。
 
-### Per-Post Custom Config
+### 每篇文章的自定义配置
 
-`Gmeek.py` attempts to parse custom JSON from the last line of an issue body after `##`.
+`Gmeek.py` 会尝试从 issue 正文中 `##` 之后的最后一行解析自定义 JSON。
 
-Supported per-post fields include:
+支持的每篇文章字段包括：
 
 - `timestamp`
 - `style`
@@ -144,23 +144,23 @@ Supported per-post fields include:
 - `head`
 - `ogImage`
 
-### URL Modes
+### URL 模式
 
-Configured in `config.json`:
+在 `config.json` 中配置：
 
-- `issue`: use issue number, stable URLs.
-- `pinyin`: convert title to pinyin.
-- `ru_translit`: transliterate Russian titles.
+- `issue`：使用 issue 编号，URL 稳定。
+- `pinyin`：把标题转为拼音。
+- `ru_translit`：转写俄语标题。
 
-The actual blog currently uses `issue`.
+实际博客当前使用 `issue`。
 
-## Maintenance Tips
+## 维护提示
 
-- To change generation logic, edit `D:\Study\html\Gmeek\Gmeek.py` or templates.
-- To change blog identity, links, injected scripts, or visual config, edit `D:\Study\html\gjken.github.io\config.json`.
-- To change generated site content, edit GitHub Issues in `gjken.github.io`; do not manually edit `docs\post\*.html` unless debugging.
-- Avoid reading all of `docs\post\`, `static\`, or `backup\` unless necessary; they can be large/noisy generated or asset folders.
-- For quick article metadata, inspect `docs\postList.json` instead of generated post HTML.
+- 要修改生成逻辑，编辑 `D:\Study\html\Gmeek\Gmeek.py` 或模板。
+- 要修改博客身份信息、链接、注入脚本或视觉配置，编辑 `D:\Study\html\gjken.github.io\config.json`。
+- 要修改生成的站点内容，编辑 `gjken.github.io` 中的 GitHub Issues；除非调试，否则不要手动编辑 `docs\post\*.html`。
+- 除非必要，不要读取整个 `docs\post\`、`static\` 或 `backup\`；它们可能是体量大/噪声多的生成目录或资源目录。
+- 要快速查看文章元数据，检查 `docs\postList.json`，而不是生成的文章 HTML。
 
 ## 主题生成任务
 
@@ -179,8 +179,8 @@ The actual blog currently uses `issue`.
 - 对于简单文本修改，优先采用「一次定位、一次最小补丁、一次简短验证」的流程，避免为了小改动反复尝试大量命令。若 `apply_patch` 在 Windows/PowerShell 下出现管道或编码问题，优先使用已经验证可行的底层 `codex.exe --codex-run-as-apply-patch` 方式传入补丁。
 - `docs\` 目录下的所有 HTML 文件是 GitHub Actions 的生成产物，不要直接修改。AI 需要修改的是模板层代码（`templates\`、CSS、JS 等基础代码）。每次用户发布 git 后，Action 会重新生成文章，`docs\` 里的 CSS 和 JS 会被覆盖。
 
-## Potential Improvements
+## 潜在改进
 
-- Add an `email` field to `gjken.github.io\config.json`, because the workflow reads `.email` for `git config user.email`.
-- Consider expanding issue triggers in `Gmeek.yml` to include `labeled`, `unlabeled`, `reopened`, and `closed` if label or state changes should regenerate the site immediately.
-- Consider keeping this guide copied in both repositories so future AI assistants can discover the relationship from either folder.
+- 在 `gjken.github.io\config.json` 中添加 `email` 字段，因为工作流会读取 `.email` 用于 `git config user.email`。
+- 考虑在 `Gmeek.yml` 中扩展 issue 触发器，加入 `labeled`、`unlabeled`、`reopened` 和 `closed`，以便标签或状态变更时立即重新生成站点。
+- 考虑在两个仓库中都保留这份指南的副本，方便后续 AI 助手能从任一文件夹发现二者的关系。

@@ -34,8 +34,8 @@
   --selection:     #ffd1da;  /* primary-disabled */
 
   /* 顶部圆形按钮新拟物阴影(静止外凸 / 按下内凹) */
-  --btn-shadow-1: #ffffff80;  /* 高光,纯白底用强一点 */
-  --btn-shadow-2: #00000014;  /* 暗影,中性灰 */
+  --header-btn-shadowColor: #ffffff80;  /* 高光,纯白底用强一点 */
+  --header-btn-shadowColor2: #00000014;  /* 暗影,中性灰 */
 
   --radius-sm:   8px;
   --radius:      14px;       /* rounded.md — 卡片/代码块 */
@@ -90,8 +90,8 @@
   --selection:     #4a1f29;
 
   /* 暗色:辉光偏品牌红 */
-  --btn-shadow-1: #00000055;  /* 暗影 */
-  --btn-shadow-2: #ff5a781f;  /* 微弱品牌红辉光 */
+  --header-btn-shadowColor: #00000055;  /* 暗影 */
+  --header-btn-shadowColor2: #ff5a781f;  /* 微弱品牌红辉光 */
 
   --shadow: rgba(0,0,0,0.3) 0 2px 6px 0, rgba(0,0,0,0.4) 0 4px 12px 0;
 
@@ -335,7 +335,7 @@ a:hover { color: var(--accent-hover); text-decoration: underline; }
 /* 顶部圆形按钮:新拟物双层阴影(还原 primer 的 header-btn 效果) */
 #functionBtn .btn-invisible {
   color: var(--heading);  /* 默认随主题正文色 */
-  box-shadow: 6px 6px 14px 0 var(--btn-shadow-1), -7px -7px 16px 0 var(--btn-shadow-2);
+  box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor), -7px -7px 16px 0 var(--header-btn-shadowColor2);
   transition: box-shadow .4s ease-in-out, filter .4s ease-in-out, color .15s ease;
 }
 /* hover:追加当前主题强调色(对应 primer 的 --color-accent-fg) */
@@ -345,7 +345,7 @@ a:hover { color: var(--accent-hover); text-decoration: underline; }
 #functionBtn .btn-invisible.selected,
 #functionBtn .btn-invisible[aria-selected="true"],
 #functionBtn .btn-invisible.zeroclipboard-is-active {
-  box-shadow: 6px 6px 14px 0 var(--btn-shadow-1) inset, -7px -7px 12px 0 var(--btn-shadow-2) inset;
+  box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor) inset, -7px -7px 12px 0 var(--header-btn-shadowColor2) inset;
 }
 
 .circle { border-radius: 50%; }

@@ -79,15 +79,19 @@
 4. **按钮**:`.btn`、`.btn-invisible`、`.circle`、`.btn-block`;`.octicon{fill:currentColor}`。
    - **顶部圆形按钮新拟物阴影(易漏!)**:primer 给 `#functionBtn` 里的圆形按钮做了双层阴影——
      静止态外凸柔光、按下/选中态翻转为 `inset` 内凹。去掉 primer 后必须补回,否则按钮变"平"。
-     做法:每套 token 里定义两个阴影变量,组件只引用变量(明暗/各品牌各自调色):
+     做法:每套 token 里定义两个阴影变量,组件只引用变量(明暗/各品牌各自调色)。
+     **变量名必须叫 `--header-btn-shadowColor` 和 `--header-btn-shadowColor2`(别自创名!)**:
+     `ArticleJs.js` 给 TOC 目录按钮按下态、`.toc-btn div:active` 直接写死了 `var(--header-btn-shadowColor[2])`
+     (见 `ArticleJs.js` 的 `toggleTOC()` 与注入的 toc 样式)。用这两个名 = 顶部圆按钮和 TOC 按钮共用一套阴影色、随主题联动;
+     用别的名 JS 那边读不到、TOC 按钮阴影会失效。注意第一个**没有数字后缀**(不是 `...Color1`)。
      ```css
      /* token(light 举例) */
-     --btn-shadow-1: #ffffff66;   /* 高光(右下) */
-     --btn-shadow-2: #5f574d24;   /* 暗影(左上) */
+     --header-btn-shadowColor:  #ffffff66;   /* 高光(右下) */
+     --header-btn-shadowColor2: #5f574d24;   /* 暗影(左上) */
      /* 组件 */
      #functionBtn .btn-invisible {
        color: var(--heading);  /* 默认:随主题正文/标题色,别用强调色 */
-       box-shadow: 6px 6px 14px 0 var(--btn-shadow-1), -7px -7px 16px 0 var(--btn-shadow-2);
+       box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor), -7px -7px 16px 0 var(--header-btn-shadowColor2);
        transition: box-shadow .4s ease-in-out, filter .4s ease-in-out, color .15s ease;
      }
      /* hover 才上强调色(对应 primer 的 --color-accent-fg) */
@@ -96,7 +100,7 @@
      #functionBtn .btn-invisible.selected,
      #functionBtn .btn-invisible[aria-selected="true"],
      #functionBtn .btn-invisible.zeroclipboard-is-active {
-       box-shadow: 6px 6px 14px 0 var(--btn-shadow-1) inset, -7px -7px 12px 0 var(--btn-shadow-2) inset;
+       box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor) inset, -7px -7px 12px 0 var(--header-btn-shadowColor2) inset;
      }
      ```
      暗色一般用 `#00000055` 暗影 + 一抹品牌色微辉光(如珊瑚 `#d98a6e1f` / 品牌红 `#ff5a781f`),
