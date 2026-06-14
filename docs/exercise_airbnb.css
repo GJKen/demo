@@ -1,0 +1,413 @@
+/* ============================================================
+ * exercise_airbnb.css  —  练手主题:Airbnb 暖色市场风
+ * 设计 token 来源: awesome-design-md / design-md/airbnb/DESIGN.md
+ *
+ * 用途:在去掉 primer.css 的情况下,为 docs-dev/post/*.html 重建主题。
+ * 原则:不修改 both.css / primer.css / 任何 .js;本文件可整体删除。
+ *       与 exercise_claude.css 选择器结构一致,可直接互换引用。
+ *
+ * 特征:纯白画布 + Rausch 品牌红 #ff385c(仅用于强调/CTA)、
+ *       几何无衬线、字重克制、足量圆角(药丸按钮)、单层柔和阴影、大留白。
+ *
+ * 明暗:亮色取自 Airbnb 官方 token;Airbnb 无官方暗色,
+ *       暗色为基于品牌红合成的协调版本。
+ * ============================================================ */
+
+/* ---------- 设计 token:亮色(Airbnb 白底) ---------- */
+:root,
+[data-color-mode="light"] {
+  --bg:            #ffffff;  /* canvas — body 纸面 */
+  --body-bg:       #f0f0f0;  /* html 视口底,比 body 深一档,让正文浮起 */
+  --body-shadow-color: rgba(0,0,0,0.10);  /* body 周围柔光晕 */
+  --surface:       #f7f7f7;  /* surface-soft */
+  --surface-card:  #f2f2f2;  /* surface-strong */
+  --fg:            #3f3f3f;  /* body */
+  --heading:       #222222;  /* ink */
+  --muted:         #6a6a6a;  /* muted */
+  --border:        #dddddd;  /* hairline */
+  --border-soft:   #ebebeb;  /* hairline-soft */
+  --accent:        #ff385c;  /* primary (Rausch) */
+  --accent-hover:  #e00b41;  /* primary-active */
+  --on-accent:     #ffffff;
+  --code-bg:       #f7f7f7;
+  --inline-code-bg:#f2f2f2;
+  --selection:     #ffd1da;  /* primary-disabled */
+
+  /* 顶部圆形按钮新拟物阴影(静止外凸 / 按下内凹) */
+  --header-btn-shadowColor: #ffffff80;  /* 高光,纯白底用强一点 */
+  --header-btn-shadowColor2: #00000014;  /* 暗影,中性灰 */
+
+  --radius-sm:   8px;
+  --radius:      14px;       /* rounded.md — 卡片/代码块 */
+  --radius-lg:   20px;
+  --radius-pill: 9999px;
+  --shadow: rgba(0,0,0,0.02) 0 0 0 1px, rgba(0,0,0,0.04) 0 2px 6px 0, rgba(0,0,0,0.1) 0 4px 8px 0;
+
+  /* —— 映射到 Primer 变量名(页面内联样式 / 警告框引用) —— */
+  --color-border-default:    var(--border);
+  --color-fg-default:        var(--fg);
+  --color-fg-muted:          #6a6a6a;
+  --color-fg-on-emphasis:    #ffffff;
+
+  --color-accent-fg:         #d11243;
+  --color-accent-emphasis:   #ff385c;
+  --color-accent-subtle:     #ffeef1;
+
+  --color-success-fg:        #2e7d32;
+  --color-success-emphasis:  #008a05;
+  --color-success-subtle:    #eaf5ea;
+
+  --color-done-fg:           #5e1a8a;
+  --color-done-emphasis:     #460479;   /* luxe */
+  --color-done-subtle:       #f3eafa;
+
+  --color-attention-fg:      #9a5b00;
+  --color-attention-emphasis:#b35900;
+  --color-attention-subtle:  #fff4e0;
+
+  --color-danger-fg:         #b32505;   /* primary-error-text-hover */
+  --color-danger-emphasis:   #c13515;   /* primary-error-text */
+  --color-danger-subtle:     #fbe9e3;
+}
+
+/* ---------- 设计 token:暗色(基于品牌红合成) ---------- */
+[data-color-mode="dark"] {
+  --bg:            #1c1c1e;  /* body 纸面 */
+  --body-bg:       #0e0e0f;  /* html 视口底,比 body 更深,正文浮起 */
+  --body-shadow-color: rgba(0,0,0,0.55);  /* 暗色用更重的黑晕 */
+  --surface:       #2a2a2c;
+  --surface-card:  #313133;
+  --fg:            #d7d7d9;
+  --heading:       #ffffff;
+  --muted:         #9a9a9d;
+  --border:        #3a3a3c;
+  --border-soft:   #303032;
+  --accent:        #ff5a78;  /* Rausch 在深底略提亮 */
+  --accent-hover:  #ff385c;
+  --on-accent:     #ffffff;
+  --code-bg:       #2a2a2c;
+  --inline-code-bg:#313133;
+  --selection:     #4a1f29;
+
+  /* 暗色:辉光偏品牌红 */
+  --header-btn-shadowColor: #00000055;  /* 暗影 */
+  --header-btn-shadowColor2: #ff5a781f;  /* 微弱品牌红辉光 */
+
+  --shadow: rgba(0,0,0,0.3) 0 2px 6px 0, rgba(0,0,0,0.4) 0 4px 12px 0;
+
+  --color-border-default:    var(--border);
+  --color-fg-default:        var(--fg);
+  --color-fg-muted:          #9a9a9d;
+  --color-fg-on-emphasis:    #ffffff;
+
+  --color-accent-fg:         #ff809a;
+  --color-accent-emphasis:   #ff5a78;
+  --color-accent-subtle:     rgba(255,90,120,0.15);
+
+  --color-success-fg:        #6fcf72;
+  --color-success-emphasis:  #4caf50;
+  --color-success-subtle:    rgba(76,175,80,0.15);
+
+  --color-done-fg:           #c79bef;
+  --color-done-emphasis:     #9b6dd6;
+  --color-done-subtle:       rgba(155,109,214,0.15);
+
+  --color-attention-fg:      #e8b35a;
+  --color-attention-emphasis:#d98a17;
+  --color-attention-subtle:  rgba(217,138,23,0.15);
+
+  --color-danger-fg:         #f08a6a;
+  --color-danger-emphasis:   #e0573a;
+  --color-danger-subtle:     rgba(224,87,58,0.15);
+}
+
+/* ============================================================
+ * 基础
+ * ============================================================ */
+html {
+  background-color: var(--body-bg);
+  transition: background-color .5s ease;
+}
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  /* 正文主体浮于 html 之上:四周柔光晕 + 圆角纸面 */
+  box-shadow: 0 0 100px var(--body-shadow-color);
+  border-radius: var(--radius-lg);
+  font-family: "Airbnb Cereal VF", Circular, -apple-system, BlinkMacSystemFont,
+               "Segoe UI", Roboto, "Helvetica Neue",
+               "PingFang SC", "Microsoft YaHei", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color .5s ease, color .5s ease, box-shadow .5s ease;
+}
+
+::selection { background: var(--selection); }
+
+/* 滚动条:细窄 + 主题化(Firefox 用 scrollbar-* 兜底) */
+* { scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: var(--radius-pill, 9999px);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); text-decoration: underline; }
+
+/* 文章标题(Airbnb:无衬线、字重克制) */
+.postTitle {
+  color: var(--heading);
+  font-weight: 600;
+  letter-spacing: -0.4px;
+}
+
+#header { color: var(--heading); }
+
+/* ============================================================
+ * 正文排版 .markdown-body
+ * ============================================================ */
+.markdown-body {
+  color: var(--fg);
+  font-size: 16px;
+  line-height: 1.75;
+  word-wrap: break-word;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  color: var(--heading);
+  font-weight: 600;            /* Airbnb 克制字重,不用 700+ */
+  line-height: 1.35;
+  margin: 1.8em 0 0.7em;
+  letter-spacing: -0.2px;
+}
+.markdown-body h1 { font-size: 1.9em; }
+.markdown-body h2 {
+  font-size: 1.45em;
+  padding-bottom: .3em;
+  border-bottom: 1px solid var(--border-soft);
+}
+.markdown-body h3 { font-size: 1.2em; }
+.markdown-body h4 { font-size: 1.05em; }
+.markdown-body h5 { font-size: .95em; }
+.markdown-body h6 { font-size: .9em; color: var(--muted); }
+
+.markdown-body p { margin: 0 0 1.1em; }
+
+.markdown-body ul,
+.markdown-body ol { margin: 0 0 1.1em; padding-left: 1.8em; }
+.markdown-body li { margin: .3em 0; }
+.markdown-body li > ul,
+.markdown-body li > ol { margin: .3em 0; }
+
+.markdown-body strong { color: var(--heading); font-weight: 600; }
+.markdown-body em { font-style: italic; }
+
+/* 行内代码 */
+.markdown-body code,
+.markdown-body code.notranslate {
+  background-color: var(--inline-code-bg);
+  color: var(--heading);
+  font-family: ui-monospace, SFMono-Regular, "SF Mono",
+               Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 85%;
+  padding: .2em .4em;
+  border-radius: var(--radius-sm);
+}
+
+/* 代码块(Airbnb 圆角更足) */
+.markdown-body pre,
+.markdown-body pre.notranslate {
+  background-color: var(--code-bg);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: 16px;
+  overflow: auto;
+  line-height: 1.5;
+  font-size: 85%;
+  margin: 0 0 1.1em;
+}
+.markdown-body pre code,
+.markdown-body pre code.notranslate {
+  background: none;
+  padding: 0;
+  font-size: 100%;
+  border-radius: 0;
+}
+.markdown-body .highlight { margin: 0 0 1.1em; }
+.markdown-body .highlight pre { margin: 0; }
+
+/* 引用 */
+.markdown-body blockquote {
+  margin: 0 0 1.1em;
+  padding: .6em 1.1em;
+  color: var(--muted);
+  border-left: 4px solid var(--accent);
+  background: var(--surface);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+.markdown-body blockquote > :first-child { margin-top: 0; }
+.markdown-body blockquote > :last-child  { margin-bottom: 0; }
+
+/* 表格 */
+.markdown-body table {
+  border-collapse: collapse;
+  margin: 0 0 1.1em;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow: auto;
+  border-radius: var(--radius-sm);
+}
+.markdown-body th,
+.markdown-body td {
+  border: 1px solid var(--border);
+  padding: 8px 13px;
+}
+.markdown-body th { background: var(--surface); font-weight: 600; color: var(--heading); }
+.markdown-body tr:nth-child(2n) td { background: var(--surface); }
+
+/* 分隔线 */
+.markdown-body hr {
+  height: 1px;
+  border: none;
+  background: var(--border);
+  margin: 2em 0;
+}
+
+/* 图片(Airbnb 招牌:大圆角) */
+.markdown-body img { max-width: 100%; border-radius: var(--radius); }
+
+/* details / summary */
+.markdown-body details {
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: .7em 1.1em;
+  margin: 0 0 1.1em;
+  background: var(--surface);
+}
+.markdown-body summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--heading);
+  -webkit-user-select: none;
+  user-select: none;  /* 禁止双击选中文本 / 弹出复制框 */
+}
+
+/* ============================================================
+ * 按钮 .btn(Airbnb:足量圆角 / 药丸 CTA)
+ * ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--heading);
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color .15s ease, border-color .15s ease,
+              color .15s ease, box-shadow .15s ease, transform .05s ease;
+}
+.btn:hover { background-color: var(--surface-card); box-shadow: var(--shadow); }
+
+.btn-invisible {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--muted);
+}
+.btn-invisible:hover { background-color: var(--surface); color: var(--heading); box-shadow: none; }
+
+/* 顶部圆形按钮:新拟物双层阴影(还原 primer 的 header-btn 效果) */
+#functionBtn .btn-invisible {
+  color: var(--heading);  /* 默认随主题正文色 */
+  box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor), -7px -7px 16px 0 var(--header-btn-shadowColor2);
+  transition: box-shadow .4s ease-in-out, filter .4s ease-in-out, color .15s ease;
+}
+/* hover:追加当前主题强调色(对应 primer 的 --color-accent-fg) */
+#functionBtn .btn-invisible:hover { background-color: transparent; color: var(--accent); filter: brightness(1.05); }
+/* 按下 / 选中:阴影翻转为内凹 */
+#functionBtn .btn-invisible:active,
+#functionBtn .btn-invisible.selected,
+#functionBtn .btn-invisible[aria-selected="true"],
+#functionBtn .btn-invisible.zeroclipboard-is-active {
+  box-shadow: 6px 6px 14px 0 var(--header-btn-shadowColor) inset, -7px -7px 12px 0 var(--header-btn-shadowColor2) inset;
+}
+
+.circle { border-radius: 50%; }
+
+/* 评论按钮 = Airbnb 品牌红药丸 CTA */
+.btn-block {
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-weight: 600;
+  color: var(--on-accent);
+  background-color: var(--accent);
+  border-color: var(--accent);
+  border-radius: var(--radius-pill);
+}
+.btn-block:hover { background-color: var(--accent-hover); border-color: var(--accent-hover); color: var(--on-accent); }
+.btn-block:active { transform: scale(0.985); }
+
+/* octicon 图标 */
+.octicon { fill: currentColor; vertical-align: text-bottom; }
+
+/* ============================================================
+ * 复制代码按钮 + 工具类(被 ArticleJs / 内联 JS 注入的结构使用)
+ * ============================================================ */
+.snippet-clipboard-content { position: relative; }
+.ClipboardButton {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+  cursor: pointer;
+}
+.ClipboardButton:hover { color: var(--heading); background-color: var(--surface-card); }
+
+/* 最小工具类集合(替代 primer 中被引用的部分) */
+.position-relative { position: relative; }
+.position-absolute { position: absolute; }
+.top-0   { top: 0; }
+.right-0 { right: 0; }
+.overflow-auto { overflow: auto; }
+.d-none  { display: none !important; }
+.m-2     { margin: 8px; }
+.mr-2    { margin-right: 8px; }
+.p-0     { padding: 0; }
+.color-fg-success { color: var(--color-success-fg); }
+
+/* ============================================================
+ * 页脚
+ * ============================================================ */
+#footer { color: var(--muted); }
+#footer a { color: var(--accent); }
+
+/* 评论加载动画占位 */
+.AnimatedEllipsis::after {
+  content: "…";
+  display: inline-block;
+  animation: blink 1.2s infinite;
+}
+
+/* ============================================================
+ * 响应式
+ * ============================================================ */
+@media (max-width: 600px) {
+  .markdown-body { font-size: 15px; }
+}
