@@ -67,6 +67,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans SC',sans-seri
 .inp:focus{border-color:var(--accent)}
 .inp::placeholder{color:var(--text3)}
 textarea.inp{display:block;width:100%;height:80px;font-size:11.5px;resize:vertical;margin:0}
+textarea.inp::-webkit-resizer{background:linear-gradient(135deg,transparent 0 50%,var(--border2) 50% 62%,transparent 62% 68%,var(--text3) 68% 80%,transparent 80%);border-radius:0 0 var(--radius) 0}
 
 /* ============================================================
    按钮基础
@@ -154,11 +155,14 @@ textarea.inp{display:block;width:100%;height:80px;font-size:11.5px;resize:vertic
    .output-code 与 .fs-code 字体、行高、padding、overflow 完全相同, 
    提取到 .code-pane, 各自只保留真正不同的部分。
    ============================================================ */
-.code-pane{overflow:auto;padding:14px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;line-height:1.6;background:transparent;}
+.code-pane{overflow:auto;padding:14px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;line-height:1.6;background:transparent;min-height:0}
 .code-pane>code{display:block;white-space:pre;tab-size:2}
-/* output-code 额外占满剩余高度 */
-.output-code{flex:1}
+/* output-code 额外占满剩余高度, 同时允许滚轮滚动 */
+.output-code{flex:1;overflow:auto;min-height:0}
+.output-code>code{display:block;white-space:pre;tab-size:2}
 /* fs-code 无额外差异, 直接复用 .code-pane 即可 */
+.fs-code{overflow:auto;min-height:0}
+.fs-code>code{display:block;white-space:pre;tab-size:2}
 
 /* ============================================================
    输出面板工具栏
@@ -288,7 +292,7 @@ pre code.hljs{display:block;overflow:visible}
 
 <!-- Node List Modal -->
 <div class="modal-overlay" id="nodeOverlay">
-  <div class="modal-box" onclick="event.stopPropagation()">
+  <div class="modal-box">
     <div class="fs-header">
       <span class="fs-title">📋 节点列表</span>
       <button class="btn btn-secondary btn-sm" id="nodeCloseBtn">✕ 关闭</button>
@@ -298,52 +302,66 @@ pre code.hljs{display:block;overflow:visible}
 </div>
 
 <script>
-const FIXED_HEADER = `port: 7890
+const FIXED_HEADER = `---
+port: 7890
 socks-port: 7891
 redir-port: 7892
 mixed-port: 7893
 tproxy-port: 7895
 allow-lan: true
 ipv6: false
-bind-address: '*'
+bind-address: "*"
 log-level: info
-external-controller: '127.0.0.1:9090'
+external-controller: 0.0.0.0:9090
 unified-delay: true
 tcp-concurrent: true
-# 认证配置
 skip-auth-prefixes:
-  - 192.168.1.0/24
-  - 192.168.31.0/24
-  - 192.168.100.0/24
-  - 127.0.0.1/8
+- 192.168.1.0/24
+- 192.168.31.0/24
+- 192.168.100.0/24
+- 127.0.0.1/8
 dns:
-    enable: true
-    ipv6: false
-    follow-rule: false
-    respect-rules: true
-    enhanced-mode: fake-ip
-    fake-ip-range: 198.18.0.1/16
-    use-hosts: false
-    use-system-hosts: false
-    default-nameserver:
-      - 119.29.29.29
-      - 180.184.1.1
-      - 223.5.5.5
-    proxy-server-nameserver: ['https://dns.alidns.com/dns-query', 'https://doh.pub/dns-query']
-    nameserver: [119.29.29.29,223.5.5.5]
-    fallback: ['https://cloudflare-dns.com/dns-query', 'https://dns.cloudflare.com/dns-query', 'https://dns.alidns.com/dns-query', 'https://doh.pub/dns-query']
-    fallback-filter: { geoip: true, geoip-code: CN, geosite: [gfw] }
-    fake-ip-filter:
-      - +.lan
-      - +.local
-      - geosite:cn
-      - geosite:Private
-      - time.*.com
-      - ntp.*.com
-      - +.miwifi.com
-      - +.docker.io
-      - +.market.xiaomi.com
-      - +.push.apple.com
+  enable: true
+  ipv6: false
+  follow-rule: false
+  respect-rules: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  use-hosts: false
+  use-system-hosts: false
+  default-nameserver:
+  - 114.114.114.114
+  - 119.29.29.29
+  - 223.5.5.5
+  proxy-server-nameserver:
+  - https://dns.alidns.com/dns-query
+  - https://doh.pub/dns-query
+  nameserver:
+  - 114.114.114.114
+  - 119.29.29.29
+  - 223.5.5.5
+  fallback:
+  - https://cloudflare-dns.com/dns-query
+  - https://dns.cloudflare.com/dns-query
+  - https://dns.alidns.com/dns-query
+  - https://doh.pub/dns-query
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    geosite:
+    - gfw
+  fake-ip-filter:
+  - "+.lan"
+  - "+.local"
+  - geosite:cn
+  - geosite:Private
+  - time.*.com
+  - ntp.*.com
+  - "+.miwifi.com"
+  - "+.docker.io"
+  - "+.market.xiaomi.com"
+  - "+.push.apple.com"
+  listen: 0.0.0.0:7874
 `;
 
 const RULE_PROVIDERS = `rule-providers:
@@ -392,7 +410,7 @@ const RULE_PROVIDERS = `rule-providers:
     interval: 86400
     type: http
   telegram:
-    url: https://fastly.jsdelivr.net/gh/GJKen/clash-Rules@master/Rules/Telegram.yaml,
+    url: https://fastly.jsdelivr.net/gh/GJKen/clash-Rules@master/Rules/Telegram.yaml
     path: ./ruleset/telegram_local.yaml
     behavior: classical
     interval: 86400
@@ -493,7 +511,13 @@ const DEFAULT_GROUPS = [
   { name: "🇯🇵日本 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇯🇵", proxies: [], canSelect: false, isCountry: true },
   { name: "🇺🇸美国 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇺🇸", proxies: [], canSelect: false, isCountry: true },
   { name: "🇪🇺欧洲 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇪🇺", proxies: [], canSelect: false, isCountry: true },
-  { name: "🇰🇷韩国 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇰🇷", proxies: [], canSelect: false, isCountry: true }
+  { name: "🇰🇷韩国 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇰🇷", proxies: [], canSelect: false, isCountry: true },
+  { name: "🇮🇳印度 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇮🇳", proxies: [], canSelect: false, isCountry: true },
+  { name: "🇨🇦加拿大 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇨🇦", proxies: [], canSelect: false, isCountry: true },
+  { name: "🇧🇷巴西 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇧🇷", proxies: [], canSelect: false, isCountry: true },
+  { name: "🇦🇪阿联酋 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇦🇪", proxies: [], canSelect: false, isCountry: true },
+  { name: "🇿🇦南非 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇿🇦", proxies: [], canSelect: false, isCountry: true },
+  { name: "🇲🇽墨西哥 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇲🇽", proxies: [], canSelect: false, isCountry: true }
 ];
 
 const COUNTRY_RULES = [
@@ -503,13 +527,19 @@ const COUNTRY_RULES = [
   { name: "🇯🇵日本 Auto", keywords: ['日本','🇯🇵','JP','Japan','Tokyo','东京','japan'], tag: 'JP', cls: 'tag-jp' },
   { name: "🇺🇸美国 Auto", keywords: ['美国','🇺🇸','US','USA','America','圣何塞','洛杉矶','凤凰城','San Jose','Los Angeles','SJC','JFK','LAX','ORD','ATL','DFW','SFO','MIA','SEA','IAD'], tag: 'US', cls: 'tag-us' },
   { name: "🇪🇺欧洲 Auto", keywords: ['奥地利','比利时','保加利亚','克罗地亚','塞尔维亚','捷克','丹麦','爱沙尼亚','芬兰','法国','德国','希腊','匈牙利','爱尔兰','意大利','拉脱维亚','立陶宛','卢森堡','马耳他','荷兰','波兰','葡萄牙','罗马尼亚','斯洛伐克','斯洛文尼亚','西班牙','瑞典','英国','🇦🇹','🇧🇪','🇧🇬','🇭🇷','🇷🇸','🇨🇿','🇩🇰','🇪🇪','🇫🇮','🇫🇷','🇩🇪','🇬🇷','🇭🇺','🇮🇪','🇮🇹','🇱🇻','🇱🇹','🇱🇺','🇲🇹','🇳🇱','🇵🇱','🇵🇹','🇷🇴','🇸🇰','🇸🇮','🇪🇸','🇸🇪','🇬🇧','CDG','FRA','AMS','MAD','BCN','FCO','MUC','BRU'], tag: 'EU', cls: 'tag-eu' },
-  { name: "🇰🇷韩国 Auto", keywords: ['韩国','🇰🇷','韓国','首尔','南朝鲜','KR','KOR','Korea','South','Seoul'], tag: 'KR', cls: 'tag-kr' }
+  { name: "🇰🇷韩国 Auto", keywords: ['韩国','🇰🇷','韓国','首尔','南朝鲜','KR','KOR','Korea','South','Seoul'], tag: 'KR', cls: 'tag-kr' },
+  { name: "🇮🇳印度 Auto", keywords: ['印度','孟买','海得拉巴','🇮🇳','IN','IND','India','Mumbai','Hyderabad'], tag: 'IN', cls: 'tag-sg' },
+  { name: "🇨🇦加拿大 Auto", keywords: ['加拿大','多伦多','🇨🇦','CA','CAN','Canada','Toronto'], tag: 'CA', cls: 'tag-us' },
+  { name: "🇧🇷巴西 Auto", keywords: ['巴西','圣保罗','🇧🇷','BR','BRA','Brazil','Sao Paulo','São Paulo'], tag: 'BR', cls: 'tag-hk' },
+  { name: "🇦🇪阿联酋 Auto", keywords: ['阿联酋','迪拜','杜拜','🇦🇪','AE','UAE','Dubai'], tag: 'AE', cls: 'tag-eu' },
+  { name: "🇿🇦南非 Auto", keywords: ['南非','约翰内斯堡','非洲','🇿🇦','ZA','ZAF','South Africa','Johannesburg'], tag: 'ZA', cls: 'tag-kr' },
+  { name: "🇲🇽墨西哥 Auto", keywords: ['墨西哥','克雷塔罗','🇲🇽','MX','MEX','Mexico','Queretaro','Querétaro'], tag: 'MX', cls: 'tag-jp' }
 ];
 
 const SPECIAL_KW = ['剩余流量','距离下次重置','套餐到期','流量：','重置剩余','到期'];
 
 // 统一的 emoji 剥离正则
-const STRIP_EMOJI = /[🚀♻️🛑🐟🤖📦✈️📱🔍🇭🇰🇹🇼🇸🇬🇯🇵🇺🇸🇪🇺🇰🇷]/g;
+const STRIP_EMOJI = /[🚀♻️🛑🐟🤖📦✈️📱🔍🇭🇰🇹🇼🇸🇬🇯🇵🇺🇸🇪🇺🇰🇷🇮🇳🇨🇦🇧🇷🇦🇪🇿🇦🇲🇽]/g;
 
 let parsedNodeNames = [], parsedProxies = [];
 let selectedGroups = {};
@@ -775,36 +805,117 @@ function setStatus(msg, type='info') {
 }
 
 function parseSubscription(content) {
-  const m = content.match(/proxies:\s*\n/);
+  const m = content.match(/^proxies:\s*$/m);
   if (!m) throw new Error('未找到 proxies 字段');
   const start = m.index + m[0].length;
-  const gm = content.match(/proxy-groups:\s*\n/);
-  const end = gm ? gm.index : content.length;
-  let section = content.substring(start, end);
-  // 清理末尾可能残留的 proxy-groups: 或其他非节点内容
-  section = section.replace(/\s*proxy-groups:.*$/i, '').trim();
+  const rest = content.substring(start);
+  const endMatch = rest.match(/^\S[\w-]*:\s*$/m);
+  let section = endMatch ? rest.substring(0, endMatch.index) : rest;
+  section = section.trim();
+  const blocks = splitProxyBlocks(section);
   const proxies = [], names = [];
-  const lines = section.split('\n');
-  let cur = '', brace = 0, inP = false;
-  for (const line of lines) {
-    if (line.match(/^\s*-\s*\{/)) {
-      if (inP && cur) { push(cur, proxies, names); }
-      cur = line.trim(); brace = (line.match(/\{/g)||[]).length - (line.match(/\}/g)||[]).length; inP = true;
-    } else if (inP) {
-      cur += ' ' + line.trim();
-      brace += (line.match(/\{/g)||[]).length - (line.match(/\}/g)||[]).length;
-      if (brace === 0) { push(cur, proxies, names); cur = ''; inP = false; }
-    }
-  }
-  if (inP && cur) push(cur, proxies, names);
+  blocks.forEach(block => {
+    const normalized = normalizeProxyBlock(block);
+    const name = getProxyName(normalized);
+    if (!name) return;
+    proxies.push(normalized);
+    names.push(name);
+  });
   if (!names.length) throw new Error('未找到任何节点');
-  return { nodeNames: names, proxies: proxies.map(p => '    ' + (p.startsWith('-') ? p : '- ' + p)) };
+  return { nodeNames: names, proxies };
 }
 
-function push(proxy, proxies, names) {
-  proxies.push(proxy);
-  const m = proxy.match(/name:\s*['"]?([^,'"}]+)['"]?/);
-  if (m) names.push(m[1].trim().replace(/^['"]|['"]$/g,''));
+function splitProxyBlocks(section) {
+  const lines = section.split(/\r?\n/);
+  const blocks = [];
+  let cur = [];
+  for (const line of lines) {
+    if (/^\s*-\s+/.test(line)) {
+      if (cur.length) blocks.push(cur.join('\n'));
+      cur = [line];
+    } else if (cur.length) {
+      cur.push(line);
+    }
+  }
+  if (cur.length) blocks.push(cur.join('\n'));
+  return blocks;
+}
+
+function normalizeProxyBlock(block) {
+  const trimmed = block.trim();
+  if (/^-\s*\{/.test(trimmed)) return blockMapToYaml(trimmed);
+  const lines = trimmed.split(/\r?\n/);
+  return lines.map((line, index) => {
+    const cleaned = line.replace(/\s+$/g, '');
+    return index === 0 ? '    ' + cleaned.replace(/^\s*/, '') : '      ' + cleaned.replace(/^\s*/, '');
+  }).join('\n');
+}
+
+function blockMapToYaml(proxy) {
+  const body = proxy.replace(/^-\s*\{|\}\s*$/g, '');
+  const pairs = splitInlinePairs(body);
+  const lines = [];
+  pairs.forEach((part, index) => {
+    const kv = part.match(/^([^:]+):\s*(.*)$/);
+    if (!kv) return;
+    const key = kv[1].trim();
+    const value = kv[2].trim();
+    lines.push(`${index === 0 ? '    -' : '     '} ${key}: ${value}`);
+  });
+  return lines.join('\n');
+}
+
+function splitInlinePairs(body) {
+  const parts = [];
+  let cur = '', quote = '', brace = 0, bracket = 0;
+  for (let i = 0; i < body.length; i++) {
+    const ch = body[i], prev = body[i - 1];
+    if (quote) {
+      cur += ch;
+      if (ch === quote && prev !== '\\') quote = '';
+      continue;
+    }
+    if (ch === '"' || ch === "'") { quote = ch; cur += ch; continue; }
+    if (ch === '{') brace++;
+    if (ch === '}') brace--;
+    if (ch === '[') bracket++;
+    if (ch === ']') bracket--;
+    if (ch === ',' && brace === 0 && bracket === 0) {
+      if (cur.trim()) parts.push(cur.trim());
+      cur = '';
+    } else {
+      cur += ch;
+    }
+  }
+  if (cur.trim()) parts.push(cur.trim());
+  return parts;
+}
+
+function getProxyName(proxy) {
+  const m = proxy.match(/^\s*-\s*name:\s*(.+?)\s*$/m) || proxy.match(/\bname:\s*('(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*"|[^,\n}]+)/);
+  return m ? parseYamlScalar(m[1]) : '';
+}
+
+function parseYamlScalar(value) {
+  const raw = String(value || '').trim();
+  if (!raw) return '';
+  if (raw[0] === '"' && raw[raw.length - 1] === '"') {
+    return decodeDoubleQuotedYaml(raw.slice(1, -1));
+  }
+  if (raw[0] === "'" && raw[raw.length - 1] === "'") {
+    return raw.slice(1, -1).replace(/''/g, "'");
+  }
+  return raw.replace(/\s+#.*$/, '').trim();
+}
+
+function decodeDoubleQuotedYaml(text) {
+  return text
+    .replace(/\\U([0-9a-fA-F]{8})/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
+    .replace(/\\u([0-9a-fA-F]{4})/g, (_, hex) => String.fromCharCode(parseInt(hex, 16)))
+    .replace(/\\([0abtnvfre"\\/])/g, (_, ch) => ({
+      '0': '\0', a: '\x07', b: '\b', t: '\t', n: '\n', v: '\v', f: '\f', r: '\r', e: '\x1b',
+      '"': '"', '\\': '\\', '/': '/'
+    }[ch] || ch));
 }
 
 /**
@@ -922,46 +1033,68 @@ function parseVlessUri(uri) {
 }
 
 /**
- * 将节点对象转换为 Clash YAML 行格式
+ * 将节点对象转换为 Clash YAML 块格式
  */
 function nodeToYamlLine(node) {
-  // 特殊处理: name 中包含特殊字符时需要用引号包裹
-  const needQuote = /[\s|—？🚀♻️倍流媒体\u4e00-\u9fa5:]/.test(node.name);
-  const nameStr = needQuote ? `'${node.name}'` : node.name;
+  const lines = [
+    `    - name: ${formatYamlScalar(node.name)}`,
+    `      type: ${formatYamlScalar(node.type)}`,
+    `      server: ${formatYamlScalar(node.server)}`,
+    `      port: ${node.port}`
+  ];
 
-  // 构建属性列表
-  const props = [`name: ${nameStr}`, `server: ${node.server}`, `port: ${node.port}`, `type: ${node.type}`];
-
-  // hysteria2 特有字段
   if (node.type === 'hysteria2') {
-    props.push(`password: ${node.password}`);
-    if (node.ports) props.push(`ports: ${node.ports}`);
-    if (node.mport) props.push(`mport: ${node.mport}`);
+    if (node.ports) lines.push(`      ports: ${formatYamlScalar(node.ports)}`);
+    if (node.mport) lines.push(`      mport: ${formatYamlScalar(node.mport)}`);
+    lines.push(`      udp: ${!!node.udp}`);
+    if (node['skip-cert-verify'] !== undefined) lines.push(`      skip-cert-verify: ${!!node['skip-cert-verify']}`);
+    if (node.sni) lines.push(`      sni: ${formatYamlScalar(node.sni)}`);
+    lines.push(`      password: ${formatYamlScalar(node.password)}`);
+    return lines.join('\n');
   }
 
-  // vless 特有字段
   if (node.type === 'vless') {
-    props.push(`uuid: ${node.uuid}`);
-    if (node.flow) props.push(`flow: ${node.flow}`);
-    if (node.network) props.push(`network: ${node.network}`);
-    if (node['reality-opts']) {
-      props.push(`reality-opts: { public-key: '${node['reality-opts'].publicKey}', short-id: '${node['reality-opts'].shortId}' }`);
-    }
+    lines.push(`      uuid: ${formatYamlScalar(node.uuid)}`);
+    lines.push(`      udp: ${!!node.udp}`);
+    if (node.flow) lines.push(`      flow: ${formatYamlScalar(node.flow)}`);
+    if (node.tls !== undefined) lines.push(`      tls: ${!!node.tls}`);
+    if (node['skip-cert-verify'] !== undefined) lines.push(`      skip-cert-verify: ${!!node['skip-cert-verify']}`);
+    if (node.client_fingerprint) lines.push(`      client-fingerprint: ${formatYamlScalar(node.client_fingerprint)}`);
+    if (node.servername) lines.push(`      servername: ${formatYamlScalar(node.servername)}`);
+    if (node.sni && !node.servername) lines.push(`      sni: ${formatYamlScalar(node.sni)}`);
+    if (node.network) lines.push(`      network: ${formatYamlScalar(node.network)}`);
     if (node.ws_opts) {
-      const wsPath = node.ws_opts.path;
-      props.push(`ws-opts: { path: '${wsPath}' }`);
+      lines.push('      ws-opts:');
+      if (node.ws_opts.path) lines.push(`        path: ${formatYamlScalar(node.ws_opts.path)}`);
+      if (node.ws_opts.headers && node.ws_opts.headers.Host) {
+        lines.push('        headers:');
+        lines.push(`          Host: ${formatYamlScalar(node.ws_opts.headers.Host)}`);
+      }
     }
-    if (node.client_fingerprint) props.push(`client-fingerprint: ${node.client_fingerprint}`);
-    if (node.servername) props.push(`servername: ${node.servername}`);
+    if (node['reality-opts']) {
+      lines.push('      reality-opts:');
+      lines.push(`        public-key: ${formatYamlScalar(node['reality-opts'].publicKey)}`);
+      lines.push(`        short-id: ${formatYamlScalar(node['reality-opts'].shortId)}`);
+    }
+    return lines.join('\n');
   }
 
-  // 公共字段
-  props.push(`udp: ${node.udp}`);
-  if (node['skip-cert-verify']) props.push(`skip-cert-verify: true`);
-  if (node.sni) props.push(`sni: ${node.sni}`);
-  if (node.tls) props.push(`tls: true`);
+  if (node.udp !== undefined) lines.push(`      udp: ${!!node.udp}`);
+  if (node.tls !== undefined) lines.push(`      tls: ${!!node.tls}`);
+  if (node['skip-cert-verify'] !== undefined) lines.push(`      skip-cert-verify: ${!!node['skip-cert-verify']}`);
+  return lines.join('\n');
+}
 
-  return `    - { ${props.join(', ')} }`;
+function formatYamlScalar(value) {
+  const str = String(value ?? '');
+  if (!str) return "''";
+  if (/^[A-Za-z0-9._/@+-]+$/.test(str) && !/^(true|false|null|yes|no|on|off)$/i.test(str)) return str;
+  return '"' + str
+    .replace(/\\/g, '\\\\')
+    .replace(/"/g, '\\"')
+    .replace(/\n/g, '\\n')
+    .replace(/\r/g, '\\r')
+    .replace(/\t/g, '\\t') + '"';
 }
 
 /**
@@ -1125,6 +1258,9 @@ function bindToggle(openId, closeId, overlayId) {
 document.getElementById('fsCloseBtn').addEventListener('click', () =>
   document.getElementById('fsOverlay').classList.remove('active'));
 bindToggle('viewNodesBtn', 'nodeCloseBtn', 'nodeOverlay');
+document.getElementById('nodeOverlay').addEventListener('click', () =>
+  document.getElementById('nodeOverlay').classList.remove('active'));
+document.querySelector('.modal-box').addEventListener('click', e => e.stopPropagation());
 
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {

@@ -4,7 +4,7 @@
     <meta content="text/html; charset=utf-8" http-equiv="content-type" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href='https://gjken.github.io/demo/primer.css' rel='stylesheet' />
+    <link href='../../static/primer.css' rel='stylesheet' />
     
     <link rel="icon" href="https://pic.imgdb.cn/item/6734c652d29ded1a8cc038aa.jpg"><script>
         let theme = localStorage.getItem("meek_theme") || "light";
@@ -27,9 +27,9 @@ body{box-sizing:border-box;min-width:200px;max-width:900px;margin:20px auto;padd
 #header{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:24px;}
 #functionBtn{display:flex;justify-content:center;margin:20px 0;gap:20px;}
 #functionBtn a{padding:14px 16px;}
-#functionBtn.Btn-flex{position:fixed;margin:0;padding:8px 0;top:-64px;left:0;width:100%;min-width:500px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;animation:fadeIn.2s ease-in 0s forwards;transition:top 0.3s ease-in-out}
+#functionBtn.Btn-flex{position:fixed;margin:0;padding:8px 0;top:0;left:0;width:100%;min-width:0px;background-color:var(--functionBtnFlex-bgColor);backdrop-filter:blur(30px);box-shadow:#00000078 0 9px 18px -15px;z-index:100;animation:fadeIn.2s ease-in 0s forwards;transition:top 0.3s ease-in-out}
 #footer{margin-top:64px;text-align:center;font-size:small;}
-body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animation:slide-fade-in 0.8s ease;animation:slide-fade-in 0.8s ease}
+#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animation:slide-fade-in 0.8s ease;animation:slide-fade-in 0.8s ease}
 .title-left img{animation:grow 0.5s cubic-bezier(0.23,1,0.32,1);-webkit-animation:grow 0.5s cubic-bezier(0.23,1,0.32,1);}
 </style>
 
@@ -89,9 +89,42 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
     <div id="content">
 <div style="margin-bottom:16px;"> </div>
 <nav class="SideNav border">
-<a class="SideNav-item d-flex flex-items-center flex-justify-between" href="post/8.html">
+<a class="SideNav-item d-flex flex-items-center flex-justify-between" href="post/11.html">
     <div class="d-flex flex-items-center">
-        <svg class="SideNav-icon octicon" style="witdh:16px;height:16px"><path class="svgTop0" d=""></path>
+        <svg class="SideNav-icon octicon" style="width:16px;height:16px"><path class="svgTop0" d=""></path>
+        </svg>
+        <span class="listTitle">OpenClash 使用记录</span>
+    </div>
+    <div class="listLabels">
+        
+        <span class="Label LabelName" style="background-color:#cb7b58"><object><a style="color:#fff" href="tag.html#翻墙">翻墙</a></object></span><span class="Label LabelName" style="background-color:#0075ca"><object><a style="color:#fff" href="tag.html#教程">教程</a></object></span>
+        <span class="Label LabelTime" style="background-color:#1f883d">2026-04-15</span>
+    </div>
+</a><a class="SideNav-item d-flex flex-items-center flex-justify-between" href="post/10.html">
+    <div class="d-flex flex-items-center">
+        <svg class="SideNav-icon octicon" style="width:16px;height:16px"><path class="svgTop0" d=""></path>
+        </svg>
+        <span class="listTitle">Windows 端 Claude Code 首次启动无法连接 Anthropic 服务解决方案</span>
+    </div>
+    <div class="listLabels">
+        <span class="Label" style="background-color:#006b75">2</span>
+        <span class="Label LabelName" style="background-color:#0075ca"><object><a style="color:#fff" href="tag.html#教程">教程</a></object></span><span class="Label LabelName" style="background-color:#5AB3F3"><object><a style="color:#fff" href="tag.html#Win">Win</a></object></span><span class="Label LabelName" style="background-color:#d97757"><object><a style="color:#fff" href="tag.html#Claude">Claude</a></object></span>
+        <span class="Label LabelTime" style="background-color:#1f883d">2026-04-02</span>
+    </div>
+</a><a class="SideNav-item d-flex flex-items-center flex-justify-between" href="post/9.html">
+    <div class="d-flex flex-items-center">
+        <svg class="SideNav-icon octicon" style="width:16px;height:16px"><path class="svgTop0" d=""></path>
+        </svg>
+        <span class="listTitle">Github Markdown 使用笔记</span>
+    </div>
+    <div class="listLabels">
+        
+        <span class="Label LabelName" style="background-color:#333333"><object><a style="color:#fff" href="tag.html#Github">Github</a></object></span><span class="Label LabelName" style="background-color:#0075ca"><object><a style="color:#fff" href="tag.html#教程">教程</a></object></span>
+        <span class="Label LabelTime" style="background-color:#0969da">2025-11-14</span>
+    </div>
+</a><a class="SideNav-item d-flex flex-items-center flex-justify-between" href="post/8.html">
+    <div class="d-flex flex-items-center">
+        <svg class="SideNav-icon octicon" style="width:16px;height:16px"><path class="svgTop0" d=""></path>
         </svg>
         <span class="listTitle">测试图片</span>
     </div>
@@ -102,7 +135,7 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
     </div>
 </a><a class="SideNav-item d-flex flex-items-center flex-justify-between" href="post/5.html">
     <div class="d-flex flex-items-center">
-        <svg class="SideNav-icon octicon" style="witdh:16px;height:16px"><path class="svgTop0" d=""></path>
+        <svg class="SideNav-icon octicon" style="width:16px;height:16px"><path class="svgTop0" d=""></path>
         </svg>
         <span class="listTitle">FFmpeg - 使用记录</span>
     </div>
@@ -113,7 +146,7 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
     </div>
 </a><a class="SideNav-item d-flex flex-items-center flex-justify-between" href="post/4.html">
     <div class="d-flex flex-items-center">
-        <svg class="SideNav-icon octicon" style="witdh:16px;height:16px"><path class="svgTop0" d=""></path>
+        <svg class="SideNav-icon octicon" style="width:16px;height:16px"><path class="svgTop0" d=""></path>
         </svg>
         <span class="listTitle">Desktop Meta - 桌面3D模型宠物</span>
     </div>
@@ -122,20 +155,9 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
         <span class="Label LabelName" style="background-color:#5da167"><object><a style="color:#fff" href="tag.html#软件">软件</a></object></span><span class="Label LabelName" style="background-color:#0075ca"><object><a style="color:#fff" href="tag.html#教程">教程</a></object></span>
         <span class="Label LabelTime" style="background-color:#0969da">2025-01-11</span>
     </div>
-</a><a class="SideNav-item d-flex flex-items-center flex-justify-between" href="post/3.html">
-    <div class="d-flex flex-items-center">
-        <svg class="SideNav-icon octicon" style="witdh:16px;height:16px"><path class="svgTop0" d=""></path>
-        </svg>
-        <span class="listTitle">Serv00 - 使用记录</span>
-    </div>
-    <div class="listLabels">
-        
-        <span class="Label LabelName" style="background-color:#0075ca"><object><a style="color:#fff" href="tag.html#教程">教程</a></object></span><span class="Label LabelName" style="background-color:#5319e7"><object><a style="color:#fff" href="tag.html#VPS">VPS</a></object></span>
-        <span class="Label LabelTime" style="background-color:#0969da">2025-01-10</span>
-    </div>
 </a><a class="SideNav-item d-flex flex-items-center flex-justify-between" href="post/2.html">
     <div class="d-flex flex-items-center">
-        <svg class="SideNav-icon octicon" style="witdh:16px;height:16px"><path class="svgTop0" d=""></path>
+        <svg class="SideNav-icon octicon" style="width:16px;height:16px"><path class="svgTop0" d=""></path>
         </svg>
         <span class="listTitle">demo测试页</span>
     </div>
@@ -146,7 +168,7 @@ body,#content,#functionBtn,.tagTitle,.title-left a,.subnav-search{-webkit-animat
     </div>
 </a><a class="SideNav-item d-flex flex-items-center flex-justify-between" href="post/1.html">
     <div class="d-flex flex-items-center">
-        <svg class="SideNav-icon octicon" style="witdh:16px;height:16px"><path class="svgTop0" d=""></path>
+        <svg class="SideNav-icon octicon" style="width:16px;height:16px"><path class="svgTop0" d=""></path>
         </svg>
         <span class="listTitle">Gmeek - 记录使用过程</span>
     </div>
@@ -180,19 +202,17 @@ var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 
 var utterancesLoad=0;
 
 let themeSettings={
-    "dark":["dark","moon","#00f0ff","dark-blue"],
-    "light":["light","sun","#ff5000","github-light"],
-    "auto":["auto","sync","","preferred-color-scheme"]
+    "dark":["dark","moon","dark-blue"],
+    "light":["light","sun","github-light"]
 };
-function changeTheme(mode, icon, color, utheme){
+function changeTheme(mode, icon, utheme){
     document.documentElement.setAttribute("data-color-mode",mode);
     document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
-    document.getElementById("themeSwitch").parentNode.style.color=color;
     if(utterancesLoad==1){utterancesTheme(utheme);}
 }
 function modeSwitch(){
     let currentMode=document.documentElement.getAttribute('data-color-mode');
-    let newMode = currentMode === "light" ? "dark" :currentMode === "dark" ? "auto" :"light";
+    let newMode = currentMode === "light" ? "dark" : "light";
     localStorage.setItem("meek_theme", newMode);
     if(themeSettings[newMode]){
         changeTheme(...themeSettings[newMode]);
