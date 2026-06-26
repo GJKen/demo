@@ -37,22 +37,17 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans SC',sans-seri
 .panel:last-child{border-right:none}
 
 /* ============================================================
-   [复用基类 1] 顶栏 — .panel-header 与 .fs-header 共用
-   原来两段声明有 7 条完全相同的规则, 现在合并到 .bar-header, 
-   各自只保留真正不同的部分。
+   [复用基类 1] 顶栏 — .panel-header 与 .fs-header 共用 base
+   分组选择器把共用规则一次性给到三个类(纯 CSS 不支持 composes,
+   故直接列选择器); .fs-header 仅覆盖差异(更大内边距、高度自适应)。
    ============================================================ */
-.bar-header{padding:0 18px;height:42px;border-bottom:1px solid var(--border);background:var(--bg2);flex-shrink:0;display:flex;align-items:center;justify-content:space-between;}
-/* panel-header 无差异, 直接复用 */
-.panel-header{composes:bar-header}
-/* fs-header 覆盖差异：更大内边距、高度自适应 */
+.bar-header,.panel-header,.fs-header{padding:0 18px;height:42px;border-bottom:1px solid var(--border);background:var(--bg2);flex-shrink:0;display:flex;align-items:center;justify-content:space-between;}
 .fs-header{padding:12px 20px;height:auto;}
 
 .panel-title{font-weight:500;color:var(--text2);text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:8px}
 
-.chip{font-size:11px;padding:1px 7px;border-radius:20px;font-family:'IBM Plex Mono',monospace;background:var(--chip-bg);border:1px solid var(--chip-border);color:var(--chip-color);}
-/* .badge 复用 chip, 同时保留原来的通用灰色默认值 */
-.badge{--chip-bg:var(--bg3);--chip-border:var(--border);--chip-color:var(--text2);}
-.badge,.chip{font-size:11px;padding:1px 7px;border-radius:20px;font-family:'IBM Plex Mono',monospace;background:var(--chip-bg,var(--bg3));border:1px solid var(--chip-border,var(--border));color:var(--chip-color,var(--text2))}
+/* .badge 用 chip-* 变量体系, 变量缺省时回退到通用灰色 */
+.badge{font-size:11px;padding:1px 7px;border-radius:20px;font-family:'IBM Plex Mono',monospace;background:var(--chip-bg,var(--bg3));border:1px solid var(--chip-border,var(--border));color:var(--chip-color,var(--text2))}
 .badge.green{--chip-bg:var(--green-bg);--chip-border:rgba(63,185,80,0.3);--chip-color:var(--green)}
 
 .panel-body{flex:1;overflow-y:auto;padding:14px}
@@ -63,6 +58,10 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans SC',sans-seri
 .input-section{margin-bottom:16px}
 .input-label{font-size:14px;font-weight:500;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px}
 .input-row{display:flex;gap:8px}
+.url-row{margin-bottom:6px}
+.manual-row{position:relative;margin-bottom:6px}
+.manual-del{position:absolute;top:6px;right:6px;padding:2px 7px;z-index:2;opacity:0.85}
+.row-del{flex:0 0 auto}
 .inp{flex:1;background:var(--bg3);border:1px solid var(--border);color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:12px;padding:8px 12px;border-radius:var(--radius);outline:none;transition:border-color 0.15s}
 .inp:focus{border-color:var(--accent)}
 .inp::placeholder{color:var(--text3)}
@@ -79,7 +78,6 @@ textarea.inp::-webkit-resizer{background:linear-gradient(135deg,transparent 0 50
 .btn-secondary:hover{background:var(--bg4);border-color:var(--border2)}
 .btn-sm{padding:5px 10px}
 
-.btn-semantic{background:var(--btn-bg);color:var(--btn-color);border:1px solid var(--btn-border);}
 .btn-copy{--btn-bg:var(--bg3);--btn-color:var(--text);--btn-border:var(--border);}
 .btn-copy:hover{background:var(--bg4)}
 .btn-dl{--btn-bg:var(--green-bg);--btn-color:var(--green);--btn-border:rgba(63,185,80,0.3);}
@@ -128,6 +126,10 @@ textarea.inp::-webkit-resizer{background:linear-gradient(135deg,transparent 0 50
 .group-header{padding:10px 14px;cursor:pointer;display:flex;align-items:center;gap:6px;user-select:none;transition:background 0.1s}
 .group-header:hover{background:var(--bg3)}
 .group-icon{font-size:14px;width:20px;text-align:center;flex-shrink:0}
+.drag-handle{cursor:grab;color:var(--text3);font-size:14px;line-height:1;flex-shrink:0;user-select:none}
+.drag-handle:active{cursor:grabbing}
+.group-item.dragging{opacity:0.4}
+.group-item.drag-over{border-top:2px solid var(--accent2)}
 .group-name{flex:1;font-weight:500}
 
 /* group-type-badge 复用 chip 变量 */
@@ -152,17 +154,13 @@ textarea.inp::-webkit-resizer{background:linear-gradient(135deg,transparent 0 50
 
 /* ============================================================
    代码面板
-   .output-code 与 .fs-code 字体、行高、padding、overflow 完全相同, 
-   提取到 .code-pane, 各自只保留真正不同的部分。
+   .output-code 与 .fs-code 字体、行高、padding、overflow 完全相同,
+   用分组选择器一次性给到两个类(纯 CSS 不支持 composes)。
    ============================================================ */
-.code-pane{overflow:auto;padding:14px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;line-height:1.6;background:transparent;min-height:0}
-.code-pane>code{display:block;white-space:pre;tab-size:2}
-/* output-code 额外占满剩余高度, 同时允许滚轮滚动 */
-.output-code{flex:1;overflow:auto;min-height:0}
-.output-code>code{display:block;white-space:pre;tab-size:2}
-/* fs-code 无额外差异, 直接复用 .code-pane 即可 */
-.fs-code{overflow:auto;min-height:0}
-.fs-code>code{display:block;white-space:pre;tab-size:2}
+.output-code,.fs-code{overflow:auto;padding:14px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;line-height:1.6;background:transparent;min-height:0}
+.output-code>code,.fs-code>code{display:block;white-space:pre;tab-size:2}
+/* output-code 额外占满剩余高度 */
+.output-code{flex:1}
 
 /* ============================================================
    输出面板工具栏
@@ -231,16 +229,25 @@ pre code.hljs{display:block;overflow:visible}
       <div class="panel-body">
         <div class="input-section">
           <div class="input-label">订阅链接</div>
-          <div class="input-row" style="gap:6px">
-            <input class="inp" type="text" id="urlInput" placeholder="https://sub.example.com/api?token=xxx">
-            <button class="btn btn-primary btn-sm" id="fetchBtn">获取</button>
+          <div id="urlRows">
+            <div class="input-row url-row" style="gap:6px">
+              <input class="inp url-input" type="text" placeholder="https://sub.example.com/api?token=xxx">
+              <button class="btn btn-secondary btn-sm row-del" title="删除此行" style="display:none">✕</button>
+            </div>
           </div>
+          <button class="btn btn-secondary btn-sm" id="addUrlBtn" style="margin-top:6px;width:100%">➕ 追加链接</button>
         </div>
         <div class="input-section">
           <div class="input-label">手动粘贴 YAML 内容</div>
-          <textarea class="inp" id="manualInput" placeholder="直接粘贴 Clash 订阅内容..."></textarea>
-          <button class="btn btn-secondary btn-sm" style="margin-top:6px;width:100%" id="useManualBtn">使用此内容</button>
+          <div id="manualRows">
+            <div class="manual-row">
+              <textarea class="inp manual-input" placeholder="直接粘贴 Clash 订阅内容..."></textarea>
+              <button class="btn btn-secondary btn-sm row-del manual-del" title="删除此块" style="display:none">✕</button>
+            </div>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="addManualBtn" style="margin-top:6px;width:100%">➕ 追加粘贴框</button>
         </div>
+        <button class="btn btn-primary btn-sm" id="fetchAllBtn" style="width:100%;margin-bottom:8px">🔄 获取全部并生成配置</button>
         <div id="status" class="status-bar info">
           <div class="status-dot"></div>
           <span>等待输入订阅链接或粘贴内容</span>
@@ -517,7 +524,8 @@ const DEFAULT_GROUPS = [
   { name: "🇧🇷巴西 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇧🇷", proxies: [], canSelect: false, isCountry: true },
   { name: "🇦🇪阿联酋 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇦🇪", proxies: [], canSelect: false, isCountry: true },
   { name: "🇿🇦南非 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇿🇦", proxies: [], canSelect: false, isCountry: true },
-  { name: "🇲🇽墨西哥 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇲🇽", proxies: [], canSelect: false, isCountry: true }
+  { name: "🇲🇽墨西哥 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🇲🇽", proxies: [], canSelect: false, isCountry: true },
+  { name: "🌐其他 Auto", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "🌐", proxies: [], canSelect: false, isCountry: true, isOther: true }
 ];
 
 const COUNTRY_RULES = [
@@ -536,16 +544,42 @@ const COUNTRY_RULES = [
   { name: "🇲🇽墨西哥 Auto", keywords: ['墨西哥','克雷塔罗','🇲🇽','MX','MEX','Mexico','Queretaro','Querétaro'], tag: 'MX', cls: 'tag-jp' }
 ];
 
-const SPECIAL_KW = ['剩余流量','距离下次重置','套餐到期','流量：','重置剩余','到期'];
+// 识别机场塞进订阅的"信息节点"(剩余流量 / 套餐到期 / 重置时间等), 它们不是真节点。
+// 信息节点在 mergeNodes 阶段已被丢弃, 这里作为全局唯一判定来源供各处复用。
+const INFO_NODE_RE = /(剩余流量|套餐到期|距离下次重置|剩余[:：]|到期[:：]|过期|流量重置|官网|订阅|续费|重置剩余|流量：|GB$|expire|traffic|reset)/i;
+function isInfoNode(name) {
+  return INFO_NODE_RE.test(String(name || ''));
+}
 
 // 统一的 emoji 剥离正则
-const STRIP_EMOJI = /[🚀♻️🛑🐟🤖📦✈️📱🔍🇭🇰🇹🇼🇸🇬🇯🇵🇺🇸🇪🇺🇰🇷🇮🇳🇨🇦🇧🇷🇦🇪🇿🇦🇲🇽]/g;
+const STRIP_EMOJI = /[🚀♻️🛑🐟🤖📦✈️📱🔍🌐🇭🇰🇹🇼🇸🇬🇯🇵🇺🇸🇪🇺🇰🇷🇮🇳🇨🇦🇧🇷🇦🇪🇿🇦🇲🇽]/g;
 
 let parsedNodeNames = [], parsedProxies = [];
 let selectedGroups = {};
 let dropdownOpen = {};
 let activeCountryGroups = new Set();
 let _lastRenderedConfig = null;
+
+// ── 分组排序持久化 (localStorage) ──
+const GROUP_ORDER_KEY = 'sub_group_order_v1';
+function saveGroupOrder() {
+  try { localStorage.setItem(GROUP_ORDER_KEY, JSON.stringify(DEFAULT_GROUPS.map(g => g.name))); } catch(e) {}
+}
+function loadGroupOrder() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(GROUP_ORDER_KEY) || 'null');
+    if (!Array.isArray(saved)) return;
+    const byName = new Map(DEFAULT_GROUPS.map(g => [g.name, g]));
+    const reordered = [];
+    // 按保存的顺序还原
+    saved.forEach(n => { if (byName.has(n)) { reordered.push(byName.get(n)); byName.delete(n); } });
+    // 保存里没有的(新增组)按原顺序补到末尾
+    DEFAULT_GROUPS.forEach(g => { if (byName.has(g.name)) reordered.push(g); });
+    DEFAULT_GROUPS.length = 0;
+    DEFAULT_GROUPS.push(...reordered);
+  } catch(e) {}
+}
+loadGroupOrder();
 
 // 初始化 statGroups 和 groupCount badge
 document.getElementById('statGroups').textContent = DEFAULT_GROUPS.length;
@@ -562,10 +596,13 @@ function getSelectableGroups(name) {
 function refreshActiveCountryGroups() {
   activeCountryGroups.clear();
   if (parsedNodeNames.length) {
-    const { countryMap } = classifyNodes(parsedNodeNames);
+    const { countryMap, others } = classifyNodes(parsedNodeNames);
     COUNTRY_RULES.forEach(r => {
       if (countryMap[r.name] && countryMap[r.name].length > 0) activeCountryGroups.add(r.name);
     });
+    // 有未归类节点时激活🌐其他组
+    const other = DEFAULT_GROUPS.find(g => g.isOther);
+    if (other && others.length > 0) activeCountryGroups.add(other.name);
   }
   // 更新每个 canSelect 组的可选列表, 并自动选中所有活跃的 url-test 组
   DEFAULT_GROUPS.forEach(g => {
@@ -576,22 +613,40 @@ function refreshActiveCountryGroups() {
   });
 }
 
+// 把名称按非字母数字切成大写 token, 用于短国家代码的精确匹配
+// (避免 Singapore 子串含 'in' 被误判成印度等)
+function nameTokens(name) {
+  return name.toUpperCase().split(/[^A-Z0-9]+/).filter(Boolean);
+}
+
 function getNodeCountry(name) {
+  const lower = name.toLowerCase();
+  const tokens = nameTokens(name);
   for (const r of COUNTRY_RULES) {
-    if (r.keywords.some(k => name.includes(k))) return r;
+    for (const k of r.keywords) {
+      // 2~3 个字母的纯 ASCII 代码(KR/US/HKG/LAX…)→ 整 token 比对, 大小写不敏感
+      if (/^[A-Za-z]{2,3}$/.test(k)) {
+        if (tokens.includes(k.toUpperCase())) return r;
+      // 中文 / 国旗 emoji / 较长英文名 → 大小写不敏感子串匹配
+      } else if (lower.includes(k.toLowerCase())) {
+        return r;
+      }
+    }
   }
   return null;
 }
 
 function classifyNodes(nodes) {
-  const normal = nodes.filter(n => !SPECIAL_KW.some(k => n.includes(k)));
+  const normal = nodes.filter(n => !isInfoNode(n));
   const countryMap = {};
   COUNTRY_RULES.forEach(r => { countryMap[r.name] = []; });
+  const others = [];  // normal 里没匹配到任何国家的节点
   normal.forEach(n => {
     const r = getNodeCountry(n);
     if (r) countryMap[r.name].push(n);
+    else others.push(n);
   });
-  return { normal, countryMap };
+  return { normal, countryMap, others };
 }
 
 // 抽取公共的"节点+代理组"列表构建逻辑
@@ -607,10 +662,11 @@ function generateConfig() {
       "\n\n" + RULE_PROVIDERS + "\n\n" + RULES;
   }
   const proxiesSection = "proxies:\n" + parsedProxies.join('\n');
-  const { normal, countryMap } = classifyNodes(parsedNodeNames);
+  const { normal, countryMap, others } = classifyNodes(parsedNodeNames);
   const groupNames = DEFAULT_GROUPS.map(g => g.name);
 
   const groupsSection = "proxy-groups:\n" + DEFAULT_GROUPS.filter(group => {
+      if (group.isOther) return others.length > 0;       // 🌐其他: 有未归类节点才输出
       if (!group.isCountry) return true;
       return (countryMap[group.name] || []).filter(p => !groupNames.includes(p)).length > 0;
     }).map(group => {
@@ -619,10 +675,13 @@ function generateConfig() {
       list = buildSelectList(group.name, [...normal]);
     } else if (group.name === "🚀手动选择") {
       list = buildSelectList(group.name, [...normal, 'DIRECT']);
+    } else if (group.isOther) {
+      list = others.filter(p => !groupNames.includes(p));
     } else if (group.isCountry) {
       list = (countryMap[group.name] || []).filter(p => !groupNames.includes(p));
     } else if (["AIGC","PikPak","PicHub","Telegram","Google","🐟漏网之鱼"].includes(group.name)) {
-      list = buildSelectList(group.name, [...normal, 'DIRECT']);
+      // 应用分流组: 把🚀手动选择放在最前, 再接节点池 + DIRECT + 已勾选的代理组
+      list = buildSelectList(group.name, ['🚀手动选择', ...normal, 'DIRECT']);
     } else if (group.name === "Adobe" || group.name === "🛑ADblock") {
       list = ["REJECT","DIRECT"];
     }
@@ -664,7 +723,7 @@ function renderNodeList() {
 
   const html = parsedNodeNames.map(name => {
     const r = getNodeCountry(name);
-    const isSpecial = SPECIAL_KW.some(k => name.includes(k));
+    const isSpecial = isInfoNode(name);
     const tagHtml = r
       ? `<span class="node-tag ${r.cls}">${r.tag}</span>`
       : isSpecial
@@ -697,8 +756,9 @@ function renderGroupConfig() {
       const selCount = current.length;
       const countBadge = selCount > 0 ? `<span class="badge" style="margin-left:auto;margin-right:6px;font-size:10px;color:var(--text4)">+${selCount}</span>` : '';
 
-      return `<div class="group-item">
+      return `<div class="group-item" draggable="true" data-gname="${group.name}">
         <div class="group-header" onclick="toggleDD('${group.name.replace(/'/g,"\\'")}')">
+          <span class="drag-handle" title="拖动排序" onclick="event.stopPropagation()">⠿</span>
           <span class="group-icon">${group.icon}</span>
           <span class="group-name">${displayName}</span>
           ${countBadge}
@@ -722,9 +782,12 @@ function renderGroupConfig() {
         </div>` : ''}
       </div>`;
     } else {
-      const infoText = group.isCountry ? '自动匹配节点' : (group.type==='url-test' ? '仅包含节点' : '固定配置');
-      return `<div class="group-item">
+      const infoText = group.isOther ? '未归类节点(未匹配任何国家)'
+        : group.isCountry ? '自动匹配节点'
+        : (group.type==='url-test' ? '仅包含节点' : '固定配置');
+      return `<div class="group-item" draggable="true" data-gname="${group.name}">
         <div class="group-header" style="cursor:default">
+          <span class="drag-handle" title="拖动排序">⠿</span>
           <span class="group-icon">${group.icon}</span>
           <span class="group-name">${displayName}</span>
           <span class="group-type-badge ${typeCls}" style="margin-left:auto">${typeLabel}</span>
@@ -842,12 +905,17 @@ function splitProxyBlocks(section) {
 }
 
 function normalizeProxyBlock(block) {
-  const trimmed = block.trim();
-  if (/^-\s*\{/.test(trimmed)) return blockMapToYaml(trimmed);
-  const lines = trimmed.split(/\r?\n/);
+  if (/^-\s*\{/.test(block.trim())) return blockMapToYaml(block.trim());
+  // 保留嵌套字段(reality-opts / ws-opts 等)的相对缩进:
+  // 以 body 行里最浅的缩进作为顶层字段基准,更深的子字段按相对偏移还原。
+  const lines = block.split(/\r?\n/).filter(line => line.trim() !== '');
+  const bodyIndents = lines.slice(1).map(line => line.match(/^(\s*)/)[1].length);
+  const keyBase = bodyIndents.length ? Math.min(...bodyIndents) : 0;
   return lines.map((line, index) => {
-    const cleaned = line.replace(/\s+$/g, '');
-    return index === 0 ? '    ' + cleaned.replace(/^\s*/, '') : '      ' + cleaned.replace(/^\s*/, '');
+    if (index === 0) return '    - ' + line.replace(/^\s*-\s*/, '');
+    const indent = line.match(/^(\s*)/)[1].length;
+    const rel = Math.max(0, indent - keyBase);
+    return '      ' + ' '.repeat(rel) + line.trim();
   }).join('\n');
 }
 
@@ -948,14 +1016,16 @@ function parseHysteria2Uri(uri) {
       type: 'hysteria2',
       password: password,
       udp: true,
-      'skip-cert-verify': paramMap.insecure === '1',
+      // 机场普遍用伪造 SNI(www.bing.com 等) + 自签证书; Mihomo 无法像客户端那样
+      // 用 pinSHA256 配伪造 SNI 校验自签证书, 故 insecure=1 或带 pinSHA256 时一律跳过校验,
+      // 与机场自己的 sing-box(insecure=1)行为保持一致, 否则 TLS 握手必然失败。
+      'skip-cert-verify': paramMap.insecure === '1' || paramMap.insecure === 'true' || !!paramMap.pinSHA256,
       sni: paramMap.sni || ''
     };
 
-    // 处理 mport (端口范围)
+    // 处理 mport (端口跳跃范围) → Mihomo 用 ports 字段; mport 是非标准字段, 不输出
     if (paramMap.mport) {
       node.ports = paramMap.mport;
-      node.mport = paramMap.mport;
     }
 
     return node;
@@ -1016,14 +1086,25 @@ function parseVlessUri(uri) {
       };
       if (paramMap.sni) node.servername = paramMap.sni;
       if (paramMap.fp) node.client_fingerprint = paramMap.fp;
+    } else if (paramMap.security === 'tls') {
+      // vless+tls 的 TLS 域名要用 servername(不是 sni), 否则对着 IP 校验证书会失败
+      if (paramMap.sni) node.servername = paramMap.sni;
+      if (paramMap.fp) node.client_fingerprint = paramMap.fp;
     } else if (paramMap.sni) {
       node.sni = paramMap.sni;
     }
 
-    // 处理 ws 参数
+    // 处理 ws 参数: path 必须 URL 解码(原始是 %2F... , Clash 需要真实路径 /...)
     if (paramMap.type === 'ws' && paramMap.path) {
-      node.ws_opts = { path: paramMap.path };
+      let wsPath = paramMap.path;
+      try { wsPath = decodeURIComponent(wsPath); } catch (e) {}
+      node.ws_opts = { path: wsPath };
       if (paramMap.host) node.ws_opts.headers = { Host: paramMap.host };
+    }
+
+    // 处理 packetEncoding(xudp)
+    if (paramMap.packetEncoding) {
+      node['packet-encoding'] = paramMap.packetEncoding;
     }
 
     return node;
@@ -1076,6 +1157,7 @@ function nodeToYamlLine(node) {
       lines.push(`        public-key: ${formatYamlScalar(node['reality-opts'].publicKey)}`);
       lines.push(`        short-id: ${formatYamlScalar(node['reality-opts'].shortId)}`);
     }
+    if (node['packet-encoding']) lines.push(`      packet-encoding: ${formatYamlScalar(node['packet-encoding'])}`);
     return lines.join('\n');
   }
 
@@ -1127,55 +1209,102 @@ function parseUriLinks(content) {
   return { nodeNames: names, proxies };
 }
 
-function processContent(content) {
+// 从节点 YAML 块中提取 server:port 作为去重键
+function getProxyEndpoint(proxyBlock) {
+  const s = proxyBlock.match(/^\s*-?\s*server:\s*(.+?)\s*$/m) || proxyBlock.match(/\bserver:\s*('[^']*'|"[^"]*"|[^,\n}]+)/);
+  const p = proxyBlock.match(/^\s*-?\s*port:\s*(.+?)\s*$/m) || proxyBlock.match(/\bport:\s*('[^']*'|"[^"]*"|[^,\n}]+)/);
+  const server = s ? parseYamlScalar(s[1]) : '';
+  const port = p ? parseYamlScalar(p[1]) : '';
+  return (server + ':' + port).toLowerCase();
+}
+
+// 按完整配置(忽略 name 行)生成去重键: 同一机场大量节点共用 server:port
+// (CDN 中转 / 端口跳跃), 仅靠 server:port 去重会误杀真·不同节点; 改用整块比对,
+// 只有连接参数完全一致(仅名字不同)的才视为重复。
+function getProxyContentKey(proxyBlock) {
+  return proxyBlock
+    .split(/\r?\n/)
+    .filter(line => !/^\s*-?\s*name:\s*/.test(line))
+    .map(line => line.trim())
+    .join('\n');
+}
+
+// 给节点重命名(改 YAML 块里的 name 字段 + 返回的显示名)
+function renameProxy(proxyBlock, oldName, newName) {
+  const oldEsc = oldName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // 块格式: "- name: xxx" 或 "name: xxx"; 支持带引号
+  const re = new RegExp(`(name:\\s*)('(?:[^'\\\\]|\\\\.)*'|"(?:[^"\\\\]|\\\\.)*"|${oldEsc})`);
+  return proxyBlock.replace(re, (_, prefix) => prefix + formatYamlScalar(newName));
+}
+
+// 合并新解析出的节点到全局池: 按完整配置去重 + 丢弃信息节点, 名称冲突自动加后缀
+function mergeNodes(nodeNames, proxies) {
+  const existingKeys = new Set(parsedProxies.map(getProxyContentKey));
+  const existingNames = new Set(parsedNodeNames);
+  let added = 0, skipped = 0, renamed = 0, infoSkipped = 0;
+
+  for (let i = 0; i < proxies.length; i++) {
+    const rawName = nodeNames[i];
+    // 信息节点(剩余流量/套餐到期等)直接丢弃
+    if (isInfoNode(rawName)) { infoSkipped++; continue; }
+
+    const key = getProxyContentKey(proxies[i]);
+    // 完整配置重复 → 跳过
+    if (existingKeys.has(key)) { skipped++; continue; }
+
+    let name = rawName;
+    let block = proxies[i];
+    // 名称冲突 → 加 (2)/(3)... 后缀直到唯一
+    if (existingNames.has(name)) {
+      let n = 2, candidate;
+      do { candidate = `${name} (${n++})`; } while (existingNames.has(candidate));
+      block = renameProxy(block, name, candidate);
+      name = candidate;
+      renamed++;
+    }
+
+    parsedNodeNames.push(name);
+    parsedProxies.push(block);
+    existingNames.add(name);
+    existingKeys.add(key);
+    added++;
+  }
+  return { added, skipped, renamed, infoSkipped };
+}
+
+// 解析单个来源内容为 {nodeNames, proxies}; 解析不出节点时抛错
+function parseAnyContent(content) {
+  // 先检测是否是 base64 编码的内容
+  let text = content;
+  const trimmed = text.trim();
+  const isBase64 = !trimmed.includes('\n') && !trimmed.includes('proxies:') && /^[A-Za-z0-9+/=\s]+$/.test(trimmed);
+  if (isBase64) {
+    try { text = atob(trimmed.replace(/\s/g, '')); } catch(e) {}
+  }
+
+  // 检测是否包含 URI 格式的节点链接
+  if (text.includes('hysteria2://') || text.includes('vless://')) {
+    const r = parseUriLinks(text);
+    if (r.nodeNames.length > 0) return r;
+  }
+
+  // 回退到 Clash YAML 格式
+  return parseSubscription(text);
+}
+
+// 把一个来源合并进现有节点池(静默, 不渲染); 返回 {ok, added, error}
+function mergeSource(content) {
   try {
-    // 先检测是否是 base64 编码的内容
-    let text = content;
-    const trimmed = text.trim();
-    const isBase64 = !trimmed.includes('\n') && !trimmed.includes('proxies:') && /^[A-Za-z0-9+/=\s]+$/.test(trimmed);
-
-    if (isBase64) {
-      try {
-        const decoded = atob(trimmed.replace(/\s/g, ''));
-        text = decoded;
-      } catch(e) {}
-    }
-
-    // 检测解码后的内容是否包含 URI 格式的节点链接
-    const hasHysteria2 = text.includes('hysteria2://');
-    const hasVless = text.includes('vless://');
-
-    if (hasHysteria2 || hasVless) {
-      // 尝试解析 URI 格式的节点
-      const { nodeNames, proxies } = parseUriLinks(text);
-      if (nodeNames.length > 0) {
-        parsedNodeNames = nodeNames;
-        parsedProxies = proxies;
-        refreshActiveCountryGroups();
-        setStatus(`解析成功 — 找到 ${nodeNames.length} 个 URI 格式节点`, 'success');
-        renderNodeList();
-        renderGroupConfig();
-        updateOutput();
-        return;
-      }
-    }
-
-    // 尝试解析 Clash YAML 格式
-    const { nodeNames, proxies } = parseSubscription(text);
-    parsedNodeNames = nodeNames; parsedProxies = proxies;
-    refreshActiveCountryGroups();
-    setStatus(`解析成功 — 找到 ${nodeNames.length} 个节点`, 'success');
-    renderNodeList(); renderGroupConfig(); updateOutput();
+    const { nodeNames, proxies } = parseAnyContent(content);
+    const { added } = mergeNodes(nodeNames, proxies);
+    return { ok: true, added };
   } catch(e) {
-    setStatus(e.message, 'error');
-    parsedNodeNames = []; parsedProxies = [];
-    activeCountryGroups.clear();
-    renderNodeList();
-    document.getElementById('outputCode').innerHTML = '<span style="color:var(--text3);font-style:italic">解析失败, 请检查订阅内容</span>';
+    return { ok: false, error: e.message };
   }
 }
 
-async function fetchFromUrl(url) {
+// 通过 CORS 代理轮询抓取 URL, 返回正文文本; 全部失败返回 null
+async function fetchUrlBody(url, onProgress) {
   const proxyNames = ['gjken', 'allorigins', 'corsproxy', 'codetabs', 'cors-anywhere'];
   const proxyUrls = [
     `https://cors001.gjken.workers.dev/?url=${encodeURIComponent(url)}`,
@@ -1184,39 +1313,104 @@ async function fetchFromUrl(url) {
     `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
     `https://cors-anywhere.herokuapp.com/${url}`
   ];
-  const errors = [];
   for (let i = 0; i < proxyUrls.length; i++) {
-    const proxyName = proxyNames[i];
-    setStatus(`正在获取订阅内容 (${i+1}/${proxyUrls.length})...`, 'info');
+    if (onProgress) onProgress(i, proxyUrls.length, proxyNames[i]);
     try {
       const ctrl = new AbortController();
       const tid = setTimeout(() => ctrl.abort(), 15000);
       const res = await fetch(proxyUrls[i], { signal: ctrl.signal });
       clearTimeout(tid);
-      if (res.ok) {
-        let text = await res.text();
-        processContent(text);
-        return;
-      } else {
-        errors.push(`${proxyName}: HTTP ${res.status}`);
-      }
-    } catch(e) {
-      errors.push(`${proxyName}: ${e.name === 'AbortError' ? '超时' : e.message}`);
-    }
+      if (res.ok) return await res.text();
+    } catch(e) {}
   }
-  setStatus('获取失败 — ' + errors.join(' | ') + ', 请手动粘贴内容', 'error');
+  return null;
+}
+
+// 统一获取: 重建节点池, 把所有链接行 + 所有粘贴框合并后生成配置
+async function fetchAll() {
+  const urls = [...document.querySelectorAll('#urlRows .url-input')]
+    .map(i => i.value.trim()).filter(Boolean);
+  const manuals = [...document.querySelectorAll('#manualRows .manual-input')]
+    .map(t => t.value.trim()).filter(Boolean);
+
+  if (!urls.length && !manuals.length) {
+    setStatus('请至少输入一个订阅链接或粘贴内容', 'error');
+    return;
+  }
+
+  // 重建模式: 清空现有节点池, 从所有来源重新合并
+  parsedNodeNames = []; parsedProxies = [];
+  activeCountryGroups.clear();
+
+  let okSources = 0, failUrls = 0;
+  for (let n = 0; n < urls.length; n++) {
+    const url = urls[n];
+    const body = await fetchUrlBody(url, (pi, pn) =>
+      setStatus(`正在获取第 ${n+1}/${urls.length} 个订阅 (代理 ${pi+1}/${pn})...`, 'info'));
+    if (body == null) { failUrls++; continue; }
+    if (mergeSource(body).ok) okSources++; else failUrls++;
+  }
+  for (const c of manuals) {
+    if (mergeSource(c).ok) okSources++;
+  }
+
+  refreshActiveCountryGroups();
+  renderNodeList();
+  renderGroupConfig();
+  updateOutput();
+
+  if (parsedNodeNames.length === 0) {
+    document.getElementById('outputCode').innerHTML = '<span style="color:var(--text3);font-style:italic">未解析到任何节点, 请检查订阅链接或内容</span>';
+    setStatus(`未解析到节点 — ${failUrls} 个链接获取/解析失败`, 'error');
+    return;
+  }
+  let msg = `完成 — 合并 ${okSources} 个来源, 共 ${parsedNodeNames.length} 个节点`;
+  if (failUrls) msg += `, ${failUrls} 个链接失败`;
+  setStatus(msg, failUrls ? 'error' : 'success');
+}
+
+// 多行输入: 仅当某类输入多于 1 行时显示删除按钮
+function refreshRowDelButtons(containerId, delSelector) {
+  const rows = document.querySelectorAll(`#${containerId} > div`);
+  rows.forEach(row => {
+    const del = row.querySelector(delSelector);
+    if (del) del.style.display = rows.length > 1 ? '' : 'none';
+  });
+}
+
+function addUrlRow() {
+  const row = document.createElement('div');
+  row.className = 'input-row url-row';
+  row.style.gap = '6px';
+  row.innerHTML = '<input class="inp url-input" type="text" placeholder="https://sub.example.com/api?token=xxx">'
+    + '<button class="btn btn-secondary btn-sm row-del" title="删除此行">✕</button>';
+  document.getElementById('urlRows').appendChild(row);
+  refreshRowDelButtons('urlRows', '.row-del');
+}
+
+function addManualRow() {
+  const row = document.createElement('div');
+  row.className = 'manual-row';
+  row.innerHTML = '<textarea class="inp manual-input" placeholder="直接粘贴 Clash 订阅内容..."></textarea>'
+    + '<button class="btn btn-secondary btn-sm row-del manual-del" title="删除此块">✕</button>';
+  document.getElementById('manualRows').appendChild(row);
+  refreshRowDelButtons('manualRows', '.row-del');
 }
 
 // 事件绑定
-document.getElementById('fetchBtn').addEventListener('click', () => {
-  const url = document.getElementById('urlInput').value.trim();
-  if (!url) { setStatus('请输入订阅链接', 'error'); return; }
-  fetchFromUrl(url);
+document.getElementById('fetchAllBtn').addEventListener('click', fetchAll);
+document.getElementById('addUrlBtn').addEventListener('click', addUrlRow);
+document.getElementById('addManualBtn').addEventListener('click', addManualRow);
+// 删除行(事件委托)
+document.getElementById('urlRows').addEventListener('click', (e) => {
+  if (!e.target.classList.contains('row-del')) return;
+  e.target.closest('.url-row').remove();
+  refreshRowDelButtons('urlRows', '.row-del');
 });
-document.getElementById('useManualBtn').addEventListener('click', () => {
-  const c = document.getElementById('manualInput').value.trim();
-  if (!c) { setStatus('请粘贴订阅内容', 'error'); return; }
-  processContent(c);
+document.getElementById('manualRows').addEventListener('click', (e) => {
+  if (!e.target.classList.contains('row-del')) return;
+  e.target.closest('.manual-row').remove();
+  refreshRowDelButtons('manualRows', '.row-del');
 });
 document.getElementById('copyBtn').addEventListener('click', async () => {
   try { await navigator.clipboard.writeText(_lastRenderedConfig || generateConfig()); setStatus('已复制到剪贴板', 'success'); }
@@ -1268,6 +1462,50 @@ document.addEventListener('keydown', e => {
     document.getElementById('nodeOverlay').classList.remove('active');
   }
 });
+
+// ── 分组卡片拖拽排序 (事件委托, 绑定一次) ──
+(function setupGroupDrag() {
+  const area = document.getElementById('groupConfigArea');
+  let dragName = null;
+  const clearOver = () => area.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+
+  area.addEventListener('dragstart', (e) => {
+    const item = e.target.closest('.group-item');
+    if (!item) return;
+    dragName = item.dataset.gname;
+    e.dataTransfer.effectAllowed = 'move';
+    item.classList.add('dragging');
+  });
+  area.addEventListener('dragend', (e) => {
+    const item = e.target.closest('.group-item');
+    if (item) item.classList.remove('dragging');
+    dragName = null;
+    clearOver();
+  });
+  area.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    const item = e.target.closest('.group-item');
+    clearOver();
+    if (item && item.dataset.gname !== dragName) item.classList.add('drag-over');
+  });
+  area.addEventListener('drop', (e) => {
+    e.preventDefault();
+    const item = e.target.closest('.group-item');
+    clearOver();
+    if (!item || !dragName) return;
+    const targetName = item.dataset.gname;
+    if (targetName === dragName) return;
+    const from = DEFAULT_GROUPS.findIndex(g => g.name === dragName);
+    const to = DEFAULT_GROUPS.findIndex(g => g.name === targetName);
+    if (from < 0 || to < 0) return;
+    const [moved] = DEFAULT_GROUPS.splice(from, 1);
+    DEFAULT_GROUPS.splice(to, 0, moved);
+    saveGroupOrder();
+    renderGroupConfig();
+    updateOutput();
+  });
+})();
 
 renderGroupConfig();
 
