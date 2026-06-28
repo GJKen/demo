@@ -45,6 +45,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans SC',sans-seri
 .fs-header{padding:12px 20px;height:auto;}
 
 .panel-title{font-weight:500;color:var(--text2);text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:8px}
+.title-icon-btn{width:24px;height:24px;padding:0;display:inline-flex;align-items:center;justify-content:center;line-height:1;font-size:13px}
 
 /* .badge 用 chip-* 变量体系, 变量缺省时回退到通用灰色 */
 .badge{font-size:11px;padding:1px 7px;border-radius:20px;font-family:'IBM Plex Mono',monospace;background:var(--chip-bg,var(--bg3));border:1px solid var(--chip-border,var(--border));color:var(--chip-color,var(--text2))}
@@ -265,7 +266,10 @@ pre code.hljs{display:block;overflow:visible}
     <!-- Panel 2: Group Config -->
     <div class="panel">
       <div class="panel-header">
-        <div class="panel-title">🎯 代理组配置</div>
+        <div class="panel-title">
+          🎯 代理组配置
+          <button class="btn btn-secondary btn-sm title-icon-btn" id="resetGroupOrderBtn" title="重置代理组排序缓存" aria-label="重置代理组排序缓存">↻</button>
+        </div>
         <span id="groupCount" class="badge">0 组</span>
       </div>
       <div class="panel-body" id="groupConfigArea"></div>
@@ -423,6 +427,13 @@ const RULE_PROVIDERS = `rule-providers:
     interval: 86400
     format: yaml
     type: http
+  api_relay:
+    url: https://fastly.jsdelivr.net/gh/GJKen/clash-Rules@master/Rules/api_relay.yaml
+    path: ./ruleset/api_relay_local.yaml
+    behavior: classical
+    interval: 86400
+    format: yaml
+    type: http
   applications:
     url: https://fastly.jsdelivr.net/gh/GJKen/clash-Rules@master/Rules/applications.yaml
     path: ./ruleset/Applications_local.yaml
@@ -494,8 +505,9 @@ const RULES = `rules:
   - RULE-SET,google,Google
   - RULE-SET,claude,AIGC
   - RULE-SET,ai_GC,AIGC
-  - RULE-SET,pikpakdomain,PikPak
+  - RULE-SET,pikpakdomain,PanDownload
   - RULE-SET,telegram,Telegram
+  - RULE-SET,api_relay,API中转站
   - RULE-SET,geolocation-!cn,🚀手动选择
   - RULE-SET,cn_domain,DIRECT
   - RULE-SET,cn_ip,DIRECT
@@ -505,9 +517,10 @@ const DEFAULT_GROUPS = [
   { name: "🚀手动选择", type: "select", icon: "🚀", proxies: [], canSelect: true },
   { name: "♻️自动选择", type: "url-test", url: "'http://cp.cloudflare.com/generate_204'", icon: "♻️", proxies: [], canSelect: false },
   { name: "AIGC", type: "select", icon: "🤖", proxies: ["DIRECT"], canSelect: true },
-  { name: "PikPak", type: "select", icon: "📦", proxies: ["DIRECT"], canSelect: true },
-  { name: "PicHub", type: "select", icon: "", proxies: ["DIRECT"], canSelect: true },
+  { name: "PanDownload", type: "select", icon: "📦", proxies: ["DIRECT"], canSelect: true },
+  { name: "PicHub", type: "select", icon: "🌄", proxies: ["DIRECT"], canSelect: true },
   { name: "Telegram", type: "select", icon: "✈️", proxies: ["DIRECT"], canSelect: true },
+  { name: "API中转站", type: "select", icon: "🔌", proxies: ["DIRECT"], canSelect: true },
   { name: "Google", type: "select", icon: "🔍", proxies: ["DIRECT"], canSelect: true },
   { name: "🛑ADblock", type: "select", icon: "🛑", proxies: ["REJECT","DIRECT"], canSelect: false },
   { name: "Adobe", type: "select", icon: "", proxies: ["REJECT","DIRECT"], canSelect: false },
@@ -578,6 +591,10 @@ function loadGroupOrder() {
     DEFAULT_GROUPS.length = 0;
     DEFAULT_GROUPS.push(...reordered);
   } catch(e) {}
+}
+function resetGroupOrderCache() {
+  try { localStorage.removeItem(GROUP_ORDER_KEY); } catch(e) {}
+  location.reload();
 }
 loadGroupOrder();
 
@@ -679,7 +696,7 @@ function generateConfig() {
       list = others.filter(p => !groupNames.includes(p));
     } else if (group.isCountry) {
       list = (countryMap[group.name] || []).filter(p => !groupNames.includes(p));
-    } else if (["AIGC","PikPak","PicHub","Telegram","Google","🐟漏网之鱼"].includes(group.name)) {
+    } else if (["AIGC","PanDownload","PicHub","Telegram","API中转站","Google","🐟漏网之鱼"].includes(group.name)) {
       // 应用分流组: 把🚀手动选择放在最前, 再接节点池 + DIRECT + 已勾选的代理组
       list = buildSelectList(group.name, ['🚀手动选择', ...normal, 'DIRECT']);
     } else if (group.name === "Adobe" || group.name === "🛑ADblock") {
@@ -1401,6 +1418,7 @@ function addManualRow() {
 document.getElementById('fetchAllBtn').addEventListener('click', fetchAll);
 document.getElementById('addUrlBtn').addEventListener('click', addUrlRow);
 document.getElementById('addManualBtn').addEventListener('click', addManualRow);
+document.getElementById('resetGroupOrderBtn').addEventListener('click', resetGroupOrderCache);
 // 删除行(事件委托)
 document.getElementById('urlRows').addEventListener('click', (e) => {
   if (!e.target.classList.contains('row-del')) return;
