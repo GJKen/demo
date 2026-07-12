@@ -248,7 +248,7 @@ pre code.hljs{display:block;overflow:visible}
           </div>
           <button class="btn btn-secondary btn-sm" id="addManualBtn" style="margin-top:6px;width:100%">➕ 追加粘贴框</button>
         </div>
-        <button class="btn btn-primary btn-sm" id="fetchAllBtn" style="width:100%;margin-bottom:8px">🔄 获取全部并生成配置</button>
+        <button class="btn btn-primary btn-sm" id="fetchAllBtn" style="width:100%;margin-bottom:8px">🔄 生成配置</button>
         <div id="status" class="status-bar info">
           <div class="status-dot"></div>
           <span>等待输入订阅链接或粘贴内容</span>
@@ -401,6 +401,13 @@ const RULE_PROVIDERS = `rule-providers:
     behavior: classical
     interval: 86400
     type: http
+  downloadweb:
+    url: https://fastly.jsdelivr.net/gh/GJKen/clash-Rules@master/Rules/DownloadWEB.yaml
+    path: ./ruleset/DownloadWEB_local.yaml
+    behavior: classical
+    interval: 86400
+    format: yaml
+    type: http
   pic_hub:
     url: https://fastly.jsdelivr.net/gh/GJKen/clash-Rules@master/Rules/PicHub.yaml
     path: ./ruleset/PicHub_local.yaml
@@ -505,6 +512,7 @@ const RULES = `rules:
   - RULE-SET,google,Google
   - RULE-SET,claude,AIGC
   - RULE-SET,ai_GC,AIGC
+  - RULE-SET,downloadweb,PanDownload
   - RULE-SET,pikpakdomain,PanDownload
   - RULE-SET,telegram,Telegram
   - RULE-SET,api_relay,API中转站
