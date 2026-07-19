@@ -951,7 +951,9 @@ function blockMapToYaml(proxy) {
   pairs.forEach((part, index) => {
     const kv = part.match(/^([^:]+):\s*(.*)$/);
     if (!kv) return;
-    const key = kv[1].trim();
+    // 键可能带引号(JSON 风格单行节点: {"name":"...","server":"..."}), 去掉两端引号,
+    // 否则输出成 "name": ... 会让下游 getProxyName 的 name: 匹配失败, 整个节点被丢弃。
+    const key = kv[1].trim().replace(/^(['"])([\s\S]*)\1$/, '$2');
     const value = kv[2].trim();
     lines.push(`${index === 0 ? '    -' : '     '} ${key}: ${value}`);
   });

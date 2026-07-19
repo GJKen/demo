@@ -51,7 +51,7 @@ updateOutput() 脏检查 + 离屏 hljs 高亮 → 写入 DOM
 ## 当前能力
 
 - 支持 Clash `proxies:` 下的两种节点写法:
-  - 单行 map: `- { name: ..., type: ..., server: ... }`
+  - 单行 map: `- { name: ..., type: ..., server: ... }`;**键可带引号**——JSON 风格 `- {"name":"...","server":"...","type":"..."}` 也支持(`blockMapToYaml` 会剥掉 key 两端引号,否则输出成 `"name": ...` 会让下游 `getProxyName` 的 `name:` 匹配失败,导致整个节点被丢弃)
   - 分块 YAML: `- name: ...` 后续多行字段
 - 支持 `name: "\U0001F1FA\U0001F1F8美国..."` 这类 YAML 双引号 Unicode 转义,会还原成真实国旗/中文用于分组。
 - URI 输入支持 `hysteria2://` 和 `vless://`,最终节点池统一输出为分块 YAML,不再输出旧的单行 `{ ... }` 节点。URI 解析对齐 Mihomo 字段要求:
