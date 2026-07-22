@@ -5,8 +5,9 @@
 一个**纯前端单文件工具**(`订阅转换.html`),把机场订阅转换成带完整附加规则的 Clash/Mihomo 配置。
 **无后端、无构建步骤、无依赖管理**——所有代码(HTML/CSS/JS)都在这一个文件里,双击即用。
 
-外部依赖仅两个 CDN:
+外部依赖三个 CDN:
 - `highlight.js` 11.11.1 — YAML 语法高亮
+- `js-yaml` 4.1.0 — **模板模式**下解析/序列化 YAML(只有模板模式用到)
 - Google Fonts(Noto Sans SC / IBM Plex Mono)
 
 ## 文件结构(单文件内的分区)
@@ -25,6 +26,7 @@
 | 1224–1305 | 多源编排 | `getProxyContentKey`(整块去重键)、`isInfoNode`、`mergeNodes()`(整块去重 + 丢信息节点)、`parseAnyContent()`、`mergeSource()` |
 | 1307–1399 | 抓取与重建 | `fetchUrlBody()`(CORS 轮询)、`fetchAll()`(重建池) |
 | 1400–1520 | 交互逻辑 | 事件绑定、追加/删除行、复制/下载/清空、全屏、节点弹窗、`setupGroupDrag()` 拖拽委托 |
+| — | 模板模式 | `SAMPLE_TEMPLATE`(默认模板)、`expandTemplateGroups`/`generateFromTemplate`(注入+展开)、模板 UI 区、`initTemplateMode`(持久化+事件)。**行号常变,按函数名搜** |
 
 ## 核心数据流
 
@@ -67,6 +69,7 @@ updateOutput() 脏检查 + 离屏 hljs 高亮 → 写入 DOM
 - **分组可拖拽排序**:分组卡片 `draggable`,拖放后重排 `DEFAULT_GROUPS` 数组(输出顺序即数组顺序)并 `updateOutput()`;顺序存 `localStorage`(`GROUP_ORDER_KEY`),`loadGroupOrder()` 在启动时还原、新增组按原位补到末尾。proxy-groups 顺序在 Clash 里只影响客户端显示、不影响分流。
 - 输出代码区和全屏代码区都需要保留 `overflow:auto; min-height:0`,否则 flex 布局下鼠标滚轮可能无法滚动。
 - 节点列表 modal 支持关闭按钮、Esc、点击外部遮罩关闭;点击弹窗内容区不会误关。
+- **附加自定义 Clash 模板(模板模式,可选)**:勾选「附加自定义 Clash 模板」后贴入任意 Clash 模板 YAML,把节点池注入模板生成配置。与内置分组生成**二选一**——勾选且模板非空才走模板路径,默认路径不受影响。设计与坑详见下方两节。
 
 ## 关键约定 / 设计
 
@@ -80,6 +83,14 @@ updateOutput() 脏检查 + 离屏 hljs 高亮 → 写入 DOM
 - **CORS 代理轮询**:`fetchUrlBody()` 依次尝试 5 个公共代理(gjken→allorigins→corsproxy→codetabs→cors-anywhere),各 15s 超时降级;返回正文文本,全失败返回 `null`。`fetchAll()` 逐个 URL 调用它。
 - **状态全局变量**:`parsedNodeNames` / `parsedProxies` / `selectedGroups` / `activeCountryGroups` / `_lastRenderedConfig`(高亮缓存,清空时要置 null)。分组顺序持久化在 `localStorage` 的 `GROUP_ORDER_KEY`,启动时由 `loadGroupOrder()` 还原。
 
+### 模板模式(第二条生成路径)
+
+- **与内置生成并存**:`generateFromTemplate()` 和内置 `generateConfig()` 二选一,勾选且模板非空时走它;内置路径一字未改。
+- **节点原样文本注入,不过 js-yaml**:节点块(`parsedProxies` 里的文本)直接拼进 `proxies:`,只有模板结构(proxy-groups / dns / rules)走 `jsyaml.load`→`dump` 往返。原因:防止全数字密码、端口等标量被 YAML 重新推断类型(如密码 `0755` 变整数)。做法是把 `proxies` / `proxy-groups` 先设成占位符字符串,dump 后再 `replace` 回手拼文本。
+- **`include-all`/`filter` 组就地展开,不透传**:按模板自带的 `filter` 正则在本地筛节点、填成显式列表,并删掉 `include-all`/`filter` 键。原因:sublinkPro 把这俩透传给客户端(只有新版 Mihomo 认),本工具展开后**任何 Clash 内核都能用**。正则用 JS `RegExp`(大小写敏感),`(?i)` 前缀转成 JS `i` flag;正则 JS 端解析不了时该组保留原样透传(降级)。
+- **代理组输出成单行**:每组单独 `jsyaml.dump(g,{flowLevel:0})` 成 `{ ... }` 再拼 `    - `。因为 js-yaml 默认块状多行,而本工具一贯是单行 flow map。
+- **四条组填充规则**(仿 subconverter/sublink):`filter`/`include-all` 展开 → 含 `__ALL_PROXIES__` 替换成全部节点 → 空 `proxies` 填全部节点 → 非空(组引用)保持不变。
+
 ## 已知坑(改之前先看)
 
 1. **不是完整 YAML 解析器**:复杂锚点、跨行字符串、数组对象混排等高级 YAML 语法仍可能解析不完整。
@@ -88,6 +99,9 @@ updateOutput() 脏检查 + 离屏 hljs 高亮 → 写入 DOM
 4. **hysteria2 默认 `skip-cert-verify: true`**:为匹配机场 sing-box(`insecure=1`)行为保证能连,牺牲了证书校验。机场用伪造 SNI(www.bing.com 等)+ 自签证书时这是常态,但若将来接入正经证书的服务端要留意。
 5. **vless 字段名**:`ws-opts`/`reality-opts` 仍是手拼对象。已统一 `servername`(TLS SNI)、`client-fingerprint`、`packet-encoding`、ws `path` 解码;若再加字段注意下划线 vs 连字符。
 6. `RULE_PROVIDERS` 各条目的 `url` 行末尾不要带逗号。它是字符串模板,逗号会原样进入最终 URL 导致规则集下载失败。
+7. **模板模式:localStorage 会盖住 `SAMPLE_TEMPLATE`**。框内容存 `sub_template_v1`、开关存 `sub_template_on_v1`,页面加载时优先回填框——所以**改了 `SAMPLE_TEMPLATE` 源码,不点「示例」或不清 localStorage 就看不到新的**,会一直显示上次存的旧内容。
+8. **模板注释会丢**:js-yaml 往返不保留 YAML 注释(sublinkPro 同样如此)。
+9. **js-yaml 走 CDN,离线时模板模式不可用**:`generateFromTemplate` 检测到 `jsyaml` 未加载会返回错误提示;取消勾选可回退内置生成。
 
 ## 修改须知
 
@@ -98,3 +112,5 @@ updateOutput() 脏检查 + 离屏 hljs 高亮 → 写入 DOM
 - 改信息节点判定:只改 `INFO_NODE_RE`(全局唯一来源),`mergeNodes` / `classifyNodes` / `renderNodeList` 自动跟随。
 - 加新规则集/代理组:同时改 `RULE_PROVIDERS`、`RULES`、`DEFAULT_GROUPS` 三处,保持名字一致。
 - 没有测试 / 没有 lint,改完直接浏览器打开验证;浏览器若限制 `file://`,至少用脚本级样例验证 `parseAnyContent()` / `mergeSource()` 和 `generateConfig()`(可用 Node 抽取函数体跑真实订阅样例)。
+- 改模板模式:默认模板在 `SAMPLE_TEMPLATE` 常量(反引号模板串,里面别出现反引号或 `${`);注入逻辑在 `generateFromTemplate()` + `expandTemplateGroups()`。改完想看效果,记得**点「示例」或清 `sub_template_v1`**(否则被 localStorage 盖住)。模板要能注入节点,须留钩子:顶层 `proxies:`(注入点)、组里 `__ALL_PROXIES__`、`include-all`+`filter`、或空 `proxies`。
+- 模板模式下「代理组配置」面板(内置分组的勾选/拖拽)不参与生成,输出的分组/规则全由模板决定。

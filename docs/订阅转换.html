@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OpenClash订阅附加规则器</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/vs2015.min.css">
-<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script>
+<link rel="stylesheet" href="https://fastly.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/vs2015.min.css">
+<script src="https://fastly.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script>
+<script src="https://fastly.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;}
 *::-webkit-scrollbar{width:8px;height:8px}
@@ -177,11 +178,6 @@ textarea.inp::-webkit-resizer{background:linear-gradient(135deg,transparent 0 50
 .stat-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;margin-top:2px}
 
 /* ============================================================
-   辅助
-   ============================================================ */
-.divider{height:1px;background:var(--border);margin:12px 0}
-
-/* ============================================================
    全屏弹层 & 中央弹窗
    弹层标题栏复用 .bar-header(已在上方定义)
    ============================================================ */
@@ -218,7 +214,7 @@ pre code.hljs{display:block;overflow:visible}
     <div class="logo">
       <div class="logo-text">OpenClash订阅附加规则器</div>
     </div>
-    <span class="logo-ver">v2.0</span>
+    <span class="logo-ver">v3.0</span>
   </div>
   <div class="main">
     <!-- Panel 1: Input + Node List -->
@@ -229,24 +225,41 @@ pre code.hljs{display:block;overflow:visible}
       </div>
       <div class="panel-body">
         <div class="input-section">
-          <div class="input-label">订阅链接</div>
+          <div class="input-label" style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+            <span>订阅链接</span>
+            <button class="btn btn-secondary btn-sm" id="addUrlBtn" style="padding:2px 8px;text-transform:none;letter-spacing:normal">+ 追加</button>
+          </div>
           <div id="urlRows">
             <div class="input-row url-row" style="gap:6px">
-              <input class="inp url-input" type="text" placeholder="https://sub.example.com/api?token=xxx">
+              <input class="inp url-input" type="text">
               <button class="btn btn-secondary btn-sm row-del" title="删除此行" style="display:none">✕</button>
             </div>
           </div>
-          <button class="btn btn-secondary btn-sm" id="addUrlBtn" style="margin-top:6px;width:100%">➕ 追加链接</button>
         </div>
         <div class="input-section">
-          <div class="input-label">手动粘贴 YAML 内容</div>
+          <div class="input-label" style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+            <span>手动粘贴节点内容</span>
+            <button class="btn btn-secondary btn-sm" id="addManualBtn" style="padding:2px 8px;text-transform:none;letter-spacing:normal">+ 追加</button>
+          </div>
           <div id="manualRows">
             <div class="manual-row">
-              <textarea class="inp manual-input" placeholder="直接粘贴 Clash 订阅内容..."></textarea>
+              <textarea class="inp manual-input"></textarea>
               <button class="btn btn-secondary btn-sm row-del manual-del" title="删除此块" style="display:none">✕</button>
             </div>
           </div>
-          <button class="btn btn-secondary btn-sm" id="addManualBtn" style="margin-top:6px;width:100%">➕ 追加粘贴框</button>
+        </div>
+        <div class="input-section" id="tplSection">
+          <div class="input-label" style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;user-select:none">
+              <input type="checkbox" id="tplEnable" style="cursor:pointer"> 附加自定义 Clash 模板
+            </label>
+            <span style="display:flex;gap:6px">
+              <button class="btn btn-secondary btn-sm" id="tplSample" style="padding:2px 8px">示例</button>
+              <button class="btn btn-secondary btn-sm" id="tplClear" style="padding:2px 8px">清空</button>
+            </span>
+          </div>
+          <textarea class="inp" id="tplText" spellcheck="false" placeholder="粘贴 Clash 模板 YAML:&#10;proxies 处注入节点&#10;组用 __ALL_PROXIES__ 或 include-all+filter 自动填充" style="height:120px;font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.5"></textarea>
+          <div id="tplMsg" style="font-size:13px;margin-top:4px;display:none"></div>
         </div>
         <button class="btn btn-primary btn-sm" id="fetchAllBtn" style="width:100%;margin-bottom:8px">🔄 生成配置</button>
         <div id="status" class="status-bar info">
@@ -258,7 +271,6 @@ pre code.hljs{display:block;overflow:visible}
           <div class="stat-card"><div class="stat-num" id="statCountries">0</div><div class="stat-label">国家</div></div>
           <div class="stat-card"><div class="stat-num" id="statGroups">0</div><div class="stat-label">代理组</div></div>
         </div>
-        <div class="divider" style="margin:8px 0"></div>
         <button class="btn btn-secondary btn-sm" style="width:100%;display:none" id="viewNodesBtn">📋 查看节点列表</button>
       </div>
     </div>
@@ -313,12 +325,8 @@ pre code.hljs{display:block;overflow:visible}
 </div>
 
 <script>
-const FIXED_HEADER = `---
-port: 7890
+const FIXED_HEADER = `port: 7890
 socks-port: 7891
-redir-port: 7892
-mixed-port: 7893
-tproxy-port: 7895
 allow-lan: true
 ipv6: false
 bind-address: "*"
@@ -372,8 +380,7 @@ dns:
   - "+.docker.io"
   - "+.market.xiaomi.com"
   - "+.push.apple.com"
-  listen: 0.0.0.0:7874
-`;
+  listen: 0.0.0.0:7874`;
 
 const RULE_PROVIDERS = `rule-providers:
   private:
@@ -680,7 +687,176 @@ function buildSelectList(groupName, base) {
   return [...base, ...(selectedGroups[groupName] || []).filter(g => groupNames.includes(g) && g !== groupName)];
 }
 
+// ===== 模板模式(混合方案) =====
+// 内置示例模板: 演示四种注入规则(proxies 注入 / __ALL_PROXIES__ / include-all+filter 展开 / 组引用保留)
+const SAMPLE_TEMPLATE = `port: 7890
+socks-port: 7891
+allow-lan: true
+ipv6: false
+bind-address: "*"
+log-level: info
+external-controller: 0.0.0.0:9090
+unified-delay: true
+tcp-concurrent: true
+skip-auth-prefixes:
+- 192.168.1.0/24
+- 192.168.31.0/24
+- 192.168.100.0/24
+- 127.0.0.1/8
+dns:
+  enable: true
+  ipv6: false
+  follow-rule: false
+  respect-rules: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  use-hosts: false
+  use-system-hosts: false
+  default-nameserver:
+  - 114.114.114.114
+  - 119.29.29.29
+  - 223.5.5.5
+  proxy-server-nameserver:
+  - https://dns.alidns.com/dns-query
+  - https://doh.pub/dns-query
+  nameserver:
+  - 114.114.114.114
+  - 119.29.29.29
+  - 223.5.5.5
+  fallback:
+  - https://cloudflare-dns.com/dns-query
+  - https://dns.cloudflare.com/dns-query
+  - https://dns.alidns.com/dns-query
+  - https://doh.pub/dns-query
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    geosite:
+    - gfw
+  fake-ip-filter:
+  - "+.lan"
+  - "+.local"
+  - geosite:cn
+  - geosite:Private
+  - time.*.com
+  - ntp.*.com
+  - "+.miwifi.com"
+  - "+.docker.io"
+  - "+.market.xiaomi.com"
+  - "+.push.apple.com"
+  listen: 0.0.0.0:7874
+proxies: ~
+proxy-groups:
+  - { name: 🚀 节点选择, type: select, proxies: [♻️ 自动选择, 🇭🇰 香港, 🇯🇵 日本, 🇺🇲 美国, 🚀 手动切换, DIRECT] }
+  - { name: 🚀 手动切换, type: select, proxies: [__ALL_PROXIES__] }
+  - { name: ♻️ 自动选择, type: url-test, url: 'http://www.gstatic.com/generate_204', interval: 300, tolerance: 50, proxies: [__ALL_PROXIES__] }
+  - { name: 🇭🇰 香港, type: url-test, url: 'http://www.gstatic.com/generate_204', interval: 300, include-all: true, filter: '(港|HK|hk|Hong Kong)', proxies: [] }
+  - { name: 🇯🇵 日本, type: url-test, url: 'http://www.gstatic.com/generate_204', interval: 300, include-all: true, filter: '(日本|JP|Japan|东京|大阪)', proxies: [] }
+  - { name: 🇺🇲 美国, type: url-test, url: 'http://www.gstatic.com/generate_204', interval: 300, include-all: true, filter: '(美|US|United States|洛杉矶|圣何塞)', proxies: [] }
+  - { name: 🐟 漏网之鱼, type: select, proxies: [🚀 节点选择, DIRECT] }
+rules:
+  - GEOIP,CN,DIRECT
+  - MATCH,🐟 漏网之鱼`;
+
+// 展开模板里的 proxy-groups:
+//  · include-all/filter 组 → 本地按模板自带正则展开成显式节点列表(产物对任何 Clash 内核通用, 不依赖客户端 include-all)
+//  · __ALL_PROXIES__ 占位 → 替换成全部节点(前后的组引用保留)
+//  · 空 proxies → 填全部节点; 非空(组引用) → 保持不变
+function expandTemplateGroups(tpl, nodeNames) {
+  const groups = Array.isArray(tpl['proxy-groups']) ? tpl['proxy-groups'] : [];
+  for (const g of groups) {
+    if (!g || typeof g !== 'object') continue;
+    const existing = Array.isArray(g.proxies) ? g.proxies.slice() : [];
+    const hasFilter = typeof g.filter === 'string' && g.filter.trim() !== '';
+    const includeAll = g['include-all'] === true || g['include-all-proxies'] === true || g['include-all-providers'] === true;
+
+    if (hasFilter || includeAll) {
+      let matched;
+      if (hasFilter) {
+        let pattern = g.filter.trim(), flags = '';
+        if (/^\(\?i\)/.test(pattern)) { flags = 'i'; pattern = pattern.slice(4); } // 兼容 Go 正则的 (?i) 前缀
+        let re = null;
+        try { re = new RegExp(pattern, flags); } catch (e) { re = null; }
+        if (re === null) continue; // JS 端无法解析该正则 → 保留模板原样(include-all/filter 透传给客户端)
+        matched = nodeNames.filter(n => re.test(n));
+      } else {
+        matched = nodeNames.slice();
+      }
+      const refs = existing.filter(p => p !== '__ALL_PROXIES__');
+      let list = [...new Set([...refs, ...matched])];
+      if (!list.length) list = ['DIRECT'];
+      g.proxies = list;
+      ['include-all', 'include-all-proxies', 'include-all-providers', 'filter', 'exclude-filter', 'exclude-type', 'use'].forEach(k => delete g[k]);
+      continue;
+    }
+
+    const phIdx = existing.indexOf('__ALL_PROXIES__');
+    if (phIdx !== -1) {
+      const before = existing.slice(0, phIdx);
+      const after = existing.slice(phIdx + 1).filter(p => p !== '__ALL_PROXIES__');
+      let list = [...new Set([...before, ...nodeNames, ...after])];
+      if (!list.length) list = ['DIRECT'];
+      g.proxies = list;
+      continue;
+    }
+
+    if (existing.length === 0) {
+      g.proxies = nodeNames.length ? nodeNames.slice() : ['DIRECT'];
+    }
+    // 非空组引用 → 不动
+  }
+}
+
+// 用户模板 → 注入节点 → 序列化输出。
+// 关键: 节点块保持原始文本(4 空格缩进)原样注入, 零字段损耗; 只有模板结构(组/规则/dns)走 js-yaml 往返。
+function generateFromTemplate(templateText) {
+  if (typeof jsyaml === 'undefined') {
+    return '# 模板模式需要 js-yaml 库, 但未加载(检查网络或 CDN)。取消勾选"附加模板模式"可恢复内置生成。';
+  }
+  let tpl;
+  try { tpl = jsyaml.load(templateText); }
+  catch (e) { return '# 模板 YAML 解析失败:\n# ' + String((e && e.message) || e).replace(/\n/g, '\n# '); }
+  if (!tpl || typeof tpl !== 'object' || Array.isArray(tpl)) {
+    return '# 模板需为一个 YAML 映射(顶层含 proxy-groups / rules 等键)。';
+  }
+
+  const names = parsedNodeNames.filter(n => !isInfoNode(n)); // 分组匹配用非信息节点名
+  expandTemplateGroups(tpl, names);
+
+  const groups = Array.isArray(tpl['proxy-groups']) ? tpl['proxy-groups'] : null;
+  const PH_NODES = '__SUBLINK_NODES_PH__';
+  const PH_GROUPS = '__SUBLINK_GROUPS_PH__';
+  const hasNodes = parsedProxies.length > 0;
+  tpl.proxies = hasNodes ? PH_NODES : [];
+  if (groups) tpl['proxy-groups'] = PH_GROUPS;
+
+  let out;
+  try { out = jsyaml.dump(tpl, { lineWidth: -1, noRefs: true }); }
+  catch (e) { return '# 模板序列化失败: ' + String((e && e.message) || e); }
+
+  if (hasNodes) {
+    // 节点块是预格式化文本(4 空格缩进)原样注入
+    out = out.replace('proxies: ' + PH_NODES, 'proxies:\n' + parsedProxies.join('\n'));
+  }
+  if (groups) {
+    // 代理组渲染成单行 flow map(- { name: .., proxies: [..] }), 贴合本工具一贯风格; js-yaml 负责必要的引号/转义
+    const groupLines = groups.map(g => {
+      let line = jsyaml.dump(g, { flowLevel: 0, lineWidth: -1 }).trim();
+      if (line.charAt(0) === '{') line = '{ ' + line.slice(1, -1).trim() + ' }';
+      return '    - ' + line;
+    }).join('\n');
+    out = out.replace('proxy-groups: ' + PH_GROUPS, 'proxy-groups:\n' + groupLines);
+  }
+  return out;
+}
+
 function generateConfig() {
+  // 模板模式: 勾选且模板非空 → 走模板注入路径; 否则沿用内置分组逻辑
+  const _tplEl = document.getElementById('tplEnable');
+  if (_tplEl && _tplEl.checked) {
+    const _t = (document.getElementById('tplText').value || '').trim();
+    if (_t) return generateFromTemplate(_t);
+  }
   if (!parsedProxies.length) {
     return FIXED_HEADER + "\n\nproxies: []\n\nproxy-groups:\n" +
       DEFAULT_GROUPS.map(g => `    - { name: ${g.name}, type: ${g.type}${g.url?`, url: ${g.url}`:''}, proxies: ['DIRECT'] }`).join('\n') +
@@ -1409,7 +1585,7 @@ function addUrlRow() {
   const row = document.createElement('div');
   row.className = 'input-row url-row';
   row.style.gap = '6px';
-  row.innerHTML = '<input class="inp url-input" type="text" placeholder="https://sub.example.com/api?token=xxx">'
+  row.innerHTML = '<input class="inp url-input" type="text">'
     + '<button class="btn btn-secondary btn-sm row-del" title="删除此行">✕</button>';
   document.getElementById('urlRows').appendChild(row);
   refreshRowDelButtons('urlRows', '.row-del');
@@ -1418,7 +1594,7 @@ function addUrlRow() {
 function addManualRow() {
   const row = document.createElement('div');
   row.className = 'manual-row';
-  row.innerHTML = '<textarea class="inp manual-input" placeholder="直接粘贴 Clash 订阅内容..."></textarea>'
+  row.innerHTML = '<textarea class="inp manual-input" placeholder="直接粘贴..."></textarea>'
     + '<button class="btn btn-secondary btn-sm row-del manual-del" title="删除此块">✕</button>';
   document.getElementById('manualRows').appendChild(row);
   refreshRowDelButtons('manualRows', '.row-del');
@@ -1426,6 +1602,50 @@ function addManualRow() {
 
 // 事件绑定
 document.getElementById('fetchAllBtn').addEventListener('click', fetchAll);
+// 模板模式: 持久化状态 + 事件
+(function initTemplateMode(){
+  const enableEl = document.getElementById('tplEnable');
+  const textEl = document.getElementById('tplText');
+  const msgEl = document.getElementById('tplMsg');
+  if (!enableEl || !textEl) return;
+  function refreshMsg(){
+    if (!enableEl.checked){ msgEl.style.display = 'none'; return; }
+    msgEl.style.display = 'block';
+    if (typeof jsyaml === 'undefined'){ msgEl.textContent = '⚠ js-yaml 未加载, 模板模式不可用(检查网络)'; msgEl.style.color = 'var(--red)'; }
+    else { msgEl.textContent = '模板模式已启用: 分组/规则以模板为准, 「代理组配置」暂不生效'; msgEl.style.color = 'var(--text2)'; }
+  }
+  try {
+    const savedText = localStorage.getItem('sub_template_v1');
+    if (savedText != null) textEl.value = savedText;
+    enableEl.checked = localStorage.getItem('sub_template_on_v1') === '1';
+  } catch(e){}
+  refreshMsg();
+  enableEl.addEventListener('change', () => {
+    try { localStorage.setItem('sub_template_on_v1', enableEl.checked ? '1' : '0'); } catch(e){}
+    refreshMsg();
+    _lastRenderedConfig = null;
+    updateOutput();
+  });
+  let debounce = null;
+  textEl.addEventListener('input', () => {
+    try { localStorage.setItem('sub_template_v1', textEl.value); } catch(e){}
+    if (!enableEl.checked) return;
+    clearTimeout(debounce);
+    debounce = setTimeout(() => { _lastRenderedConfig = null; updateOutput(); }, 300);
+  });
+  document.getElementById('tplSample').addEventListener('click', () => {
+    textEl.value = SAMPLE_TEMPLATE;
+    try { localStorage.setItem('sub_template_v1', textEl.value); } catch(e){}
+    if (enableEl.checked){ _lastRenderedConfig = null; updateOutput(); }
+    setStatus('已载入示例模板', 'info');
+  });
+  document.getElementById('tplClear').addEventListener('click', () => {
+    textEl.value = '';
+    try { localStorage.removeItem('sub_template_v1'); } catch(e){}
+    if (enableEl.checked){ _lastRenderedConfig = null; updateOutput(); }
+    setStatus('模板已清空', 'info');
+  });
+})();
 document.getElementById('addUrlBtn').addEventListener('click', addUrlRow);
 document.getElementById('addManualBtn').addEventListener('click', addManualRow);
 document.getElementById('resetGroupOrderBtn').addEventListener('click', resetGroupOrderCache);
