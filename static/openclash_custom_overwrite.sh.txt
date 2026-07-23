@@ -13,8 +13,328 @@ LOG_FILE="/tmp/openclash.log"
 CONFIG_FILE="$1"
 
 # --- 核心修改开始 ---
- # {'name'=>'Sub', 'type'=>'select', 'proxies'=>['PROXY', 'AUTO', 'AIGC', 'PikPak', 'PicHub', 'Telegram', '应用程序代理', 'Google', 'Adobe']},
+# ===== 订阅转换.html 功能移植: 一次性把运行配置改写成同款结构 =====
+# 静态 YAML 用带引号 heredoc 传入(零转义), Ruby 读一次写一次
+OC_DNS=$(cat <<'YAMLDNS'
+enable: true
+ipv6: false
+follow-rule: false
+respect-rules: true
+enhanced-mode: fake-ip
+fake-ip-range: 198.18.0.1/16
+use-hosts: false
+use-system-hosts: false
+default-nameserver:
+- 114.114.114.114
+- 119.29.29.29
+- 223.5.5.5
+proxy-server-nameserver:
+- https://dns.alidns.com/dns-query
+- https://doh.pub/dns-query
+nameserver:
+- 114.114.114.114
+- 119.29.29.29
+- 223.5.5.5
+fallback:
+- https://cloudflare-dns.com/dns-query
+- https://dns.cloudflare.com/dns-query
+- https://dns.alidns.com/dns-query
+- https://doh.pub/dns-query
+fallback-filter:
+  geoip: true
+  geoip-code: CN
+  geosite:
+  - gfw
+fake-ip-filter:
+- "+.lan"
+- "+.local"
+- geosite:cn
+- geosite:Private
+- time.*.com
+- ntp.*.com
+- "+.miwifi.com"
+- "+.docker.io"
+- "+.market.xiaomi.com"
+- "+.push.apple.com"
+listen: 0.0.0.0:7874
+YAMLDNS
+)
 
+OC_RPROV=$(cat <<'YAMLRP'
+private:
+  url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/private.yaml
+  path: ./ruleset/Private_local.yaml
+  behavior: domain
+  interval: 86400
+  format: yaml
+  type: http
+cn_domain:
+  url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/cn.yaml
+  path: ./ruleset/cn_domain_local.yaml
+  behavior: domain
+  interval: 86400
+  type: http
+ai_GC:
+  url: https://fastly.jsdelivr.net/gh/GJKen/clash-Rules@master/Rules/AIGC.yaml
+  path: ./ruleset/AIGC_local.yaml
+  behavior: classical
+  interval: 86400
+  type: http
+pikpakdomain:
+  url: https://fastly.jsdelivr.net/gh/GJKen/clash-Rules@master/Rules/PikPak.yaml
+  path: ./ruleset/PikPak_local.yaml
+  behavior: classical
+  interval: 86400
+  type: http
+downloadweb:
+  url: https://fastly.jsdelivr.net/gh/GJKen/clash-Rules@master/Rules/DownloadWEB.yaml
+  path: ./ruleset/DownloadWEB_local.yaml
+  behavior: classical
+  interval: 86400
+  format: yaml
+  type: http
+pic_hub:
+  url: https://fastly.jsdelivr.net/gh/GJKen/clash-Rules@master/Rules/PicHub.yaml
+  path: ./ruleset/PicHub_local.yaml
+  behavior: classical
+  interval: 86400
+  type: http
+google:
+  url: https://fastly.jsdelivr.net/gh/GJKen/clash-Rules@master/Rules/Google.yaml
+  path: ./ruleset/Google_local.yaml
+  behavior: classical
+  interval: 86400
+  format: yaml
+  type: http
+adobe:
+  url: https://fastly.jsdelivr.net/gh/GJKen/clash-Rules@master/Rules/Adobe.yaml
+  path: ./ruleset/Adobe_local.yaml
+  behavior: classical
+  interval: 86400
+  type: http
+telegram:
+  url: https://fastly.jsdelivr.net/gh/GJKen/clash-Rules@master/Rules/Telegram.yaml
+  path: ./ruleset/telegram_local.yaml
+  behavior: classical
+  interval: 86400
+  format: yaml
+  type: http
+api_relay:
+  url: https://fastly.jsdelivr.net/gh/GJKen/clash-Rules@master/Rules/api_relay.yaml
+  path: ./ruleset/api_relay_local.yaml
+  behavior: classical
+  interval: 86400
+  format: yaml
+  type: http
+applications:
+  url: https://fastly.jsdelivr.net/gh/GJKen/clash-Rules@master/Rules/applications.yaml
+  path: ./ruleset/Applications_local.yaml
+  behavior: classical
+  interval: 86400
+  type: http
+geolocation-!cn:
+  url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/geolocation-!cn.yaml
+  path: ./ruleset/geolocation-!cn.yaml
+  behavior: domain
+  interval: 86400
+  format: yaml
+  type: http
+cn_ip:
+  url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/cn.yaml
+  path: ./ruleset/cn_ip_local.yaml
+  behavior: ipcidr
+  interval: 86400
+  format: yaml
+  type: http
+bing:
+  url: https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Bing/Bing.yaml
+  path: ./ruleset/bing_local.yaml
+  behavior: classical
+  interval: 86400
+  format: yaml
+  type: http
+copilot:
+  url: https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Copilot/Copilot.yaml
+  path: ./ruleset/copilot_local.yaml
+  behavior: classical
+  interval: 86400
+  format: yaml
+  type: http
+claude:
+  url: https://fastly.jsdelivr.net/gh/GJKen/clash-Rules@master/Rules/Claude.yaml
+  path: ./ruleset/claude_local.yaml
+  behavior: classical
+  interval: 86400
+  format: yaml
+  type: http
+bard:
+  url: https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/BardAI/BardAI.yaml
+  path: ./ruleset/bard_local.yaml
+  behavior: classical
+  interval: 86400
+  format: yaml
+  type: http
+openai:
+  url: https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/OpenAI/OpenAI.yaml
+  path: ./ruleset/openai_local.yaml
+  behavior: classical
+  interval: 86400
+  format: yaml
+  type: http
+steam:
+  url: https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Steam/Steam.yaml
+  path: ./ruleset/steam_local.yaml
+  behavior: classical
+  interval: 86400
+  format: yaml
+  type: http
+YAMLRP
+)
+
+OC_RULES=$(cat <<'YAMLRULES'
+- RULE-SET,private,DIRECT
+- DOMAIN-KEYWORD,jdssl.top,手动选择
+- DOMAIN-SUFFIX,cocogoat.work,DIRECT
+- DOMAIN-KEYWORD,lgych,DIRECT
+- DOMAIN-KEYWORD,webl,DIRECT
+- DOMAIN-KEYWORD,tsdm,手动选择
+- DOMAIN-KEYWORD,ts-dm,手动选择
+- DOMAIN-KEYWORD,v2rayse,手动选择
+- DOMAIN-KEYWORD,nyaa,手动选择
+- DOMAIN-KEYWORD,mojie,手动选择
+- DOMAIN-KEYWORD,level-plus.net,手动选择
+- DOMAIN-KEYWORD,spring-plus.net,手动选择
+- DOMAIN-KEYWORD,moegirl.org.cn,手动选择
+- DOMAIN-KEYWORD,1lou,手动选择
+- DOMAIN-KEYWORD,notion,手动选择
+- DOMAIN-KEYWORD,acgrip,手动选择
+- DOMAIN-KEYWORD,assrt,手动选择
+- DOMAIN-KEYWORD,linuxdo,手动选择
+- DOMAIN-KEYWORD,ldcstore,手动选择
+- DOMAIN-KEYWORD,nodebuf.com,手动选择
+- DOMAIN-KEYWORD,zerotier.com,手动选择
+- DOMAIN-KEYWORD,avjb.cc,手动选择
+- DOMAIN-KEYWORD,my.yue.to,手动选择
+- DOMAIN-KEYWORD,free.u-8.cc,手动选择
+- RULE-SET,adobe,Adobe
+- RULE-SET,pic_hub,PicHub
+- RULE-SET,steam,手动选择
+- RULE-SET,google,Google
+- RULE-SET,claude,AIGC
+- RULE-SET,ai_GC,AIGC
+- RULE-SET,downloadweb,PanDownload
+- RULE-SET,pikpakdomain,PanDownload
+- RULE-SET,telegram,Telegram
+- RULE-SET,api_relay,API中转站
+- RULE-SET,geolocation-!cn,手动选择
+- RULE-SET,cn_domain,DIRECT
+- RULE-SET,cn_ip,DIRECT
+- MATCH,🐟漏网之鱼
+YAMLRULES
+)
+
+OC_COUNTRY=$(cat <<'YAMLC'
+- name: "🇭🇰香港 Auto"
+  keywords: ['香港','🇭🇰','HK','HKG','HongKong','hongkong']
+- name: "🇹🇼台湾 Auto"
+  keywords: ['台湾','🇹🇼','TW','KHH','Taiwan','taiwan']
+- name: "🇸🇬新加坡 Auto"
+  keywords: ['新加坡','🇸🇬','SG','Singapore','singapore']
+- name: "🇯🇵日本 Auto"
+  keywords: ['日本','🇯🇵','JP','Japan','Tokyo','东京','japan']
+- name: "🇺🇸美国 Auto"
+  keywords: ['美国','🇺🇸','US','USA','America','圣何塞','洛杉矶','凤凰城','San Jose','Los Angeles','SJC','JFK','LAX','ORD','ATL','DFW','SFO','MIA','SEA','IAD']
+- name: "🇪🇺欧洲 Auto"
+  keywords: ['奥地利','比利时','保加利亚','克罗地亚','塞尔维亚','捷克','丹麦','爱沙尼亚','芬兰','法国','德国','希腊','匈牙利','爱尔兰','意大利','拉脱维亚','立陶宛','卢森堡','马耳他','荷兰','波兰','葡萄牙','罗马尼亚','斯洛伐克','斯洛文尼亚','西班牙','瑞典','英国','🇦🇹','🇧🇪','🇧🇬','🇭🇷','🇷🇸','🇨🇿','🇩🇰','🇪🇪','🇫🇮','🇫🇷','🇩🇪','🇬🇷','🇭🇺','🇮🇪','🇮🇹','🇱🇻','🇱🇹','🇱🇺','🇲🇹','🇳🇱','🇵🇱','🇵🇹','🇷🇴','🇸🇰','🇸🇮','🇪🇸','🇸🇪','🇬🇧','CDG','FRA','AMS','MAD','BCN','FCO','MUC','BRU']
+- name: "🇰🇷韩国 Auto"
+  keywords: ['韩国','🇰🇷','韓国','首尔','南朝鲜','KR','KOR','Korea','South','Seoul']
+- name: "🇮🇳印度 Auto"
+  keywords: ['印度','孟买','海得拉巴','🇮🇳','IN','IND','India','Mumbai','Hyderabad']
+- name: "🇨🇦加拿大 Auto"
+  keywords: ['加拿大','多伦多','🇨🇦','CA','CAN','Canada','Toronto']
+- name: "🇧🇷巴西 Auto"
+  keywords: ['巴西','圣保罗','🇧🇷','BR','BRA','Brazil','Sao Paulo','São Paulo']
+- name: "🇦🇪阿联酋 Auto"
+  keywords: ['阿联酋','迪拜','杜拜','🇦🇪','AE','UAE','Dubai']
+- name: "🇿🇦南非 Auto"
+  keywords: ['南非','约翰内斯堡','非洲','🇿🇦','ZA','ZAF','South Africa','Johannesburg']
+- name: "🇲🇽墨西哥 Auto"
+  keywords: ['墨西哥','克雷塔罗','🇲🇽','MX','MEX','Mexico','Queretaro','Querétaro']
+YAMLC
+)
+
+export CONFIG_FILE OC_DNS OC_RPROV OC_RULES OC_COUNTRY
+
+ruby -ryaml -E UTF-8 -e '
+begin
+  cfg = YAML.load_file(ENV["CONFIG_FILE"])
+  info = /(剩余流量|套餐到期|距离下次重置|过期|流量重置|官网|订阅|续费|重置剩余|GB$|expire|traffic|reset)/i
+  cfg["proxies"] ||= []
+  cfg["proxies"].reject! { |p| p["name"].to_s =~ info }
+  names = cfg["proxies"].map { |p| p["name"] }
+  if names.size == 0
+    puts "订阅转换: proxies 为空(可能 provider 模式), 跳过注入以免生成空组"
+  else
+    countries = YAML.load(ENV["OC_COUNTRY"])
+    find = lambda { |nm|
+      lower = nm.to_s.downcase
+      toks = nm.to_s.upcase.split(/[^A-Z0-9]+/).reject { |x| x.empty? }
+      res = nil
+      countries.each { |r|
+        r["keywords"].each { |k|
+          if k =~ /\A[A-Za-z]{2,3}\z/
+            if toks.include?(k.upcase) then res = r["name"]; break end
+          else
+            if lower.include?(k.downcase) then res = r["name"]; break end
+          end
+        }
+        break if res
+      }
+      res
+    }
+    cmap = {}
+    others = []
+    names.each { |n|
+      hit = find.call(n)
+      if hit then (cmap[hit] ||= []) << n else others << n end
+    }
+    active = countries.map { |c| c["name"] }.select { |nm| (cmap[nm] || []).size > 0 }
+    url = "http://cp.cloudflare.com/generate_204"
+    g = []
+    g << { "name" => "手动选择", "type" => "select", "proxies" => (active + ["♻️自动选择", "DIRECT"]), "include-all-proxies" => true }
+    g << { "name" => "♻️自动选择", "type" => "url-test", "url" => url, "interval" => 300, "tolerance" => 50, "proxies" => names }
+    ["AIGC", "PanDownload", "PicHub", "Telegram", "API中转站", "Google", "🐟漏网之鱼"].each { |nm|
+      g << { "name" => nm, "type" => "select", "proxies" => (["手动选择"] + active + ["♻️自动选择", "DIRECT"]), "include-all-proxies" => true }
+    }
+    g << { "name" => "🛑ADblock", "type" => "select", "proxies" => ["REJECT", "DIRECT"] }
+    g << { "name" => "Adobe", "type" => "select", "proxies" => ["REJECT", "DIRECT"] }
+    active.each { |nm|
+      g << { "name" => nm, "type" => "url-test", "url" => url, "interval" => 300, "tolerance" => 50, "proxies" => cmap[nm] }
+    }
+    if others.size > 0
+      g << { "name" => "🌐其他 Auto", "type" => "url-test", "url" => url, "interval" => 300, "tolerance" => 50, "proxies" => others }
+    end
+    cfg["proxy-groups"] = g
+    cfg["rule-providers"] = YAML.load(ENV["OC_RPROV"])
+    cfg["rules"] = YAML.load(ENV["OC_RULES"])
+    cfg["dns"] = YAML.load(ENV["OC_DNS"])
+    cfg["port"] = 7890
+    cfg["socks-port"] = 7891
+    cfg["allow-lan"] = true
+    cfg["ipv6"] = false
+    cfg["bind-address"] = "*"
+    cfg["log-level"] = "info"
+    cfg["external-controller"] = "0.0.0.0:9090"
+    cfg["unified-delay"] = true
+    cfg["tcp-concurrent"] = true
+    cfg["skip-auth-prefixes"] = ["192.168.1.0/24", "192.168.31.0/24", "192.168.100.0/24", "127.0.0.1/8"]
+    File.open(ENV["CONFIG_FILE"], "w") { |f| YAML.dump(cfg, f) }
+    puts "订阅转换规则注入成功: 国家组 #{active.size} 个, 未归类 #{others.size} 个, 节点 #{names.size} 个"
+  end
+rescue => e
+  puts "订阅转换规则注入失败: #{e.message}"
+end
+'
 # --- 核心修改结束 ---
 
     #Simple Demo:
