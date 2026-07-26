@@ -114,3 +114,49 @@ updateOutput() 脏检查 + 离屏 hljs 高亮 → 写入 DOM
 - 没有测试 / 没有 lint,改完直接浏览器打开验证;浏览器若限制 `file://`,至少用脚本级样例验证 `parseAnyContent()` / `mergeSource()` 和 `generateConfig()`(可用 Node 抽取函数体跑真实订阅样例)。
 - 改模板模式:默认模板在 `SAMPLE_TEMPLATE` 常量(反引号模板串,里面别出现反引号或 `${`);注入逻辑在 `generateFromTemplate()` + `expandTemplateGroups()`。改完想看效果,记得**点「示例」或清 `sub_template_v1`**(否则被 localStorage 盖住)。模板要能注入节点,须留钩子:顶层 `proxies:`(注入点)、组里 `__ALL_PROXIES__`、`include-all`+`filter`、或空 `proxies`。
 - 模板模式下「代理组配置」面板(内置分组的勾选/拖拽)不参与生成,输出的分组/规则全由模板决定。
+
+---
+
+## 附:用 OpenClash 覆写脚本(`.sh`)在路由器端等价实现
+
+本工具的**分流结构**也可以用 OpenClash 的 `openclash_custom_overwrite.sh`(自定义覆写脚本)在路由器端等价实现 —— 它在 OpenClash 生成配置**之后**执行,`$CONFIG_FILE`(`$1`)是运行配置路径,写在「核心修改区」(`# --- 核心修改开始/结束 ---` 之间)。
+
+**根本区别:节点不用自己解析**。OpenClash 已订阅并把节点解析进 `cfg['proxies']`,所以 `.html` 里最重的 vless/hysteria2/base64 解析、去重、信息节点过滤在 `.sh` 里**全都不做**;`.sh` 只改**结构层**(`proxy-groups` / `rule-providers` / `rules` / `dns` / header)。
+
+**实现载体:一段 `ruby -ryaml -E UTF-8`(读一次 / 写一次)**:
+
+- 静态 YAML(`dns`、19 个 `rule-providers`、15 条 `rules`、13 国 `COUNTRY_RULES`)用**带引号 heredoc** `<<'X'` 经环境变量传入 → **零转义**,直接照搬本文件同名常量的原文。
+- Ruby 代码用单引号 `-e '...'` 包裹,**内部只用双引号/正则,绝不出现单引号**(否则提前闭合 shell 单引号)。
+- 整段 `begin/rescue => e`(不捕 `SystemExit`):出错就不写文件、配置保持 OpenClash 原样,**不会断网**。
+
+**组结构映射(`generateConfig` 各分支 → `.sh` Ruby)**:
+
+| `.html` 组 | `.sh`(Mihomo 内核) |
+|---|---|
+| ♻️自动选择(所有节点) | `url-test` + **显式全节点列表**(不靠 include,防某些内核 url-test 空组硬报错) |
+| 国家组(该国节点、按需输出) | `url-test` + 显式匹配节点列表,**有节点才输出** |
+| 🚀手动选择 / 应用组 | `select` + `proxies:[国家组…, ♻️自动选择, DIRECT]` + `include-all-proxies: true` |
+| 🛑ADblock / Adobe | `select` + `[REJECT, DIRECT]` |
+| `RULE_PROVIDERS`/`RULES`/`FIXED_HEADER` | `YAML.load` 后赋给 `cfg` 的 `rule-providers`、`rules`、`dns` + 逐个设 header 标量 |
+
+**关键设计(复刻了 `.html` 的哪条逻辑)**:
+
+- **信息节点**:在 `cfg['proxies']` 层先 `reject!`(复刻 `isInfoNode` / `INFO_NODE_RE`),之后所有 include 组自动干净。
+- **国家匹配**:Ruby 精确复刻 `getNodeCountry` —— 2~3 字母代码按整 token 匹配、中文/emoji/长名子串匹配(避免 `Singapore` 里的 `in` 误判成印度)。
+- **按需输出**:只输出有节点的国家组(复刻 `refreshActiveCountryGroups`)。**空的 `url-test` 组会让 Mihomo 拒绝加载整份配置**,所以宁可不输出。
+- **覆盖范围**:本次按「完全照搬 `FIXED_HEADER`」实现,连 `port`/`dns`/`external-controller` 一并覆盖;只改指定字段,不删 OpenClash 的 `redir-port`/`tproxy-port` 等透明代理端口,故不撞端口。
+
+**扩展方法**:加国家改 Ruby 里 `OC_COUNTRY` heredoc(对应 `COUNTRY_RULES`);加规则集/规则改 `OC_RPROV`/`OC_RULES`(对应 `RULE_PROVIDERS`/`RULES`);组顺序在 Ruby 构建数组处(对应 `DEFAULT_GROUPS` 顺序)。
+
+### 落地操作(开新对话照此编辑覆写脚本)
+
+通过 Twinkstar 浏览器 CDP(端口 `9222`)+ `browser-harness` 远程操作 OpenClash「覆写模块」编辑器。踩坑后的稳定流程:
+
+1. **连接** — `Invoke-RestMethod http://127.0.0.1:9222/json/version` 确认 CDP 在线,`switch_tab` 到 OpenWrt LuCI 页(`192.168.1.250/…/openclash/client`)。PowerShell 管道喂 harness 会加 BOM → 把 Python 片段写成**无 BOM 临时文件**,再 `cmd /c "browser-harness < file.py"`。
+2. **打开** — 点主页「覆写模块」→ 弹出 **CodeMirror 6** 编辑器(即 `openclash_custom_overwrite.sh`)。判断弹层开没开**别用「覆写设置」文本**(顶部有常驻同名 tab),用可见的 `#oc-icon-save` 图标或「您正在编辑覆写脚本」警告。
+3. **写入** — 页面暴露全局 `ocGetActiveEditorInstance()` → 返回 CM6 `EditorView`;用 `view.dispatch({changes:{from,to,insert}})` **只替换 `# --- 核心修改开始/结束 ---` 之间**,别模拟打字(会触发自动缩进/括号补全)。大段文本用 Python `json.dumps` 转成 JS 字符串字面量注入,避 emoji/引号问题。
+4. **保存** — 右上角 💾(`title="保存"` + `use[href="#oc-icon-save"]`)。**坑:下载/保存/关闭图标各有多个隐藏副本**(对应订阅/配置/覆写三种编辑器),必须 `filter` 出 `getBoundingClientRect().width>0` 的**可见**那个再点,否则点到隐藏的(坐标 `0,0`)无效。
+5. **关闭 + 重启** — **按 `Esc` 关弹层**(实测可行,比找关闭图标省事,直接绕开上面那些隐藏图标副本;注:编辑器底部提示「Esc 退出全屏」,若处于**全屏态** `Esc` 会先退全屏、需再按一次。备选:点可见的 `#oc-icon-close`)→ 主页「重启」按钮(`title="重启"`,在「覆写模块」**左边**),**点击即重启、无二次确认**,代理短暂断几秒。
+6. **验证运行配置** — 改完**让用户自主验证**。验证入口:面板 `#edit_config`(「编辑节点 / 运行配置预览」)看**保存重启后真正运行的 YAML**;或刷新 zashboard(`:9090/ui/zashboard`)看分组/节点数。配置能加载成功本身就说明没有空 `url-test` 组、YAML 合法。
+
+**兜底**:`capture_screenshot` 对 zashboard / 状态页实时动画**偶发 `TimeoutError`**,用 `js()` 抓 DOM 状态代替(截图失败 ≠ 操作失败)。回滚 = 把核心区换回空/旧内容再保存重启(`rescue` 保证脚本出错时配置保持原样、不断网)。
