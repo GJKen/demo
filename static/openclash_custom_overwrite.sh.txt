@@ -216,6 +216,10 @@ OC_RULES=$(cat <<'YAMLRULES'
 - DOMAIN-KEYWORD,avjb.cc,手动选择
 - DOMAIN-KEYWORD,my.yue.to,手动选择
 - DOMAIN-KEYWORD,free.u-8.cc,手动选择
+- DOMAIN-KEYWORD,cun.ai,API中转站
+- IP-CIDR,182.255.82.168/32,手动选择,no-resolve
+- DOMAIN-KEYWORD,ksy.moe,手动选择
+- DOMAIN-KEYWORD,zzzcoding,API中转站
 - RULE-SET,adobe,Adobe
 - RULE-SET,pic_hub,PicHub
 - RULE-SET,steam,手动选择
