@@ -473,7 +473,8 @@
         ? "http://127.0.0.1:8785"
         : "");
       const AUTH_TOKEN = urlToken || savedToken || "";
-      const state = { maps: [], editingId: "", selectedFile: null, toastTimer: null, staticMode: false };
+      const canWrite = AUTH_TOKEN.length > 0;
+      const state = { maps: [], editingId: "", selectedFile: null, toastTimer: null, staticMode: false, authError: false };
       const $ = (id) => document.getElementById(id);
       const els = {
         form: $("mapForm"), formPanel: $("formPanel"), formTitle: $("formTitle"), editHint: $("editHint"),
@@ -547,9 +548,10 @@
             : `<div class="map-art empty"><strong data-id="${escapeHtml(map.map_id)}">${escapeHtml(map.map_id)}</strong><span class="map-id">待添加预览</span><button class="zoom-btn" type="button" aria-label="放大查看"><i data-lucide="search" class="icon"></i></button></div>`;
           const cardActions = state.staticMode
             ? `<a class="button secondary" href="${escapeHtml(map.source_url || `https://steamcommunity.com/sharedfiles/filedetails/?id=${map.map_id}`)}" target="_blank" rel="noreferrer" title="打开 Steam Workshop"><i data-lucide="external-link" class="icon"></i></a>`
-            : `<a class="button secondary" href="${escapeHtml(map.source_url || `https://steamcommunity.com/sharedfiles/filedetails/?id=${map.map_id}`)}" target="_blank" rel="noreferrer" title="打开 Steam Workshop"><i data-lucide="external-link" class="icon"></i></a>
-                <button class="button secondary" type="button" data-action="edit" data-id="${escapeHtml(map.map_id)}">编辑</button>
-                <button class="button danger" type="button" data-action="delete" data-id="${escapeHtml(map.map_id)}" aria-label="删除 ${escapeHtml(map.name)}">删除</button>`;
+            : `<a class="button secondary" href="${escapeHtml(map.source_url || `https://steamcommunity.com/sharedfiles/filedetails/?id=${map.map_id}`)}" target="_blank" rel="noreferrer" title="打开 Steam Workshop"><i data-lucide="external-link" class="icon"></i></a>${canWrite
+                ? `<button class="button secondary" type="button" data-action="edit" data-id="${escapeHtml(map.map_id)}">编辑</button>
+                <button class="button danger" type="button" data-action="delete" data-id="${escapeHtml(map.map_id)}" aria-label="删除 ${escapeHtml(map.name)}">删除</button>`
+                : ""}`;
           return `<article class="map-card">
             ${art}
             <div class="map-body">
@@ -589,8 +591,16 @@
       function setLocalMode() {
         state.staticMode = false;
         setServerStatus(true);
-        [els.fetchButton, els.saveButton, els.mapId, els.mapName, els.description, els.tags, els.previewFile].forEach((element) => { element.disabled = false; });
-        if (!state.editingId) {
+        if (canWrite) {
+          [els.fetchButton, els.saveButton, els.mapId, els.mapName, els.description, els.tags, els.previewFile].forEach((element) => { element.disabled = false; });
+          els.formPanel.style.display = "";
+        } else {
+          [els.fetchButton, els.saveButton, els.mapId, els.mapName, els.description, els.tags, els.previewFile].forEach((element) => { element.disabled = true; });
+          els.formTitle.textContent = "浏览地图目录";
+          els.editHint.textContent = "当前为只读模式。如需编辑，请在 URL 添加 &token=你的密码 或在设置中填写密码。";
+          els.editHint.classList.add("visible");
+        }
+        if (!state.editingId && canWrite) {
           els.formTitle.textContent = "收录一张地图";
           els.editHint.classList.remove("visible");
         }
@@ -613,6 +623,18 @@
           setLocalMode();
           renderMaps();
         } catch (error) {
+          if (error.message && error.message.includes("已被封禁")) {
+            state.authError = true;
+            setServerStatus(false);
+            els.filterSummary.textContent = "无法读取地图目录";
+            els.grid.innerHTML = "";
+            els.empty.hidden = false;
+            els.emptyTitle.textContent = "连接被拒绝";
+            els.emptyText.textContent = error.message;
+            els.formPanel.style.display = "none";
+            return;
+          }
+          // 尝试静态模式
           try {
             await loadStaticMaps();
           } catch (_) {
@@ -621,7 +643,8 @@
             els.grid.innerHTML = "";
             els.empty.hidden = false;
             els.emptyTitle.textContent = "没有可读取的数据";
-            els.emptyText.textContent = "本地服务未启动，且静态数据文件不可用。请检查 Broforce_maps_src/maps.json。";
+            els.emptyText.textContent = "后端未连接，且静态数据不可用。请在设置中配置后端地址或在 URL 添加 ?backend=地址。";
+            els.formPanel.style.display = "none";
           }
         }
       }
