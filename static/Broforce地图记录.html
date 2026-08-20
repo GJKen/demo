@@ -22,9 +22,11 @@
     }
 
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-y: auto; }
     body {
       margin: 0;
+      overflow-x: hidden;
+      min-height: 100vh;
       color: var(--ink);
       background: var(--paper);
       font-family: "Segoe UI", "Noto Sans SC", system-ui, sans-serif;
@@ -243,7 +245,7 @@
     .search input { width: 100%; border: 0; outline: 0; padding: 9px 0; background: transparent; color: var(--ink); font-size: 13px; }
     .filter-line { display: flex; align-items: center; justify-content: space-between; min-height: 33px; margin-bottom: 13px; padding-bottom: 9px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 12px; }
     .filter-line strong { color: var(--ink); }
-    .map-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(245px, 1fr)); gap: 14px; min-height: 100px; padding: 2px; overflow: visible; }
+    .map-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(245px, 1fr)); gap: 14px; min-height: 100px; padding: 2px; overflow: hidden; }
     .map-card {
       min-width: 0;
       display: flex;
@@ -254,9 +256,11 @@
       transition: transform .2s, box-shadow .2s, border-color .2s;
       z-index: 1;
       position: relative;
+      will-change: transform;
     }
     .map-card.zoomed {
       transform: scale(1.8);
+      transform-origin: center top;
       border-color: var(--blue);
       box-shadow: var(--shadow);
       z-index: 50 !important;
@@ -372,7 +376,7 @@
     <section class="workspace">
       <aside class="form-panel" id="formPanel">
         <div class="section-kicker">01 / Add record</div>
-        <h2 class="section-title" id="formTitle">收录一张地图</h2>
+        <h2 class="section-title" id="formTitle"></h2>
         <p class="section-note">先获取 Workshop 信息，再补上你自己的名称和预览图。</p>
         <div class="edit-hint" id="editHint">正在编辑已有记录。保存会更新这张地图。</div>
 
@@ -472,7 +476,9 @@
       const API_BASE = urlBackend || savedBackend || (window.location.protocol === "file:" || localHosts.has(window.location.hostname)
         ? "http://127.0.0.1:8785"
         : "");
-      const AUTH_TOKEN = urlToken || savedToken || "";
+      // 同源访问时，localStorage 不应用于读写权限判断（除非主动设置了后端地址）
+      const isSameOriginAccess = !urlBackend && !savedBackend && !(window.location.protocol === "file:" || localHosts.has(window.location.hostname));
+      const AUTH_TOKEN = urlToken || (isSameOriginAccess ? "" : savedToken) || "";
       const canWrite = AUTH_TOKEN.length > 0;
       const state = { maps: [], editingId: "", selectedFile: null, toastTimer: null, staticMode: false, authError: false };
       const $ = (id) => document.getElementById(id);
@@ -594,15 +600,17 @@
         if (canWrite) {
           [els.fetchButton, els.saveButton, els.mapId, els.mapName, els.description, els.tags, els.previewFile].forEach((element) => { element.disabled = false; });
           els.formPanel.style.display = "";
+          els.formTitle.textContent = state.editingId ? "编辑地图记录" : "收录一张地图";
+          if (state.editingId) {
+            els.editHint.classList.add("visible");
+          } else {
+            els.editHint.classList.remove("visible");
+          }
         } else {
           [els.fetchButton, els.saveButton, els.mapId, els.mapName, els.description, els.tags, els.previewFile].forEach((element) => { element.disabled = true; });
           els.formTitle.textContent = "浏览地图目录";
           els.editHint.textContent = "当前为只读模式。如需编辑，请在 URL 添加 &token=你的密码 或在设置中填写密码。";
           els.editHint.classList.add("visible");
-        }
-        if (!state.editingId && canWrite) {
-          els.formTitle.textContent = "收录一张地图";
-          els.editHint.classList.remove("visible");
         }
       }
 
@@ -713,8 +721,14 @@
         state.editingId = "";
         els.form.reset();
         ["sourceUrl", "sourceTitle", "sourceDescription", "sourcePreviewUrl"].forEach((key) => { delete els.form.dataset[key]; });
-        els.formTitle.textContent = "收录一张地图";
-        els.editHint.classList.remove("visible");
+        els.formTitle.textContent = canWrite ? "收录一张地图" : "浏览地图目录";
+        // 只读模式下保留提示，非只读模式隐藏
+        if (canWrite) {
+          els.editHint.classList.remove("visible");
+        } else {
+          els.editHint.textContent = "当前为只读模式。如需编辑，请在 URL 添加 &token=你的密码 或在设置中填写密码。";
+          els.editHint.classList.add("visible");
+        }
         els.cancelButton.hidden = true;
         els.fetchResult.classList.remove("visible");
         resetUpload();
@@ -857,8 +871,15 @@
       if (savedToken) els.authPassword.value = savedToken;
       els.settingsBtn.addEventListener("click", () => { els.settingsModal.classList.add("visible"); });
       els.closeSettingsBtn.addEventListener("click", () => { els.settingsModal.classList.remove("visible"); });
+      // 回车键保存设置
+      els.serverAddress.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); els.saveSettingsBtn.click(); } });
+      els.authPassword.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); els.saveSettingsBtn.click(); } });
       els.saveSettingsBtn.addEventListener("click", () => {
-        const url = els.serverAddress.value.trim().replace(/\/+$/, "");
+        let url = els.serverAddress.value.trim().replace(/\/+$/, "");
+        // 没写协议头时自动补 http://
+        if (url && !/^https?:\/\//i.test(url)) {
+          url = "http://" + url;
+        }
         const token = els.authPassword.value.trim();
         if (url && !/^https?:\/\/.+/.test(url)) { showToast("请输入有效的 HTTP 或 HTTPS 地址", true); return; }
         localStorage.setItem("broforce_backend_url", url);
@@ -867,8 +888,8 @@
         showToast("设置已保存，正在重新连接…");
         location.reload();
       });
-      // 点击遮罩关闭弹窗
-      els.settingsModal.addEventListener("click", (e) => { if (e.target === els.settingsModal) els.settingsModal.classList.remove("visible"); });
+      // 点击遮罩关闭弹窗 - 用 mousedown 防止拖拽松开误触
+      els.settingsModal.addEventListener("mousedown", (e) => { if (e.target === els.settingsModal) els.settingsModal.classList.remove("visible"); });
       iconRefresh();
       loadMaps();
     })();
