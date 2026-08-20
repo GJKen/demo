@@ -22,7 +22,7 @@
     }
 
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; overflow-y: auto; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       overflow-x: hidden;
@@ -30,11 +30,12 @@
       color: var(--ink);
       background: var(--paper);
       font-family: "Segoe UI", "Noto Sans SC", system-ui, sans-serif;
-      line-height: 1.5;
+      line-height: 1.6;
+      font-size: 16px;
     }
     button, input, textarea { font: inherit; }
     button { cursor: pointer; }
-    button:disabled { cursor: wait; opacity: .58; }
+    button:disabled { cursor: not-allowed; opacity: .58; }
     a { color: inherit; }
     .icon { width: 16px; height: 16px; stroke-width: 2.2; vertical-align: -3px; }
 
@@ -67,6 +68,11 @@
     .stat { min-width: 92px; padding-left: 14px; border-left: 2px solid var(--ink); }
     .stat strong { display: block; font-size: 30px; line-height: 1; }
     .stat span { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; letter-spacing: .1em; }
+    .server-status-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
     .server-status {
       display: inline-flex;
       align-items: center;
@@ -128,7 +134,7 @@
       text-transform: uppercase;
     }
     .section-title { margin: 0; font-size: 22px; letter-spacing: -.03em; }
-    .section-note { margin: 5px 0 21px; color: var(--muted); font-size: 12px; }
+    .section-note { margin: 5px 0 21px; color: var(--muted); font-size: 14px; }
     .field { margin-bottom: 16px; }
     .field label {
       display: flex;
@@ -212,8 +218,8 @@
       justify-content: center;
       padding: 18px;
       color: var(--muted);
-      font-size: 12px;
-      line-height: 1.5;
+      font-size: 14px;
+      line-height: 1.6;
       text-align: center;
       pointer-events: none;
     }
@@ -232,7 +238,7 @@
     .catalog-panel { min-width: 0; padding: 22px 0; }
     .catalog-head { display: flex; align-items: start; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
     .catalog-head .section-note { margin-bottom: 0; }
-    .catalog-head .filter-summary { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; }
+    .catalog-head .filter-summary { display: block; margin-top: 4px; color: var(--muted); font-size: 14px; }
     .catalog-head .filter-summary strong { color: var(--ink); }
     .search {
       width: min(320px, 44%);
@@ -243,9 +249,29 @@
       color: var(--muted);
     }
     .search input { width: 100%; border: 0; outline: 0; padding: 9px 0; background: transparent; color: var(--ink); font-size: 13px; }
+    .catalog-actions { display: flex; align-items: center; gap: 10px; }
+    .catalog-actions .refresh-btn {
+      min-height: 34px;
+      width: 34px;
+      flex: 0 0 34px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line-strong);
+      border-radius: 0;
+      background: var(--panel);
+      color: var(--ink-soft);
+      cursor: pointer;
+      transition: background .15s, color .15s, border-color .15s;
+    }
+    .catalog-actions .refresh-btn:hover { background: var(--lime); color: var(--ink); border-color: var(--ink); }
+    .catalog-actions .refresh-btn:active .icon { transform: rotate(180deg); }
+    .catalog-actions .refresh-btn .icon { width: 16px; height: 16px; transition: transform .3s; }
+    .catalog-actions .refresh-btn.spinning .icon { animation: refreshSpin .7s linear infinite; }
+    @keyframes refreshSpin { to { transform: rotate(360deg); } }
+    .catalog-actions .search { width: min(280px, 100%); flex: 1 1 auto; min-width: 0; }
     .filter-line { display: flex; align-items: center; justify-content: space-between; min-height: 33px; margin-bottom: 13px; padding-bottom: 9px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 12px; }
     .filter-line strong { color: var(--ink); }
-    .map-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(245px, 1fr)); gap: 14px; min-height: 100px; padding: 2px; overflow: hidden; }
+    .map-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(245px, 1fr)); gap: 14px; min-height: 100px; padding: 2px; overflow: visible; }
     .map-card {
       min-width: 0;
       display: flex;
@@ -318,13 +344,13 @@
       z-index: 100;
     }
     .map-body h3.overflow:hover::after { opacity: 1; }
-    .map-description { display: -webkit-box; flex: 0 0 42px; height: 42px; margin: 8px 0 10px; overflow: hidden; color: var(--ink-soft); font-size: 12px; line-height: 1.7; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+    .map-description { display: -webkit-box; flex: 0 0 42px; height: 42px; margin: 8px 0 10px; overflow: hidden; color: var(--ink-soft); font-size: 13px; line-height: 1.7; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
     .map-meta { display: flex; flex-wrap: wrap; gap: 5px; height: 23px; overflow: hidden; }
-    .tag { padding: 3px 6px; background: #e8e9e2; color: var(--ink-soft); font-size: 10px; }
+    .tag { padding: 3px 6px; background: #e8e9e2; color: var(--ink-soft); font-size: 11px; }
     .map-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; padding-top: 13px; border-top: 1px solid var(--line); }
-    .map-date { color: var(--muted); font-size: 10px; }
+    .map-date { color: var(--muted); font-size: 12px; }
     .card-actions { display: flex; gap: 5px; }
-    .card-actions .button { min-height: 30px; padding: 5px 8px; font-size: 11px; }
+    .card-actions .button { min-height: 30px; padding: 5px 8px; font-size: 12px; }
     .empty-state { display: grid; min-height: 300px; place-items: center; border: 1px dashed var(--line-strong); color: var(--muted); text-align: center; }
     .empty-state[hidden] { display: none; }
     .empty-state strong { display: block; margin-bottom: 5px; color: var(--ink); font-size: 18px; }
@@ -368,7 +394,10 @@
             </button>
           </div>
       </div>
-      <div class="server-status" id="serverStatus"><span class="status-dot"></span><span>连接中</span></div>
+      <div class="server-status-wrap">
+        <button class="topbar-btn" id="refreshBtn" type="button" aria-label="刷新后端数据" title="刷新后端数据"><i data-lucide="refresh-cw" class="icon"></i></button>
+        <div class="server-status" id="serverStatus"><span class="status-dot"></span><span>连接中</span></div>
+      </div>
     </div>
   </header>
 
@@ -492,7 +521,8 @@
         filterSummary: $("filterSummary"), serverStatus: $("serverStatus"), toast: $("toast"),
         settingsBtn: $("settingsBtn"), settingsModal: $("settingsModal"), serverAddress: $("serverAddress"),
         authPassword: $("authPassword"),
-        saveSettingsBtn: $("saveSettingsBtn"), closeSettingsBtn: $("closeSettingsBtn")
+        saveSettingsBtn: $("saveSettingsBtn"), closeSettingsBtn: $("closeSettingsBtn"),
+        refreshBtn: $("refreshBtn")
       };
 
       function iconRefresh() {
@@ -544,8 +574,13 @@
       }
 
       function renderMaps() {
+        els.refreshBtn.classList.remove("spinning");
         const query = els.search.value.trim().toLowerCase();
         const maps = state.maps.filter((map) => !query || [map.map_id, map.name, map.tags].some((value) => String(value || "").toLowerCase().includes(query)));
+        // 如果当前编辑的地图不在搜索结果中，取消编辑状态
+        if (state.editingId && !maps.find((map) => map.map_id === state.editingId)) {
+          resetForm();
+        }
         els.grid.innerHTML = maps.map((map) => {
           const preview = map.source_preview_url || imageUrl(map.preview_url);
           const tags = String(map.tags || "").split(/[,，]/).map((tag) => tag.trim()).filter(Boolean).slice(0, 4);
@@ -607,7 +642,7 @@
             els.editHint.classList.remove("visible");
           }
         } else {
-          [els.fetchButton, els.saveButton, els.mapId, els.mapName, els.description, els.tags, els.previewFile].forEach((element) => { element.disabled = true; });
+          [els.fetchButton, els.saveButton, els.mapId, els.mapName, els.description, els.tags, els.previewFile, els.cancelButton].forEach((element) => { element.disabled = true; });
           els.formTitle.textContent = "浏览地图目录";
           els.editHint.textContent = "当前为只读模式。如需编辑，请在 URL 添加 &token=你的密码 或在设置中填写密码。";
           els.editHint.classList.add("visible");
@@ -722,13 +757,8 @@
         els.form.reset();
         ["sourceUrl", "sourceTitle", "sourceDescription", "sourcePreviewUrl"].forEach((key) => { delete els.form.dataset[key]; });
         els.formTitle.textContent = canWrite ? "收录一张地图" : "浏览地图目录";
-        // 只读模式下保留提示，非只读模式隐藏
-        if (canWrite) {
-          els.editHint.classList.remove("visible");
-        } else {
-          els.editHint.textContent = "当前为只读模式。如需编辑，请在 URL 添加 &token=你的密码 或在设置中填写密码。";
-          els.editHint.classList.add("visible");
-        }
+        els.editHint.textContent = "";
+        els.editHint.classList.remove("visible");
         els.cancelButton.hidden = true;
         els.fetchResult.classList.remove("visible");
         resetUpload();
@@ -829,7 +859,20 @@
         if (mapIdEl) {
           const id = mapIdEl.dataset.id || mapIdEl.textContent.replace(/^#/, "").trim();
           if (/^\d{3,20}$/.test(id)) {
-            navigator.clipboard.writeText(id).then(() => showToast(`已复制地图 ID：${id}`)).catch(() => {});
+            // 兼容 HTTP 环境的复制方案
+            try {
+              const ta = document.createElement("textarea");
+              ta.value = id;
+              ta.style.position = "fixed";
+              ta.style.opacity = "0";
+              document.body.appendChild(ta);
+              ta.select();
+              document.execCommand("copy");
+              document.body.removeChild(ta);
+              showToast(`已复制地图 ID：${id}`);
+            } catch (_) {
+              navigator.clipboard.writeText(id).then(() => showToast(`已复制地图 ID：${id}`)).catch(() => {});
+            }
             return;
           }
         }
@@ -865,6 +908,15 @@
           zoomed.classList.add("zooming-out");
           setTimeout(() => zoomed.classList.remove("zooming-out"), 220);
         }
+      });
+      // 刷新按钮
+      els.refreshBtn.addEventListener("click", () => {
+        els.refreshBtn.classList.add("spinning");
+        els.filterSummary.textContent = "正在刷新…";
+        els.grid.innerHTML = "";
+        loadMaps().then(() => {
+          showToast("数据已刷新");
+        });
       });
       // 设置弹窗
       if (savedBackend) els.serverAddress.value = savedBackend;
