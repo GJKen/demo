@@ -1,0 +1,7 @@
+# Broforce maps - 服务器端文件（敏感信息）
+Broforce_maps_src/server.py
+Broforce_maps_src/maps.json
+Broforce_maps_src/previews/
+Broforce_maps_src/web.bat
+Broforce_maps_src/README.md
+Broforce_maps_src/__pycache__/
