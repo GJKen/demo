@@ -220,6 +220,12 @@ OC_RULES=$(cat <<'YAMLRULES'
 - IP-CIDR,182.255.82.168/32,手动选择,no-resolve
 - DOMAIN-KEYWORD,ksy.moe,手动选择
 - DOMAIN-KEYWORD,zzzcoding,API中转站
+- DOMAIN-KEYWORD,sharedchat,API中转站
+- DOMAIN-KEYWORD,agentrouter,API中转站
+- DOMAIN-KEYWORD,247kan,API中转站
+- DOMAIN-KEYWORD,sui-xiang.com,API中转站
+- DOMAIN-KEYWORD,ai.121628.xyz,API中转站
+- DOMAIN-KEYWORD,appinn,手动选择
 - RULE-SET,adobe,Adobe
 - RULE-SET,pic_hub,PicHub
 - RULE-SET,steam,手动选择
