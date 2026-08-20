@@ -495,9 +495,8 @@
       function apiUrl(path) { return API_BASE + path; }
 
       async function request(path, options = {}) {
-        // 对写操作添加 Authorization 头
-        const method = (options.method || "GET").toUpperCase();
-        if (method !== "GET" && AUTH_TOKEN) {
+        // 所有 API 请求都添加 Authorization 头
+        if (AUTH_TOKEN) {
           options.headers = { ...(options.headers || {}), "Authorization": `Bearer ${AUTH_TOKEN}` };
         }
         const response = await fetch(apiUrl(path), options);
