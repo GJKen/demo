@@ -539,7 +539,7 @@
         const query = els.search.value.trim().toLowerCase();
         const maps = state.maps.filter((map) => !query || [map.map_id, map.name, map.tags].some((value) => String(value || "").toLowerCase().includes(query)));
         els.grid.innerHTML = maps.map((map) => {
-          const preview = imageUrl(map.preview_url);
+          const preview = map.source_preview_url || imageUrl(map.preview_url);
           const tags = String(map.tags || "").split(/[,，]/).map((tag) => tag.trim()).filter(Boolean).slice(0, 4);
           const art = preview
             ? `<div class="map-art"><img src="${escapeHtml(preview)}" alt="${escapeHtml(map.name)} 的地图预览图" loading="lazy"><span class="map-id" data-id="${escapeHtml(map.map_id)}" title="点击复制地图 ID">#${escapeHtml(map.map_id)}</span><button class="zoom-btn" type="button" aria-label="放大查看"><i data-lucide="search" class="icon"></i></button></div>`
