@@ -729,12 +729,16 @@
         try {
           const data = await request("/api/maps/fetch", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ map_id: input }) });
           els.mapId.value = data.map_id;
-          els.form.dataset.sourceUrl = data.source_url || "";
-          if (!state.editingId || !els.mapName.value.trim()) els.mapName.value = data.source_title || "";
-          showFetched(data);
           const existing = state.maps.find((map) => map.map_id === data.map_id);
           if (existing && !state.editingId) fillForm(existing);
-          else if (existing) showToast("已读取 Steam 信息；这张地图已有本地记录");
+          els.form.dataset.sourceUrl = data.source_url || "";
+          els.form.dataset.sourceTitle = data.source_title || "";
+          els.form.dataset.sourceDescription = data.source_description || "";
+          els.form.dataset.sourcePreviewUrl = data.source_preview_url || "";
+          els.form.dataset.autoPreview = data.preview_url || "";
+          if (!existing && (!state.editingId || !els.mapName.value.trim())) els.mapName.value = data.source_title || "";
+          showFetched(data);
+          if (existing) showToast("已读取 Steam 信息；这张地图已有本地记录");
           else showToast("Steam 信息已读取，请补充预览图后保存");
         } catch (error) { showToast(error.message, true); }
         finally {
@@ -755,7 +759,7 @@
       function resetForm() {
         state.editingId = "";
         els.form.reset();
-        ["sourceUrl", "sourceTitle", "sourceDescription", "sourcePreviewUrl"].forEach((key) => { delete els.form.dataset[key]; });
+        ["sourceUrl", "sourceTitle", "sourceDescription", "sourcePreviewUrl", "autoPreview"].forEach((key) => { delete els.form.dataset[key]; });
         els.formTitle.textContent = canWrite ? "收录一张地图" : "浏览地图目录";
         els.editHint.textContent = "";
         els.editHint.classList.remove("visible");
