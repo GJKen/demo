@@ -110,6 +110,15 @@
     .modal-box .field .hint { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; }
     .modal-actions { display: flex; gap: 8px; margin-top: 20px; }
     .modal-actions .button { flex: 1; }
+    .delete-modal-box { width: min(420px, calc(100% - 40px)); }
+    .delete-modal-copy { margin: 10px 0 0; color: var(--ink-soft); font-size: 13px; white-space: pre-line; }
+    .delete-modal-box .modal-actions { justify-content: flex-end; }
+    .delete-modal-box .modal-actions .button { flex: 0 0 auto; min-width: 92px; }
+    .batch-import-field { margin-top: 4px; padding-top: 16px; border-top: 1px solid var(--line); }
+    .batch-import-field textarea { min-height: 96px; resize: vertical; }
+    .batch-import-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 7px; }
+    .batch-import-summary { min-width: 0; color: var(--muted); font-size: 11px; }
+    .batch-import-actions .button { flex: 0 0 auto; }
 
     .workspace {
       width: min(1480px, calc(100% - 44px));
@@ -225,9 +234,6 @@
     }
     .upload-empty .icon { display: block; width: 22px; height: 22px; margin: 0 0 5px; color: var(--blue); }
     .upload-empty small { display: block; margin-top: 2px; }
-    .upload-preview { display: none; width: 100%; height: 116px; object-fit: cover; }
-    .upload.has-preview .upload-empty { display: none; }
-    .upload.has-preview .upload-preview { display: block; }
     .upload-info { display: none; justify-content: space-between; gap: 8px; margin-top: 6px; color: var(--muted); font-size: 11px; }
     .upload-info.visible { display: flex; }
     .form-actions { display: flex; gap: 8px; margin-top: 22px; }
@@ -283,10 +289,10 @@
       z-index: 1;
       position: relative;
       will-change: transform;
+      transform-origin: center top;
     }
     .map-card.zoomed {
       transform: scale(1.8);
-      transform-origin: center top;
       border-color: var(--blue);
       box-shadow: var(--shadow);
       z-index: 50 !important;
@@ -316,11 +322,13 @@
       background: rgba(23, 32, 42, .72);
       color: #fffefa;
       cursor: zoom-in;
-      transition: background .15s;
+      opacity: .4;
+      transition: background .15s, opacity .15s;
     }
-    .zoom-btn:hover { background: var(--blue); }
+    .zoom-btn:hover, .zoom-btn:focus-visible { background: var(--blue); opacity: 1; }
     .zoom-btn .icon { width: 18px; height: 18px; }
-    .map-id { position: absolute; top: 10px; left: 10px; padding: 3px 6px; background: var(--lime); color: var(--ink); font: 800 11px/1.2 ui-monospace, SFMono-Regular, Consolas, monospace; cursor: pointer; }
+    .map-id { position: absolute; top: 10px; left: 10px; padding: 3px 6px; background: var(--lime); color: var(--ink); font: 800 11px/1.2 ui-monospace, SFMono-Regular, Consolas, monospace; cursor: pointer; opacity: .4; transition: opacity .15s; }
+    .map-id:hover, .map-id:focus-visible { opacity: 1; }
     .map-body { display: flex; flex: 1; flex-direction: column; padding: 14px; }
     .map-body h3 { display: -webkit-box; flex: 0 0 44.2px; height: 44.2px; margin: 0; overflow: hidden; font-size: 17px; line-height: 1.3; -webkit-box-orient: vertical; -webkit-line-clamp: 2; position: relative; }
     .map-body h3.overflow { cursor: help; }
@@ -373,8 +381,11 @@
     @media (max-width: 460px) {
       .brand-copy strong { font-size: 15px; }
       .brand-copy span { font-size: 9px; }
-      .server-status { font-size: 0; }
-      .server-status .status-dot { width: 10px; height: 10px; }
+      .server-status-wrap { gap: 6px; margin-left: auto; min-width: 0; }
+      .server-status { gap: 5px; min-width: 0; font-size: 10px; }
+      .server-status span:last-child { overflow: hidden; text-overflow: ellipsis; }
+      .server-status .status-dot { width: 8px; height: 8px; flex: 0 0 auto; }
+      .map-art .zoom-btn { display: none; }
       .map-grid { grid-template-columns: 1fr; }
       .intro-actions { justify-content: space-between; }
       .stat { flex: 1; }
@@ -418,6 +429,15 @@
             </div>
           </div>
 
+          <div class="field batch-import-field">
+            <label for="batchInput">批量导入 <small>自动识别 ID / URL</small></label>
+            <textarea id="batchInput" placeholder="粘贴多个 Steam Workshop ID 或 URL"></textarea>
+            <div class="batch-import-actions">
+              <span class="batch-import-summary" id="batchSummary">尚未识别地图</span>
+              <button class="button secondary" type="button" id="batchImportButton"><i data-lucide="list-plus" class="icon"></i>批量获取并保存</button>
+            </div>
+          </div>
+
           <div class="fetch-result" id="fetchResult" aria-live="polite"></div>
 
           <div class="field">
@@ -433,11 +453,10 @@
             <input id="mapTags" name="tags" maxlength="200" placeholder="合作, 困难, Boss">
           </div>
           <div class="field">
-            <label>地图预览图 <small>手动上传</small></label>
+            <label>地图预览图 <small>保存时上传</small></label>
             <div class="upload" id="uploadBox">
               <input id="previewFile" name="preview" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
-              <div class="upload-empty"><i data-lucide="image-plus" class="icon"></i><span>点击选择本地图片</span><small>JPG / PNG / WEBP / GIF，最大 8 MB</small></div>
-              <img class="upload-preview" id="uploadPreview" alt="待上传的地图预览图">
+              <div class="upload-empty"><i data-lucide="image-plus" class="icon"></i><span>点击选择本地图片</span><small>选择后点击“保存地图”才会上传，最大 8 MB</small></div>
             </div>
             <div class="upload-info" id="uploadInfo"><span id="uploadName"></span><span id="uploadSize"></span></div>
           </div>
@@ -487,6 +506,17 @@
     </div>
   </div>
 
+  <div class="modal-overlay" id="deleteModal" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle">
+    <div class="modal-box delete-modal-box">
+      <h2 id="deleteModalTitle">删除地图记录</h2>
+      <p class="delete-modal-copy" id="deleteModalText"></p>
+      <div class="modal-actions">
+        <button class="button secondary" id="cancelDeleteButton" type="button">取消</button>
+        <button class="button danger" id="confirmDeleteButton" type="button"><i data-lucide="trash-2" class="icon"></i>删除</button>
+      </div>
+    </div>
+  </div>
+
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
@@ -509,19 +539,22 @@
       const isSameOriginAccess = !urlBackend && !savedBackend && !(window.location.protocol === "file:" || localHosts.has(window.location.hostname));
       const AUTH_TOKEN = urlToken || (isSameOriginAccess ? "" : savedToken) || "";
       const canWrite = AUTH_TOKEN.length > 0;
-      const state = { maps: [], editingId: "", selectedFile: null, toastTimer: null, staticMode: false, authError: false };
+      const state = { maps: [], editingId: "", selectedFile: null, pendingDeleteId: "", toastTimer: null, staticMode: false, authError: false };
       const $ = (id) => document.getElementById(id);
       const els = {
         form: $("mapForm"), formPanel: $("formPanel"), formTitle: $("formTitle"), editHint: $("editHint"),
         mapId: $("mapId"), mapName: $("mapName"), description: $("mapDescription"), tags: $("mapTags"),
-        fetchButton: $("fetchButton"), fetchResult: $("fetchResult"), previewFile: $("previewFile"),
-        uploadBox: $("uploadBox"), uploadPreview: $("uploadPreview"), uploadInfo: $("uploadInfo"),
+        fetchButton: $("fetchButton"), batchInput: $("batchInput"), batchSummary: $("batchSummary"), batchImportButton: $("batchImportButton"),
+        fetchResult: $("fetchResult"), previewFile: $("previewFile"),
+        uploadInfo: $("uploadInfo"),
         uploadName: $("uploadName"), uploadSize: $("uploadSize"), saveButton: $("saveButton"), cancelButton: $("cancelButton"),
         search: $("searchInput"), grid: $("mapGrid"), empty: $("emptyState"), emptyTitle: $("emptyTitle"), emptyText: $("emptyText"),
         filterSummary: $("filterSummary"), serverStatus: $("serverStatus"), toast: $("toast"),
         settingsBtn: $("settingsBtn"), settingsModal: $("settingsModal"), serverAddress: $("serverAddress"),
         authPassword: $("authPassword"),
         saveSettingsBtn: $("saveSettingsBtn"), closeSettingsBtn: $("closeSettingsBtn"),
+        deleteModal: $("deleteModal"), deleteModalText: $("deleteModalText"),
+        cancelDeleteButton: $("cancelDeleteButton"), confirmDeleteButton: $("confirmDeleteButton"),
         refreshBtn: $("refreshBtn")
       };
 
@@ -618,6 +651,8 @@
         state.staticMode = true;
         els.serverStatus.innerHTML = `<span class="status-dot"></span><span>静态只读模式</span>`;
         els.fetchButton.disabled = true;
+        els.batchInput.disabled = true;
+        els.batchImportButton.disabled = true;
         els.saveButton.disabled = true;
         els.mapId.disabled = true;
         els.mapName.disabled = true;
@@ -633,7 +668,7 @@
         state.staticMode = false;
         setServerStatus(true);
         if (canWrite) {
-          [els.fetchButton, els.saveButton, els.mapId, els.mapName, els.description, els.tags, els.previewFile].forEach((element) => { element.disabled = false; });
+          [els.fetchButton, els.batchInput, els.batchImportButton, els.saveButton, els.mapId, els.mapName, els.description, els.tags, els.previewFile].forEach((element) => { element.disabled = false; });
           els.formPanel.style.display = "";
           els.formTitle.textContent = state.editingId ? "编辑地图记录" : "收录一张地图";
           if (state.editingId) {
@@ -642,7 +677,7 @@
             els.editHint.classList.remove("visible");
           }
         } else {
-          [els.fetchButton, els.saveButton, els.mapId, els.mapName, els.description, els.tags, els.previewFile, els.cancelButton].forEach((element) => { element.disabled = true; });
+          [els.fetchButton, els.batchInput, els.batchImportButton, els.saveButton, els.mapId, els.mapName, els.description, els.tags, els.previewFile, els.cancelButton].forEach((element) => { element.disabled = true; });
           els.formTitle.textContent = "浏览地图目录";
           els.editHint.textContent = "当前为只读模式。如需编辑，请在 URL 添加 &token=你的密码 或在设置中填写密码。";
           els.editHint.classList.add("visible");
@@ -701,18 +736,49 @@
         } catch (_) { return text.match(/(?:^|\/)(\d{3,20})\/?$/)?.[1] || ""; }
       }
 
+      function parseBatchInput(value) {
+        const tokens = String(value || "")
+          .split(/[\s,，;；]+/)
+          .map((token) => token.trim().replace(/^[([\{"'<]+|[)\]}\"'>，,;；。]+$/g, ""))
+          .filter(Boolean);
+        const ids = [];
+        const invalid = [];
+        const seen = new Set();
+        let duplicates = 0;
+        tokens.forEach((token) => {
+          const id = normalizeId(token);
+          if (!id) {
+            invalid.push(token);
+          } else if (seen.has(id)) {
+            duplicates += 1;
+          } else {
+            seen.add(id);
+            ids.push(id);
+          }
+        });
+        return { ids, invalid, duplicates };
+      }
+
+      function updateBatchSummary() {
+        const result = parseBatchInput(els.batchInput.value);
+        if (!result.ids.length && !result.invalid.length) {
+          els.batchSummary.textContent = "尚未识别地图";
+          return result;
+        }
+        const parts = [`已识别 ${result.ids.length} 张地图`];
+        if (result.duplicates) parts.push(`去重 ${result.duplicates} 项`);
+        if (result.invalid.length) parts.push(`忽略 ${result.invalid.length} 项`);
+        els.batchSummary.textContent = parts.join("，");
+        return result;
+      }
+
       function showFetched(data) {
         const title = escapeHtml(data.source_title || "Steam 页面未返回标题");
         const preview = data.source_preview_url ? `<img src="${escapeHtml(data.source_preview_url)}" alt="Steam 参考预览图">` : "";
         const previewInfo = data.preview_url ? `<div>预览图已自动保存到本地。</div>` : "";
         els.fetchResult.innerHTML = `<strong>已读取 Steam 页面：${title}</strong><a href="${escapeHtml(data.source_url)}" target="_blank" rel="noreferrer">${escapeHtml(data.source_url)}</a>${preview}${previewInfo}`;
         els.fetchResult.classList.add("visible");
-        // 如果后端返回了本地预览图，直接显示在上传区域
         if (data.preview_url) {
-          const imgUrl = imageUrl(data.preview_url);
-          els.uploadPreview.src = imgUrl;
-          els.uploadBox.classList.add("has-preview");
-          els.uploadInfo.classList.remove("visible");
           els.form.dataset.autoPreview = data.preview_url;
         } else {
           els.form.dataset.autoPreview = "";
@@ -729,16 +795,12 @@
         try {
           const data = await request("/api/maps/fetch", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ map_id: input }) });
           els.mapId.value = data.map_id;
+          els.form.dataset.sourceUrl = data.source_url || "";
+          if (!state.editingId || !els.mapName.value.trim()) els.mapName.value = data.source_title || "";
+          showFetched(data);
           const existing = state.maps.find((map) => map.map_id === data.map_id);
           if (existing && !state.editingId) fillForm(existing);
-          els.form.dataset.sourceUrl = data.source_url || "";
-          els.form.dataset.sourceTitle = data.source_title || "";
-          els.form.dataset.sourceDescription = data.source_description || "";
-          els.form.dataset.sourcePreviewUrl = data.source_preview_url || "";
-          els.form.dataset.autoPreview = data.preview_url || "";
-          if (!existing && (!state.editingId || !els.mapName.value.trim())) els.mapName.value = data.source_title || "";
-          showFetched(data);
-          if (existing) showToast("已读取 Steam 信息；这张地图已有本地记录");
+          else if (existing) showToast("已读取 Steam 信息；这张地图已有本地记录");
           else showToast("Steam 信息已读取，请补充预览图后保存");
         } catch (error) { showToast(error.message, true); }
         finally {
@@ -748,18 +810,80 @@
         }
       }
 
+      async function importBatch() {
+        if (state.staticMode || !canWrite) return;
+        const result = updateBatchSummary();
+        if (!result.ids.length) {
+          showToast("没有识别到有效的 Workshop ID 或 URL", true);
+          els.batchInput.focus();
+          return;
+        }
+        if (result.ids.length > 20) {
+          showToast("一次最多批量处理 20 张地图，请分批导入", true);
+          return;
+        }
+
+        const failures = [];
+        let successCount = 0;
+        els.batchImportButton.disabled = true;
+        try {
+          for (let index = 0; index < result.ids.length; index += 1) {
+            const mapId = result.ids[index];
+            els.batchImportButton.innerHTML = `<i data-lucide="loader-circle" class="icon"></i>处理中 ${index + 1}/${result.ids.length}`;
+            iconRefresh();
+            try {
+              const data = await request("/api/maps/fetch", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ map_id: mapId })
+              });
+              const canonicalId = data.map_id || mapId;
+              const existing = state.maps.find((map) => map.map_id === canonicalId);
+              const formData = new FormData();
+              formData.append("map_id", canonicalId);
+              formData.append("name", existing ? String(existing.name || "").trim() : String(data.source_title || "").trim() || canonicalId);
+              formData.append("description", existing ? String(existing.description || "") : String(data.source_description || ""));
+              formData.append("tags", existing ? String(existing.tags || "") : "");
+              formData.append("source_url", data.source_url || `https://steamcommunity.com/sharedfiles/filedetails/?id=${canonicalId}`);
+              formData.append("source_title", data.source_title || "");
+              formData.append("source_description", data.source_description || "");
+              formData.append("source_preview_url", data.source_preview_url || "");
+              if (data.preview_url) formData.append("auto_preview_url", data.preview_url);
+              const path = existing ? `/api/maps/${encodeURIComponent(canonicalId)}` : "/api/maps";
+              await request(path, { method: existing ? "PUT" : "POST", body: formData });
+              successCount += 1;
+            } catch (error) {
+              failures.push(`${mapId}: ${error.message}`);
+            }
+          }
+          await loadMaps();
+          const summary = `批量完成：成功 ${successCount} 张，失败 ${failures.length} 张`;
+          if (failures.length) {
+            const details = failures.slice(0, 3).join("；");
+            showToast(`${summary}。${details}${failures.length > 3 ? "；其余失败项请重试" : ""}`, true);
+          } else {
+            showToast(summary);
+          }
+        } finally {
+          const batchEnabled = !state.staticMode && canWrite;
+          els.batchInput.disabled = !batchEnabled;
+          els.batchImportButton.disabled = !batchEnabled;
+          els.batchImportButton.innerHTML = `<i data-lucide="list-plus" class="icon"></i>批量获取并保存`;
+          iconRefresh();
+          updateBatchSummary();
+        }
+      }
+
       function resetUpload() {
         state.selectedFile = null;
         els.previewFile.value = "";
-        els.uploadPreview.removeAttribute("src");
-        els.uploadBox.classList.remove("has-preview");
         els.uploadInfo.classList.remove("visible");
       }
 
       function resetForm() {
         state.editingId = "";
         els.form.reset();
-        ["sourceUrl", "sourceTitle", "sourceDescription", "sourcePreviewUrl", "autoPreview"].forEach((key) => { delete els.form.dataset[key]; });
+        ["sourceUrl", "sourceTitle", "sourceDescription", "sourcePreviewUrl"].forEach((key) => { delete els.form.dataset[key]; });
         els.formTitle.textContent = canWrite ? "收录一张地图" : "浏览地图目录";
         els.editHint.textContent = "";
         els.editHint.classList.remove("visible");
@@ -785,11 +909,6 @@
         els.cancelButton.hidden = false;
         if (map.source_title || map.source_preview_url) showFetched(map);
         resetUpload();
-        // 显示已有预览图
-        if (map.preview_url) {
-          els.uploadPreview.src = imageUrl(map.preview_url);
-          els.uploadBox.classList.add("has-preview");
-        }
         els.formPanel.scrollIntoView({ behavior: "smooth", block: "start" });
       }
 
@@ -830,10 +949,26 @@
         }
       }
 
-      async function deleteMap(mapId) {
+      function closeDeleteModal() {
+        state.pendingDeleteId = "";
+        els.deleteModal.classList.remove("visible");
+      }
+
+      function openDeleteModal(mapId) {
         if (state.staticMode) return;
         const map = state.maps.find((item) => item.map_id === mapId);
-        if (!map || !window.confirm(`确定删除“${map.name}”吗？\n此操作会同时删除地图记录和对应的本地预览图。`)) return;
+        if (!map) return;
+        state.pendingDeleteId = mapId;
+        els.deleteModalText.textContent = `确定删除“${map.name}”吗？\n此操作会同时删除地图记录和对应的本地预览图。`;
+        els.deleteModal.classList.add("visible");
+        els.cancelDeleteButton.focus();
+      }
+
+      async function deleteMap() {
+        const mapId = state.pendingDeleteId;
+        const map = state.maps.find((item) => item.map_id === mapId);
+        if (!map) { closeDeleteModal(); return; }
+        closeDeleteModal();
         try {
           await request(`/api/maps/${encodeURIComponent(mapId)}`, { method: "DELETE" });
           if (state.editingId === mapId) resetForm();
@@ -843,6 +978,8 @@
       }
 
       els.fetchButton.addEventListener("click", fetchWorkshop);
+      els.batchInput.addEventListener("input", updateBatchSummary);
+      els.batchImportButton.addEventListener("click", importBatch);
       els.mapId.addEventListener("keydown", (event) => { if (event.key === "Enter") { event.preventDefault(); fetchWorkshop(); } });
       els.form.addEventListener("submit", saveMap);
       els.cancelButton.addEventListener("click", resetForm);
@@ -852,8 +989,6 @@
         if (!file) return;
         if (file.size > 8 * 1024 * 1024) { showToast("预览图不能超过 8 MB", true); resetUpload(); return; }
         state.selectedFile = file;
-        els.uploadPreview.src = URL.createObjectURL(file);
-        els.uploadBox.classList.add("has-preview");
         els.uploadInfo.classList.add("visible");
         els.uploadName.textContent = file.name;
         els.uploadSize.textContent = fileSize(file.size);
@@ -901,7 +1036,7 @@
           const map = state.maps.find((item) => item.map_id === mapId);
           if (map) fillForm(map);
         }
-        if (action.dataset.action === "delete") deleteMap(mapId);
+        if (action.dataset.action === "delete") openDeleteModal(mapId);
       });
       // 点击外部区域缩小放大卡片
       document.addEventListener("click", (event) => {
@@ -927,6 +1062,8 @@
       if (savedToken) els.authPassword.value = savedToken;
       els.settingsBtn.addEventListener("click", () => { els.settingsModal.classList.add("visible"); });
       els.closeSettingsBtn.addEventListener("click", () => { els.settingsModal.classList.remove("visible"); });
+      els.cancelDeleteButton.addEventListener("click", closeDeleteModal);
+      els.confirmDeleteButton.addEventListener("click", deleteMap);
       // 回车键保存设置
       els.serverAddress.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); els.saveSettingsBtn.click(); } });
       els.authPassword.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); els.saveSettingsBtn.click(); } });
@@ -946,7 +1083,12 @@
       });
       // 点击遮罩关闭弹窗 - 用 mousedown 防止拖拽松开误触
       els.settingsModal.addEventListener("mousedown", (e) => { if (e.target === els.settingsModal) els.settingsModal.classList.remove("visible"); });
+      els.deleteModal.addEventListener("mousedown", (e) => { if (e.target === els.deleteModal) closeDeleteModal(); });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && els.deleteModal.classList.contains("visible")) closeDeleteModal();
+      });
       iconRefresh();
+      updateBatchSummary();
       loadMaps();
     })();
   </script>
