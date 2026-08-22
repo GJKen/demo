@@ -66,6 +66,8 @@ repo根目录/
 ├── Broforce_maps_src/
 │   ├── server.py                # Python 后端 (标准库，零依赖)
 │   ├── web.bat                  # Windows 本地启动脚本
+│   ├── upload_to_serv00.py      # 多主机 SFTP 差异同步、备份和 SHA-256 校验
+│   ├── upload_to_serv00.bat     # Windows 双击启动上传脚本
 │   ├── maps.json                # 地图数据 (serv00 远程存储)
 │   ├── previews/                # (已废弃) 本地预览图目录
 │   ├── BROFORCE_MAINTENANCE.md  # 本维护文档
@@ -77,12 +79,16 @@ repo根目录/
 ```bash
 cp static/Broforce地图记录.html docs/Broforce地图记录.html
 ```
+Windows PowerShell 可使用：
+```powershell
+Copy-Item -LiteralPath 'static\Broforce地图记录.html' -Destination 'docs\Broforce地图记录.html' -Force
+```
 
 ---
 
 ## 四、后端 server.py 详解
 
-Python 标准库实现，**零第三方依赖**，可在 Windows/FreeBSD 直接跑。
+Python 标准库实现，后端本身**零第三方依赖**，可在 Windows/FreeBSD 直接跑。仓库附带的 SFTP 上传工具使用第三方 `paramiko`，不属于后端运行依赖。
 
 ### 4.1 认证配置（第 39-46 行）
 
@@ -135,10 +141,14 @@ ALLOWED_ORIGINS = {
 ### 4.5 关键函数
 
 - `read_maps()` / `write_maps()` — 读写 `maps.json`（带写锁）
-- `fetch_workshop_data(map_id)` — 抓取 Steam 页面，提取 og:title、og:description、og:image
+- `fetch_workshop_data(map_id)` — 抓取 Steam 页面，提取标题、描述、封面和 Steam 截图候选
+- `workshop_image_candidates(page, meta_image)` — 合并 Steam 元数据图片、页面主图和截图数据，去重后返回最多 40 张候选图
+- `clean_image_candidates()` / `clean_preview_urls()` — 校验候选图列表和保存的多图 URL
 - `check_auth()` — Bearer Token 验证 + IP 封禁
 - `save_map()` — 新增/更新（做了结构化校验）
 - `do_GET` — 注意：静态文件（`/static/*`）不经过速率/并发限制，直接放行
+
+`POST /api/maps/fetch` 返回的 `image_candidates` 是候选图片对象数组，每项包含 `url`、`label`、`type` 和 `is_default`。保存地图时，前端把用户选中的候选图 URL 或手动粘贴的 HTTP(S) 图片外链统一写入 `preview_urls` 数组；外链只保存 URL，不上传图片文件。`preview_url` 仍保留作为旧记录兼容字段。读取旧记录时，如果没有 `preview_urls`，前端会回退到 `preview_url`。
 
 ### 4.6 启动
 
@@ -157,11 +167,11 @@ cd ~/broforce_maps && nohup python3 Broforce_maps_src/server.py > server.log 2>&
 
 ---
 
-## 五、前端 前端.html 详解
+## 五、前端 `Broforce地图记录.html` 详解
 
-原生 HTML + CSS + JS，无框架。单个文件 950 行，全部在一个 IIFE 里。
+原生 HTML + CSS + JS，无框架。页面主体全部在一个 IIFE 里；不要依赖固定行号定位代码。
 
-### 5.1 配置读取（第 497-511 行）—— 最容易踩坑的地方
+### 5.1 配置读取（IIFE 开头的配置区）—— 最容易踩坑的地方
 
 ```javascript
 const urlParams = new URLSearchParams(window.location.search);
@@ -222,6 +232,39 @@ document.body.removeChild(ta);
 - 回车键触发保存
 - 点遮罩关闭用 `mousedown`（防止拖拽时误关）
 
+### 5.6 CSS 悬停提示
+
+前端业务交互禁止使用浏览器原生提示和原生弹窗：不得添加 `title`，也不得调用 `window.alert()`、`window.confirm()` 或 `window.prompt()`。普通控件统一使用 `data-tooltip` + CSS `::after` 伪元素，长备注使用 `data-tip` + `overflow` 类；反馈使用 toast，确认操作使用页面内自定义弹窗：
+
+- 后端设置、刷新后端数据
+- 复制地图 ID
+- 打开 Steam Workshop
+- 点击选择本地图片
+- 地图备注超出两行时显示完整内容
+
+备注正文仍固定显示两行；`renderMaps()` 会根据 `scrollHeight > clientHeight` 自动给超长备注添加 `overflow` 类。修改提示内容时，必须同时检查 `static/` 与 `docs/`。
+
+### 5.7 批量导入、删除和预览图
+
+- 批量导入框自动识别 Workshop ID/URL，自动去重，单次最多处理 20 张地图；每张地图依次执行 Steam 抓取和保存，最后显示成功/失败汇总。
+- 删除地图使用自定义确认弹窗，不再调用原生 `window.confirm()`；支持取消、点击遮罩关闭和 `Escape` 关闭。
+- 预览图选择后只暂存在浏览器内，点击“保存地图”时才上传；单文件最大 8 MB。
+- 地图预览图支持本地上传或手动图片外链；外链输入会自动识别空格、换行、逗号和分号分隔的多个 HTTP(S) URL，最多保存 40 个，图片本身不上传到服务器。
+- Steam 候选图支持多选，地图记录用 `preview_urls` 保存多张图片；地图卡片支持半透明箭头、触摸横向滑动和鼠标横向拖动切换。
+- 地图卡片操作区同时提供 Steam 客户端创意工坊跳转（`steam://url/CommunityFilePage/{map_id}`）和网页 Workshop 链接，Steam 图标使用内联 SVG。
+- 候选图区域只显示缩略图网格；点击图片会打开半透明大图弹层，弹层支持左右箭头、触摸左右滑动、键盘左右方向键和 `Escape` 关闭。
+- 候选图缩略图本身负责查看大图，缩略图下方的选择区域负责勾选/取消勾选，这样可以连续选择多张图片而不会误触预览。
+- 页面切换到外部 Steam 客户端或失去焦点时会暂时隐藏 CSS tooltip，返回后移动鼠标离开原触发元素才恢复提示。
+- 静态只读模式会同时禁用批量导入和预览图控件。
+
+### 5.8 前端布局与交互硬约束
+
+- 地图卡片正文中的 `.map-meta` 是标签区，必须通过 `margin-top: auto` 固定在正文底部；`.map-footer` 紧随标签区下方。不要把自动间距改回 `.map-footer`，否则标签会回到标题和备注下方的顶部位置。
+- 修改卡片结构或 CSS 后，必须在 CDP 中检查 `#mapGrid > article:nth-child(1) > div.map-body > div.map-meta` 的 `getBoundingClientRect()`，确认它位于正文底部且 footer 仍在其下方。
+- `.map-grid` 保持纵向内容可见，但横向使用 `overflow-x: clip`，并保留 `overflow-clip-margin` 让边缘 CSS tooltip 有显示空间，避免卡片图片区提示层的像素舍入产生横向滚动条；不要用全局横向裁剪替代这条局部规则。
+- 地图表单使用 `novalidate`，必填项由 `saveMap()` 的自定义 toast 校验；不得恢复浏览器原生“请填写此字段”提示。
+- 新增任何提示、错误反馈或确认流程时，先复用现有 CSS tooltip、toast 或自定义 modal；不得引入浏览器原生提示/弹窗。
+
 ---
 
 ## 六、服务器运维（serv00）
@@ -268,11 +311,74 @@ pkill -f server.py && sleep 1 && cd ~/broforce_maps && nohup python3 Broforce_ma
 
 ### 6.4 上传更新文件
 
-通过 SFTP（paramiko 脚本）将 `server.py` 和 `Broforce地图记录.html` 上传到：
-- `~/broforce_maps/Broforce_maps_src/server.py`
-- `~/broforce_maps/static/Broforce地图记录.html`
+仓库内的 `upload_to_serv00.py` 支持保存多套本地主机配置，并把前端、后端或地图数据单向同步到选中的远程主机。同步前后都会比较 SHA-256，只上传有差异的文件。
 
-**改 server.py 后必须重启服务；改 HTML 不用重启。**
+首次使用先安装上传工具依赖：`python -m pip install paramiko`
+
+```powershell
+python Broforce_maps_src/upload_to_serv00.py
+```
+
+也可以双击 `Broforce_maps_src/upload_to_serv00.bat`。首次运行会创建本地配置 `Broforce_maps_src/upload_hosts.local.json`，以后运行时可以选择不同主机。配置保存：
+
+- 配置名称
+- SSH 主机、端口、用户名和密码
+- 远程项目根目录
+
+SSH 密码按用户选择保存在本地配置中，选择主机后会自动使用；密码不会出现在主机列表或日志。该文件以明文存储凭据，仅适合受信任的个人电脑，并已加入 `.gitignore`，不会随 Git 提交。
+
+可选同步范围：
+
+- 前端页面：`static/Broforce地图记录.html`
+- 后端程序：`Broforce_maps_src/server.py`
+- 地图数据：`Broforce_maps_src/maps.json` 和 `previews/` 内已有文件
+- 全部：以上三类一起同步
+
+双击 BAT 并选择主机后，还可以选择“手动重启后端”，该操作只重启服务，不上传文件。
+
+当同步范围包含地图数据时，会继续选择数据方式：
+
+- 合并（默认）：按 `map_id` 合并，本地同 ID 记录优先，远程独有记录保留。
+- 覆盖：使用本地 `maps.json` 完整替换远程版本。
+
+这是**本地到远程的单向同步**：不会下载远程数据，也不会删除远程多余文件。远程旧文件在覆盖前备份到 `~/broforce_maps/.sync-backups/<时间>/`，再通过临时文件上传、SHA-256 校验和原子替换完成更新。合并后的 `maps.json` 也会先备份远程旧版本。
+
+同步完成后脚本会根据变更内容自动判断是否需要重启：
+
+- 只有实际上传的 `Broforce_maps_src/server.py` 需要重启后端；远程文件相同而被跳过时不会重启。
+- 只更新前端、`maps.json` 或预览图：不重启后端。
+- 使用单文件模式时，如果目标路径是项目内的 `Broforce_maps_src/server.py`，也会自动重启。
+- 重启后会轮询 `/api/health` 验证服务已经恢复。
+- 第一次自动重启时会隐藏输入后端 API Token，并保存到本地主机配置；以后自动复用。
+- 未提供后端 API Token 时仍会完成文件同步，但会提示后端未重启。
+
+双击运行时，脚本在一次操作结束后不会关闭窗口；按任意键会回到操作、主机选择和同步范围菜单，可以继续同步或手动重启另一台主机。带参数运行（例如 `--help`、`--plan` 或自动化调用）时仍只执行一次。
+
+命令行直接选择已保存主机和同步范围：
+```powershell
+python Broforce_maps_src/upload_to_serv00.py --profile serv00-main --scope all
+python Broforce_maps_src/upload_to_serv00.py --profile serv00-main --scope all --data-mode merge
+python Broforce_maps_src/upload_to_serv00.py --profile serv00-main --scope data --data-mode overwrite
+```
+
+管理或查看配置：
+```powershell
+python Broforce_maps_src/upload_to_serv00.py --configure serv00-main
+python Broforce_maps_src/upload_to_serv00.py --list-profiles
+python Broforce_maps_src/upload_to_serv00.py --profile serv00-main --restart
+```
+
+只显示计划、不连接远程：
+```powershell
+python Broforce_maps_src/upload_to_serv00.py --profile serv00-main --scope data --plan
+```
+
+仍可直接指定单个文件和远程路径：
+```powershell
+python Broforce_maps_src/upload_to_serv00.py --profile serv00-main --local static\Broforce地图记录.html --remote ~/broforce_maps/static/Broforce地图记录.html
+```
+
+**只有实际改动 `server.py` 后同步工具才会自动重启服务（需要已保存或临时输入后端 API Token）；改 HTML、地图数据和预览图不用重启。**
 
 ### 6.5 保活
 
@@ -290,6 +396,9 @@ serv00 空闲进程可能被回收。建议在 serv00 面板的 Cron jobs 添加
 - 仓库 `GJKen/demo`，GitHub Pages 从 `docs/` 目录发布
 - 每次改 `static/Broforce地图记录.html` 后，`cp` 到 `docs/`
 - 提交推送 `git push origin main`
+- 当前 `.github/workflows/Gmeek.yml` **没有监听 `push` 事件**；普通推送后不会自动触发 Pages 部署
+- 推送后必须在 GitHub 的 `Actions → build Gmeek → Run workflow` 手动触发工作流，等待 `build` 和 `deploy` 两个任务成功
+- 验证发布时先检查 `raw.githubusercontent.com/GJKen/demo/main/docs/...`，再检查 Pages 页面；Pages 可能有 CDN 缓存延迟
 
 ### 7.2 访问方式
 
@@ -350,6 +459,19 @@ https://gjken.github.io/demo/Broforce地图记录.html?backend=http://s13.serv00
 - 确认 HTML 是最新版（`Ctrl+F5`）
 - 事件绑定在 `els.refreshBtn.addEventListener`
 
+### 9.6 CSS 提示不显示
+
+- 确认 HTML 已上传/发布为最新版，并用强制刷新绕过浏览器缓存
+- 检查对应元素是否有 `data-tooltip` 属性；备注提示还需要 `data-tip` 和 `map-description-wrap.overflow` 类
+- 不要重新添加原生 `title`，统一维护 CSS tooltip 规则
+
+### 9.7 Steam 页面提示“没有找到可选图片”
+
+- 先对页面执行 `Ctrl+F5`，确认浏览器没有继续使用旧 HTML；前端改动不会通过重启后端自动更新。
+- 确认页面设置中的后端地址指向当前 Serv00 服务，并打开 `/api/health` 检查服务是否在线。
+- 使用同一个 Workshop ID 请求 `/api/maps/fetch`，检查返回 JSON 是否包含 `image_candidates`；这个字段为空时才是 Steam 页面解析没有提取到截图。
+- 只更新 HTML 不需要重启后端；如果 `server.py` 发生更新，必须同步后端并重启。
+
 ---
 
 ## 十、改动清单（开发历史速查）
@@ -358,18 +480,29 @@ https://gjken.github.io/demo/Broforce地图记录.html?backend=http://s13.serv00
 - `HOST` 从 127.0.0.1 → **0.0.0.0**（允许远程访问）
 - 后端添加：Token 鉴权、IP 封禁、CORS 白名单、速率限制、并发限制
 - 前端添加：URL 参数读取、设置弹窗、只读模式、刷新按钮、HTTP 复制兼容
+- 前端添加：批量导入（单次最多 20 张）、删除确认弹窗、备注超长提示
+- 前端提示统一改为 CSS `data-tooltip` + `::after`，替代原生 `title`
+- 预览图改为选择后在保存时上传
+- 预览图支持自动识别多个 HTTP(S) 外链，外链直接保存到 `preview_urls`，不上传图片文件
 - 预览图从本地文件 → **Steam CDN URL**（`source_preview_url` 优先）
+- Steam 候选图支持多选，并通过 `preview_urls` 保存多张预览图
+- 候选图改为缩略图网格 + 半透明大图弹层，支持箭头、触摸滑动和键盘切换
+- 地图卡片 `.map-meta` 标签区固定在正文底部，`.map-footer` 紧随其后
+- 前端业务提示/弹窗统一使用 CSS tooltip、toast 和自定义 modal，禁止原生 `title`、`alert`、`confirm`、`prompt`
 - `web.bat` 移到了 `Broforce_maps_src/` 目录
+- 新增 `upload_to_serv00.py` / `upload_to_serv00.bat`：保存多主机配置，同步前端、后端或数据并做备份和 SHA-256 校验
 - 敏感文件加入 `.gitignore`，git 历史已清理旧密码
 
 ---
 
 ## 十一、给接手的 AI 的实用提示
 
-1. **先读 `server.py` 顶部配置区**（第 24-64 行）和前端第 497-526 行（配置读取），这是理解系统的最快路径
+1. **先读 `server.py` 顶部配置区**和前端 IIFE 开头的配置读取区，这是理解系统的最快路径
 2. **改前端两个文件必须同步**：`static/` 和 `docs/`
-3. **改 server.py 必须重启 serv00 服务**
+3. **同步 `server.py` 后工具会自动重启 serv00 服务；如果未配置后端 Token，则需手动重启**
 4. **测试用 CDP**：参考 `/twinkstar-harness`，用 `browser-harness` 打开 `http://s13.serv00.com:13333/static/Broforce地图记录.html?xxx` 模拟操作, 密码需要向用户获取
 5. **不要提交敏感文件**：`server.py`、`maps.json`、`web.bat` 都在 `.gitignore`
 6. **调试先看日志**：`cat ~/broforce_maps/server.log | tail -20`
 7. **本地测试**：`cd Broforce_maps_src && python server.py`，访问 `http://127.0.0.1:13333/static/Broforce地图记录.html`
+8. **同步到远程**：运行 `python Broforce_maps_src/upload_to_serv00.py`，选择主机和同步范围；只改前端时无需重启服务
+9. **发布 Pages**：推送后手动运行 `Actions → build Gmeek → Run workflow`；不要只等待 `git push`
