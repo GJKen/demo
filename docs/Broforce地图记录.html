@@ -349,9 +349,29 @@
 
     .catalog-panel { position: relative; z-index: 2; min-width: 0; padding-left: 0; padding-right: 0; }
     .catalog-head { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
+    .catalog-copy { min-width: 230px; }
     .catalog-head .section-note { margin-bottom: 0; }
     .catalog-head .filter-summary { display: block; margin-top: 4px; color: var(--muted); font-size: 14px; }
     .catalog-head .filter-summary strong { color: var(--ink); }
+    .catalog-controls { width: min(520px, 52%); display: flex; flex-direction: column; align-items: stretch; gap: 10px; }
+    .collection-link { min-width: 0; display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+    .collection-label { min-width: 0; overflow: hidden; color: var(--ink-soft); font-size: 12px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+    .collection-label .icon { margin-right: 4px; color: var(--blue); }
+    .collection-actions { flex: 0 0 auto; display: flex; gap: 5px; }
+    .collection-action {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line-strong);
+      border-radius: 0;
+      background: var(--panel);
+      color: var(--ink-soft);
+      text-decoration: none;
+      transition: background .15s, color .15s, border-color .15s;
+    }
+    .collection-action:hover { background: var(--lime); color: var(--ink); border-color: var(--ink); }
+    .collection-action .icon { width: 16px; height: 16px; }
     .search {
       width: min(320px, 44%);
       display: flex;
@@ -527,7 +547,11 @@
       .form-panel { padding-right: 0; }
       .catalog-panel { padding-top: 26px; }
       .catalog-head { align-items: start; display: block; }
+      .catalog-controls { width: 100%; margin-top: 18px; }
+      .collection-link { justify-content: flex-start; }
+      .collection-label { flex: 1 1 auto; }
       .search { width: 100%; margin-top: 18px; }
+      .catalog-controls .search { margin-top: 0; }
     }
     @media (max-width: 460px) {
       .brand-copy strong { font-size: 15px; }
@@ -618,13 +642,23 @@
 
       <section class="catalog-panel" aria-labelledby="catalogTitle">
         <div class="catalog-head">
-          <div>
+          <div class="catalog-copy">
             <div class="section-kicker">02 / Collection</div>
             <h2 class="section-title" id="catalogTitle">地图目录</h2>
             <p class="section-note">按地图 ID、名称或标签筛选；点击编辑继续补充资料。</p>
             <span class="filter-summary" id="filterSummary">正在读取地图目录…</span>
           </div>
-          <label class="search" for="searchInput"><i data-lucide="search" class="icon"></i><input id="searchInput" name="map_search" type="search" placeholder="查找 ID / 名称 / 标签" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" aria-autocomplete="none" data-lpignore="true" data-1p-ignore="true"></label>
+          <div class="catalog-controls">
+            <div class="collection-link">
+              <span class="collection-label" id="collectionLabel"><i data-lucide="library" class="icon"></i><span>Steam 合集 #3623011414</span></span>
+              <div class="collection-actions">
+                <a class="collection-action tooltip-below" id="collectionSteamLink" href="steam://url/CommunityFilePage/3623011414" aria-label="在 Steam 客户端打开合集" data-tooltip="在 Steam 客户端打开合集"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" class="icon steam-icon"><path fill="currentColor" d="M12 2a10 10 0 0 1 10 10a10 10 0 0 1-10 10c-4.6 0-8.45-3.08-9.64-7.27l3.83 1.58a2.84 2.84 0 0 0 2.78 2.27c1.56 0 2.83-1.27 2.83-2.83v-.13l3.4-2.43h.08c2.08 0 3.77-1.69 3.77-3.77s-1.69-3.77-3.77-3.77s-3.78 1.69-3.78 3.77v.05l-2.37 3.46l-.16-.01c-.59 0-1.14.18-1.59.49L2 11.2C2.43 6.05 6.73 2 12 2m-3.72 15.17c.8.33 1.72-.04 2.05-.84s-.05-1.71-.83-2.04l-1.28-.53c.49-.18 1.04-.19 1.56.03c.53.21.94.62 1.15 1.15c.22.52.22 1.1 0 1.62c-.43 1.08-1.7 1.6-2.78 1.15c-.5-.21-.88-.59-1.09-1.04zm9.52-7.75c0 1.39-1.13 2.52-2.52 2.52a2.52 2.52 0 0 1-2.51-2.52a2.5 2.5 0 0 1 2.51-2.51a2.52 2.52 0 0 1 2.52 2.51m-4.4 0c0 1.04.84 1.89 1.89 1.89c1.04 0 1.88-.85 1.88-1.89s-.84-1.89-1.88-1.89s-1.89.85-1.89 1.89"></path></svg></a>
+                <a class="collection-action tooltip-below" id="collectionWebLink" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3623011414" target="_blank" rel="noreferrer" aria-label="在新标签页打开合集" data-tooltip="在新标签页打开合集"><i data-lucide="external-link" class="icon"></i></a>
+                <button class="collection-action tooltip-below" id="editCollectionButton" type="button" aria-label="编辑合集 URL" data-tooltip="编辑合集 URL"><i data-lucide="pencil" class="icon"></i></button>
+              </div>
+            </div>
+            <label class="search" for="searchInput"><i data-lucide="search" class="icon"></i><input id="searchInput" name="map_search" type="search" placeholder="查找 ID / 名称 / 标签" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" aria-autocomplete="none" data-lpignore="true" data-1p-ignore="true"></label>
+          </div>
         </div>
         <div class="map-grid" id="mapGrid"></div>
         <div class="empty-state" id="emptyState" hidden>
@@ -651,6 +685,22 @@
       <div class="modal-actions">
         <button class="button accent" id="saveSettingsBtn" type="button"><i data-lucide="check" class="icon"></i>保存</button>
         <button class="button secondary" id="closeSettingsBtn" type="button">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="collectionModal" role="dialog" aria-modal="true" aria-labelledby="collectionModalTitle">
+    <div class="modal-box">
+      <h2 id="collectionModalTitle">编辑 Steam 合集</h2>
+      <p class="section-note">更新目录标题区使用的合集链接。</p>
+      <div class="field">
+        <label for="collectionUrlInput">Steam Workshop 合集 URL 或 ID</label>
+        <input id="collectionUrlInput" type="url" inputmode="url" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" maxlength="500">
+        <span class="hint">保存后会同时更新 Steam 客户端和网页打开地址。</span>
+      </div>
+      <div class="modal-actions">
+        <button class="button accent" id="saveCollectionButton" type="button"><i data-lucide="check" class="icon"></i>保存</button>
+        <button class="button secondary" id="cancelCollectionButton" type="button">取消</button>
       </div>
     </div>
   </div>
@@ -694,6 +744,8 @@
       const urlToken = urlParams.get("token") || "";
       const savedBackend = localStorage.getItem("broforce_backend_url") || "";
       const savedToken = localStorage.getItem("broforce_auth_token") || "";
+      const DEFAULT_COLLECTION_URL = "https://steamcommunity.com/sharedfiles/filedetails/?id=3623011414";
+      const savedCollectionUrl = localStorage.getItem("broforce_collection_url") || DEFAULT_COLLECTION_URL;
       const API_BASE = urlBackend || savedBackend || (window.location.protocol === "file:" || localHosts.has(window.location.hostname)
         ? "http://127.0.0.1:8785"
         : "");
@@ -701,7 +753,7 @@
       const isSameOriginAccess = !urlBackend && !savedBackend && !(window.location.protocol === "file:" || localHosts.has(window.location.hostname));
       const AUTH_TOKEN = urlToken || (isSameOriginAccess ? "" : savedToken) || "";
       const canWrite = AUTH_TOKEN.length > 0;
-      const state = { maps: [], editingId: "", selectedFile: null, selectedImageUrls: [], externalImageUrls: [], imageSelectionTouched: false, imageCandidates: [], lightboxItems: [], candidateLightboxIndex: -1, candidateLightboxSwipe: null, candidateLightboxDragged: false, candidateLightboxWheelAt: 0, carouselSwipe: null, pendingDeleteId: "", toastTimer: null, staticMode: false, authError: false };
+      const state = { maps: [], editingId: "", selectedFile: null, selectedImageUrls: [], externalImageUrls: [], imageSelectionTouched: false, imageCandidates: [], lightboxItems: [], candidateLightboxIndex: -1, candidateLightboxSwipe: null, candidateLightboxDragged: false, candidateLightboxWheelAt: 0, carouselSwipe: null, pendingDeleteId: "", collectionUrl: savedCollectionUrl, toastTimer: null, staticMode: false, authError: false };
       const $ = (id) => document.getElementById(id);
       const els = {
         form: $("mapForm"), formPanel: $("formPanel"), formTitle: $("formTitle"), editHint: $("editHint"),
@@ -712,6 +764,9 @@
         uploadName: $("uploadName"), uploadSize: $("uploadSize"), saveButton: $("saveButton"), cancelButton: $("cancelButton"),
         search: $("searchInput"), grid: $("mapGrid"), empty: $("emptyState"), emptyTitle: $("emptyTitle"), emptyText: $("emptyText"),
         filterSummary: $("filterSummary"), serverStatus: $("serverStatus"), toast: $("toast"),
+        collectionLabel: $("collectionLabel"), collectionSteamLink: $("collectionSteamLink"), collectionWebLink: $("collectionWebLink"),
+        editCollectionButton: $("editCollectionButton"), collectionModal: $("collectionModal"), collectionUrlInput: $("collectionUrlInput"),
+        saveCollectionButton: $("saveCollectionButton"), cancelCollectionButton: $("cancelCollectionButton"),
         settingsBtn: $("settingsBtn"), settingsModal: $("settingsModal"), serverAddress: $("serverAddress"),
         authPassword: $("authPassword"),
         saveSettingsBtn: $("saveSettingsBtn"), closeSettingsBtn: $("closeSettingsBtn"),
@@ -726,6 +781,58 @@
 
       const steamIconMarkup = '<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" class="icon steam-icon"><path fill="currentColor" d="M12 2a10 10 0 0 1 10 10a10 10 0 0 1-10 10c-4.6 0-8.45-3.08-9.64-7.27l3.83 1.58a2.84 2.84 0 0 0 2.78 2.27c1.56 0 2.83-1.27 2.83-2.83v-.13l3.4-2.43h.08c2.08 0 3.77-1.69 3.77-3.77s-1.69-3.77-3.77-3.77s-3.78 1.69-3.78 3.77v.05l-2.37 3.46l-.16-.01c-.59 0-1.14.18-1.59.49L2 11.2C2.43 6.05 6.73 2 12 2M8.28 17.17c.8.33 1.72-.04 2.05-.84s-.05-1.71-.83-2.04l-1.28-.53c.49-.18 1.04-.19 1.56.03c.53.21.94.62 1.15 1.15c.22.52.22 1.1 0 1.62c-.43 1.08-1.7 1.6-2.78 1.15c-.5-.21-.88-.59-1.09-1.04zm9.52-7.75c0 1.39-1.13 2.52-2.52 2.52a2.52 2.52 0 0 1-2.51-2.52a2.5 2.5 0 0 1 2.51-2.51a2.52 2.52 0 0 1 2.52 2.51m-4.4 0c0 1.04.84 1.89 1.89 1.89c1.04 0 1.88-.85 1.88-1.89s-.84-1.89-1.88-1.89s-1.89.85-1.89 1.89"></path></svg>';
       function steamWorkshopUrl(mapId) { return `steam://url/CommunityFilePage/${encodeURIComponent(mapId)}`; }
+
+      function normalizeCollectionUrl(value) {
+        const input = String(value || "").trim();
+        let collectionId = /^\d{3,20}$/.test(input) ? input : "";
+        let parsed = null;
+        if (!collectionId) {
+          try { parsed = new URL(input); } catch (_) { throw new Error("请输入有效的 Steam Workshop 合集 URL 或数字 ID"); }
+          const steamHost = parsed.hostname === "steamcommunity.com" || parsed.hostname.endsWith(".steamcommunity.com");
+          if (!/^https?:$/.test(parsed.protocol) || !steamHost || parsed.pathname !== "/sharedfiles/filedetails/") {
+            throw new Error("请输入 Steam Community 的 Workshop 合集链接");
+          }
+          collectionId = parsed.searchParams.get("id") || "";
+        }
+        if (!/^\d{3,20}$/.test(collectionId)) throw new Error("合集链接中缺少有效的数字 ID");
+        return {
+          id: collectionId,
+          url: parsed ? parsed.href : `https://steamcommunity.com/sharedfiles/filedetails/?id=${collectionId}`
+        };
+      }
+
+      function updateCollectionLinks(value) {
+        let collection;
+        try { collection = normalizeCollectionUrl(value); }
+        catch (_) { collection = normalizeCollectionUrl(DEFAULT_COLLECTION_URL); }
+        state.collectionUrl = collection.url;
+        els.collectionLabel.querySelector("span").textContent = `Steam 合集 #${collection.id}`;
+        els.collectionSteamLink.href = steamWorkshopUrl(collection.id);
+        els.collectionWebLink.href = collection.url;
+      }
+
+      function openCollectionModal() {
+        els.collectionUrlInput.value = state.collectionUrl;
+        els.collectionModal.classList.add("visible");
+        els.collectionUrlInput.focus();
+      }
+
+      function closeCollectionModal() {
+        els.collectionModal.classList.remove("visible");
+      }
+
+      function saveCollectionUrl() {
+        try {
+          const collection = normalizeCollectionUrl(els.collectionUrlInput.value);
+          localStorage.setItem("broforce_collection_url", collection.url);
+          updateCollectionLinks(collection.url);
+          closeCollectionModal();
+          showToast("Steam 合集链接已更新");
+        } catch (error) {
+          showToast(error.message, true);
+          els.collectionUrlInput.focus();
+        }
+      }
 
       let tooltipSuspended = false;
       let suspendedTooltipTrigger = null;
@@ -1659,6 +1766,10 @@
       if (savedToken) els.authPassword.value = savedToken;
       els.settingsBtn.addEventListener("click", () => { els.settingsModal.classList.add("visible"); });
       els.closeSettingsBtn.addEventListener("click", () => { els.settingsModal.classList.remove("visible"); });
+      els.editCollectionButton.addEventListener("click", openCollectionModal);
+      els.cancelCollectionButton.addEventListener("click", closeCollectionModal);
+      els.saveCollectionButton.addEventListener("click", saveCollectionUrl);
+      els.collectionUrlInput.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); saveCollectionUrl(); } });
       els.cancelDeleteButton.addEventListener("click", closeDeleteModal);
       els.confirmDeleteButton.addEventListener("click", deleteMap);
       // 回车键保存设置
@@ -1680,6 +1791,7 @@
       });
       // 点击遮罩关闭弹窗 - 用 mousedown 防止拖拽松开误触
       els.settingsModal.addEventListener("mousedown", (e) => { if (e.target === els.settingsModal) els.settingsModal.classList.remove("visible"); });
+      els.collectionModal.addEventListener("mousedown", (e) => { if (e.target === els.collectionModal) closeCollectionModal(); });
       els.deleteModal.addEventListener("mousedown", (e) => { if (e.target === els.deleteModal) closeDeleteModal(); });
       document.addEventListener("keydown", (e) => {
         if (els.candidateLightbox.classList.contains("visible")) {
@@ -1688,8 +1800,10 @@
           else if (e.key === "ArrowRight") { e.preventDefault(); shiftCandidateLightbox(1); }
           return;
         }
-        if (e.key === "Escape" && els.deleteModal.classList.contains("visible")) closeDeleteModal();
+        if (e.key === "Escape" && els.collectionModal.classList.contains("visible")) closeCollectionModal();
+        else if (e.key === "Escape" && els.deleteModal.classList.contains("visible")) closeDeleteModal();
       });
+      updateCollectionLinks(savedCollectionUrl);
       iconRefresh();
       updateBatchSummary();
       loadMaps();
