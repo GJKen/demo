@@ -679,7 +679,7 @@
       <p class="section-note">配置远程服务器地址和后端访问密码；URL 参数可覆盖此设置。</p>
       <div class="field">
         <label for="serverAddress">后端地址</label>
-        <input id="serverAddress" type="text" placeholder="http://127.0.0.1:8785" maxlength="500">
+        <input id="serverAddress" type="text" placeholder="http://127.0.0.1:13333" maxlength="500">
         <span class="hint">留空则使用本地后端。可在 URL 加 <code>?backend=地址</code> 自动填入。</span>
       </div>
       <div class="field">
@@ -752,7 +752,7 @@
       const DEFAULT_COLLECTION_URL = "https://steamcommunity.com/sharedfiles/filedetails/?id=3623011414";
       const savedCollectionUrl = localStorage.getItem("broforce_collection_url") || DEFAULT_COLLECTION_URL;
       const API_BASE = urlBackend || savedBackend || (window.location.protocol === "file:" || localHosts.has(window.location.hostname)
-        ? "http://127.0.0.1:8785"
+        ? "http://127.0.0.1:13333"
         : "");
       // 同源访问时，localStorage 不应用于读写权限判断（除非主动设置了后端地址）
       const isSameOriginAccess = !urlBackend && !savedBackend && !(window.location.protocol === "file:" || localHosts.has(window.location.hostname));

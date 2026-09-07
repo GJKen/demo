@@ -50,7 +50,7 @@
 2. **GitHub Pages 模式**（静态备份/入口）
    - 页面在 `https://gjken.github.io/demo/`
    - GitHub Pages 是 HTTPS，serv00 后端是 HTTP → **浏览器会阻止混合内容**
-   - 必须通过 URL 参数 `?backend=http://s13.serv00.com:13333&token=xxx` 指定后端
+   - 必须通过 URL 参数 `?backend=http://s13.serv00.com:13333&token=<token>` 指定后端
    - 即使带了参数，HTTPS 页面发 HTTP 请求仍可能被浏览器拦截，**功能受限**
 
 ---
@@ -71,7 +71,7 @@ repo根目录/
 │   ├── maps.json                # 地图数据 (serv00 远程存储)
 │   ├── previews/                # (已废弃) 本地预览图目录
 │   ├── BROFORCE_MAINTENANCE.md  # 本维护文档
-│   └── README.md                # 旧版英文 README (过时，仅供参考)
+│   └── README.md                # 本地启动、存储和发布速查
 └── .gitignore                   # 忽略 server.py、maps.json 等敏感文件
 ```
 
@@ -90,19 +90,21 @@ Copy-Item -LiteralPath 'static\Broforce地图记录.html' -Destination 'docs\Bro
 
 Python 标准库实现，后端本身**零第三方依赖**，可在 Windows/FreeBSD 直接跑。仓库附带的 SFTP 上传工具使用第三方 `paramiko`，不属于后端运行依赖。
 
-### 4.1 认证配置（第 39-46 行）
+### 4.1 认证配置
 
 ```python
-API_TOKEN = "*xxx(脱敏密码)"          # 管理密码（读写）
+API_TOKEN = os.environ.get("BROFORCE_API_TOKEN", "").strip()
 MAX_FAILED_ATTEMPTS = 3                 # 失败超过此次数后封禁
 BAN_WINDOW_SECONDS = 3600               # 封禁时长（1 小时）
 BANNED_FILE = SOURCE_DIR / "banned_ips.json"  # 封禁持久化
 ```
 
-- 写操作（POST/PUT/DELETE）需 `Authorization: Bearer xxx(脱敏密码)`
+- 服务启动前必须设置非空的 `BROFORCE_API_TOKEN`，否则服务器会拒绝启动
+- 写操作（POST/PUT/DELETE）需 `Authorization: Bearer <token>`
 - **读操作不验证**（任何人都可查看地图目录）
 - 连续 3 次密码错误 → 该 IP 封禁 1 小时，封禁记录写入 `banned_ips.json`
-- 换密码 = 改 `API_TOKEN` 变量，然后重启服务
+- 换密码 = 修改服务进程的 `BROFORCE_API_TOKEN`，然后重启服务
+- Token 属于敏感信息，不得写入文档或提交到 Git
 
 ### 4.2 CORS 白名单（第 48-55 行）
 
@@ -154,16 +156,25 @@ ALLOWED_ORIGINS = {
 
 ```bash
 # serv00 (FreeBSD) 远程启动
-cd ~/broforce_maps && nohup python3 Broforce_maps_src/server.py > server.log 2>&1 &
-
-# Windows 本地启动
-cd Broforce_maps_src && python server.py
-# 或双击 web.bat
+cd ~/broforce_maps && BROFORCE_API_TOKEN='<your-token>' nohup python3 Broforce_maps_src/server.py > server.log 2>&1 &
 
 # 重启
 pkill -f server.py
-cd ~/broforce_maps && nohup python3 Broforce_maps_src/server.py > server.log 2>&1 &
+cd ~/broforce_maps && BROFORCE_API_TOKEN='<your-token>' nohup python3 Broforce_maps_src/server.py > server.log 2>&1 &
 ```
+
+Windows PowerShell 本地启动：
+
+```powershell
+$env:BROFORCE_API_TOKEN = "<your-token>"
+python -u Broforce_maps_src/server.py
+# 或在同一 PowerShell 会话中运行：
+& .\Broforce_maps_src\web.bat
+```
+
+`web.bat` 不会把 Token 写入脚本；如果 `upload_hosts.local.json` 中默认主机配置了
+`backend_token`，脚本会在启动时自动读取，双击即可运行。若本地配置没有 Token，
+再手动设置 `BROFORCE_API_TOKEN` 或补充默认配置。
 
 ---
 
@@ -180,7 +191,7 @@ const urlToken = urlParams.get("token") || "";       // URL &token=xxx
 const savedBackend = localStorage.getItem("broforce_backend_url") || "";
 const savedToken = localStorage.getItem("broforce_auth_token") || "";
 
-const API_BASE = urlBackend || savedBackend || (本地 ? "http://127.0.0.1:8785" : "");
+const API_BASE = urlBackend || savedBackend || (本地 ? "http://127.0.0.1:13333" : "");
 // 同源访问时不应用 localStorage 的 token
 const isSameOriginAccess = !urlBackend && !savedBackend && !本地;
 const AUTH_TOKEN = urlToken || (isSameOriginAccess ? "" : savedToken) || "";
@@ -244,7 +255,13 @@ document.body.removeChild(ta);
 
 备注正文仍固定显示两行；`renderMaps()` 会根据 `scrollHeight > clientHeight` 自动给超长备注添加 `overflow` 类。修改提示内容时，必须同时检查 `static/` 与 `docs/`。
 
-### 5.7 批量导入、删除和预览图
+### 5.7 Steam 合集入口
+
+目录标题区提供 Steam Workshop 合集入口，默认合集由前端常量 `DEFAULT_COLLECTION_URL` 决定。用户可以调用 Steam 客户端、在新标签页打开合集网页，也可以编辑完整 Workshop URL 或数字合集 ID。
+
+编辑结果只写入当前浏览器的 `localStorage`，键名为 `broforce_collection_url`；不会写入 Python 后端、`maps.json`、Git 仓库，也不会同步到其他浏览器或设备。需要修改所有访客看到的默认合集时，必须同时修改 `static/` 和 `docs/` 两份 HTML 中的 `DEFAULT_COLLECTION_URL` 并重新发布。
+
+### 5.8 批量导入、删除和预览图
 
 - 批量导入框自动识别 Workshop ID/URL，自动去重，单次最多处理 20 张地图；每张地图依次执行 Steam 抓取和保存，最后显示成功/失败汇总。
 - 删除地图使用自定义确认弹窗，不再调用原生 `window.confirm()`；支持取消、点击遮罩关闭和 `Escape` 关闭。
@@ -257,7 +274,7 @@ document.body.removeChild(ta);
 - 页面切换到外部 Steam 客户端或失去焦点时会暂时隐藏 CSS tooltip，返回后移动鼠标离开原触发元素才恢复提示。
 - 静态只读模式会同时禁用批量导入和预览图控件。
 
-### 5.8 前端布局与交互硬约束
+### 5.9 前端布局与交互硬约束
 
 - 地图卡片正文中的 `.map-meta` 是标签区，必须通过 `margin-top: auto` 固定在正文底部；`.map-footer` 紧随标签区下方。不要把自动间距改回 `.map-footer`，否则标签会回到标题和备注下方的顶部位置。
 - 修改卡片结构或 CSS 后，必须在 CDP 中检查 `#mapGrid > article:nth-child(1) > div.map-body > div.map-meta` 的 `getBoundingClientRect()`，确认它位于正文底部且 footer 仍在其下方。
@@ -404,7 +421,7 @@ serv00 空闲进程可能被回收。建议在 serv00 面板的 Cron jobs 添加
 
 ```html
 <!-- GitHub Pages 访问（需带参数才能连后端） -->
-https://gjken.github.io/demo/Broforce地图记录.html?backend=http://s13.serv00.com:13333&token=xxx(脱敏密码)
+https://gjken.github.io/demo/Broforce地图记录.html?backend=http://s13.serv00.com:13333&token=<token>
 
 <!-- 只读访问（不带 token） -->
 https://gjken.github.io/demo/Broforce地图记录.html?backend=http://s13.serv00.com:13333
@@ -421,7 +438,7 @@ https://gjken.github.io/demo/Broforce地图记录.html?backend=http://s13.serv00
 ## 八、安全策略
 
 1. **密码不提交 git**：`server.py`、`maps.json`、`web.bat` 已被 `.gitignore` 忽略
-2. **读操作公开，写操作需密码**：密码 = `xxx(脱敏密码)`
+2. **读操作公开，写操作需 Token**：Token 从 `BROFORCE_API_TOKEN` 环境变量读取，不写入源码或文档
 3. **IP 封禁**：3 次错误密码封 1 小时，持久化到 `banned_ips.json`
 4. **CORS 白名单**：只允许指定域名跨域
 5. **速率限制**：每分钟 60 次/IP
@@ -450,9 +467,9 @@ https://gjken.github.io/demo/Broforce地图记录.html?backend=http://s13.serv00
 
 ### 9.4 添加地图不成功
 
-- 写操作需要 `Authorization: Bearer xxx(脱敏密码)`
+- 写操作需要 `Authorization: Bearer <token>`
 - 同源访问若无 token，是只读模式（编辑按钮不出现）
-- 先在设置里填密码，或 URL 带 `&token=xxx`
+- 先在设置里填 Token，或 URL 带 `&token=<token>`
 
 ### 9.5 刷新按钮无效
 
@@ -489,6 +506,7 @@ https://gjken.github.io/demo/Broforce地图记录.html?backend=http://s13.serv00
 - 候选图改为缩略图网格 + 半透明大图弹层，支持箭头、触摸滑动和键盘切换
 - 地图卡片 `.map-meta` 标签区固定在正文底部，`.map-footer` 紧随其后
 - 前端业务提示/弹窗统一使用 CSS tooltip、toast 和自定义 modal，禁止原生 `title`、`alert`、`confirm`、`prompt`
+- 目录标题区新增 Steam 合集入口，支持 Steam 客户端、网页新标签页和浏览器本地 URL 编辑
 - `web.bat` 移到了 `Broforce_maps_src/` 目录
 - 新增 `upload_to_serv00.py` / `upload_to_serv00.bat`：保存多主机配置，同步前端、后端或数据并做备份和 SHA-256 校验
 - 敏感文件加入 `.gitignore`，git 历史已清理旧密码
@@ -503,6 +521,6 @@ https://gjken.github.io/demo/Broforce地图记录.html?backend=http://s13.serv00
 4. **测试用 CDP**：参考 `/twinkstar-harness`，用 `browser-harness` 打开 `http://s13.serv00.com:13333/static/Broforce地图记录.html?xxx` 模拟操作, 密码需要向用户获取
 5. **不要提交敏感文件**：`server.py`、`maps.json`、`web.bat` 都在 `.gitignore`
 6. **调试先看日志**：`cat ~/broforce_maps/server.log | tail -20`
-7. **本地测试**：`cd Broforce_maps_src && python server.py`，访问 `http://127.0.0.1:13333/static/Broforce地图记录.html`
+7. **本地测试**：在 PowerShell 中设置 `$env:BROFORCE_API_TOKEN = "<your-token>"`，再运行 `python -u Broforce_maps_src/server.py`，访问 `http://127.0.0.1:13333/static/Broforce地图记录.html`
 8. **同步到远程**：运行 `python Broforce_maps_src/upload_to_serv00.py`，选择主机和同步范围；只改前端时无需重启服务
 9. **发布 Pages**：推送后手动运行 `Actions → build Gmeek → Run workflow`；不要只等待 `git push`
